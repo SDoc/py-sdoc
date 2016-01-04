@@ -24,6 +24,16 @@ class sdoc1ParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by sdoc1Parser#cmd_comment.
+    def visitCmd_comment(self, ctx:sdoc1Parser.Cmd_commentContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by sdoc1Parser#cmd_debug.
+    def visitCmd_debug(self, ctx:sdoc1Parser.Cmd_debugContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by sdoc1Parser#cmd_expression.
     def visitCmd_expression(self, ctx:sdoc1Parser.Cmd_expressionContext):
         return self.visitChildren(ctx)
@@ -34,13 +44,8 @@ class sdoc1ParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by sdoc1Parser#cmd_comment.
-    def visitCmd_comment(self, ctx:sdoc1Parser.Cmd_commentContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by sdoc1Parser#cmd_debug.
-    def visitCmd_debug(self, ctx:sdoc1Parser.Cmd_debugContext):
+    # Visit a parse tree produced by sdoc1Parser#cmd_include.
+    def visitCmd_include(self, ctx:sdoc1Parser.Cmd_includeContext):
         return self.visitChildren(ctx)
 
 

@@ -6,17 +6,26 @@ sdoc: (command|text)*;
 
 text: TEXT;
 
-// All SDoc1 commands
+// All SDoc1 commands.
 command
   : cmd_comment
   | cmd_debug
   | cmd_expression
   | cmd_if
+  | cmd_include
   | cmd_notice
-  | cmd_sdoc2
+
+  | cmd_sdoc2   // Note: This command MUST be the last alternative of all commands.
   ;
 
-// Expression command.
+
+// Comment command. Does nothing.
+cmd_comment: LINE_COMMENT;
+
+// Bebug command. Prints the value of an expression.
+cmd_debug: DEBUG EXPR_OBRACE expression? EXPR_CBRACE;
+
+// Expression command. Sets one or more variables.
 cmd_expression: EXPRESSION EXPR_OBRACE expression EXPR_CBRACE;
 
 // If-then-else command.
@@ -25,63 +34,61 @@ cmd_if: IF EXPR_OBRACE expression EXPR_CBRACE sdoc
         (ELSE sdoc)?
         ENDIF;
 
-// Comment command.
-cmd_comment: LINE_COMMENT;
+// Include command. Includes a SDoc resource.
+cmd_include: INCLUDE SIMPLE_OBRACE SIMPLE_ARG SIMPLE_CBRACE;
 
-// Bebug command. Prints the value of an expression.
-cmd_debug: DEBUG EXPR_OBRACE expression? EXPR_CBRACE;
+// Notice command. Prints message on console.
+cmd_notice: NOTICE SIMPLE_OBRACE SIMPLE_ARG SIMPLE_CBRACE;
 
-// Notice command. Prints message on colsole.
-cmd_notice: NOTICE NOTICE_OBRACE NOTICE_MESSAGE NOTICE_CBRACE;
-
-//
+// SDoc2 command. Passed through to the output without modifications.
 cmd_sdoc2: SDOC2_COMMAND;
 
+// Expression stuff.
 primaryExpression
-    :   IDENTIFIER        # primaryExpressionIdentifier
-    |   INTEGER_CONSTANT  # primaryExpressionIntegerConstant
-    |   STRING_CONSTANT   # primaryExpressionStringConstant
+    :   EXPR_IDENTIFIER        # primaryExpressionIdentifier
+    |   EXPR_INTEGER_CONSTANT  # primaryExpressionIntegerConstant
+    |   EXPR_STRING_CONSTANT   # primaryExpressionStringConstant
     ;
 
 postfixExpression
     :   primaryExpression
-    |   postfixExpression OBRACKET expression CBRACKET
+    |   postfixExpression EXPR_OBRACKET expression EXPR_CBRACKET
     ;
 
 multiplicativeExpression
     :   postfixExpression
-    |   multiplicativeExpression MULT postfixExpression
-    |   multiplicativeExpression DIV postfixExpression
+    |   multiplicativeExpression EXPR_MULT postfixExpression
+    |   multiplicativeExpression EXPR_DIV postfixExpression
     ;
 
 additiveExpression
     :   multiplicativeExpression
-    |   additiveExpression ADD multiplicativeExpression
-    |   additiveExpression MINUS multiplicativeExpression
+    |   additiveExpression EXPR_ADD multiplicativeExpression
+    |   additiveExpression EXPR_MINUS multiplicativeExpression
     ;
 
 relationalExpression
     :   additiveExpression
-    |   relationalExpression LT additiveExpression
-    |   relationalExpression GT additiveExpression
-    |   relationalExpression LTE additiveExpression
-    |   relationalExpression GTE additiveExpression
+    |   relationalExpression EXPR_LT additiveExpression
+    |   relationalExpression EXPR_GT additiveExpression
+    |   relationalExpression EXPR_LTE additiveExpression
+    |   relationalExpression EXPR_GTE additiveExpression
     ;
 
 equalityExpression
     :   relationalExpression
-    |   equalityExpression EQUAL relationalExpression
-    |   equalityExpression NOT_EQUAL relationalExpression
+    |   equalityExpression EXPR_EQUAL relationalExpression
+    |   equalityExpression EXPR_NOT_EQUAL relationalExpression
     ;
 
 logicalAndExpression
     :   equalityExpression
-    |   logicalAndExpression LOGICAL_AND equalityExpression
+    |   logicalAndExpression EXPR_LOGICAL_AND equalityExpression
     ;
 
 logicalOrExpression
-    :   logicalAndExpression                                # logicalOrExpressionParent
-    |   logicalOrExpression LOGICAL_OR logicalAndExpression # logicalOrExpressionLogicalOr
+    :   logicalAndExpression                                     # logicalOrExpressionParent
+    |   logicalOrExpression EXPR_LOGICAL_OR logicalAndExpression # logicalOrExpressionLogicalOr
     ;
 
 assignmentExpression
@@ -90,7 +97,7 @@ assignmentExpression
     ;
 
 assignmentOperator
-    :   ASSIGN
+    :   EXPR_ASSIGN
     ;
 
 expression

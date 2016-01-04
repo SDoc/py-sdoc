@@ -17,65 +17,68 @@ ELSE:       '\\else';
 ENDIF:      '\\endif';
 EXPRESSION: '\\expression'      -> mode(MODE_EXPR);
 IF:         '\\if'              -> mode(MODE_EXPR);
-NOTICE:     '\\notice'          -> mode(MODE_NOTICE);
+INCLUDE:    '\\include'         -> mode(MODE_SIMPLE);
+NOTICE:     '\\notice'          -> mode(MODE_SIMPLE);
 
 // All other tokens starting with \ are considered SDoc2 commands.
 SDOC2_COMMAND: '\\'[a-z_]+;
 
 
-mode MODE_NOTICE;
+// Mode for SDoc1 commands with a simple argument, i.e. \notice{Hello World}
+mode MODE_SIMPLE;
 
-NOTICE_OBRACE:  '{';
-NOTICE_CBRACE:  '}'  -> mode(DEFAULT_MODE);
-NOTICE_MESSAGE: (~[\{\}] | '\\'. )+;
+SIMPLE_OBRACE:  '{';
+SIMPLE_CBRACE:  '}'  -> mode(DEFAULT_MODE);
+SIMPLE_ARG:     (~[\{\}] | '\\'. )+;
 
 
+// Mode for SDoc1 commands with an expression as argument, i.e. \expression{a=b=c='abc'}
 mode MODE_EXPR;
 
 EXPR_OBRACE: '{';
 EXPR_CBRACE: '}'  -> mode(DEFAULT_MODE);
 EXPR_WS:     [ \r\t\n]+ -> channel(HIDDEN);
 
-OBRACKET:    '[';
-CBRACKET:    ']';
+EXPR_OBRACKET:    '[';
+EXPR_CBRACKET:    ']';
 
-MULT:        '*';
-DIV:         '/';
-ADD:         '+';
-MINUS:       '-';
+EXPR_MULT:        '*';
+EXPR_DIV:         '/';
+EXPR_ADD:         '+';
+EXPR_MINUS:       '-';
 
-EQUAL:       '==';
-GT:          '>';
-GTE:         '>=';
-LOGICAL_AND: '&&';
-LOGICAL_OR:  '||';
-LT:          '<';
-LTE:         '<=';
-NOT_EQUAL:   '!=';
+EXPR_EQUAL:       '==';
+EXPR_GT:          '>';
+EXPR_GTE:         '>=';
+EXPR_LOGICAL_AND: '&&';
+EXPR_LOGICAL_OR:  '||';
+EXPR_LT:          '<';
+EXPR_LTE:         '<=';
+EXPR_NOT_EQUAL:   '!=';
 
-ASSIGN:      '=';
+EXPR_ASSIGN:      '=';
 
-IDENTIFIER
-    :   Nondigit
-        (   Nondigit
-        |   Digit
+EXPR_IDENTIFIER
+    :   EXPR_NON_DIGIT
+        (   EXPR_NON_DIGIT
+        |   EXPR_DIGIT
         )*
     ;
 
-INTEGER_CONSTANT
-    :   Digit+
+EXPR_INTEGER_CONSTANT
+    :   EXPR_DIGIT+
     ;
 
 fragment
-Nondigit
+EXPR_NON_DIGIT
     :   [a-zA-Z_]
     ;
 
 fragment
-Digit
+EXPR_DIGIT
     :   [0-9]
     ;
 
-STRING_CONSTANT
+EXPR_STRING_CONSTANT
     :   '\'' ~['\\\r\n]* '\''
     ;

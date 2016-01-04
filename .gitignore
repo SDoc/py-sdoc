@@ -6,4 +6,5 @@ doc
 vendor/
 composer.lock
 test.py
-test1.sdoc
+test1-main.sdoc
+test1-chapter1.sdoc
