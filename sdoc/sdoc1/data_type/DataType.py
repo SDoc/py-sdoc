@@ -26,6 +26,16 @@ class DataType:
 
     # ------------------------------------------------------------------------------------------------------------------
     @abc.abstractmethod
+    def dereference(self):
+        """
+        Returns a clone of this data type.
+
+        :rtype: DataType
+        """
+        raise NotImplementedError
+
+    # ------------------------------------------------------------------------------------------------------------------
+    @abc.abstractmethod
     def get_value(self):
         """
         Returns the underling value of this data type.
@@ -39,6 +49,16 @@ class DataType:
     def is_constant(self):
         """
         Returns True if this data type is a constant. Returns False otherwise.
+
+        :rtype: bool
+        """
+        raise NotImplementedError
+
+    # ------------------------------------------------------------------------------------------------------------------
+    @abc.abstractmethod
+    def is_defined(self):
+        """
+        Returns True if this data type is defined, i.e. has a value. Returns False otherwise.
 
         :rtype: bool
         """

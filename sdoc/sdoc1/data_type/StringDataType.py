@@ -37,6 +37,15 @@ class StringDataType(DataType):
         return "'" + self._value + "'"
 
     # ------------------------------------------------------------------------------------------------------------------
+    def dereference(self):
+        """
+        Returns a clone of this string.
+
+        :rtype: StringDataType
+        """
+        return StringDataType(self._value)
+
+    # ------------------------------------------------------------------------------------------------------------------
     def get_value(self):
         """
         Returns the underling value of this data type.
@@ -53,6 +62,15 @@ class StringDataType(DataType):
         :rtype: bool
         """
         return False
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def is_defined(self):
+        """
+        Returns True always.
+
+        :rtype: bool
+        """
+        return True
 
     # ------------------------------------------------------------------------------------------------------------------
     def is_scalar(self):

@@ -14,13 +14,14 @@ class IdentifierDataType(DataType):
     """
     Class for identifiers.
     """
+
     # ------------------------------------------------------------------------------------------------------------------
     def __init__(self, scope, name):
         """
         Object constructor.
 
         :param sdoc.sdoc1.data_type.ArrayDataType.ArrayDataType scope: The scope of the identifier.
-        :param str name: The name of the identifier.
+        :param int|str name: The name of the identifier.
         """
         self._scope = scope
         """
@@ -33,7 +34,7 @@ class IdentifierDataType(DataType):
         """
         The name of this identifier.
 
-        :type: str
+        :type: int|str
         """
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -43,14 +44,26 @@ class IdentifierDataType(DataType):
 
         :rtype: str
         """
-        return "'%s' => %s" %(self._name, self._scope.get_reference(self._name).debug())
+        if not self._scope.has_element(self._name):
+            return "'%s' => %s" % (self._name, 'UNDEFINED')
+
+        return "'%s' => %s" % (self._name, self._scope.get_reference(self._name).debug())
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def dereference(self):
+        """
+        Returns a clone of the referenced data type.
+
+        :rtype: DataType
+        """
+        return self._scope.get_reference(self._name).dereference()
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_value(self):
         """
         Returns the underling value of this data type.
 
-        :rtype: str|int
+        :rtype: int|str
         """
         return self._scope.get_reference(self._name).get_value()
 
@@ -59,7 +72,7 @@ class IdentifierDataType(DataType):
         """
         Returns the name of this identifier.
 
-        :rtype: str
+        :rtype: int|str
         """
         return self._name
 
@@ -71,6 +84,15 @@ class IdentifierDataType(DataType):
         :rtype: bool
         """
         return False
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def is_defined(self):
+        """
+        Returns if the reference is defined, i.e. if the element exists in the underling array. False otherwise.
+
+        :rtype: bool
+        """
+        return self._scope.has_element(self._name)
 
     # ------------------------------------------------------------------------------------------------------------------
     def is_scalar(self):
@@ -91,15 +113,27 @@ class IdentifierDataType(DataType):
         return self._scope.get_reference(self._name).get_value()
 
     # ------------------------------------------------------------------------------------------------------------------
+    def get_array_element(self, key):
+        """
+        Sets the value for this identifier as an array element.
+
+        :param sdoc.sdoc1.data_type.DataType.DataType key: The key.
+
+        :rtype: sdoc.sdoc1.data_type.DataType.DataType
+        """
+        tmp = self._scope.get_array(self._name)
+
+        return IdentifierDataType(tmp, key.get_value())
+
+    # ------------------------------------------------------------------------------------------------------------------
     def set_value(self, value):
         """
-        Sets the value for this identifier
+        Sets the value for this identifier.
 
         :param sdoc.sdoc1.data_type.DataType.DataType value: The value.
 
         :rtype: sdoc.sdoc1.data_type.DataType.DataType
         """
         return self._scope.add_element(StringDataType(self._name), value)
-
 
 # ----------------------------------------------------------------------------------------------------------------------

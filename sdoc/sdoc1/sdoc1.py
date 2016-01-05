@@ -79,7 +79,7 @@ class Sdoc1(sdoc1ParserVisitor):
     # ------------------------------------------------------------------------------------------------------------------
     def visitAssignmentExpressionAssignment(self, ctx):
         """
-        Visit a parse tree produced by sdoc1Parser#assignmentExpressionAssignment.
+        Visit a parse tree for expression like a = b.
 
         :param sdoc1Parser.AssignmentExpressionAssignmentContext ctx: The context tree.
         """
@@ -93,6 +93,25 @@ class Sdoc1(sdoc1ParserVisitor):
             # @todo more verbose logging, own exception class
 
         return left_hand_side.set_value(right_hand_side)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def visitPostfixExpressionExpression(self, ctx):
+        """
+        Vistsis a parse tree for expressions like 'a[1]'.
+
+        :param sdoc1Parser.PostfixExpressionExpressionContext ctx: The context tree.
+        """
+        # First get the value of key.
+        expression = ctx.expression().accept(self)
+        if not expression.is_defined():
+            raise RuntimeError('%s is not defined.' % ctx.expression().getText())
+
+        postfix_expression = ctx.postfixExpression().accept(self)
+        if not isinstance(postfix_expression, IdentifierDataType):
+            raise RuntimeError("'%s' is not an identifier." % ctx.postfixExpression().getText())
+            # @todo more verbose logging, own exception class
+
+        return postfix_expression.get_array_element(expression)
 
     # ------------------------------------------------------------------------------------------------------------------
     def visitPrimaryExpressionIdentifier(self, ctx):

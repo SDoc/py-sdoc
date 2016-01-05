@@ -915,30 +915,52 @@ class sdoc1Parser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def primaryExpression(self):
-            return self.getTypedRuleContext(sdoc1Parser.PrimaryExpressionContext,0)
-
-
-        def postfixExpression(self):
-            return self.getTypedRuleContext(sdoc1Parser.PostfixExpressionContext,0)
-
-
-        def EXPR_OBRACKET(self):
-            return self.getToken(sdoc1Parser.EXPR_OBRACKET, 0)
-
-        def expression(self):
-            return self.getTypedRuleContext(sdoc1Parser.ExpressionContext,0)
-
-
-        def EXPR_CBRACKET(self):
-            return self.getToken(sdoc1Parser.EXPR_CBRACKET, 0)
 
         def getRuleIndex(self):
             return sdoc1Parser.RULE_postfixExpression
 
+     
+        def copyFrom(self, ctx:ParserRuleContext):
+            super().copyFrom(ctx)
+
+
+    class PrimaryExpressionParentContext(PostfixExpressionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a sdoc1Parser.PostfixExpressionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def primaryExpression(self):
+            return self.getTypedRuleContext(sdoc1Parser.PrimaryExpressionContext,0)
+
+
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitPostfixExpression" ):
-                return visitor.visitPostfixExpression(self)
+            if hasattr( visitor, "visitPrimaryExpressionParent" ):
+                return visitor.visitPrimaryExpressionParent(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class PostfixExpressionExpressionContext(PostfixExpressionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a sdoc1Parser.PostfixExpressionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def postfixExpression(self):
+            return self.getTypedRuleContext(sdoc1Parser.PostfixExpressionContext,0)
+
+        def EXPR_OBRACKET(self):
+            return self.getToken(sdoc1Parser.EXPR_OBRACKET, 0)
+        def expression(self):
+            return self.getTypedRuleContext(sdoc1Parser.ExpressionContext,0)
+
+        def EXPR_CBRACKET(self):
+            return self.getToken(sdoc1Parser.EXPR_CBRACKET, 0)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPostfixExpressionExpression" ):
+                return visitor.visitPostfixExpressionExpression(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -953,6 +975,10 @@ class sdoc1Parser ( Parser ):
         self.enterRecursionRule(localctx, 22, self.RULE_postfixExpression, _p)
         try:
             self.enterOuterAlt(localctx, 1)
+            localctx = sdoc1Parser.PrimaryExpressionParentContext(self, localctx)
+            self._ctx = localctx
+            _prevctx = localctx
+
             self.state = 114
             self.primaryExpression()
             self._ctx.stop = self._input.LT(-1)
@@ -964,7 +990,7 @@ class sdoc1Parser ( Parser ):
                     if self._parseListeners is not None:
                         self.triggerExitRuleEvent()
                     _prevctx = localctx
-                    localctx = sdoc1Parser.PostfixExpressionContext(self, _parentctx, _parentState)
+                    localctx = sdoc1Parser.PostfixExpressionExpressionContext(self, sdoc1Parser.PostfixExpressionContext(self, _parentctx, _parentState))
                     self.pushNewRecursionContext(localctx, _startState, self.RULE_postfixExpression)
                     self.state = 116
                     if not self.precpred(self._ctx, 1):

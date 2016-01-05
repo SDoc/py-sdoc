@@ -74,8 +74,13 @@ class sdoc1ParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by sdoc1Parser#postfixExpression.
-    def visitPostfixExpression(self, ctx:sdoc1Parser.PostfixExpressionContext):
+    # Visit a parse tree produced by sdoc1Parser#primaryExpressionParent.
+    def visitPrimaryExpressionParent(self, ctx:sdoc1Parser.PrimaryExpressionParentContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by sdoc1Parser#postfixExpressionExpression.
+    def visitPostfixExpressionExpression(self, ctx:sdoc1Parser.PostfixExpressionExpressionContext):
         return self.visitChildren(ctx)
 
 

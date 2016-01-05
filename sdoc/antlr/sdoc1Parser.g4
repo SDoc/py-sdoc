@@ -51,8 +51,8 @@ primaryExpression
     ;
 
 postfixExpression
-    :   primaryExpression
-    |   postfixExpression EXPR_OBRACKET expression EXPR_CBRACKET
+    :   primaryExpression                                         # primaryExpressionParent
+    |   postfixExpression EXPR_OBRACKET expression EXPR_CBRACKET  # postfixExpressionExpression
     ;
 
 multiplicativeExpression
