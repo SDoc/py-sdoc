@@ -39,13 +39,15 @@ EXPR_OBRACE: '{';
 EXPR_CBRACE: '}'  -> mode(DEFAULT_MODE);
 EXPR_WS:     [ \r\t\n]+ -> channel(HIDDEN);
 
-EXPR_OBRACKET:    '[';
-EXPR_CBRACKET:    ']';
+EXPR_LEFT_PAREN :   '(';
+EXPR_RIGHT_PAREN :  ')';
+EXPR_LEFT_BRACKET:  '[';
+EXPR_RIGHT_BRACKET: ']';
 
-EXPR_MULT:        '*';
-EXPR_DIV:         '/';
-EXPR_ADD:         '+';
-EXPR_MINUS:       '-';
+EXPR_MULT:  '*';
+EXPR_DIV:   '/';
+EXPR_ADD:   '+';
+EXPR_MINUS: '-';
 
 EXPR_EQUAL:       '==';
 EXPR_GT:          '>';
