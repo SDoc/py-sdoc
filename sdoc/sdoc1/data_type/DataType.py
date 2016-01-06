@@ -14,6 +14,11 @@ class DataType:
     Abstract parent class for all data types.
     """
 
+    # Constants for all data types.
+    INT = 1
+    STRING = 2
+    ARRAY = 3
+
     # ------------------------------------------------------------------------------------------------------------------
     @abc.abstractmethod
     def debug(self):
@@ -41,6 +46,16 @@ class DataType:
         Returns the underling value of this data type.
 
         :rtype: str|int
+        """
+        raise NotImplementedError
+
+    # ------------------------------------------------------------------------------------------------------------------
+    @abc.abstractmethod
+    def get_type_id(self):
+        """
+        Returns the ID of this data type.
+
+        :rtype: int
         """
         raise NotImplementedError
 
@@ -83,6 +98,5 @@ class DataType:
         :rtype: bool
         """
         raise NotImplementedError
-
 
 # ----------------------------------------------------------------------------------------------------------------------

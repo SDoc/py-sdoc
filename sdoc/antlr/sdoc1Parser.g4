@@ -82,8 +82,8 @@ equalityExpression
     ;
 
 logicalAndExpression
-    :   equalityExpression
-    |   logicalAndExpression EXPR_LOGICAL_AND equalityExpression
+    :   equalityExpression                                       # logicalAndExpressionParent
+    |   logicalAndExpression EXPR_LOGICAL_AND equalityExpression # logicalAndExpressionAnd
     ;
 
 logicalOrExpression

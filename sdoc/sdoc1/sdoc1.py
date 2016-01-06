@@ -95,9 +95,37 @@ class Sdoc1(sdoc1ParserVisitor):
         return left_hand_side.set_value(right_hand_side)
 
     # ------------------------------------------------------------------------------------------------------------------
+    def visitLogicalAndExpressionAnd(self, ctx):
+        """
+        Visits a parse tree for expressions like 'a && b'.
+
+        :param sdoc1Parser.LogicalAndExpressionAndContext ctx: The context tree.
+        """
+        a = ctx.logicalAndExpression().accept(self)
+        b = ctx.equalityExpression().accept(self)
+
+        # @todo test a and b are defined
+
+        return IntegerDataType(1 if a.is_true() and b.is_true() else 0)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def visitLogicalOrExpressionLogicalOr(self, ctx):
+        """
+        Visits a parse tree for expressions like 'a || b'.
+
+        :param sdoc1Parser.LogicalOrExpressionLogicalOrContext ctx: The context tree.
+        """
+        a = ctx.logicalOrExpression().accept(self)
+        b = ctx.logicalAndExpression().accept(self)
+
+        # @todo test a and b are defined
+
+        return IntegerDataType(1 if a.is_true() or b.is_true() else 0)
+
+    # ------------------------------------------------------------------------------------------------------------------
     def visitPostfixExpressionExpression(self, ctx):
         """
-        Vistsis a parse tree for expressions like 'a[1]'.
+        Visits a parse tree for expressions like 'a[1]'.
 
         :param sdoc1Parser.PostfixExpressionExpressionContext ctx: The context tree.
         """

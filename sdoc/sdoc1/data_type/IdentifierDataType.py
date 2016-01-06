@@ -77,6 +77,15 @@ class IdentifierDataType(DataType):
         return self._name
 
     # ------------------------------------------------------------------------------------------------------------------
+    def get_type_id(self):
+        """
+        Returns the ID of this data type.
+
+        :rtype: int
+        """
+        return self._scope.get_reference(self._name).get_type_id()
+
+    # ------------------------------------------------------------------------------------------------------------------
     def is_constant(self):
         """
         Returns False always.
@@ -88,7 +97,8 @@ class IdentifierDataType(DataType):
     # ------------------------------------------------------------------------------------------------------------------
     def is_defined(self):
         """
-        Returns if the reference is defined, i.e. if the element exists in the underling array. False otherwise.
+        Returns True if the reference is defined, i.e. if the element exists in the underling array. Returns False
+        otherwise.
 
         :rtype: bool
         """

@@ -1420,23 +1420,50 @@ class sdoc1Parser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def equalityExpression(self):
-            return self.getTypedRuleContext(sdoc1Parser.EqualityExpressionContext,0)
-
-
-        def logicalAndExpression(self):
-            return self.getTypedRuleContext(sdoc1Parser.LogicalAndExpressionContext,0)
-
-
-        def EXPR_LOGICAL_AND(self):
-            return self.getToken(sdoc1Parser.EXPR_LOGICAL_AND, 0)
 
         def getRuleIndex(self):
             return sdoc1Parser.RULE_logicalAndExpression
 
+     
+        def copyFrom(self, ctx:ParserRuleContext):
+            super().copyFrom(ctx)
+
+
+    class LogicalAndExpressionParentContext(LogicalAndExpressionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a sdoc1Parser.LogicalAndExpressionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def equalityExpression(self):
+            return self.getTypedRuleContext(sdoc1Parser.EqualityExpressionContext,0)
+
+
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitLogicalAndExpression" ):
-                return visitor.visitLogicalAndExpression(self)
+            if hasattr( visitor, "visitLogicalAndExpressionParent" ):
+                return visitor.visitLogicalAndExpressionParent(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class LogicalAndExpressionAndContext(LogicalAndExpressionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a sdoc1Parser.LogicalAndExpressionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def logicalAndExpression(self):
+            return self.getTypedRuleContext(sdoc1Parser.LogicalAndExpressionContext,0)
+
+        def EXPR_LOGICAL_AND(self):
+            return self.getToken(sdoc1Parser.EXPR_LOGICAL_AND, 0)
+        def equalityExpression(self):
+            return self.getTypedRuleContext(sdoc1Parser.EqualityExpressionContext,0)
+
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitLogicalAndExpressionAnd" ):
+                return visitor.visitLogicalAndExpressionAnd(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -1451,6 +1478,10 @@ class sdoc1Parser ( Parser ):
         self.enterRecursionRule(localctx, 32, self.RULE_logicalAndExpression, _p)
         try:
             self.enterOuterAlt(localctx, 1)
+            localctx = sdoc1Parser.LogicalAndExpressionParentContext(self, localctx)
+            self._ctx = localctx
+            _prevctx = localctx
+
             self.state = 189
             self.equalityExpression(0)
             self._ctx.stop = self._input.LT(-1)
@@ -1462,7 +1493,7 @@ class sdoc1Parser ( Parser ):
                     if self._parseListeners is not None:
                         self.triggerExitRuleEvent()
                     _prevctx = localctx
-                    localctx = sdoc1Parser.LogicalAndExpressionContext(self, _parentctx, _parentState)
+                    localctx = sdoc1Parser.LogicalAndExpressionAndContext(self, sdoc1Parser.LogicalAndExpressionContext(self, _parentctx, _parentState))
                     self.pushNewRecursionContext(localctx, _startState, self.RULE_logicalAndExpression)
                     self.state = 191
                     if not self.precpred(self._ctx, 1):

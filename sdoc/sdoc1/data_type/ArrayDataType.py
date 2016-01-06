@@ -113,6 +113,15 @@ class ArrayDataType(DataType):
         raise NotImplementedError
 
     # ------------------------------------------------------------------------------------------------------------------
+    def get_type_id(self):
+        """
+        Returns the ID of this data type.
+
+        :rtype: int
+        """
+        return DataType.ARRAY
+
+    # ------------------------------------------------------------------------------------------------------------------
     def has_element(self, name):
         """
         Returns True if this array has a specified element.

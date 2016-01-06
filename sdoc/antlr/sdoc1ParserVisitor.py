@@ -104,8 +104,13 @@ class sdoc1ParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by sdoc1Parser#logicalAndExpression.
-    def visitLogicalAndExpression(self, ctx:sdoc1Parser.LogicalAndExpressionContext):
+    # Visit a parse tree produced by sdoc1Parser#logicalAndExpressionParent.
+    def visitLogicalAndExpressionParent(self, ctx:sdoc1Parser.LogicalAndExpressionParentContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by sdoc1Parser#logicalAndExpressionAnd.
+    def visitLogicalAndExpressionAnd(self, ctx:sdoc1Parser.LogicalAndExpressionAndContext):
         return self.visitChildren(ctx)
 
 

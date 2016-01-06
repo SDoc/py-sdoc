@@ -55,6 +55,15 @@ class StringDataType(DataType):
         return self._value
 
     # ------------------------------------------------------------------------------------------------------------------
+    def get_type_id(self):
+        """
+        Returns the ID of this data type.
+
+        :rtype: int
+        """
+        return DataType.STRING
+
+    # ------------------------------------------------------------------------------------------------------------------
     def is_constant(self):
         """
         Returns False always.

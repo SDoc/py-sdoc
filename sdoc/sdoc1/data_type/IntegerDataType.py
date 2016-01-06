@@ -18,7 +18,7 @@ class IntegerDataType(DataType):
         """
         Object constructor.
 
-        :param str value: The value of this integer constant.
+        :param int|str value: The value of this integer constant.
         """
         self._value = int(value)
         """
@@ -53,6 +53,15 @@ class IntegerDataType(DataType):
         :rtype: int
         """
         return self._value
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def get_type_id(self):
+        """
+        Returns the ID of this data type.
+
+        :rtype: int
+        """
+        return DataType.INT
 
     # ------------------------------------------------------------------------------------------------------------------
     def is_constant(self):
