@@ -169,6 +169,15 @@ class Sdoc1(sdoc1ParserVisitor):
         return StringDataType(ctx.EXPR_STRING_CONSTANT().getText()[1:-1])
 
     # ------------------------------------------------------------------------------------------------------------------
+    def visitPrimaryExpressionSubExpression(self, ctx):
+        """
+        Visits a parse tree for sub-expressions like (a && b).
+
+        :param sdoc1Parser.primaryExpressionSubExpression ctx: The context tree.
+        """
+        return ctx.expression().accept(self)
+
+    # ------------------------------------------------------------------------------------------------------------------
     def visitCmd_comment(self, ctx):
         """
         Visits a parse tree produced by sdoc1Parser#cmd_comment.

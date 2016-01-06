@@ -45,14 +45,15 @@ cmd_sdoc2: SDOC2_COMMAND;
 
 // Expression stuff.
 primaryExpression
-    :   EXPR_IDENTIFIER        # primaryExpressionIdentifier
-    |   EXPR_INTEGER_CONSTANT  # primaryExpressionIntegerConstant
-    |   EXPR_STRING_CONSTANT   # primaryExpressionStringConstant
+    :   EXPR_IDENTIFIER                              # primaryExpressionIdentifier
+    |   EXPR_INTEGER_CONSTANT                        # primaryExpressionIntegerConstant
+    |   EXPR_STRING_CONSTANT                         # primaryExpressionStringConstant
+    |   EXPR_LEFT_PAREN expression EXPR_RIGHT_PAREN  # primaryExpressionSubExpression
     ;
 
 postfixExpression
-    :   primaryExpression                                         # primaryExpressionParent
-    |   postfixExpression EXPR_OBRACKET expression EXPR_CBRACKET  # postfixExpressionExpression
+    :   primaryExpression                                                  # primaryExpressionParent
+    |   postfixExpression EXPR_LEFT_BRACKET expression EXPR_RIGHT_BRACKET  # postfixExpressionExpression
     ;
 
 multiplicativeExpression
