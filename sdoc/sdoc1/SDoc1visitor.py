@@ -16,7 +16,7 @@ from sdoc.sdoc1.data_type.IntegerDataType import IntegerDataType
 from sdoc.sdoc1.data_type.StringDataType import StringDataType
 
 
-class Sdoc1(sdoc1ParserVisitor):
+class SDoc1Visitor(sdoc1ParserVisitor):
     """
     Visitor for SDoc level 1.
     """
@@ -286,7 +286,7 @@ class Sdoc1(sdoc1ParserVisitor):
         tokens = antlr4.CommonTokenStream(lexer)
         parser = sdoc1Parser(tokens)
         tree = parser.sdoc()
-        visitor = Sdoc1()
+        visitor = SDoc1Visitor()
 
         # Set or inherit properties from the parser of the parent document.
         visitor._include_level = self._include_level + 1

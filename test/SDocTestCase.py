@@ -4,7 +4,7 @@ from io import StringIO
 import antlr4
 from sdoc.antlr.sdoc1Lexer import sdoc1Lexer
 from sdoc.antlr.sdoc1Parser import sdoc1Parser
-from sdoc.sdoc1.sdoc1 import Sdoc1
+from sdoc.sdoc1.SDoc1visitor import SDoc1Visitor
 
 
 class SDocTestCase(unittest.TestCase):
@@ -20,7 +20,7 @@ class SDocTestCase(unittest.TestCase):
         tokens = antlr4.CommonTokenStream(lexer)
         parser = sdoc1Parser(tokens)
         tree = parser.sdoc()
-        visitor = Sdoc1()
+        visitor = SDoc1Visitor()
         visitor.visit(tree)
 
         return sys.stdout.getvalue().strip()
