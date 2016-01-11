@@ -14,7 +14,6 @@ class Node:
     """
     Abstract class for SDoc2 nodes.
     """
-
     # ------------------------------------------------------------------------------------------------------------------
     def __init__(self, name):
         """
@@ -74,30 +73,66 @@ class Node:
             node_store.out_scope(node)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_content_categories(self):
+    def get_hierarchy_name(self):
         """
-        Returns the content types of this node.
+        Returns the hierarchy name if this node is a part of a hierarchy. Otherwise returns False.
 
-        :rtype: set(int)
+        :rtype: str|bool
         """
-        raise NotImplementedError()
+        return False
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def get_hierarchy_level(self):
+        """
+        Returns the hierarchy level if this node is a part of a hierarchy.
+
+        :rtype: int
+        """
+        raise RuntimeError("This method MUST only be called when a node is a part of an hierarchy.")
 
     # ------------------------------------------------------------------------------------------------------------------
     def is_block_command(self):
         """
-        Returns True if this node is create by a block command.
+        Returns True if this node is created by a block command. Otherwise returns False.
 
         :rtype: bool
         """
         raise NotImplementedError()
 
     # ------------------------------------------------------------------------------------------------------------------
+    def is_document_root(self):
+        """
+        Returns True if this node is a document root node. Otherwise returns False.
+
+        :rtype: bool
+        """
+        return False
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def is_hierarchy_root(self):
+        """
+        Returns True if this node can be the root of a hierarchy. Otherwise returns False.
+
+        :rtype: bool
+        """
+        return False
+
+    # ------------------------------------------------------------------------------------------------------------------
     def is_inline_command(self):
         """
-        Returns True if this node is create by a inline command.
+        Returns True if this node is created by a inline command. Otherwise returns False.
 
         :rtype: bool
         """
         raise NotImplementedError()
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def is_phrasing(self):
+        """
+        Returns True if this node is a phrasing node, i.e. is a part of a paragraph. Otherwise returns False.
+
+        :rtype: bool
+        """
+        return False
 
 # ----------------------------------------------------------------------------------------------------------------------

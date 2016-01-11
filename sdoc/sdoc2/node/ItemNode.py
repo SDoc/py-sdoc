@@ -19,13 +19,22 @@ class ItemNode(Node):
         super().__init__('item')
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_content_categories(self):
+    def get_hierarchy_level(self):
         """
-        Returns the content types of this node.
+        Returns 1.
 
-        :rtype: set(int)
+        :rtype: int
         """
-        return {}
+        return 1
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def get_hierarchy_name(self):
+        """
+        Returns 'item'
+
+        :rtype: str
+        """
+        return 'item'
 
     # ------------------------------------------------------------------------------------------------------------------
     def is_block_command(self):

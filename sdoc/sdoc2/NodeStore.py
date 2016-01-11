@@ -6,10 +6,8 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 
+
 # ----------------------------------------------------------------------------------------------------------------------
-from sdoc.sdoc2 import CONTENT_TYPE_SECTION
-
-
 class NodeStore:
     """
     Class for creating, storing, and retrieving nodes.
@@ -120,6 +118,7 @@ class NodeStore:
     def create_inline_node(self, command, options, argument):
         """
         Creates a node based on a inline command.
+
         :param str command: The inline command.
         :param dict options: The options.
         :param str argument: The argument of the inline command.
@@ -136,55 +135,15 @@ class NodeStore:
         node.argument = argument
 
         # Add the node to the node store.
-        node_id = len(self.nodes) + 1
-        node.id = node_id
-        self.nodes[node_id] = node
+        self._store_node(node)
 
-        # If the node is a section node adjust the nested nodes stack.
-        # @todo refactor
-        if CONTENT_TYPE_SECTION in node.get_content_categories():
-            level = node.get_heading_level()
-            found_parent = False
-            while self.nested_nodes and not found_parent:
-                parent_node = self.nested_nodes[-1]
-                if CONTENT_TYPE_SECTION not in parent_node.get_content_categories():
-                    # @todo position of this node
-                    # @todo position of block node.
-                    raise RuntimeError("Improper nesting of block node '%s' and section node '%s'." %
-                                       (parent_node.name, node.name))
-
-                parent_level = parent_node.get_heading_level()
-                if parent_level >= level and parent_level != 0:
-                    self.nested_nodes.pop()
-                else:
-                    found_parent = True
-
-            if self.nested_nodes:
-                parent_node = self.nested_nodes[-1]
-                parent_level = parent_node.get_heading_level()
-            else:
-                parent_level = -1
-
-            if level - parent_level > 1:
-                # @todo position
-                print("Warning improper nesting of section nodes: %d %d." % (parent_level, level))
-
-            if self.nested_nodes:
-                parent_node = self.nested_nodes[-1]
-                parent_node.nodes.append(node_id)
-
-            self.nested_nodes.append(node)
-
-        else:
-            # Add the node to the list of child nodes of its parent node.
-            if self.nested_nodes:
-                parent_node = self.nested_nodes[-1]
-                parent_node.nodes.append(node_id)
+        return node
 
     # ------------------------------------------------------------------------------------------------------------------
     def create_block_node(self, command, options):
         """
         Creates a node based on a inline command.
+
         :param str command: The inline command.
         :param dict options: The options.
 
@@ -199,16 +158,89 @@ class NodeStore:
         node = constructor()
 
         # Add the node to the node store.
+        self._store_node(node)
+
+        return node
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def _adjust_hierarchy(self, node):
+        """
+        Adjust the hierarchy based on the hierarchy of a new node.
+
+        :param sdoc.sdoc2.node.Node.Node node: The new node.
+        """
+        node_hierarchy_name = node.get_hierarchy_name()
+        if node_hierarchy_name:
+            node_hierarchy_level = node.get_hierarchy_level()
+            parent_found = False
+            parent_is_root = False
+            while self.nested_nodes and not parent_found:
+                parent_node = self.nested_nodes[-1]
+                parent_hierarchy_name = parent_node.get_hierarchy_name()
+                if parent_hierarchy_name != node_hierarchy_name:
+                    if node.is_hierarchy_root():
+                        parent_is_root = True
+                        parent_found = True
+                    else:
+                        # @todo position of this node
+                        # @todo position of block node.
+                        raise RuntimeError("Improper nesting of node '%s' and node '%s'." %
+                                           (parent_node.name, node.name))
+
+                if not parent_is_root:
+                    parent_hierarchy_level = parent_node.get_hierarchy_level()
+                    if parent_hierarchy_level >= node_hierarchy_level and len(self.nested_nodes) > 1:
+                        self.nested_nodes.pop()
+                    else:
+                        parent_found = True
+
+            if self.nested_nodes:
+                parent_node = self.nested_nodes[-1]
+                parent_hierarchy_level = parent_node.get_hierarchy_level()
+            else:
+                parent_hierarchy_level = -1
+
+            if node_hierarchy_level - parent_hierarchy_level > 1:
+                # @todo position
+                print("Warning improper nesting of levels: %d %d." %
+                      (parent_hierarchy_level, node_hierarchy_level))
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def _store_node(self, node):
+        """
+        Stores a node.
+
+        :param sdoc.sdoc2.node.Node.Node node: The node.
+        """
+        # Add the node to the node store.
         node_id = len(self.nodes) + 1
         node.id = node_id
         self.nodes[node_id] = node
 
-        # Add the node to the list of child nodes of its parent node.
-        if self.nested_nodes:
+        if node_id == 1:
+            # The first node must be a document root.
+            if not node.is_document_root():
+                # @todo position of block node.
+                raise RuntimeError("Node %s is not a document root" % node.name)
+
+            self.nested_nodes.append(node)
+
+        else:
+            # All other nodes must not be a document root.
+            if node.is_document_root():
+                # @todo position of block node.
+                raise RuntimeError("Unexpected %s. Node is document root" % node.name)
+
+            # If the node is a part a hierarchy adjust the nested nodes stack.
+            if node.get_hierarchy_name():
+                self._adjust_hierarchy(node)
+
+            # Add the node to the list of child nodes of its parent node.
             parent_node = self.nested_nodes[-1]
             parent_node.nodes.append(node_id)
 
-        # Push the node on the stack of block commands.
-        self.nested_nodes.append(node)
+            # Block commands and hierarchical nodes must be appended to the nested nodes.
+            if node.is_block_command() or node.get_hierarchy_name():
+                self.nested_nodes.append(node)
 
 # ----------------------------------------------------------------------------------------------------------------------

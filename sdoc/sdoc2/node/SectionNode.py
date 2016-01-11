@@ -19,8 +19,13 @@ class SectionNode(HeadingNode):
         super().__init__('section')
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_heading_level(self):
-        return 2
+    def get_hierarchy_level(self):
+        """
+        Returns 2.
+
+        :rtype: int
+        """
+        return 1
 
     # ------------------------------------------------------------------------------------------------------------------
     def is_block_command(self):

@@ -7,7 +7,6 @@ Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
 from sdoc.sdoc2 import node_store
-from sdoc.sdoc2 import CONTENT_TYPE_FLOW, CONTENT_TYPE_PALPABLE
 from sdoc.sdoc2.node.Node import Node
 
 
@@ -20,16 +19,34 @@ class ItemizeNode(Node):
         super().__init__('itemize')
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_content_categories(self):
+    def get_hierarchy_level(self):
         """
-        Returns the content types of this node.
+        Returns 0.
 
-        :rtype: set(int)
+        :rtype: int
         """
-        return {CONTENT_TYPE_FLOW, CONTENT_TYPE_PALPABLE}
+        return 0
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def get_hierarchy_name(self):
+        """
+        Returns 'item'
+
+        :rtype: str
+        """
+        return 'item'
 
     # ------------------------------------------------------------------------------------------------------------------
     def is_block_command(self):
+        """
+        Returns True.
+
+        :rtype: bool
+        """
+        return True
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def is_hierarchy_root(self):
         """
         Returns True.
 
@@ -45,6 +62,15 @@ class ItemizeNode(Node):
         :rtype: bool
         """
         return False
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def is_phrasing(self):
+        """
+        Returns True.
+
+        :rtype: bool
+        """
+        return True
 
 
 # ----------------------------------------------------------------------------------------------------------------------

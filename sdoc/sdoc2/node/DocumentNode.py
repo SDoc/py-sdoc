@@ -6,7 +6,7 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-from sdoc.sdoc2 import node_store, CONTENT_TYPE_SECTION
+from sdoc.sdoc2 import node_store
 from sdoc.sdoc2.node.Node import Node
 
 
@@ -19,17 +19,22 @@ class DocumentNode(Node):
         super().__init__('document')
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_content_categories(self):
+    def get_hierarchy_level(self):
         """
-        Returns the content types of this node.
+        Returns 0.
 
-        :rtype: set(int)
+        :rtype: int
         """
-        return {CONTENT_TYPE_SECTION}
+        return 1
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_heading_level(self):
-        return 0
+    def get_hierarchy_name(self):
+        """
+        Returns 'sectioning'.
+
+        :rtype: str
+        """
+        return 'sectioning'
 
     # ------------------------------------------------------------------------------------------------------------------
     def is_block_command(self):
@@ -41,7 +46,24 @@ class DocumentNode(Node):
         return True
 
     # ------------------------------------------------------------------------------------------------------------------
+    def is_document_root(self):
+        """
+        Returns True.
+        :rtype: bool
+        """
+        return True
+
+    # ------------------------------------------------------------------------------------------------------------------
     def is_inline_command(self):
+        """
+        Returns False.
+
+        :rtype: bool
+        """
+        return False
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def is_phrasing(self):
         """
         Returns False.
 

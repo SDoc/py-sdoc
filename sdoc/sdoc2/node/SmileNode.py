@@ -6,7 +6,7 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-from sdoc.sdoc2 import node_store, CONTENT_TYPE_PHRASING
+from sdoc.sdoc2 import node_store
 from sdoc.sdoc2.node.Node import Node
 
 
@@ -19,15 +19,6 @@ class SmileNode(Node):
         super().__init__('smile')
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_content_categories(self):
-        """
-        Returns the content types of this node.
-
-        :rtype: set(int)
-        """
-        return {CONTENT_TYPE_PHRASING}
-
-    # ------------------------------------------------------------------------------------------------------------------
     def is_block_command(self):
         """
         Returns False.
@@ -38,6 +29,15 @@ class SmileNode(Node):
 
     # ------------------------------------------------------------------------------------------------------------------
     def is_inline_command(self):
+        """
+        Returns True.
+
+        :rtype: bool
+        """
+        return True
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def is_phrasing(self):
         """
         Returns True.
 
