@@ -170,40 +170,34 @@ class NodeStore:
         :param sdoc.sdoc2.node.Node.Node node: The new node.
         """
         node_hierarchy_name = node.get_hierarchy_name()
-        if node_hierarchy_name:
-            node_hierarchy_level = node.get_hierarchy_level()
-            parent_found = False
-            parent_is_root = False
-            while self.nested_nodes and not parent_found:
-                parent_node = self.nested_nodes[-1]
-                parent_hierarchy_name = parent_node.get_hierarchy_name()
-                if parent_hierarchy_name != node_hierarchy_name:
-                    if node.is_hierarchy_root():
-                        parent_is_root = True
-                        parent_found = True
-                    else:
-                        # @todo position of this node
-                        # @todo position of block node.
-                        raise RuntimeError("Improper nesting of node '%s' and node '%s'." %
-                                           (parent_node.name, node.name))
+        node_hierarchy_level = node.get_hierarchy_level()
+        parent_found = False
+        while self.nested_nodes and not parent_found:
+            parent_node = self.nested_nodes[-1]
+            parent_hierarchy_name = parent_node.get_hierarchy_name()
+            if parent_hierarchy_name != node_hierarchy_name:
+                if node.is_hierarchy_root():
+                    parent_found = True
+                else:
+                    # @todo position of this node
+                    # @todo position of block node.
+                    raise RuntimeError("Improper nesting of node '%s' and node '%s'." %
+                                       (parent_node.name, node.name))
 
-                if not parent_is_root:
-                    parent_hierarchy_level = parent_node.get_hierarchy_level()
-                    if parent_hierarchy_level >= node_hierarchy_level and len(self.nested_nodes) > 1:
-                        self.nested_nodes.pop()
-                    else:
-                        parent_found = True
-
-            if self.nested_nodes:
-                parent_node = self.nested_nodes[-1]
+            if not parent_found:
                 parent_hierarchy_level = parent_node.get_hierarchy_level()
-            else:
-                parent_hierarchy_level = -1
+                if parent_hierarchy_level >= node_hierarchy_level and len(self.nested_nodes) > 1:
+                    self.nested_nodes.pop()
+                else:
+                    parent_found = True
 
-            if node_hierarchy_level - parent_hierarchy_level > 1:
-                # @todo position
-                print("Warning improper nesting of levels: %d %d." %
-                      (parent_hierarchy_level, node_hierarchy_level))
+        parent_node = self.nested_nodes[-1]
+        parent_hierarchy_level = parent_node.get_hierarchy_level()
+
+        if node_hierarchy_level - parent_hierarchy_level > 1:
+            # @todo position
+            print("Warning improper nesting of levels: %d %d." %
+                  (parent_hierarchy_level, node_hierarchy_level))
 
     # ------------------------------------------------------------------------------------------------------------------
     def _store_node(self, node):
@@ -231,7 +225,7 @@ class NodeStore:
                 # @todo position of block node.
                 raise RuntimeError("Unexpected %s. Node is document root" % node.name)
 
-            # If the node is a part a hierarchy adjust the nested nodes stack.
+            # If the node is a part of a hierarchy adjust the nested nodes stack.
             if node.get_hierarchy_name():
                 self._adjust_hierarchy(node)
 
