@@ -88,11 +88,31 @@
         <exec command="${ANTLR4} -Dlanguage=Python3 -visitor -no-listener -lib sdoc/antlr sdoc/antlr/sdoc1Parser.g4" passthru="true" checkreturn="true"/>
     </target>
 
+    <target name="antlr2">
+        <exec command="${ANTLR4} -Dlanguage=Python3 -visitor -no-listener -lib sdoc/antlr sdoc/antlr/sdoc2Lexer.g4" passthru="true" checkreturn="true"/>
+        <exec command="${ANTLR4} -Dlanguage=Python3 -visitor -no-listener -lib sdoc/antlr sdoc/antlr/sdoc2Parser.g4" passthru="true" checkreturn="true"/>
+    </target>
+
+    <target name="antlr" depends="antlr1,antlr2"/>
+
     <target name="grun-test1" depends="antlr1">
         <exec command="${ANTLR4} -lib sdoc/antlr sdoc/antlr/sdoc1Lexer.g4" passthru="true" checkreturn="true"/>
         <exec command="${ANTLR4} -lib sdoc/antlr sdoc/antlr/sdoc1Parser.g4" passthru="true" checkreturn="true"/>
         <exec command="javac sdoc/antlr/sdoc1*.java" passthru="true" checkreturn="true"/>
         <exec command="cd sdoc/antlr; ${GRUN} sdoc1 sdoc -gui ../../test1.sdoc" passthru="true" checkreturn="true"/>
+        <delete>
+            <fileset dir="sdoc/antlr">
+                <include name="*.java"/>
+                <include name="*.class"/>
+            </fileset>
+        </delete>
+    </target>
+
+    <target name="grun-test2" depends="antlr2">
+        <exec command="${ANTLR4} -lib sdoc/antlr sdoc/antlr/sdoc2Lexer.g4" passthru="true" checkreturn="true"/>
+        <exec command="${ANTLR4} -lib sdoc/antlr sdoc/antlr/sdoc2Parser.g4" passthru="true" checkreturn="true"/>
+        <exec command="javac sdoc/antlr/sdoc2*.java" passthru="true" checkreturn="true"/>
+        <exec command="cd sdoc/antlr; ${GRUN} sdoc2 sdoc -gui ../../test2.sdoc" passthru="true" checkreturn="true"/>
         <delete>
             <fileset dir="sdoc/antlr">
                 <include name="*.java"/>
