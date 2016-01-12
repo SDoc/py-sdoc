@@ -24,15 +24,38 @@ class ArrayDataType(DataType):
         """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def debug(self):
+    def debug(self, indent=1):
         """
         Returns a string for debugging.
 
         :rtype: str
         """
         ret = ''
+        longest = 0
+        last = 0
+
+        # cheking the longest key
         for (key, value) in self._elements.items():
-            ret += "'%s' => %s\n" % (key, value.debug())
+            if len("%s" % key) > longest:
+                longest = len("'%s'" % key)
+
+        for (key, value) in self._elements.items():
+            sep = " => "
+            # checking the key type, and setting quotes
+            if isinstance(key, int):
+                str1 = "{}".format(key).center(longest + 2, " ")
+            else:
+                str1 = "'{}'".format(key).center(longest + 2, " ")
+
+            # creating indentation level
+            if isinstance(value, ArrayDataType):
+                str2 = "{}".format(value.debug(indent)).center(longest + 2, " ")
+                ret += (" " * last * indent) + str1 + sep + str2
+                indent += 1
+            else:
+                str2 = "{}".format(value.debug()).center(longest + 2, " ")
+                ret += (" " * last * indent) + str1 + sep + str2 + "\n"
+            last = len(str1 + sep)
 
         return ret
 
