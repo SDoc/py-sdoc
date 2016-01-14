@@ -19,7 +19,7 @@ class TextNode(Node):
         super().__init__('TEXT')
 
     # ------------------------------------------------------------------------------------------------------------------
-    def xprint_info(self, level):
+    def print_info(self, level):
         """
         Temp function for development.
 

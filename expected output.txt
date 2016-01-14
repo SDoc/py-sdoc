@@ -1,0 +1,24 @@
+  1 document
+       2 chapter
+           3 paragraph
+                TEXT
+           3 paragraph
+                TEXT
+       4 section
+           5 TEXT
+           6 itemize
+               7 item
+                   8 TEXT
+                   9 smile
+                  10 TEXT
+              11 item
+                  12 TEXT
+              13 item
+                  14 TEXT
+          15 TEXT
+          16 smile
+          17 TEXT
+      18 section
+          19 TEXT
+      20 chapter
+          21 TEXT

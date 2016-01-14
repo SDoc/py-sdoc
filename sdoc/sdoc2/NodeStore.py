@@ -1,7 +1,7 @@
 """
 SDoc
 
-Copyright 2016 Set Based IT Consultancy
+Cop2yright 2016 Set Based IT Consultancy
 
 Licence MIT
 """
@@ -230,11 +230,16 @@ class NodeStore:
                 self._adjust_hierarchy(node)
 
             # Add the node to the list of child nodes of its parent node.
-            parent_node = self.nested_nodes[-1]
-            parent_node.nodes.append(node_id)
+            if len(self.nested_nodes):
+                parent_node = self.nested_nodes[-1]
+                parent_node.nodes.append(node_id)
 
             # Block commands and hierarchical nodes must be appended to the nested nodes.
             if node.is_block_command() or node.get_hierarchy_name():
                 self.nested_nodes.append(node)
+
+    #-------------------------------------------------------------------------------------------------------------------
+    def prepare_content_tree(self):
+        pass
 
 # ----------------------------------------------------------------------------------------------------------------------
