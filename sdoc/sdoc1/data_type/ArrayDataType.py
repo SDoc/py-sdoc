@@ -24,38 +24,47 @@ class ArrayDataType(DataType):
         """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def debug(self, indent=1):
+    def debug(self, indent=0):
         """
         Returns a string for debugging.
 
         :rtype: str
         """
         ret = ''
+        sep = " => "
         longest = 0
-        last = 0
+        counter = 0
 
         # cheking the longest key
         for (key, value) in self._elements.items():
-            if len("%s" % key) > longest:
-                longest = len("'%s'" % key)
+            if len("%s" % key) >= longest:
+                longest = len("%s" % key)
+                # need this check, because every quote it's an additional symbol
+                if isinstance(key, str):
+                    longest += 2
 
         for (key, value) in self._elements.items():
-            sep = " => "
+            # setting first indentation
+            if counter == 0:
+                indentation = 0
+            else:
+                indentation = indent
+
             # checking the key type, and setting quotes
             if isinstance(key, int):
-                str1 = "{}".format(key).center(longest + 2, " ")
+                str1 = " " * indentation + "{}".format(key).ljust(longest, " ")
             else:
-                str1 = "'{}'".format(key).center(longest + 2, " ")
+                str1 = " " * indentation + "'{}'".format(key).ljust(longest, " ")
 
             # creating indentation level
             if isinstance(value, ArrayDataType):
-                str2 = "{}".format(value.debug(indent)).center(longest + 2, " ")
-                ret += (" " * last * indent) + str1 + sep + str2
-                indent += 1
+                indent = len(str1 + sep)
+                str2 = "{}".format(value.debug(indent)).ljust(longest, " ")
+                ret += str1 + sep + str2
             else:
-                str2 = "{}".format(value.debug()).center(longest + 2, " ")
-                ret += (" " * last * indent) + str1 + sep + str2 + "\n"
-            last = len(str1 + sep)
+                str2 = "{}".format(value.debug()).ljust(longest, " ")
+                ret += str1 + sep + str2 + "\n"
+            counter += 1
 
         return ret
 

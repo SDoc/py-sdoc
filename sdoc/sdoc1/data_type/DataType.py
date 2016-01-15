@@ -21,11 +21,9 @@ class DataType:
 
     # ------------------------------------------------------------------------------------------------------------------
     @abc.abstractmethod
-    def debug(self, indent=0):
+    def debug(self):
         """
         Returns a string for debugging.
-
-        :param int level: The nested array level.
 
         :rtype: str
         """
