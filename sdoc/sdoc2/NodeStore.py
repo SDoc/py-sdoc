@@ -240,6 +240,10 @@ class NodeStore:
 
     #-------------------------------------------------------------------------------------------------------------------
     def prepare_content_tree(self):
-        pass
+        import sdoc.sdoc2.node
+
+        for key, value in self.nodes.items():
+            if isinstance(value, sdoc.sdoc2.node.TextNode.TextNode):
+                print(key, value.print_info(0))
 
 # ----------------------------------------------------------------------------------------------------------------------
