@@ -53,12 +53,16 @@ class ArrayDataType(DataType):
             # checking the key type, and setting quotes
             if isinstance(key, int):
                 str1 = " " * indentation + "{}".format(key).ljust(longest, " ")
-            else:
+            if isinstance(key, str):
                 str1 = " " * indentation + "'{}'".format(key).ljust(longest, " ")
 
             # creating indentation level
             if isinstance(value, ArrayDataType):
-                indent = len(str1 + sep)
+                # need this check if we have many nested nodes
+                if counter == 0:
+                    indent += len(str1 + sep)
+                else:
+                    indent = len(str1 + sep)
                 str2 = "{}".format(value.debug(indent)).ljust(longest, " ")
                 ret += str1 + sep + str2
             else:

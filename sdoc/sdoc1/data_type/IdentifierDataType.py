@@ -38,7 +38,7 @@ class IdentifierDataType(DataType):
         """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def debug(self):
+    def debug(self, indent=0):
         """
         Returns a string for debugging.
 
@@ -50,7 +50,7 @@ class IdentifierDataType(DataType):
         # setting first indentation
         first_indent = len("'%s' => " % self._name)
         return "'%s' => %s" % (self._name,
-                               self._scope.get_reference(self._name).debug(first_indent))
+                               self._scope.get_reference(self._name).debug(indent=first_indent))
 
     # ------------------------------------------------------------------------------------------------------------------
     def dereference(self):
