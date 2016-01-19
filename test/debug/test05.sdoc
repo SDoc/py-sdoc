@@ -1,0 +1,4 @@
+\expression{a=b=c='abc'}
+\debug{a}
+\debug{b}
+\debug{c}
