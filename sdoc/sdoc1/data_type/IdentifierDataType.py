@@ -42,15 +42,17 @@ class IdentifierDataType(DataType):
         """
         Returns a string for debugging.
 
+        :param int indent: Unused.
+
         :rtype: str
         """
         if not self._scope.has_element(self._name):
             return "'%s' => %s" % (self._name, 'UNDEFINED')
 
-        # setting first indentation
+        # Setting first indentation
         first_indent = len("'%s' => " % self._name)
-        return "'%s' => %s" % (self._name,
-                               self._scope.get_reference(self._name).debug(indent=first_indent))
+
+        return "'%s' => %s" % (self._name, self._scope.get_reference(self._name).debug(first_indent))
 
     # ------------------------------------------------------------------------------------------------------------------
     def dereference(self):

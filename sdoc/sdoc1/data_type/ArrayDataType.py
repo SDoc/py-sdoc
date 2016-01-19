@@ -28,24 +28,26 @@ class ArrayDataType(DataType):
         """
         Returns a string for debugging.
 
+        :param int indent: The indentation level.
+
         :rtype: str
         """
         ret = ''
         sep = " => "
         longest = 0
-        counter = 0
+        first = True
 
-        # cheking the longest key
+        # Find the length of the longest key.
         for (key, value) in self._elements.items():
             if len("%s" % key) >= longest:
                 longest = len("%s" % key)
-                # need this check, because every quote it's an additional symbol
                 if isinstance(key, str):
+                    # The longest key is a string. Add 2 positions for quotes.
                     longest += 2
 
         for (key, value) in self._elements.items():
             # setting first indentation
-            if counter == 0:
+            if first:
                 indentation = 0
             else:
                 indentation = indent
@@ -59,7 +61,7 @@ class ArrayDataType(DataType):
             # creating indentation level
             if isinstance(value, ArrayDataType):
                 # need this check if we have many nested nodes
-                if counter == 0:
+                if first:
                     indent += len(str1 + sep)
                 else:
                     indent = len(str1 + sep)
@@ -68,7 +70,8 @@ class ArrayDataType(DataType):
             else:
                 str2 = "{}".format(value.debug()).ljust(longest, " ")
                 ret += str1 + sep + str2 + "\n"
-            counter += 1
+
+            first = False
 
         return ret
 

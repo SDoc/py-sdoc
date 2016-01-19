@@ -32,6 +32,8 @@ class IntegerDataType(DataType):
         """
         Returns a string for debugging.
 
+        :param int indent: Unused.
+
         :rtype: str
         """
         return str(self._value)
