@@ -21,9 +21,11 @@ class DataType:
 
     # ------------------------------------------------------------------------------------------------------------------
     @abc.abstractmethod
-    def debug(self):
+    def debug(self, indent=0):
         """
         Returns a string for debugging.
+
+        :param int indent: The indentation level.
 
         :rtype: str
         """

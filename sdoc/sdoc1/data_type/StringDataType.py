@@ -28,7 +28,7 @@ class StringDataType(DataType):
         """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def debug(self):
+    def debug(self, indent=0):
         """
         Returns a string for debugging.
 

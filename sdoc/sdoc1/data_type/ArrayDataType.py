@@ -24,15 +24,51 @@ class ArrayDataType(DataType):
         """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def debug(self):
+    def debug(self, indent=0):
         """
         Returns a string for debugging.
 
         :rtype: str
         """
         ret = ''
+        sep = " => "
+        longest = 0
+        counter = 0
+
+        # cheking the longest key
         for (key, value) in self._elements.items():
-            ret += "'%s' => %s\n" % (key, value.debug())
+            if len("%s" % key) >= longest:
+                longest = len("%s" % key)
+                # need this check, because every quote it's an additional symbol
+                if isinstance(key, str):
+                    longest += 2
+
+        for (key, value) in self._elements.items():
+            # setting first indentation
+            if counter == 0:
+                indentation = 0
+            else:
+                indentation = indent
+
+            # checking the key type, and setting quotes
+            if isinstance(key, int):
+                str1 = " " * indentation + "{}".format(key).ljust(longest, " ")
+            if isinstance(key, str):
+                str1 = " " * indentation + "'{}'".format(key).ljust(longest, " ")
+
+            # creating indentation level
+            if isinstance(value, ArrayDataType):
+                # need this check if we have many nested nodes
+                if counter == 0:
+                    indent += len(str1 + sep)
+                else:
+                    indent = len(str1 + sep)
+                str2 = "{}".format(value.debug(indent)).ljust(longest, " ")
+                ret += str1 + sep + str2
+            else:
+                str2 = "{}".format(value.debug()).ljust(longest, " ")
+                ret += str1 + sep + str2 + "\n"
+            counter += 1
 
         return ret
 
