@@ -9,25 +9,22 @@ from sdoc.sdoc1.SDoc1visitor import SDoc1Visitor
 
 class SDocTestCase(unittest.TestCase):
     # ------------------------------------------------------------------------------------------------------------------
-    def setUp(self):
-        self.old_stdout, sys.stdout = sys.stdout, StringIO()
-        pass
-
-    # ------------------------------------------------------------------------------------------------------------------
     def run_output_test(self, sdoc):
+        self.old_stdout, sys.stdout = sys.stdout, StringIO()
+
         stream = antlr4.InputStream(sdoc)
         lexer = sdoc1Lexer(stream)
         tokens = antlr4.CommonTokenStream(lexer)
         parser = sdoc1Parser(tokens)
         tree = parser.sdoc()
         visitor = SDoc1Visitor()
+        visitor.set_output(sys.stdout)
         visitor.visit(tree)
 
-        return sys.stdout.getvalue().strip()
+        output = sys.stdout.getvalue().trim()
 
-    # ------------------------------------------------------------------------------------------------------------------
-    def tearDown(self):
         sys.stdout = self.old_stdout
-        pass
+
+        return output
 
 # ----------------------------------------------------------------------------------------------------------------------

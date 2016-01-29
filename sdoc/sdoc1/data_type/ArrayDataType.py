@@ -24,38 +24,54 @@ class ArrayDataType(DataType):
         """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def debug(self, indent=1):
+    def debug(self, indent=0):
         """
         Returns a string for debugging.
+
+        :param int indent: The indentation level.
 
         :rtype: str
         """
         ret = ''
+        sep = " => "
         longest = 0
-        last = 0
+        first = True
 
-        # cheking the longest key
+        # Find the length of the longest key.
         for (key, value) in self._elements.items():
-            if len("%s" % key) > longest:
-                longest = len("'%s'" % key)
+            if len("%s" % key) >= longest:
+                longest = len("%s" % key)
+                if isinstance(key, str):
+                    # The longest key is a string. Add 2 positions for quotes.
+                    longest += 2
 
         for (key, value) in self._elements.items():
-            sep = " => "
+            # setting first indentation
+            if first:
+                indentation = 0
+            else:
+                indentation = indent
+
             # checking the key type, and setting quotes
             if isinstance(key, int):
-                str1 = "{}".format(key).center(longest + 2, " ")
-            else:
-                str1 = "'{}'".format(key).center(longest + 2, " ")
+                str1 = " " * indentation + "{}".format(key).ljust(longest, " ")
+            if isinstance(key, str):
+                str1 = " " * indentation + "'{}'".format(key).ljust(longest, " ")
 
             # creating indentation level
             if isinstance(value, ArrayDataType):
-                str2 = "{}".format(value.debug(indent)).center(longest + 2, " ")
-                ret += (" " * last * indent) + str1 + sep + str2
-                indent += 1
+                # need this check if we have many nested nodes
+                if first:
+                    indent += len(str1 + sep)
+                else:
+                    indent = len(str1 + sep)
+                str2 = "{}".format(value.debug(indent)).ljust(longest, " ")
+                ret += str1 + sep + str2
             else:
-                str2 = "{}".format(value.debug()).center(longest + 2, " ")
-                ret += (" " * last * indent) + str1 + sep + str2 + "\n"
-            last = len(str1 + sep)
+                str2 = "{}".format(value.debug()).ljust(longest, " ")
+                ret += str1 + sep + str2 + "\n"
+
+            first = False
 
         return ret
 

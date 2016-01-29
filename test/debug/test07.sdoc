@@ -1,0 +1,7 @@
+\expression{b[1] ='b1'}
+\expression{b[2] ='b2'}
+\expression{b['abc'] ='abc'}
+\expression{a[2] = 2}
+\expression{a[1] = 1}
+\expression{a[3] = b}
+\debug{a}

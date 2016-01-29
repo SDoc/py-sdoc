@@ -1,0 +1,6 @@
+\expression{d[1] ='d1'}
+\expression{d[2] ='d2'}
+\expression{c[1] = 1}
+\expression{c[2] = 2}
+\expression{c[3] = 3}
+\debug{c}

@@ -25,7 +25,7 @@ class DataType:
         """
         Returns a string for debugging.
 
-        :param int level: The nested array level.
+        :param int indent: The indentation level.
 
         :rtype: str
         """
