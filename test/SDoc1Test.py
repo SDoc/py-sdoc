@@ -10,7 +10,6 @@ class SDoc1Test(SDocTestCase):
         test_file_names = glob.glob(os.path.dirname(os.path.abspath(__file__)) + "/debug/*.sdoc")
 
         for test_file_name in sorted(test_file_names):
-            print(test_file_name)
             with open(test_file_name, 'r') as file:
                 sdoc1 = file.read()
 

@@ -50,9 +50,9 @@ class IdentifierDataType(DataType):
             return "'%s' => %s" % (self._name, 'UNDEFINED')
 
         # Setting first indentation
-        first_indent = len("'%s' => " % self._name)
+        first_indent = len("%s = " % self._name)
 
-        return "'%s' => %s" % (self._name, self._scope.get_reference(self._name).debug(first_indent))
+        return "%s = %s" % (self._name, self._scope.get_reference(self._name).debug(first_indent))
 
     # ------------------------------------------------------------------------------------------------------------------
     def dereference(self):
