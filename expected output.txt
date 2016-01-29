@@ -5,7 +5,8 @@
            3 paragraph
                 TEXT
        4 section
-           5 TEXT
+           5 paragraph
+                TEXT
            6 itemize
                7 item
                    8 TEXT

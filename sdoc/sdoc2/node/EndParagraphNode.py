@@ -7,16 +7,16 @@ Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
 from sdoc.sdoc2 import node_store
-from sdoc.sdoc2.node.HeadingNode import HeadingNode
+from sdoc.sdoc2.node.Node import Node
 
 
-class ParagraphNode(HeadingNode):
+class EndParagraphNode(Node):
     """
-    SDoc2 node for paragraphs.
+    SDoc2 node for end of paragraphs.
     """
     # ------------------------------------------------------------------------------------------------------------------
     def __init__(self):
-        super().__init__('paragraph')
+        super().__init__('end_paragraph')
 
     # ------------------------------------------------------------------------------------------------------------------
     def is_block_command(self):
@@ -39,10 +39,9 @@ class ParagraphNode(HeadingNode):
     # ------------------------------------------------------------------------------------------------------------------
     def prepare_content_tree(self):
         """
-        Not implemented for paragraph nodes.
+        Not implemented for end paragraph nodes.
         """
         raise NotImplementedError()
 
-
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_inline_command('paragraph', ParagraphNode)
+node_store.register_inline_command('end_paragraph', EndParagraphNode)

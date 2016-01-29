@@ -5,6 +5,8 @@ Cop2yright 2016 Set Based IT Consultancy
 
 Licence MIT
 """
+# ----------------------------------------------------------------------------------------------------------------------
+import sdoc.sdoc2.node
 
 
 # ----------------------------------------------------------------------------------------------------------------------
@@ -200,6 +202,18 @@ class NodeStore:
                   (parent_hierarchy_level, node_hierarchy_level))
 
     # ------------------------------------------------------------------------------------------------------------------
+    def store_node(self, node):
+        """
+        Stores a node.
+
+        :param sdoc.sdoc2.node.Node.Node node: The node.
+        """
+        # Add the node to the node store.
+        node_id = len(self.nodes) + 1
+        node.id = node_id
+        self.nodes[node_id] = node
+
+    # ------------------------------------------------------------------------------------------------------------------
     def _store_node(self, node):
         """
         Stores a node.
@@ -240,10 +254,6 @@ class NodeStore:
 
     #-------------------------------------------------------------------------------------------------------------------
     def prepare_content_tree(self):
-        import sdoc.sdoc2.node
-
-        for key, value in self.nodes.items():
-            if isinstance(value, sdoc.sdoc2.node.TextNode.TextNode):
-                print(key, value.print_info(0))
+        self.nodes[1].prepare_content_tree()
 
 # ----------------------------------------------------------------------------------------------------------------------
