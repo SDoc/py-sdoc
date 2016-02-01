@@ -200,9 +200,9 @@ class SDoc1Visitor(sdoc1ParserVisitor):
         expression = ctx.expression()
 
         if expression is not None:
-            print(expression.accept(self).debug())
+            print(expression.accept(self).debug(), end='')
         else:
-            print(self._global_scope.debug())
+            print(self._global_scope.debug(), end='')
 
     # ------------------------------------------------------------------------------------------------------------------
     def visitCmd_expression(self, ctx):

@@ -32,9 +32,10 @@ class ArrayDataType(DataType):
 
         :rtype: str
         """
-        ret = ''
+        ret = '[\n'
         sep = " => "
         longest = 0
+        brace_indent = indent
         first = True
 
         # Find the length of the longest key.
@@ -45,35 +46,29 @@ class ArrayDataType(DataType):
                     # The longest key is a string. Add 2 positions for quotes.
                     longest += 2
 
-        for (key, value) in self._elements.items():
-            # setting first indentation
-            if first:
-                indentation = 0
-            else:
-                indentation = indent
-
-            # checking the key type, and setting quotes
+        for key in dict(sorted(self._elements.items(), key=lambda x: str(x), reverse=True)):
+            # Checking the key type, and setting quotes.
             if isinstance(key, int):
-                str1 = " " * indentation + "{}".format(key).ljust(longest, " ")
+                str1 = " " + " " * indent + "{}".format(key).ljust(longest, " ")
             if isinstance(key, str):
-                str1 = " " * indentation + "'{}'".format(key).ljust(longest, " ")
+                str1 = " " + " " * indent + "'{}'".format(key).ljust(longest, " ")
 
-            # creating indentation level
-            if isinstance(value, ArrayDataType):
-                # need this check if we have many nested nodes
+            # Creating indentation level.
+            if isinstance(self._elements[key], ArrayDataType):
+                # Need this check if we have many nested nodes.
                 if first:
                     indent += len(str1 + sep)
                 else:
                     indent = len(str1 + sep)
-                str2 = "{}".format(value.debug(indent)).ljust(longest, " ")
+                str2 = "{}".format(self._elements[key].debug(indent)).ljust(longest, " ")
                 ret += str1 + sep + str2
             else:
-                str2 = "{}".format(value.debug()).ljust(longest, " ")
+                str2 = "{}".format(self._elements[key].debug()).strip()
                 ret += str1 + sep + str2 + "\n"
 
             first = False
 
-        return ret
+        return ret + brace_indent * " " + "]\n"
 
     # ------------------------------------------------------------------------------------------------------------------
     def dereference(self):
