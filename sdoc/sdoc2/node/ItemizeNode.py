@@ -8,6 +8,7 @@ Licence MIT
 # ----------------------------------------------------------------------------------------------------------------------
 from sdoc.sdoc2 import node_store
 from sdoc.sdoc2.node.Node import Node
+from sdoc.sdoc2.node.ItemNode import ItemNode
 
 
 class ItemizeNode(Node):
@@ -72,6 +73,18 @@ class ItemizeNode(Node):
         """
         return False
 
+    #-------------------------------------------------------------------------------------------------------------------
+    def prepare_content_tree(self):
+        """
+        Method which checks if all child nodes is instance of sdoc.sdoc2.node.ItemNode.ItemNode.
+        """
+        for node_id in self.nodes:
+            node = node_store.in_scope(node_id)
+
+            if not isinstance(node, ItemNode):
+                raise RuntimeError("Node: id:%s, %s is not instance of 'ItemNode'" % (str(node.id), node.name))
+
+            node_store.out_scope(node)
 
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_block_command('itemize', ItemizeNode)

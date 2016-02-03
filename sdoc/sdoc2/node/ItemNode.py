@@ -54,6 +54,18 @@ class ItemNode(Node):
         """
         return True
 
+    # ------------------------------------------------------------------------------------------------------------------
+    def prepare_content_tree(self):
+        """
+        Method which checks if all child nodes is phrasing.
+        """
+        for node_id in self.nodes:
+            node = node_store.in_scope(node_id)
+
+            if not node.is_phrasing():
+                raise RuntimeError("Node: id:%s, %s is not phrasing" % (str(node.id), node.name))
+
+            node_store.out_scope(node)
 
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_inline_command('item', ItemNode)
