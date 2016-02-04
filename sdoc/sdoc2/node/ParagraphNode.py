@@ -43,6 +43,5 @@ class ParagraphNode(HeadingNode):
         """
         raise NotImplementedError()
 
-
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_inline_command('paragraph', ParagraphNode)
