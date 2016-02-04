@@ -139,7 +139,7 @@ class Node:
     # ------------------------------------------------------------------------------------------------------------------
     def prepare_content_tree(self):
         """
-        Prepares the content tree.
+        Prepares this node for further processing.
         """
         for node_id in self.nodes:
             node = node_store.in_scope(node_id)

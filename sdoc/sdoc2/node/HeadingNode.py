@@ -39,21 +39,20 @@ class HeadingNode(Node):
     def prepare_content_tree(self):
         """
         Prepares the content tree. Create paragraph nodes.
-
-        :rtype: None
         """
         super().prepare_content_tree()
 
         # Adding the id's of splitted text in 'new_child_nodes1' list.
-        self.get_splitted_text_ids()
+        self.split_text_nodes()
 
         # Creating paragraphs and add all id's in 'new_child_nodes2' list.
-        self.setting_child_nodes()
+        self.create_paragraphs()
 
     # ------------------------------------------------------------------------------------------------------------------
-    def create_paragraph(self):
+    @staticmethod
+    def create_paragraph():
         """
-        Method for creating paragraphs.
+        Returns a paragraph node.
 
         :rtype: sdoc.sdoc2.node.ParagraphNode.ParagraphNode
         """
@@ -64,9 +63,10 @@ class HeadingNode(Node):
         return paragraph_node
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_splitted_text_ids(self):
+    def split_text_nodes(self):
         """
-        Method for replacing text parts and creating new list of id's
+        Replaces single text nodes that contains a paragraph separator (i.e. a double new line) with multiple text Nodes
+        without paragraph separator.
         """
         new_child_nodes = []
 
@@ -74,7 +74,7 @@ class HeadingNode(Node):
             node = node_store.in_scope(node_id)
 
             if isinstance(node, TextNode):
-                list_ids = node.splitted_text()
+                list_ids = node.split_by_paragraph()
                 for ids in list_ids:
                     new_child_nodes.append(ids)
             else:
@@ -85,9 +85,12 @@ class HeadingNode(Node):
         self.nodes = new_child_nodes
 
     # ------------------------------------------------------------------------------------------------------------------
-    def setting_child_nodes(self):
+    def create_paragraphs(self):
         """
-        Method for setting child nodes.
+        Create paragraph nodes.
+
+        A paragraph consists of phrasing nodes only. Each continuous slice of phrasing child nodes is move to a
+        paragraph node.
         """
         new_child_nodes = []
         paragraph_node = None

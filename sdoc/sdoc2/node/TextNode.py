@@ -58,12 +58,13 @@ class TextNode(Node):
         return True
 
     # ------------------------------------------------------------------------------------------------------------------
-    def splitted_text(self):
+    def split_by_paragraph(self):
         """
-        Method which takes text and splits it by newlines, creates text nodes,
-        sets id's to text nodes, put id's in list and returns list of id's.
+        Splits this text node into text nodes without a paragraph separator (i.e. a double new line) in to a list of
+        text nodes without paragraph separator each paragraph separator is replace with a end paragraph node. Each
+        paragraph separator is replaced wth a end paragraph node.
 
-        :param sdoc.sdoc2.node.TextNode.TextNode text: Whole text
+        Returns a list of node ID.
 
         :rtype: list[int]
         """

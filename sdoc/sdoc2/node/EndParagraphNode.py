@@ -13,9 +13,15 @@ from sdoc.sdoc2.node.Node import Node
 class EndParagraphNode(Node):
     """
     SDoc2 node for end of paragraphs.
+
+    Note: End of paragraphs will are temporary used during the content tree preparation. Before and after the content
+          preparation end of paragraph nodes do not exist.
     """
     # ------------------------------------------------------------------------------------------------------------------
     def __init__(self):
+        """
+        Object constructor.
+        """
         super().__init__('end_paragraph')
 
     # ------------------------------------------------------------------------------------------------------------------
