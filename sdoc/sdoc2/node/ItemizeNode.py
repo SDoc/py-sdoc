@@ -73,7 +73,7 @@ class ItemizeNode(Node):
         """
         return True
 
-    #-------------------------------------------------------------------------------------------------------------------
+    # ------------------------------------------------------------------------------------------------------------------
     def prepare_content_tree(self):
         """
         Method which checks if all child nodes is instance of sdoc.sdoc2.node.ItemNode.ItemNode.
