@@ -5,8 +5,4 @@ bin/yuicompressor.jar
 doc
 vendor/
 composer.lock
-test.py
-test1-main.sdoc
-test1-chapter1.sdoc
-test2.sdoc
-test2.tmp
+test*.*
