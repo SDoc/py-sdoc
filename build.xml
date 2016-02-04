@@ -121,6 +121,11 @@
         </delete>
     </target>
 
+    <!-- Checks the code with pylint -->
+    <target name="pylint">
+        <exec command="pylint --rcfile pylintrc --ignore=antlr -extension-pkg-whitelist=antlr,antlr4 sdoc" passthru="true"/>
+    </target>
+
     <!-- Runs all unit tests-->
     <target name="unit">
         <exec command="python3 -m unittest test/*.py" passthru="true" checkreturn="true"/>
