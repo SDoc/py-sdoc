@@ -6,8 +6,8 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
+import sdoc
 from sdoc.sdoc2 import node_store
-from sdoc.sdoc2.NodeStore import NodeStore, sdoc
 from sdoc.sdoc2.node.Node import Node
 from sdoc.sdoc2.node.TextNode import TextNode
 from sdoc.sdoc2.node.EndParagraphNode import EndParagraphNode

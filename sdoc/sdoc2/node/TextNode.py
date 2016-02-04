@@ -17,6 +17,7 @@ class TextNode(Node):
     """
     SDoc2 node for items.
     """
+
     # ------------------------------------------------------------------------------------------------------------------
     def __init__(self):
         super().__init__('TEXT')
@@ -28,7 +29,7 @@ class TextNode(Node):
 
         :param int level: the level of block commands.
         """
-        print("%s%4d %s %s" % (' ' * 4*level, self.id, self.name, ''))
+        print("%s%4d %s %s" % (' ' * 4 * level, self.id, self.name, ''))
 
     # ------------------------------------------------------------------------------------------------------------------
     def is_block_command(self):
@@ -98,7 +99,7 @@ class TextNode(Node):
             # Checking where we need to add paragraph.
             if len(text_ids):
                 if list_of_texts[-1]:
-                   text_ids.pop()
+                    text_ids.pop()
 
         return text_ids
 
