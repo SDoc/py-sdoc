@@ -53,5 +53,7 @@ class SDoc2Interpreter:
 
         visitor.visit(tree)
 
+        sdoc.sdoc2.node_store.prepare_content_tree()
+
 
 # ----------------------------------------------------------------------------------------------------------------------

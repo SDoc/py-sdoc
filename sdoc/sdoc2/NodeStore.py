@@ -1,10 +1,12 @@
 """
 SDoc
 
-Copyright 2016 Set Based IT Consultancy
+Cop2yright 2016 Set Based IT Consultancy
 
 Licence MIT
 """
+# ----------------------------------------------------------------------------------------------------------------------
+import sdoc.sdoc2.node
 
 
 # ----------------------------------------------------------------------------------------------------------------------
@@ -200,6 +202,18 @@ class NodeStore:
                   (parent_hierarchy_level, node_hierarchy_level))
 
     # ------------------------------------------------------------------------------------------------------------------
+    def store_node(self, node):
+        """
+        Stores a node.
+
+        :param sdoc.sdoc2.node.Node.Node node: The node.
+        """
+        # Add the node to the node store.
+        node_id = len(self.nodes) + 1
+        node.id = node_id
+        self.nodes[node_id] = node
+
+    # ------------------------------------------------------------------------------------------------------------------
     def _store_node(self, node):
         """
         Stores a node.
@@ -230,11 +244,16 @@ class NodeStore:
                 self._adjust_hierarchy(node)
 
             # Add the node to the list of child nodes of its parent node.
-            parent_node = self.nested_nodes[-1]
-            parent_node.nodes.append(node_id)
+            if len(self.nested_nodes):
+                parent_node = self.nested_nodes[-1]
+                parent_node.nodes.append(node_id)
 
             # Block commands and hierarchical nodes must be appended to the nested nodes.
             if node.is_block_command() or node.get_hierarchy_name():
                 self.nested_nodes.append(node)
+
+    #-------------------------------------------------------------------------------------------------------------------
+    def prepare_content_tree(self):
+        self.nodes[1].prepare_content_tree()
 
 # ----------------------------------------------------------------------------------------------------------------------

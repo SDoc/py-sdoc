@@ -68,6 +68,7 @@ class Node:
         print("%s%4d %s" % (' ' * 4*level, self.id, self.name))
         for node_id in self.nodes:
             node = node_store.in_scope(node_id)
+
             node.print_info(level + 1)
 
             node_store.out_scope(node)
@@ -134,5 +135,17 @@ class Node:
         :rtype: bool
         """
         return False
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def prepare_content_tree(self):
+        """
+        Prepares the content tree.
+        """
+        for node_id in self.nodes:
+            node = node_store.in_scope(node_id)
+
+            node.prepare_content_tree()
+
+            node_store.out_scope(node)
 
 # ----------------------------------------------------------------------------------------------------------------------
