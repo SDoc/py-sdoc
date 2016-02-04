@@ -7,6 +7,8 @@ Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
 import antlr4
+
+import sdoc
 from sdoc.antlr.sdoc1Lexer import sdoc1Lexer
 from sdoc.antlr.sdoc1Parser import sdoc1Parser
 from sdoc.antlr.sdoc1ParserVisitor import sdoc1ParserVisitor
@@ -20,6 +22,7 @@ class SDoc1Visitor(sdoc1ParserVisitor):
     """
     Visitor for SDoc level 1.
     """
+
     # ------------------------------------------------------------------------------------------------------------------
     def __init__(self):
         self._output = None
@@ -275,10 +278,10 @@ class SDoc1Visitor(sdoc1ParserVisitor):
         """
         # Test the maximum include level.
         if self._include_level >= self._options['max_include_level']:
-            raise RuntimeError("Maximum include level exceeded.")   # @todo More verbose logging, own exception class.
+            raise RuntimeError("Maximum include level exceeded.")  # @todo More verbose logging, own exception class.
 
         # Open a stream for the sub-document.
-        file_name = ctx.SIMPLE_ARG().getText()  # @todo unescape
+        file_name = sdoc.unescape(ctx.SIMPLE_ARG().getText())
         stream = antlr4.FileStream(file_name)
 
         # Create a new lexer and parser for the sub-document.
@@ -305,9 +308,12 @@ class SDoc1Visitor(sdoc1ParserVisitor):
 
         :param sdoc1Parser.Cmd_noticeContext ctx: The parse tree.
         """
-        # @todo print position
-        # @todo unescape
-        print('Notice: ' + ctx.SIMPLE_ARG().getText())
+        token = ctx.NOTICE().getSymbol()
+        filename = token.getInputStream().fileName  # Replace fileName with get_source_name() when implemented in ANTLR.
+        line_number = token.line
+        message = sdoc.unescape(ctx.SIMPLE_ARG().getText())
+
+        print('Notice (%s:%d): %s' % (filename, line_number, message))
         # @todo set position
 
     # ------------------------------------------------------------------------------------------------------------------
