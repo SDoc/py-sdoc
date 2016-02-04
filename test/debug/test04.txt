@@ -1,1 +1,1 @@
-'abc' => UNDEFINED
+'abc' = UNDEFINED

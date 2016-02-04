@@ -21,7 +21,7 @@ class SDocTestCase(unittest.TestCase):
         visitor.set_output(sys.stdout)
         visitor.visit(tree)
 
-        output = sys.stdout.getvalue().trim()
+        output = sys.stdout.getvalue().strip()
 
         sys.stdout = self.old_stdout
 
