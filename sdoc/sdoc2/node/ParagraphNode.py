@@ -8,6 +8,7 @@ Licence MIT
 # ----------------------------------------------------------------------------------------------------------------------
 from sdoc.sdoc2 import node_store
 from sdoc.sdoc2.node.HeadingNode import HeadingNode
+from sdoc.sdoc2.node.TextNode import TextNode
 
 
 class ParagraphNode(HeadingNode):
@@ -17,6 +18,22 @@ class ParagraphNode(HeadingNode):
     # ------------------------------------------------------------------------------------------------------------------
     def __init__(self):
         super().__init__('paragraph')
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def gen_html(self, level, file):
+        """
+        Function for generating part of the HTML document.
+
+        :param int level: the level of node.
+        :param file file: the file where we write html.
+        """
+        file.write("<p>")
+        for node_id in self.nodes:
+            node = node_store.in_scope(node_id)
+
+            node.gen_html(level, file)
+
+            node_store.out_scope(node)
 
     # ------------------------------------------------------------------------------------------------------------------
     def is_block_command(self):
@@ -39,9 +56,23 @@ class ParagraphNode(HeadingNode):
     # ------------------------------------------------------------------------------------------------------------------
     def prepare_content_tree(self):
         """
-        Not implemented for paragraph nodes.
+        Removes spaces from end of a paragraph.
         """
-        raise NotImplementedError()
+        first = self.nodes[0]
+        last = self.nodes[-1]
+
+        for node_id in self.nodes:
+            node = node_store.in_scope(node_id)
+
+            if isinstance(node, TextNode):
+                if node.id == first:
+                    node.prune_whitespace(leading=True)
+                elif node.id == last:
+                    node.prune_whitespace(trailing=True)
+                else:
+                    node.prune_whitespace()
+
+            node_store.out_scope(node)
 
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_inline_command('paragraph', ParagraphNode)

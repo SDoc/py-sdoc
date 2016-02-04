@@ -7,6 +7,7 @@ Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
 import re
+from cgi import escape
 import sdoc
 from sdoc.sdoc2 import node_store
 from sdoc.sdoc2.node.Node import Node
@@ -29,6 +30,22 @@ class TextNode(Node):
         :param int level: the level of block commands.
         """
         print("%s%4d %s %s" % (' ' * 4*level, self.id, self.name, ''))
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def gen_html(self, level, file):
+        """
+        Function for generating part of the HTML document.
+
+        :param int level: the level of node.
+        :param file file: the file where we write html.
+        """
+        file.write("%s" % (escape(self.argument, True)))
+        for node_id in self.nodes:
+            node = node_store.in_scope(node_id)
+
+            node.gen_html(level + 1, file)
+
+            node_store.out_scope(node)
 
     # ------------------------------------------------------------------------------------------------------------------
     def is_block_command(self):
@@ -100,6 +117,20 @@ class TextNode(Node):
                    text_ids.pop()
 
         return text_ids
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def prune_whitespace(self, leading=False, trailing=False):
+        """
+        Method for removing white space in text.
+
+        :param bool leading: if True, remove whitespaces from start.
+        :param bool trailing: if True, remove whitespaces from end.
+        """
+        if leading:
+            self.argument = self.argument.lstrip()
+        if trailing:
+            self.argument = self.argument.rstrip()
+        self.argument = re.sub(r'\s+', ' ', self.argument)  #  all whitespace \n\ \t\r
 
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_inline_command('TEXT', TextNode)

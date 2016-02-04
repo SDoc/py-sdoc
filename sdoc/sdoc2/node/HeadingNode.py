@@ -102,11 +102,15 @@ class HeadingNode(Node):
 
                 paragraph_node.nodes.append(node.id)
             else:
+                paragraph_node.prepare_content_tree()
                 paragraph_node = None
                 if not isinstance(node, EndParagraphNode):
                     new_child_nodes.append(node.id)
 
             node_store.out_scope(node)
+
+        if paragraph_node:
+            paragraph_node.prepare_content_tree()
 
         # Setting child nodes.
         self.nodes = new_child_nodes

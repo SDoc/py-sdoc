@@ -254,6 +254,28 @@ class NodeStore:
 
     #-------------------------------------------------------------------------------------------------------------------
     def prepare_content_tree(self):
+        """
+        Method which creating modifications for pretty output.
+        """
         self.nodes[1].prepare_content_tree()
+
+    #------------------------------------------------------------------------------------------------------------------
+    def generate_html(self):
+        """
+        Method for generating HTML page.
+        """
+        file = open("output.html", "w")
+
+        file.write("<!DOCTYPE html>")
+        file.write("<html>")
+        file.write("<meta charset='utf-8'")
+        file.write("<body>")
+
+        sdoc.sdoc2.node_store.nodes[1].gen_html(1, file)
+
+        file.write("</body>")
+        file.write("</html>")
+        file.close()
+
 
 # ----------------------------------------------------------------------------------------------------------------------

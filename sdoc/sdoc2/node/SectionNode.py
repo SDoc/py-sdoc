@@ -45,6 +45,5 @@ class SectionNode(HeadingNode):
         """
         return True
 
-
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_inline_command('section', SectionNode)

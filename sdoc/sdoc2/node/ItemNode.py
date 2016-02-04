@@ -8,6 +8,7 @@ Licence MIT
 # ----------------------------------------------------------------------------------------------------------------------
 from sdoc.sdoc2 import node_store
 from sdoc.sdoc2.node.Node import Node
+from sdoc.sdoc2.node.TextNode import TextNode
 
 
 class ItemNode(Node):
@@ -17,6 +18,26 @@ class ItemNode(Node):
     # ------------------------------------------------------------------------------------------------------------------
     def __init__(self):
         super().__init__('item')
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def gen_html(self, level, file):
+        """
+        Function for generating part of the HTML document.
+
+        :param int level: the level of node.
+        :param file file: the file where we write html.
+        """
+        file.write("<li>")
+        for node_id in self.nodes:
+            node = node_store.in_scope(node_id)
+
+            if isinstance(node, TextNode):
+                node.prune_whitespace()
+
+            node.gen_html(level + 1, file)
+
+            node_store.out_scope(node)
+        file.write("</li>")
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_hierarchy_level(self):
