@@ -26,11 +26,9 @@ class ParagraphNode(HeadingNode):
 
         :param file file: the file where we write html.
         """
-        file.write("<p>")
-
+        file.write('<p>')
         super().generate_html(file)
-
-        file.write("</p>")
+        file.write('</p>')
 
     # ------------------------------------------------------------------------------------------------------------------
     def is_block_command(self):

@@ -8,8 +8,6 @@ Licence MIT
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-import sdoc
-
 class NodeStore:
     """
     Class for creating, storing, and retrieving nodes.
@@ -303,21 +301,24 @@ class NodeStore:
         # Currently, node with ID 1 is the document node. @todo Improve getting the document node.
         self.nodes[1].prepare_content_tree()
 
-    #------------------------------------------------------------------------------------------------------------------
+    # ------------------------------------------------------------------------------------------------------------------
     def generate_html(self):
         """
-        Method for generating HTML page.
+        Generates HTML code based on the content tree.
+
+        Note: Temporary solution. In phase 2 (when implementing other output formats) replace with decorator pattern or
+              inheritance.
         """
-        file = open("output.html", "w")
+        file = open('output.html', 'w')
 
         file.write('<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="NL" lang="NL">')
         file.write('<head><meta charset="UTF-8"/><title>sdoc</title></head>')
-        file.write("<body>")
+        file.write('<body>')
 
-        sdoc.sdoc2.node_store.nodes[1].generate_html(file)
+        self.nodes[1].generate_html(file)
 
-        file.write("</body>")
-        file.write("</html>")
+        file.write('</body>')
+        file.write('</html>')
         file.close()
 
 

@@ -77,9 +77,9 @@ class Node:
     # ------------------------------------------------------------------------------------------------------------------
     def generate_html(self, file):
         """
-        Function for generating part of the HTML document.
+        Generates the HTML code for this node.
 
-        :param file file: the file where we write html.
+        :param file file: The output stream to with the generated HTML will be written.
         """
         for node_id in self._child_nodes:
             node = node_store.in_scope(node_id)

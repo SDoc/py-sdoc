@@ -22,17 +22,14 @@ class ItemNode(Node):
     # ------------------------------------------------------------------------------------------------------------------
     def generate_html(self, file):
         """
-        Function for generating part of the HTML document.
+        Generates the HTML code for this node.
 
-        :param file file: the file where we write html.
+        :param file file: The output stream to with the generated HTML will be written.
         """
-        file.write("<li>")
-
+        file.write('<li>')
         self.prepare_content_tree()
-
         super().generate_html(file)
-
-        file.write("</li>")
+        file.write('</li>')
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_hierarchy_level(self):

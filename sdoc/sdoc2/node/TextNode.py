@@ -6,8 +6,8 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
+import html
 import re
-from html import escape
 import sdoc
 from sdoc.sdoc2 import node_store
 from sdoc.sdoc2.node.Node import Node
@@ -35,12 +35,11 @@ class TextNode(Node):
     # ------------------------------------------------------------------------------------------------------------------
     def generate_html(self, file):
         """
-        Function for generating part of the HTML document.
+        Generates the HTML code for this node.
 
-        :param file file: the file where we write html.
+        :param file file: The output stream to with the generated HTML will be written.
         """
-
-        file.write("%s" % (escape(self.argument, True)))
+        file.write(html.escape(self.argument))
 
         super().generate_html(file)
 

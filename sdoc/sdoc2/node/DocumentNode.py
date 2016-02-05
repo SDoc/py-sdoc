@@ -19,15 +19,6 @@ class DocumentNode(Node):
         super().__init__('document')
 
     # ------------------------------------------------------------------------------------------------------------------
-    def generate_html(self, file):
-        """
-        Function for generating part of the HTML document.
-
-        :param file file: the file where we write html.
-        """
-        super().generate_html(file)
-
-    # ------------------------------------------------------------------------------------------------------------------
     def get_hierarchy_level(self):
         """
         Returns 0.
@@ -79,8 +70,6 @@ class DocumentNode(Node):
         :rtype: bool
         """
         return False
-
-    # ------------------------------------------------------------------------------------------------------------------
 
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_block_command('document', DocumentNode)

@@ -6,7 +6,8 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-from html import escape
+import html
+
 from sdoc.sdoc2 import node_store
 from sdoc.sdoc2.node.HeadingNode import HeadingNode
 
@@ -22,11 +23,13 @@ class SectionNode(HeadingNode):
     # ------------------------------------------------------------------------------------------------------------------
     def generate_html(self, file):
         """
-        Function for generating part of the HTML document.
+        Generates the HTML code for this node.
 
-        :param file file: the file where we write html.
+        :param file file: The output stream to with the generated HTML will be written.
         """
-        file.write("<h2>%s</h2>" % escape(self.argument))
+        file.write('<h2>')
+        file.write(html.escape(self.argument))
+        file.write('</h2>')
 
         super().generate_html(file)
 

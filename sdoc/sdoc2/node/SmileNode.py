@@ -25,7 +25,7 @@ class SmileNode(Node):
 
         :param file file: the file where we write html.
         """
-        file.write("<b>SMILE</b>")
+        file.write('<b>SMILE</b>')
 
         super().generate_html(file)
 

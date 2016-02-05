@@ -22,15 +22,13 @@ class ItemizeNode(Node):
     # ------------------------------------------------------------------------------------------------------------------
     def generate_html(self, file):
         """
-        Function for generating part of the HTML document.
+        Generates the HTML code for this node.
 
-        :param file file: the file where we write html.
+        :param file file: The output stream to with the generated HTML will be written.
         """
-        file.write("<ul>")
-
+        file.write('<ul>')
         super().generate_html(file)
-
-        file.write("</ul>")
+        file.write('</ul>')
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_hierarchy_level(self):
