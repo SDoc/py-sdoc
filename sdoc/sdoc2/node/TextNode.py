@@ -33,18 +33,17 @@ class TextNode(Node):
         print("%s%4d %s %s" % (' ' * 4 * level, self.id, self.name, ''))
 
     # ------------------------------------------------------------------------------------------------------------------
-    def gen_html(self, level, file):
+    def generate_html(self, file):
         """
         Function for generating part of the HTML document.
 
-        :param int level: the level of node.
         :param file file: the file where we write html.
         """
         file.write("%s" % (escape(self.argument, True)))
         for node_id in self.nodes:
             node = node_store.in_scope(node_id)
 
-            node.gen_html(level + 1, file)
+            node.generate_html(file)
 
             node_store.out_scope(node)
 
@@ -132,7 +131,7 @@ class TextNode(Node):
             self.argument = self.argument.lstrip()
         if trailing:
             self.argument = self.argument.rstrip()
-        self.argument = re.sub(r'\s+', ' ', self.argument)  #  all whitespace \n\ \t\r
+        self.argument = re.sub(r'\s+', ' ', self.argument)
 
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_inline_command('TEXT', TextNode)

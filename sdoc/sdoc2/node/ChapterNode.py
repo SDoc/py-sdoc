@@ -19,6 +19,21 @@ class ChapterNode(HeadingNode):
         super().__init__('chapter')
 
     # ------------------------------------------------------------------------------------------------------------------
+    def generate_html(self, file):
+        """
+        Function for generating part of the HTML document.
+
+        :param file file: the file where we write html.
+        """
+        file.write("<h1>%s</h1>" % self.name)
+        for node_id in self.nodes:
+            node = node_store.in_scope(node_id)
+
+            node.generate_html(file)
+
+            node_store.out_scope(node)
+
+    # ------------------------------------------------------------------------------------------------------------------
     def get_hierarchy_level(self):
         """
         Returns 1.

@@ -19,18 +19,17 @@ class SmileNode(Node):
         super().__init__('smile')
 
     # ------------------------------------------------------------------------------------------------------------------
-    def gen_html(self, level, file):
+    def generate_html(self, file):
         """
         Function for generating part of the HTML document.
 
-        :param int level: the level of node.
         :param file file: the file where we write html.
         """
         file.write("<b>SMILE</b>")
         for node_id in self.nodes:
             node = node_store.in_scope(node_id)
 
-            node.gen_html(level, file)
+            node.generate_html(file)
 
             node_store.out_scope(node)
 

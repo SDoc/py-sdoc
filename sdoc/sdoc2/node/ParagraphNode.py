@@ -20,18 +20,17 @@ class ParagraphNode(HeadingNode):
         super().__init__('paragraph')
 
     # ------------------------------------------------------------------------------------------------------------------
-    def gen_html(self, level, file):
+    def generate_html(self, file):
         """
         Function for generating part of the HTML document.
 
-        :param int level: the level of node.
         :param file file: the file where we write html.
         """
         file.write("<p>")
         for node_id in self.nodes:
             node = node_store.in_scope(node_id)
 
-            node.gen_html(level, file)
+            node.generate_html(file)
 
             node_store.out_scope(node)
 

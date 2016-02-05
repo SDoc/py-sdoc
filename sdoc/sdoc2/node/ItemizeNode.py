@@ -20,18 +20,17 @@ class ItemizeNode(Node):
         super().__init__('itemize')
 
     # ------------------------------------------------------------------------------------------------------------------
-    def gen_html(self, level, file):
+    def generate_html(self, file):
         """
         Function for generating part of the HTML document.
 
-        :param int level: the level of node.
         :param file file: the file where we write html.
         """
         file.write("<ul>")
         for node_id in self.nodes:
             node = node_store.in_scope(node_id)
 
-            node.gen_html(level + 1, file)
+            node.generate_html(file)
 
             node_store.out_scope(node)
         file.write("</ul>")

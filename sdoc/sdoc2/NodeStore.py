@@ -6,7 +6,7 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-
+import sdoc
 
 class NodeStore:
     """
@@ -252,14 +252,9 @@ class NodeStore:
     # ------------------------------------------------------------------------------------------------------------------
     def prepare_content_tree(self):
         """
-<<<<<<< HEAD
-        Method which creating modifications for pretty output.
-        """
-=======
         Prepares after parsing at SDoc2 level the content tree for further processing.
         """
         # Currently, node with ID 1 is the document node. @todo Improve getting the document node.
->>>>>>> f95c39ece4ef1670a456bb75b2a47f221e52798a
         self.nodes[1].prepare_content_tree()
 
     #------------------------------------------------------------------------------------------------------------------
@@ -274,7 +269,7 @@ class NodeStore:
         file.write("<meta charset='utf-8'")
         file.write("<body>")
 
-        sdoc.sdoc2.node_store.nodes[1].gen_html(1, file)
+        sdoc.sdoc2.node_store.nodes[1].generate_html(file)
 
         file.write("</body>")
         file.write("</html>")
