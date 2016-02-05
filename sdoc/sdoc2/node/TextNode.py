@@ -18,6 +18,7 @@ class TextNode(Node):
     """
     SDoc2 node for items.
     """
+
     # ------------------------------------------------------------------------------------------------------------------
     def __init__(self):
         super().__init__('TEXT')
@@ -29,7 +30,7 @@ class TextNode(Node):
 
         :param int level: the level of block commands.
         """
-        print("%s%4d %s %s" % (' ' * 4*level, self.id, self.name, ''))
+        print("%s%4d %s %s" % (' ' * 4 * level, self.id, self.name, ''))
 
     # ------------------------------------------------------------------------------------------------------------------
     def gen_html(self, level, file):
@@ -75,12 +76,13 @@ class TextNode(Node):
         return True
 
     # ------------------------------------------------------------------------------------------------------------------
-    def splitted_text(self):
+    def split_by_paragraph(self):
         """
-        Method which takes text and splits it by newlines, creates text nodes,
-        sets id's to text nodes, put id's in list and returns list of id's.
+        Splits this text node into text nodes without a paragraph separator (i.e. a double new line) in to a list of
+        text nodes without paragraph separator each paragraph separator is replace with a end paragraph node. Each
+        paragraph separator is replaced wth a end paragraph node.
 
-        :param sdoc.sdoc2.node.TextNode.TextNode text: Whole text
+        Returns a list of node ID.
 
         :rtype: list[int]
         """
@@ -114,7 +116,7 @@ class TextNode(Node):
             # Checking where we need to add paragraph.
             if len(text_ids):
                 if list_of_texts[-1]:
-                   text_ids.pop()
+                    text_ids.pop()
 
         return text_ids
 

@@ -88,9 +88,9 @@ class ItemizeNode(Node):
 
         :rtype: bool
         """
-        return False
+        return True
 
-    #-------------------------------------------------------------------------------------------------------------------
+    # ------------------------------------------------------------------------------------------------------------------
     def prepare_content_tree(self):
         """
         Method which checks if all child nodes is instance of sdoc.sdoc2.node.ItemNode.ItemNode.

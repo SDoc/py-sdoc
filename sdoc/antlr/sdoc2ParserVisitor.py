@@ -34,6 +34,11 @@ class sdoc2ParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by sdoc2Parser#cmd_position.
+    def visitCmd_position(self, ctx:sdoc2Parser.Cmd_positionContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by sdoc2Parser#cmd_sdoc2.
     def visitCmd_sdoc2(self, ctx:sdoc2Parser.Cmd_sdoc2Context):
         return self.visitChildren(ctx)

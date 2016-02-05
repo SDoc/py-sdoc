@@ -7,6 +7,8 @@ Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
 import antlr4
+
+import sdoc
 from sdoc.antlr.sdoc1Lexer import sdoc1Lexer
 from sdoc.antlr.sdoc1Parser import sdoc1Parser
 from sdoc.antlr.sdoc1ParserVisitor import sdoc1ParserVisitor
@@ -20,6 +22,7 @@ class SDoc1Visitor(sdoc1ParserVisitor):
     """
     Visitor for SDoc level 1.
     """
+
     # ------------------------------------------------------------------------------------------------------------------
     def __init__(self):
         self._output = None
@@ -75,6 +78,39 @@ class SDoc1Visitor(sdoc1ParserVisitor):
         """
         if snippet is not None:
             self._output.write(snippet)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def put_position(self, ctx, position):
+        """
+        Puts a \position SDoc2 command on the output stream.
+
+        :param ParserRuleContext ctx: The context tree.
+        :param str position: Either start or stop.
+        """
+        if position == 'start':
+            token = ctx.start
+        else:
+            token = ctx.stop
+
+        filename = token.getInputStream().fileName  # Replace fileName with get_source_name() when implemented in ANTLR.
+        line_number = token.line
+        column = token.column
+
+        if position == 'stop':
+            column += len(token.text)
+
+        self.stream('\\position{%s:%d.%d}' % (sdoc.escape(filename), line_number, column))
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def visit(self, tree):
+        """
+        Visits a parse tree produced by sdoc1
+
+        :param ParserRuleContext tree: The context tree.
+        """
+        self.put_position(tree, 'start')
+
+        return super().visit(tree)
 
     # ------------------------------------------------------------------------------------------------------------------
     def visitAssignmentExpressionAssignment(self, ctx):
@@ -184,11 +220,7 @@ class SDoc1Visitor(sdoc1ParserVisitor):
 
         :param sdoc1Parser.Cmd_commentContext ctx: The context tree.
         """
-        # @todo If previous char is not a new line (i.e. middle in the line comment) print newline
-        # @todo otherwise print new line
-
-        self.stream('')
-        # @todo set position
+        self.put_position(ctx, 'stop')
 
     # ------------------------------------------------------------------------------------------------------------------
     def visitCmd_debug(self, ctx):
@@ -204,6 +236,8 @@ class SDoc1Visitor(sdoc1ParserVisitor):
         else:
             print(self._global_scope.debug(), end='')
 
+        self.put_position(ctx, 'stop')
+
     # ------------------------------------------------------------------------------------------------------------------
     def visitCmd_expression(self, ctx):
         """
@@ -212,7 +246,8 @@ class SDoc1Visitor(sdoc1ParserVisitor):
         :param sdoc1Parser.Cmd_expressionContext ctx: The context tree.
         """
         self.visitExpression(ctx.expression())
-        # @todo set position
+
+        self.put_position(ctx, 'stop')
 
     # ------------------------------------------------------------------------------------------------------------------
     def visitCmd_if(self, ctx):
@@ -226,9 +261,9 @@ class SDoc1Visitor(sdoc1ParserVisitor):
         i = 0
         while i < n and not fired:
             child = ctx.getChild(i)
-            token = child.getText()
+            token_text = child.getText()
             i += 1
-            if token == '\\if' or token == '\\elif':
+            if token_text == '\\if' or token_text == '\\elif':
                 # Skip {
                 i += 1
 
@@ -246,6 +281,7 @@ class SDoc1Visitor(sdoc1ParserVisitor):
                 if data.is_true():
                     # Child is the code inside the if or elif clause.
                     child = ctx.getChild(i)
+                    self.put_position(child, 'start')
                     i += 1
                     child.accept(self)
                     fired = True
@@ -254,7 +290,7 @@ class SDoc1Visitor(sdoc1ParserVisitor):
                     # Skip the code inside the if or elif clause.
                     i += 1
 
-            elif token == '\\else':
+            elif token_text == '\\else':
                 # Child is the code inside the else clause.
                 child = ctx.getChild(i)
                 i += 1
@@ -262,9 +298,10 @@ class SDoc1Visitor(sdoc1ParserVisitor):
                 child.accept(self)
                 fired = True
 
-            elif token == '\\endif':
-                # @todo set position
+            elif token_text == '\\endif':
                 pass
+
+        self.put_position(ctx, 'stop')
 
     # ------------------------------------------------------------------------------------------------------------------
     def visitCmd_include(self, ctx):
@@ -275,10 +312,10 @@ class SDoc1Visitor(sdoc1ParserVisitor):
         """
         # Test the maximum include level.
         if self._include_level >= self._options['max_include_level']:
-            raise RuntimeError("Maximum include level exceeded.")   # @todo More verbose logging, own exception class.
+            raise RuntimeError("Maximum include level exceeded.")  # @todo More verbose logging, own exception class.
 
         # Open a stream for the sub-document.
-        file_name = ctx.SIMPLE_ARG().getText()  # @todo unescape
+        file_name = sdoc.unescape(ctx.SIMPLE_ARG().getText())
         stream = antlr4.FileStream(file_name)
 
         # Create a new lexer and parser for the sub-document.
@@ -296,6 +333,8 @@ class SDoc1Visitor(sdoc1ParserVisitor):
         # Run the visitor on the parse tree.
         visitor.visit(tree)
 
+        self.put_position(ctx, 'stop')
+
         # @todo test on errors and warnings from parser and pass back to parent parser
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -305,10 +344,14 @@ class SDoc1Visitor(sdoc1ParserVisitor):
 
         :param sdoc1Parser.Cmd_noticeContext ctx: The parse tree.
         """
-        # @todo print position
-        # @todo unescape
-        print('Notice: ' + ctx.SIMPLE_ARG().getText())
-        # @todo set position
+        token = ctx.NOTICE().getSymbol()
+        filename = token.getInputStream().fileName  # Replace fileName with get_source_name() when implemented in ANTLR.
+        line_number = token.line
+        message = sdoc.unescape(ctx.SIMPLE_ARG().getText())
+
+        print('Notice (%s:%d): %s' % (filename, line_number, message))
+
+        self.put_position(ctx, 'stop')
 
     # ------------------------------------------------------------------------------------------------------------------
     def visitCmd_sdoc2(self, ctx):

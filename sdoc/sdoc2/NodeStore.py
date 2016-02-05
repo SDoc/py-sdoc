@@ -1,22 +1,19 @@
 """
 SDoc
 
-Cop2yright 2016 Set Based IT Consultancy
+Copyright 2016 Set Based IT Consultancy
 
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-import sdoc.sdoc2.node
 
 
-# ----------------------------------------------------------------------------------------------------------------------
 class NodeStore:
     """
     Class for creating, storing, and retrieving nodes.
 
-    @todo Make abstract
+    @todo Make abstract and implement other document store classes.
     """
-
     # ------------------------------------------------------------------------------------------------------------------
     def __init__(self):
         """
@@ -252,11 +249,17 @@ class NodeStore:
             if node.is_block_command() or node.get_hierarchy_name():
                 self.nested_nodes.append(node)
 
-    #-------------------------------------------------------------------------------------------------------------------
+    # ------------------------------------------------------------------------------------------------------------------
     def prepare_content_tree(self):
         """
+<<<<<<< HEAD
         Method which creating modifications for pretty output.
         """
+=======
+        Prepares after parsing at SDoc2 level the content tree for further processing.
+        """
+        # Currently, node with ID 1 is the document node. @todo Improve getting the document node.
+>>>>>>> f95c39ece4ef1670a456bb75b2a47f221e52798a
         self.nodes[1].prepare_content_tree()
 
     #------------------------------------------------------------------------------------------------------------------
