@@ -27,7 +27,7 @@ class ParagraphNode(HeadingNode):
         :param file file: the file where we write html.
         """
         file.write("<p>")
-        for node_id in self.nodes:
+        for node_id in self._child_nodes:
             node = node_store.in_scope(node_id)
 
             node.generate_html(file)
@@ -60,7 +60,7 @@ class ParagraphNode(HeadingNode):
         first = self.nodes[0]
         last = self.nodes[-1]
 
-        for node_id in self.nodes:
+        for node_id in self._child_nodes:
             node = node_store.in_scope(node_id)
 
             if isinstance(node, TextNode):

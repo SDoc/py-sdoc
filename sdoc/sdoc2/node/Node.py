@@ -14,6 +14,7 @@ class Node:
     """
     Abstract class for SDoc2 nodes.
     """
+
     # ------------------------------------------------------------------------------------------------------------------
     def __init__(self, name):
         """
@@ -49,7 +50,7 @@ class Node:
         :type: dict[str,int|str]
         """
 
-        self.nodes = []
+        self._child_nodes = []
         """
         The ID's of the SDoc2 child nodes of this SDoc2 node.
 
@@ -65,8 +66,8 @@ class Node:
 
         :param int level: the level of block commands.
         """
-        print("%s%4d %s" % (' ' * 4*level, self.id, self.name))
-        for node_id in self.nodes:
+        print("%s%4d %s" % (' ' * 4 * level, self.id, self.name))
+        for node_id in self._child_nodes:
             node = node_store.in_scope(node_id)
 
             node.print_info(level + 1)
@@ -80,7 +81,7 @@ class Node:
 
         :param file file: the file where we write html.
         """
-        for node_id in self.nodes:
+        for node_id in self._child_nodes:
             node = node_store.in_scope(node_id)
 
             node.generate_html(file)
@@ -151,11 +152,20 @@ class Node:
         return False
 
     # ------------------------------------------------------------------------------------------------------------------
+    def append_child_node(self, child_node):
+        """
+        Appends a child node to the list of child nodes of the node.
+
+        :param sdoc.sdoc2.node.Node.Node child_node: The new child node
+        """
+        self._child_nodes.append(child_node.id)
+
+    # ------------------------------------------------------------------------------------------------------------------
     def prepare_content_tree(self):
         """
         Prepares this node for further processing.
         """
-        for node_id in self.nodes:
+        for node_id in self._child_nodes:
             node = node_store.in_scope(node_id)
 
             node.prepare_content_tree()

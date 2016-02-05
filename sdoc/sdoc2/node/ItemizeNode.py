@@ -27,7 +27,7 @@ class ItemizeNode(Node):
         :param file file: the file where we write html.
         """
         file.write("<ul>")
-        for node_id in self.nodes:
+        for node_id in self._child_nodes:
             node = node_store.in_scope(node_id)
 
             node.generate_html(file)
@@ -94,7 +94,7 @@ class ItemizeNode(Node):
         """
         Method which checks if all child nodes is instance of sdoc.sdoc2.node.ItemNode.ItemNode.
         """
-        for node_id in self.nodes:
+        for node_id in self._child_nodes:
             node = node_store.in_scope(node_id)
 
             if not isinstance(node, ItemNode):

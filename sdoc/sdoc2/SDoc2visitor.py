@@ -49,7 +49,7 @@ class SDoc2Visitor(sdoc2ParserVisitor):
         """
         command = ctx.BLOCK_ARG_ARG().getText()
 
-        sdoc2.node_store.create_block_node(command, {})
+        sdoc2.node_store.append_block_node(command, {})
 
     # ------------------------------------------------------------------------------------------------------------------
     def visitCmd_end(self, ctx):
@@ -72,7 +72,7 @@ class SDoc2Visitor(sdoc2ParserVisitor):
         command = ctx.SDOC2_COMMAND().getText()
         argument = ctx.INLINE_ARG_ARG()
 
-        sdoc2.node_store.create_inline_node(command[1:], {}, argument.getText() if argument else '')
+        sdoc2.node_store.append_inline_node(command[1:], {}, argument.getText() if argument else '')
 
     # ------------------------------------------------------------------------------------------------------------------
     def visitText(self, ctx):
@@ -81,7 +81,7 @@ class SDoc2Visitor(sdoc2ParserVisitor):
 
         :param sdoc.antlr.sdoc2Parser.sdoc2Parser.TextContext ctx: The parse tree.
         """
-        sdoc2.node_store.create_inline_node('TEXT', {}, ctx.TEXT().getText())
+        sdoc2.node_store.append_inline_node('TEXT', {}, ctx.TEXT().getText())
 
 
 # ----------------------------------------------------------------------------------------------------------------------

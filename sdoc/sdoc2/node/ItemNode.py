@@ -27,7 +27,7 @@ class ItemNode(Node):
         :param file file: the file where we write html.
         """
         file.write("<li>")
-        for node_id in self.nodes:
+        for node_id in self._child_nodes:
             node = node_store.in_scope(node_id)
 
             self.prepare_content_tree()
@@ -78,7 +78,7 @@ class ItemNode(Node):
         """
         Method which checks if all child nodes is phrasing.
         """
-        for node_id in self.nodes:
+        for node_id in self._child_nodes:
             node = node_store.in_scope(node_id)
 
             if isinstance(node, TextNode):
