@@ -6,6 +6,7 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
+from html import escape
 from sdoc.sdoc2 import node_store
 from sdoc.sdoc2.node.HeadingNode import HeadingNode
 
@@ -25,13 +26,9 @@ class SectionNode(HeadingNode):
 
         :param file file: the file where we write html.
         """
-        file.write("<h2>%s</h2>" % self.name)
-        for node_id in self._child_nodes:
-            node = node_store.in_scope(node_id)
+        file.write("<h2>%s</h2>" % escape(self.argument))
 
-            node.generate_html(file)
-
-            node_store.out_scope(node)
+        super().generate_html(file)
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_hierarchy_level(self):

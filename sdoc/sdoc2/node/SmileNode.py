@@ -26,12 +26,8 @@ class SmileNode(Node):
         :param file file: the file where we write html.
         """
         file.write("<b>SMILE</b>")
-        for node_id in self._child_nodes:
-            node = node_store.in_scope(node_id)
 
-            node.generate_html(file)
-
-            node_store.out_scope(node)
+        super().generate_html(file)
 
     # ------------------------------------------------------------------------------------------------------------------
     def is_block_command(self):

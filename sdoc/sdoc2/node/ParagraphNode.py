@@ -27,12 +27,10 @@ class ParagraphNode(HeadingNode):
         :param file file: the file where we write html.
         """
         file.write("<p>")
-        for node_id in self._child_nodes:
-            node = node_store.in_scope(node_id)
 
-            node.generate_html(file)
+        super().generate_html(file)
 
-            node_store.out_scope(node)
+        file.write("</p>")
 
     # ------------------------------------------------------------------------------------------------------------------
     def is_block_command(self):
@@ -53,7 +51,7 @@ class ParagraphNode(HeadingNode):
         return False
 
     # ------------------------------------------------------------------------------------------------------------------
-    def prepare_content_tree(self):
+    def prune_whitespace(self):
         """
         Removes spaces from end of a paragraph.
         """
@@ -66,9 +64,9 @@ class ParagraphNode(HeadingNode):
             if isinstance(node, TextNode):
                 if node.id == first:
                     node.prune_whitespace(leading=True)
-                elif node.id == last:
+                if node.id == last:
                     node.prune_whitespace(trailing=True)
-                else:
+                if node.id != last and node.id != first:
                     node.prune_whitespace()
 
             node_store.out_scope(node)

@@ -310,9 +310,8 @@ class NodeStore:
         """
         file = open("output.html", "w")
 
-        file.write("<!DOCTYPE html>")
-        file.write("<html>")
-        file.write("<meta charset='utf-8'")
+        file.write('<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="NL" lang="NL">')
+        file.write('<head><meta charset="UTF-8"/><title>sdoc</title></head>')
         file.write("<body>")
 
         sdoc.sdoc2.node_store.nodes[1].generate_html(file)

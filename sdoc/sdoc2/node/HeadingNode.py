@@ -91,9 +91,8 @@ class HeadingNode(Node):
 
                 paragraph_node.append_child_node(node)
             else:
-                paragraph_node.prepare_content_tree()
-
                 if paragraph_node:
+                    paragraph_node.prune_whitespace()
                     sdoc.sdoc2.node_store.store_node(paragraph_node)
                     paragraph_node = None
 
@@ -105,7 +104,7 @@ class HeadingNode(Node):
             node_store.out_scope(node)
 
         if paragraph_node:
-            paragraph_node.prepare_content_tree()
+            paragraph_node.prune_whitespace()
             sdoc.sdoc2.node_store.store_node(paragraph_node)
             # paragraph_node = None
 

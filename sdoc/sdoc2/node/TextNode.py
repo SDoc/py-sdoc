@@ -7,7 +7,7 @@ Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
 import re
-from cgi import escape
+from html import escape
 import sdoc
 from sdoc.sdoc2 import node_store
 from sdoc.sdoc2.node.Node import Node
@@ -39,13 +39,10 @@ class TextNode(Node):
 
         :param file file: the file where we write html.
         """
+
         file.write("%s" % (escape(self.argument, True)))
-        for node_id in self._child_nodes:
-            node = node_store.in_scope(node_id)
 
-            node.generate_html(file)
-
-            node_store.out_scope(node)
+        super().generate_html(file)
 
     # ------------------------------------------------------------------------------------------------------------------
     def is_block_command(self):
