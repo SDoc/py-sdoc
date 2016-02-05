@@ -57,8 +57,8 @@ class ParagraphNode(HeadingNode):
         """
         Removes spaces from end of a paragraph.
         """
-        first = self.nodes[0]
-        last = self.nodes[-1]
+        first = self._child_nodes[0]
+        last = self._child_nodes[-1]
 
         for node_id in self._child_nodes:
             node = node_store.in_scope(node_id)
