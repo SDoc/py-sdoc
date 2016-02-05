@@ -5,6 +5,8 @@ Copyright 2016 Set Based IT Consultancy
 
 Licence MIT
 """
+
+
 # ----------------------------------------------------------------------------------------------------------------------
 
 
@@ -14,6 +16,7 @@ class NodeStore:
 
     @todo Make abstract and implement other document store classes.
     """
+
     # ------------------------------------------------------------------------------------------------------------------
     def __init__(self):
         """
@@ -114,9 +117,11 @@ class NodeStore:
         self.block_creators[command] = constructor
 
     # ------------------------------------------------------------------------------------------------------------------
-    def create_inline_node(self, command, options, argument):
+    def create_inline_node(self, command, options=None, argument=None):
         """
-        Creates a node based on a inline command.
+        Creates a node based an inline command.
+
+        Note: The node is not stored nor appended to the content tree.
 
         :param str command: The inline command.
         :param dict options: The options.
@@ -133,15 +138,17 @@ class NodeStore:
         node = constructor()
         node.argument = argument
 
-        # Add the node to the node store.
-        self._store_node(node)
+        # Store the node and assign ID.
+        self.store_node(node)
 
         return node
 
     # ------------------------------------------------------------------------------------------------------------------
-    def create_block_node(self, command, options):
+    def create_block_node(self, command, options=None):
         """
-        Creates a node based on a inline command.
+        Creates a node based on a block command.
+
+        Note: The node is not appended to the content tree.
 
         :param str command: The inline command.
         :param dict options: The options.
@@ -156,8 +163,45 @@ class NodeStore:
         constructor = self.block_creators[command]
         node = constructor()
 
+        # Store the node and assign ID.
+        self.store_node(node)
+
+        return node
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def append_inline_node(self, command, options, argument):
+        """
+        Creates a node based an inline command and appends it to the end of the content tree.
+
+        :param str command: The inline command.
+        :param dict options: The options.
+        :param str argument: The argument of the inline command.
+
+        :rtype: sdoc.sdoc2.node.Node.Node
+        """
+        # Create the inline node.
+        node = self.create_inline_node(command, options, argument)
+
         # Add the node to the node store.
-        self._store_node(node)
+        self._append_to_content_tree(node)
+
+        return node
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def append_block_node(self, command, options):
+        """
+        Creates a node based on a block command and appends it to the end of the content tree.
+
+        :param str command: The inline command.
+        :param dict options: The options.
+
+        :rtype: sdoc.sdoc2.node.Node.Node
+        """
+        # Create the block node.
+        node = self.create_block_node(command, options)
+
+        # Add the node to the node store.
+        self._append_to_content_tree(node)
 
         return node
 
@@ -201,28 +245,30 @@ class NodeStore:
     # ------------------------------------------------------------------------------------------------------------------
     def store_node(self, node):
         """
-        Stores a node.
+        Stores a node. IF the node was not stored before assigns an ID to this node, otherwise the node replaces the
+        node stored under the same ID. Returns the ID if the node.
 
         :param sdoc.sdoc2.node.Node.Node node: The node.
+
+        :rtype: int
         """
-        # Add the node to the node store.
-        node_id = len(self.nodes) + 1
-        node.id = node_id
-        self.nodes[node_id] = node
+        if not node.id:
+            # Add the node to the node store.
+            node_id = len(self.nodes) + 1
+            node.id = node_id
+
+        self.nodes[node.id] = node
+
+        return node.id
 
     # ------------------------------------------------------------------------------------------------------------------
-    def _store_node(self, node):
+    def _append_to_content_tree(self, node):
         """
-        Stores a node.
+        Appends the node at the proper nesting level at the end of the content tree.
 
         :param sdoc.sdoc2.node.Node.Node node: The node.
         """
-        # Add the node to the node store.
-        node_id = len(self.nodes) + 1
-        node.id = node_id
-        self.nodes[node_id] = node
-
-        if node_id == 1:
+        if node.id == 1:
             # The first node must be a document root.
             if not node.is_document_root():
                 # @todo position of block node.
@@ -243,7 +289,7 @@ class NodeStore:
             # Add the node to the list of child nodes of its parent node.
             if len(self.nested_nodes):
                 parent_node = self.nested_nodes[-1]
-                parent_node.nodes.append(node_id)
+                parent_node._child_nodes.append(node.id)
 
             # Block commands and hierarchical nodes must be appended to the nested nodes.
             if node.is_block_command() or node.get_hierarchy_name():

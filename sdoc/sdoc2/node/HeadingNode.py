@@ -49,28 +49,14 @@ class HeadingNode(Node):
         self.create_paragraphs()
 
     # ------------------------------------------------------------------------------------------------------------------
-    @staticmethod
-    def create_paragraph():
-        """
-        Returns a paragraph node.
-
-        :rtype: sdoc.sdoc2.node.ParagraphNode.ParagraphNode
-        """
-        constructor = sdoc.sdoc2.node_store.inline_creators['paragraph']
-        paragraph_node = constructor()
-        sdoc.sdoc2.node_store.store_node(paragraph_node)
-
-        return paragraph_node
-
-    # ------------------------------------------------------------------------------------------------------------------
     def split_text_nodes(self):
         """
-        Replaces single text nodes that contains a paragraph separator (i.e. a double new line) with multiple text Nodes
+        Replaces single text nodes that contains a paragraph separator (i.e. a double new line) with multiple text nodes
         without paragraph separator.
         """
         new_child_nodes = []
 
-        for node_id in self.nodes:
+        for node_id in self._child_nodes:
             node = node_store.in_scope(node_id)
 
             if isinstance(node, TextNode):
@@ -82,7 +68,7 @@ class HeadingNode(Node):
 
             node_store.out_scope(node)
 
-        self.nodes = new_child_nodes
+        self._child_nodes = new_child_nodes
 
     # ------------------------------------------------------------------------------------------------------------------
     def create_paragraphs(self):
@@ -95,23 +81,32 @@ class HeadingNode(Node):
         new_child_nodes = []
         paragraph_node = None
 
-        for node_id in self.nodes:
+        for node_id in self._child_nodes:
             node = node_store.in_scope(node_id)
 
             if node.is_phrasing():
                 if not paragraph_node:
-                    paragraph_node = self.create_paragraph()
+                    paragraph_node = sdoc.sdoc2.node_store.create_inline_node('paragraph')
                     new_child_nodes.append(paragraph_node.id)
 
-                paragraph_node.nodes.append(node.id)
+                paragraph_node.append_child_node(node)
             else:
-                paragraph_node = None
+                if paragraph_node:
+                    sdoc.sdoc2.node_store.store_node(paragraph_node)
+                    paragraph_node = None
+
+                # End paragraph nodes are created temporary to separate paragraphs in a flat list of (text) node. There
+                # role ae replaced by the content hierarchy now. So, we must no store end paragraph nodes.
                 if not isinstance(node, EndParagraphNode):
                     new_child_nodes.append(node.id)
 
             node_store.out_scope(node)
 
+        if paragraph_node:
+            sdoc.sdoc2.node_store.store_node(paragraph_node)
+            # paragraph_node = None
+
         # Setting child nodes.
-        self.nodes = new_child_nodes
+        self._child_nodes = new_child_nodes
 
 # ----------------------------------------------------------------------------------------------------------------------

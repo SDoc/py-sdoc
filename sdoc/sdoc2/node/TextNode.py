@@ -65,7 +65,7 @@ class TextNode(Node):
         text nodes without paragraph separator each paragraph separator is replace with a end paragraph node. Each
         paragraph separator is replaced wth a end paragraph node.
 
-        Returns a list of node ID.
+        Returns a list of node IDs.
 
         :rtype: list[int]
         """
@@ -92,8 +92,7 @@ class TextNode(Node):
                 text_node.argument = text
                 text_ids.append(text_node.id)
 
-                end_paragraph_node = EndParagraphNode()
-                sdoc.sdoc2.node_store.store_node(end_paragraph_node)
+                end_paragraph_node = sdoc.sdoc2.node_store.create_inline_node('end_paragraph')
                 text_ids.append(end_paragraph_node.id)
 
             # Checking where we need to add paragraph.

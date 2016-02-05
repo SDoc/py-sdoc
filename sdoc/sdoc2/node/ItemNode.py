@@ -59,7 +59,7 @@ class ItemNode(Node):
         """
         Method which checks if all child nodes is phrasing.
         """
-        for node_id in self.nodes:
+        for node_id in self._child_nodes:
             node = node_store.in_scope(node_id)
 
             if not node.is_phrasing():
