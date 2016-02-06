@@ -36,6 +36,24 @@ class HeadingNode(Node):
         return 'sectioning'
 
     # ------------------------------------------------------------------------------------------------------------------
+    def is_block_command(self):
+        """
+        Returns False.
+
+        :rtype: bool
+        """
+        return False
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def is_inline_command(self):
+        """
+        Returns True.
+
+        :rtype: bool
+        """
+        return True
+
+    # ------------------------------------------------------------------------------------------------------------------
     def prepare_content_tree(self):
         """
         Prepares the content tree. Create paragraph nodes.

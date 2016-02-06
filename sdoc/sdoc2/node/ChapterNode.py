@@ -43,23 +43,5 @@ class ChapterNode(HeadingNode):
         """
         return 1
 
-    # ------------------------------------------------------------------------------------------------------------------
-    def is_block_command(self):
-        """
-        Returns False.
-
-        :rtype: bool
-        """
-        return False
-
-    # ------------------------------------------------------------------------------------------------------------------
-    def is_inline_command(self):
-        """
-        Returns True.
-
-        :rtype: bool
-        """
-        return True
-
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_inline_command('chapter', ChapterNode)

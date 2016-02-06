@@ -40,25 +40,7 @@ class SectionNode(HeadingNode):
 
         :rtype: int
         """
-        return 1
-
-    # ------------------------------------------------------------------------------------------------------------------
-    def is_block_command(self):
-        """
-        Returns False.
-
-        :rtype: bool
-        """
-        return False
-
-    # ------------------------------------------------------------------------------------------------------------------
-    def is_inline_command(self):
-        """
-        Returns True.
-
-        :rtype: bool
-        """
-        return True
+        return 2
 
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_inline_command('section', SectionNode)
