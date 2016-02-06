@@ -43,5 +43,6 @@ class ChapterNode(HeadingNode):
         """
         return 1
 
+
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_inline_command('chapter', ChapterNode)

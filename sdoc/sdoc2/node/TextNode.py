@@ -128,5 +128,6 @@ class TextNode(Node):
             self.argument = self.argument.rstrip()
         self.argument = re.sub(r'\s+', ' ', self.argument)
 
+
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_inline_command('TEXT', TextNode)
