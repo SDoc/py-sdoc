@@ -20,8 +20,14 @@ class TextNode(Node):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self):
-        super().__init__('TEXT')
+    def __init__(self, options, argument):
+        """
+        Object constructor.
+
+        :param dict[str,str] options: Not used.
+        :param str argument: The actual text.
+        """
+        super().__init__('TEXT', options, argument)
 
     # ------------------------------------------------------------------------------------------------------------------
     def print_info(self, level):
@@ -39,7 +45,7 @@ class TextNode(Node):
 
         :param file file: The output stream to with the generated HTML will be written.
         """
-        file.write(html.escape(self.argument))
+        file.write(html.escape(self._argument))
 
         super().generate_html(file)
 
@@ -82,7 +88,7 @@ class TextNode(Node):
         :rtype: list[int]
         """
         text_ids = []
-        list_of_texts = re.split("\n\n", self.argument)
+        list_of_texts = re.split("\n\n", self._argument)
 
         # Cleaning the text parts.
         if "\n" in list_of_texts:
@@ -99,9 +105,8 @@ class TextNode(Node):
 
             # Creating text and paragraph end nodes and put id's in list.
             for text in list_of_texts[:to]:
-                text_node = TextNode()
+                text_node = TextNode({}, text)
                 sdoc.sdoc2.node_store.store_node(text_node)
-                text_node.argument = text
                 text_ids.append(text_node.id)
 
                 end_paragraph_node = sdoc.sdoc2.node_store.create_inline_node('end_paragraph')
@@ -123,10 +128,10 @@ class TextNode(Node):
         :param bool trailing: if True, remove whitespaces from end.
         """
         if leading:
-            self.argument = self.argument.lstrip()
+            self._argument = self._argument.lstrip()
         if trailing:
-            self.argument = self.argument.rstrip()
-        self.argument = re.sub(r'\s+', ' ', self.argument)
+            self._argument = self._argument.rstrip()
+        self._argument = re.sub(r'\s+', ' ', self._argument)
 
 
 # ----------------------------------------------------------------------------------------------------------------------

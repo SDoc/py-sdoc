@@ -17,8 +17,14 @@ class SectionNode(HeadingNode):
     SDoc2 node for sections.
     """
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self):
-        super().__init__('section')
+    def __init__(self, options, argument):
+        """
+        Object constructor.
+
+        :param dict[str,str] options: The options of this section.
+        :param str argument: The title of this section.
+        """
+        super().__init__('section', options, argument)
 
     # ------------------------------------------------------------------------------------------------------------------
     def generate_html(self, file):
@@ -28,7 +34,7 @@ class SectionNode(HeadingNode):
         :param file file: The output stream to with the generated HTML will be written.
         """
         file.write('<h2>')
-        file.write(html.escape(self.argument))
+        file.write(html.escape(self._argument))
         file.write('</h2>')
 
         super().generate_html(file)

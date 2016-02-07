@@ -18,13 +18,15 @@ class HeadingNode(Node):
     Abstract class for heading nodes.
     """
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, name):
+    def __init__(self, name, options, argument):
         """
         Object constructor.
 
-        :param str name: The (command) name of this node.
+        :param str name: The (command) name of this heading.
+        :param dict[str,str] options: The options of this heading.
+        :param str argument: The title of this heading.
         """
-        super().__init__(name)
+        super().__init__(name, options, argument)
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_hierarchy_name(self):

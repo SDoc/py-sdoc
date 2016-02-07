@@ -15,8 +15,14 @@ class SmileNode(Node):
     SDoc2 node for development testing.
     """
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self):
-        super().__init__('smile')
+    def __init__(self, options, argument):
+        """
+        Object constructor.
+
+        :param dict[str,str] options: The options of this smile.
+        :param str argument: Not used.
+        """
+        super().__init__('smile', options, argument)
 
     # ------------------------------------------------------------------------------------------------------------------
     def generate_html(self, file):

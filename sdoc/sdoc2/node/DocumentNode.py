@@ -15,8 +15,13 @@ class DocumentNode(Node):
     SDoc2 node for documents.
     """
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self):
-        super().__init__('document')
+    def __init__(self, options):
+        """
+        Object constructor.
+
+        :param dict[str,str] options: The options of this document.
+        """
+        super().__init__('document', options)
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_hierarchy_level(self):

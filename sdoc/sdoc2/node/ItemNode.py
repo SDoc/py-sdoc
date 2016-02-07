@@ -16,8 +16,14 @@ class ItemNode(Node):
     SDoc2 node for items.
     """
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self):
-        super().__init__('item')
+    def __init__(self, options, argument):
+        """
+        Object constructor.
+
+        :param dict[str,str] options: The options of this item.
+        :param str argument: Not used.
+        """
+        super().__init__('item', options, argument)
 
     # ------------------------------------------------------------------------------------------------------------------
     def generate_html(self, file):

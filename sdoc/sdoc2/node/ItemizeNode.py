@@ -16,8 +16,13 @@ class ItemizeNode(Node):
     SDoc2 node for itemize.
     """
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self):
-        super().__init__('itemize')
+    def __init__(self, options):
+        """
+        Object constructor.
+
+        :param dict[str,str] options: The options of this itemize.
+        """
+        super().__init__('itemize', options)
 
     # ------------------------------------------------------------------------------------------------------------------
     def generate_html(self, file):

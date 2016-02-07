@@ -18,11 +18,14 @@ class EndParagraphNode(Node):
           preparation end of paragraph nodes do not exist.
     """
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self):
+    def __init__(self, options, argument):
         """
         Object constructor.
+
+        :param dict[str,str] options: Not used.
+        :param str argument: Not used.
         """
-        super().__init__('end_paragraph')
+        super().__init__('end_paragraph', options, argument)
 
     # ------------------------------------------------------------------------------------------------------------------
     def is_block_command(self):

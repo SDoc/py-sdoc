@@ -115,7 +115,7 @@ class NodeStore:
         self.block_creators[command] = constructor
 
     # ------------------------------------------------------------------------------------------------------------------
-    def create_inline_node(self, command, options=None, argument=None):
+    def create_inline_node(self, command, options=dict, argument=''):
         """
         Creates a node based an inline command.
 
@@ -133,8 +133,7 @@ class NodeStore:
 
         # Create the new node.
         constructor = self.inline_creators[command]
-        node = constructor()
-        node.argument = argument
+        node = constructor(options, argument)
 
         # Store the node and assign ID.
         self.store_node(node)
@@ -142,14 +141,14 @@ class NodeStore:
         return node
 
     # ------------------------------------------------------------------------------------------------------------------
-    def create_block_node(self, command, options=None):
+    def create_block_node(self, command, options=dict):
         """
         Creates a node based on a block command.
 
         Note: The node is not appended to the content tree.
 
         :param str command: The inline command.
-        :param dict options: The options.
+        :param dict[str,str] options: The options.
 
         :rtype: sdoc.sdoc2.node.Node.Node
         """
@@ -159,7 +158,7 @@ class NodeStore:
 
         # Create the new node.
         constructor = self.block_creators[command]
-        node = constructor()
+        node = constructor(options)
 
         # Store the node and assign ID.
         self.store_node(node)
@@ -320,6 +319,5 @@ class NodeStore:
         file.write('</body>')
         file.write('</html>')
         file.close()
-
 
 # ----------------------------------------------------------------------------------------------------------------------

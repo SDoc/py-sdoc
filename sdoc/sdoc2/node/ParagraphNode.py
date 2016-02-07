@@ -16,8 +16,14 @@ class ParagraphNode(HeadingNode):
     SDoc2 node for paragraphs.
     """
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self):
-        super().__init__('paragraph')
+    def __init__(self, options, argument):
+        """
+        Object constructor.
+
+        :param dict[str,str] options: Not used.
+        :param str argument: The text of this paragraph.
+        """
+        super().__init__('paragraph', options, argument)
 
     # ------------------------------------------------------------------------------------------------------------------
     def generate_html(self, file):

@@ -16,11 +16,13 @@ class Node:
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, name):
+    def __init__(self, name, options=dict, argument=''):
         """
         Object constructor.
 
         :param str name: The (command) name of this node.
+        :param dict[str,str] options: The options of this node.
+        :param str argument: The argument of this node (inline commands only).
         """
         self.id = 0
         """
@@ -36,14 +38,14 @@ class Node:
         :type: str
         """
 
-        self.argument = ''
+        self._argument = argument
         """
         The argument of this node (inline commands only).
 
         :type: str
         """
 
-        self.options = ''
+        self._options = options
         """
         The options of this node.
 
@@ -105,6 +107,17 @@ class Node:
         :rtype: int
         """
         raise RuntimeError("This method MUST only be called when a node is a part of an hierarchy.")
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def get_option_value(self, option_name):
+        """
+        Returns the value of an option. Returns None if the option is not set.
+
+        :param str option_name: The name of the option.
+
+        :rtype: str
+        """
+        return self._options[option_name] if option_name in self._options else None
 
     # ------------------------------------------------------------------------------------------------------------------
     def is_block_command(self):
