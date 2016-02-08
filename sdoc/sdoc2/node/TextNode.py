@@ -90,9 +90,11 @@ class TextNode(Node):
         text_ids = []
         list_of_texts = re.split("\n\n", self._argument)
 
+        #print(list_of_texts)
+
         # Cleaning the text parts.
         if "\n" in list_of_texts:
-            list_of_texts[list_of_texts.index("\n")] = ''
+            list_of_texts[list_of_texts.index("\n")] = ' '
         if list_of_texts[0] == '':
             list_of_texts.remove('')
 
