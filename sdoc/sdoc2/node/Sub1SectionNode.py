@@ -10,9 +10,9 @@ from sdoc.sdoc2 import node_store
 from sdoc.sdoc2.node.HeadingNode import HeadingNode
 
 
-class SubSubSectionNode(HeadingNode):
+class Sub1SectionNode(HeadingNode):
     """
-    SDoc2 node for sub subsections.
+    SDoc2 node for subsections.
     """
     # ------------------------------------------------------------------------------------------------------------------
     def __init__(self, options, argument):
@@ -22,17 +22,18 @@ class SubSubSectionNode(HeadingNode):
         :param dict[str,str] options: The options of this section.
         :param str argument: The title of this section.
         """
-        super().__init__('sub_subsection', options, argument)
+        super().__init__('subsection', options, argument)
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_hierarchy_level(self):
         """
-        Returns 4.
+        Returns 3.
 
         :rtype: int
         """
-        return 4
+        return 3
 
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_inline_command('sub_subsection', SubSubSectionNode)
+node_store.register_inline_command('sub1section', Sub1SectionNode)
+node_store.register_inline_command('subsection', Sub1SectionNode)
 

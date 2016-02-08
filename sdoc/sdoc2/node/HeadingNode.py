@@ -44,15 +44,6 @@ class HeadingNode(Node):
         super().generate_html(file)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_hierarchy_level(self):
-        """
-        Returns 1.
-
-        :rtype: int
-        """
-        return 1
-
-    # ------------------------------------------------------------------------------------------------------------------
     def get_hierarchy_name(self):
         """
         Returns 'sectioning'.
