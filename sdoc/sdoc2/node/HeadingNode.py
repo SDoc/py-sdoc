@@ -6,6 +6,7 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
+from html import escape
 import sdoc
 from sdoc.sdoc2 import node_store
 from sdoc.sdoc2.node.Node import Node
@@ -27,6 +28,29 @@ class HeadingNode(Node):
         :param str argument: The title of this heading.
         """
         super().__init__(name, options, argument)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def generate_html(self, file):
+        """
+        Generates the HTML code for this node.
+
+        :param file file: The output stream to with the generated HTML will be written.
+        """
+        level = str(self.get_hierarchy_level())
+        file.write('<h%s>' % level)
+        file.write(escape(self._argument))
+        file.write('</h%s>' % level)
+
+        super().generate_html(file)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def get_hierarchy_level(self):
+        """
+        Returns 1.
+
+        :rtype: int
+        """
+        return 1
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_hierarchy_name(self):
