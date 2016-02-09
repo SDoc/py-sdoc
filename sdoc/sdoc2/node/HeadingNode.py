@@ -37,6 +37,7 @@ class HeadingNode(Node):
         :param file file: The output stream to with the generated HTML will be written.
         """
         level = str(self.get_hierarchy_level())
+
         file.write('<h%s>' % level)
         file.write(escape(self._argument))
         file.write('</h%s>' % level)
