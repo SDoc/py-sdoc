@@ -6,8 +6,8 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-from html import escape
 import sdoc
+from sdoc.helper.Html import Html
 from sdoc.sdoc2 import node_store
 from sdoc.sdoc2.node.Node import Node
 from sdoc.sdoc2.node.TextNode import TextNode
@@ -36,10 +36,7 @@ class HeadingNode(Node):
 
         :param file file: The output stream to with the generated HTML will be written.
         """
-        level = str(self.get_hierarchy_level())
-        file.write('<h%s>' % level)
-        file.write(escape(self._argument))
-        file.write('</h%s>' % level)
+        file.write(Html.generate_element('h%d' % self.get_hierarchy_level(), {}, self._argument))
 
         super().generate_html(file)
 
