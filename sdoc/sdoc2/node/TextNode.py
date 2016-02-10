@@ -6,9 +6,9 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-import html
 import re
 import sdoc
+from sdoc.helper.Html import Html
 from sdoc.sdoc2 import node_store
 from sdoc.sdoc2.node.Node import Node
 from sdoc.sdoc2.node.EndParagraphNode import EndParagraphNode
@@ -45,7 +45,7 @@ class TextNode(Node):
 
         :param file file: The output stream to with the generated HTML will be written.
         """
-        file.write(html.escape(self._argument))
+        file.write(Html.escape(self._argument))
 
         super().generate_html(file)
 
