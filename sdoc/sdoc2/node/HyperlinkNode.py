@@ -7,8 +7,10 @@ Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
 from urllib import request, error
+import httplib2
 from sdoc.sdoc2 import node_store
 from sdoc.sdoc2.node.Node import Node
+from sdoc.helper.Html import Html
 
 
 class HyperlinkNode(Node):
@@ -32,44 +34,80 @@ class HyperlinkNode(Node):
 
         :param file file: The output stream to with the generated HTML will be written.
         """
-        file.write("<a")
 
-        if not self._options:
-            file.write(" href='%s'" % self.try_connect(self._argument))
-        else:
-            for key, value in self._options.items():
-                if key == "href":
-                    file.write(" %s='%s'" % (key, self.try_connect(value)))
-                else:
-                    file.write(" %s='%s'" % (key, value))
-
-        file.write(">%s</a>" % self._argument)
+        file.write(Html.generate_element('a', self.get_html_attributes(), self._argument))
 
     # ------------------------------------------------------------------------------------------------------------------
-    def try_connect(self, url):
+    def get_html_attributes(self):
         """
-        Tries to connect using http or https protocol. Returns a full url address.
+        Checks valid html attributes for hyperlinks and returns a list of attributes.
 
-        :param str url: The url with protocol.
-        :rtype: str
+        :rtype: dict[str,str]
         """
-        # Splitting the url.
-        raw_url = url.lstrip("(http://)|(https://)")
+        valid_html_attributes = ('href', 'class', 'id', 'download', 'hreflang', 'media', 'rel', 'target', 'type')
+        attributes_dict = {}
 
-        # Trying to connect with 'https' protocol.
-        try:
-            request.urlopen("https://%s" % raw_url)
-            return "https://%s" % raw_url
-        except error.URLError:
-            pass
+        for key, value in self._options.items():
+            if key in valid_html_attributes:
+                attributes_dict[key] = value
 
-        # Trying to connect with 'http' protocol.
+        return attributes_dict
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def prepare_content_tree(self):
+        """
+        Prepares the content of the node. Checks url of 'href' attribute. Sets if needed.
+        """
+        # Setting scheme if we haven't.
+        if 'href' in self._options:
+            self.set_scheme(self._options['href'])
+        else:
+            self.set_scheme(self._argument)
+
+        # Trying to connect
+        self.try_connect()
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def set_scheme(self, url):
+        """
+        Checks if we haven't got a scheme. Sets scheme if needed.
+
+        :param str url: The url address with scheme or without.
+        """
+        if not request.urlparse(url).scheme:
+            if url.startswith('ftp.'):
+                url = 'ftp://%s' % url
+                self._options['href'] = url
+            else:
+                url = 'http://%s' % url
+                self._options['href'] = url
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def try_connect(self):
+        """
+        Tries to connect to url. If have connection, checks the redirect. If redirect to 'https' protocol and
+        host is the same, reset scheme in 'href' attribute.
+        """
         try:
-            request.urlopen("http://%s" % raw_url)
-            return "http://%s" % raw_url
+            response = request.urlopen(self._options['href'])
+
+            # Check if we can connect to host.
+            if response.getcode() not in range(200, 400):
+                print("Warning! - Cannot connect to: '%s'" % self._options['href'])
+            else:
+                # If we connected, check the redirect.
+                url = self._options['href'].lstrip('(http://)|(https://)')
+
+                connection = httplib2.HTTPConnectionWithTimeout(url)
+                connection.request('HEAD', '/')
+                response = connection.getresponse()
+
+                if response.status in range(301, 304):
+                    # If host of redirected is the same, reset 'href' option
+                    if response.getheader('Location').startswith('https://' + url):
+                        self._options['href'].replace('http://', 'https://')
         except error.URLError:
-            return "http://%s" % raw_url
-            print("Cannot connect to adress '%s'" % raw_url)
+            print("Warning! - Invalid url address: '%s'" % self._options['href'])
 
     # ------------------------------------------------------------------------------------------------------------------
     def is_phrasing(self):
