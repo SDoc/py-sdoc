@@ -7,6 +7,8 @@ Licence MIT
 """
 
 # ----------------------------------------------------------------------------------------------------------------------
+import abc
+
 from sdoc.sdoc2 import node_store
 
 
@@ -100,6 +102,16 @@ class Node:
         return False
 
     # ------------------------------------------------------------------------------------------------------------------
+    @abc.abstractmethod
+    def get_command(self):
+        """
+        Returns command of this node.
+
+        :rtype: str
+        """
+        raise NotImplementedError()
+
+    # ------------------------------------------------------------------------------------------------------------------
     def get_hierarchy_level(self):
         """
         Returns the hierarchy level if this node is a part of a hierarchy.
@@ -120,6 +132,7 @@ class Node:
         return self._options[option_name] if option_name in self._options else None
 
     # ------------------------------------------------------------------------------------------------------------------
+    @abc.abstractmethod
     def is_block_command(self):
         """
         Returns True if this node is created by a block command. Otherwise returns False.
@@ -147,6 +160,7 @@ class Node:
         return False
 
     # ------------------------------------------------------------------------------------------------------------------
+    @abc.abstractmethod
     def is_inline_command(self):
         """
         Returns True if this node is created by a inline command. Otherwise returns False.

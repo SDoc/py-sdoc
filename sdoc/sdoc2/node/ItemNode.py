@@ -38,6 +38,15 @@ class ItemNode(Node):
         file.write('</li>')
 
     # ------------------------------------------------------------------------------------------------------------------
+    def get_command(self):
+        """
+        Returns the command of this node, i.e. item.
+
+        :rtype: str
+        """
+        return 'item'
+
+    # ------------------------------------------------------------------------------------------------------------------
     def get_hierarchy_level(self):
         """
         Returns 1.

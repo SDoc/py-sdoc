@@ -27,6 +27,15 @@ class ChapterNode(HeadingNode):
         super().__init__('chapter', options, argument)
 
     # ------------------------------------------------------------------------------------------------------------------
+    def get_command(self):
+        """
+        Returns the command of this node, i.e. chapter.
+
+        :rtype: str
+        """
+        return 'chapter'
+
+    # ------------------------------------------------------------------------------------------------------------------
     def get_hierarchy_level(self):
         """
         Returns 1.

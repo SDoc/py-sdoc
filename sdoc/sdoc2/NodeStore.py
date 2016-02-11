@@ -22,7 +22,7 @@ class NodeStore:
         """
         self.inline_creators = {}
         """
-        Map from inline commands to object creators.
+        Map from inline commands to node creators.
 
         :type: dict[str,callable]
         """
@@ -32,6 +32,20 @@ class NodeStore:
         Map from block commands to object creators.
 
         :type: dict[str,callable]
+        """
+
+        self.format = 'html'
+        """
+        The output format.
+
+        :type: str
+        """
+
+        self.format_decorators = {}
+        """
+        Map from format to map from inline and block commands to output format decorator creators.
+
+        :type: dict[str,dict[str,callable]]
         """
 
         self.nested_nodes = []
@@ -99,10 +113,24 @@ class NodeStore:
         """
         Registers a node constructor for an inline command.
 
-        :param string command: The name of the inline command.
+        :param str command: The name of the inline command.
         :param callable constructor: The node constructor.
         """
         self.inline_creators[command] = constructor
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def register_format_decorator(self, command, output_format, decorator):
+        """
+        Registers a output format decorator constructor for an inline command.
+
+        :param str command: The name of the inline command.
+        :param str output_format: The output format the decorator generates.
+        :param callable decorator: The decorator for generating the content of the node in the output format.
+        """
+        if output_format not in self.format_decorators:
+            self.format_decorators[output_format] = {}
+
+        self.format_decorators[output_format][command] = decorator
 
     # ------------------------------------------------------------------------------------------------------------------
     def register_block_command(self, command, constructor):
@@ -201,6 +229,28 @@ class NodeStore:
         self._append_to_content_tree(node)
 
         return node
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def create_format_decorator(self, command, parent):
+        """
+        Creates a decorator for generating the output of nodes in the requested output format.
+
+        :param str command: The inline of block command.
+        :param sdoc.sdoc2.decorator.Decorator.Decorator parent: The parent decorator.
+
+        :rtype: sdoc.sdoc2.decorator.Decorator.Decorator
+        """
+        if self.format not in self.format_decorators:
+            raise RuntimeError("Unknown output format '%s'." % self.format)
+
+        if command not in self.format_decorators[self.format]:
+            # @todo use defaut none decorator with warning
+            raise RuntimeError("Unknown decorator '%s' for format '%s'." % command, self.format)
+
+        constructor = self.format_decorators[self.format][command]
+        decorator = constructor(parent)
+
+        return decorator
 
     # ------------------------------------------------------------------------------------------------------------------
     def _adjust_hierarchy(self, node):

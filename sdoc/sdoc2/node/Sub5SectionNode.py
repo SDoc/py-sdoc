@@ -25,6 +25,15 @@ class Sub5SectionNode(HeadingNode):
         super().__init__('sub5section', options, argument)
 
     # ------------------------------------------------------------------------------------------------------------------
+    def get_command(self):
+        """
+        Returns the command of this node, i.e. sub5section.
+
+        :rtype: str
+        """
+        return 'sub5section'
+
+    # ------------------------------------------------------------------------------------------------------------------
     def get_hierarchy_level(self):
         """
         Returns 7.

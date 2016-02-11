@@ -39,6 +39,15 @@ class TextNode(Node):
         print("%s%4d %s %s" % (' ' * 4 * level, self.id, self.name, ''))
 
     # ------------------------------------------------------------------------------------------------------------------
+    def get_command(self):
+        """
+        Returns the command of this node, i.e. TEXT.
+
+        :rtype: str
+        """
+        return 'TEXT'
+
+    # ------------------------------------------------------------------------------------------------------------------
     def generate_html(self, file):
         """
         Generates the HTML code for this node.

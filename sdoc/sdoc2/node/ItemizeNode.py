@@ -36,6 +36,15 @@ class ItemizeNode(Node):
         file.write('</ul>')
 
     # ------------------------------------------------------------------------------------------------------------------
+    def get_command(self):
+        """
+        Returns the command of this node, i.e. itemize.
+
+        :rtype: str
+        """
+        return 'itemize'
+
+    # ------------------------------------------------------------------------------------------------------------------
     def get_hierarchy_level(self):
         """
         Returns 0.

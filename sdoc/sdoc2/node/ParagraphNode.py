@@ -44,6 +44,15 @@ class ParagraphNode(HeadingNode):
         file.write('</p>')
 
     # ------------------------------------------------------------------------------------------------------------------
+    def get_command(self):
+        """
+        Returns the command of this node, i.e. paragraph.
+
+        :rtype: str
+        """
+        return 'paragraph'
+
+    # ------------------------------------------------------------------------------------------------------------------
     def is_block_command(self):
         """
         Returns False.

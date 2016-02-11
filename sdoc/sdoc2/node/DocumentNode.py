@@ -24,6 +24,15 @@ class DocumentNode(Node):
         super().__init__('document', options)
 
     # ------------------------------------------------------------------------------------------------------------------
+    def get_command(self):
+        """
+        Returns the command of this node, i.e. document.
+
+        :rtype: str
+        """
+        return 'document'
+
+    # ------------------------------------------------------------------------------------------------------------------
     def get_hierarchy_level(self):
         """
         Returns 0.

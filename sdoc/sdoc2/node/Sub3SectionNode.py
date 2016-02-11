@@ -25,6 +25,15 @@ class Sub3SectionNode(HeadingNode):
         super().__init__('sub3section', options, argument)
 
     # ------------------------------------------------------------------------------------------------------------------
+    def get_command(self):
+        """
+        Returns the command of this node, i.e. sub3section.
+
+        :rtype: str
+        """
+        return 'sub3section'
+
+    # ------------------------------------------------------------------------------------------------------------------
     def get_hierarchy_level(self):
         """
         Returns 5.

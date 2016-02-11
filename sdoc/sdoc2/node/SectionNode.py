@@ -25,6 +25,15 @@ class SectionNode(HeadingNode):
         super().__init__('section', options, argument)
 
     # ------------------------------------------------------------------------------------------------------------------
+    def get_command(self):
+        """
+        Returns the command of this node, i.e. section.
+
+        :rtype: str
+        """
+        return 'section'
+
+    # ------------------------------------------------------------------------------------------------------------------
     def get_hierarchy_level(self):
         """
         Returns 2.

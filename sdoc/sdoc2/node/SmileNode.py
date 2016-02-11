@@ -37,6 +37,15 @@ class SmileNode(Node):
         super().generate_html(file)
 
     # ------------------------------------------------------------------------------------------------------------------
+    def get_command(self):
+        """
+        Returns the command of this node, i.e. smile.
+
+        :rtype: str
+        """
+        return 'smile'
+
+    # ------------------------------------------------------------------------------------------------------------------
     def is_block_command(self):
         """
         Returns False.
