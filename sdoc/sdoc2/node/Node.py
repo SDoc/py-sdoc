@@ -79,20 +79,6 @@ class Node:
             node_store.out_scope(node)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def generate_html(self, file):
-        """
-        Generates the HTML code for this node.
-
-        :param file file: The output stream to with the generated HTML will be written.
-        """
-        for node_id in self._child_nodes:
-            node = node_store.in_scope(node_id)
-
-            node.generate_html(file)
-
-            node_store.out_scope(node)
-
-    # ------------------------------------------------------------------------------------------------------------------
     def get_hierarchy_name(self):
         """
         Returns the hierarchy name if this node is a part of a hierarchy. Otherwise returns False.

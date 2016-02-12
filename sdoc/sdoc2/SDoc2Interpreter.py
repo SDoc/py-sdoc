@@ -30,10 +30,23 @@ class SDoc2Interpreter:
         sdoc.sdoc2.node_store = NodeStore()
 
         # Import all node modules.
-        modules = os.listdir(os.path.dirname(__file__) + '/node/')
+        self.importing('/node/')
+        self.importing('/decorator/html/')
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def importing(self, path):
+        """
+        Imports modules from specific path.
+
+        :param str path: The specific path.
+        """
+        modules = os.listdir(os.path.dirname(__file__) + path)
+
+        path = path.replace('/', '.')
+
         for module in modules:
             if module != '__init__.py' and module[-3:] == '.py':
-                __import__('sdoc.sdoc2.node.' + module[:-3], locals(), globals())
+                __import__('sdoc.sdoc2' + path + module[:-3], locals(), globals())
 
     # ------------------------------------------------------------------------------------------------------------------
     def process(self, infile, outfile):

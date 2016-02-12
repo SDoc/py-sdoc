@@ -23,10 +23,11 @@ class Decorator:
         :param sdoc.sdoc2.node.Node.Node node: The node for which the output must be generated.
         :param file file: The output file.
         """
+
         for node_id in node._child_nodes:  # @todo fix access
             child_node = node_store.in_scope(node_id)
 
-            decorator = node_store.create_format_decorator(node.get_command(), self)
+            decorator = node_store.create_format_decorator(child_node.get_command(), self)
             decorator.generate(child_node, file)
 
             node_store.out_scope(child_node)
