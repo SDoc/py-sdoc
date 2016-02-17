@@ -7,60 +7,50 @@ Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
 from sdoc.sdoc2 import node_store
-from sdoc.sdoc2.node.HeadingNode import HeadingNode
-from sdoc.sdoc2.node.Sub1SectionNode import Sub1SectionNode
+from sdoc.sdoc2.node.Node import Node
 
 
-class SectionNode(HeadingNode):
+class FigureNode(Node):
     """
-    SDoc2 node for sections.
+    SDoc2 node for figures.
     """
     # ------------------------------------------------------------------------------------------------------------------
     def __init__(self, options, argument):
         """
         Object constructor.
 
-        :param dict[str,str] options: The options of this section.
-        :param str argument: The title of this section.
+        :param dict[str,str] options: The options of this figure.
+        :param str argument: Not used.
         """
-        super().__init__('section', options, argument)
+        super().__init__('figure', options, argument)
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_command(self):
         """
-        Returns the command of this node, i.e. section.
+        Returns the command of this node, i.e. smile.
 
         :rtype: str
         """
-        return 'section'
+        return 'figure'
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_hierarchy_level(self):
+    def is_block_command(self):
         """
-        Returns 2.
+        Returns False.
 
-        :rtype: int
+        :rtype: bool
         """
-        return 2
+        return False
 
     # ------------------------------------------------------------------------------------------------------------------
-    def set_numbers(self, level):
+    def is_inline_command(self):
         """
-        Sets numbers to subsection nodes.
+        Returns True.
 
-        :param str level: The level of hierarchy.
+        :rtype: bool
         """
-        self._options['number'] = level
+        return True
 
-        number = 1
-        for node_id in self._child_nodes:
-            node = node_store.in_scope(node_id)
-
-            if isinstance(node, Sub1SectionNode):
-                node.set_numbers(self._options['number'] + '.' + str(number))
-                number += 1
-
-            node_store.out_scope(node)
 
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_inline_command('section', SectionNode)
+node_store.register_inline_command('figure', FigureNode)

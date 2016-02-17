@@ -42,6 +42,16 @@ class Sub5SectionNode(HeadingNode):
         """
         return 7
 
+    # ------------------------------------------------------------------------------------------------------------------
+    def set_numbers(self, level):
+        """
+        Sets numbers to sub-sub-sub-sub-subsection nodes.
+
+        :param str level: The level of hierarchy.
+        """
+        self._options['number'] = level
+
+
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_inline_command('sub5section', Sub5SectionNode)
 node_store.register_inline_command('subsubsubsubsubsection', Sub5SectionNode)

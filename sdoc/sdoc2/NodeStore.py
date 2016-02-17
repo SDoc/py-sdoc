@@ -358,6 +358,7 @@ class NodeStore:
         Note: Temporary solution. In phase 2 (when implementing other output formats) replace with decorator pattern or
               inheritance.
         """
+        self.nodes[1].set_numbers()
         file = open('output.html', 'w')
 
         decorator = self.create_format_decorator('document', self.nodes[1])
