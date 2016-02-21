@@ -28,18 +28,6 @@ class ItemNode(Node):
         self._hierarchy_level = 0
 
     # ------------------------------------------------------------------------------------------------------------------
-    def generate_html(self, file):
-        """
-        Generates the HTML code for this node.
-
-        :param file file: The output stream to with the generated HTML will be written.
-        """
-        file.write('<li>')
-        self.prepare_content_tree()
-        super().generate_html(file)
-        file.write('</li>')
-
-    # ------------------------------------------------------------------------------------------------------------------
     def get_command(self):
         """
         Returns the command of this node, i.e. item.

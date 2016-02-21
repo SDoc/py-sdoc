@@ -10,7 +10,6 @@ from urllib import request, error
 import httplib2
 from sdoc.sdoc2 import node_store
 from sdoc.sdoc2.node.Node import Node
-from sdoc.helper.Html import Html
 
 
 class HyperlinkNode(Node):
@@ -26,15 +25,6 @@ class HyperlinkNode(Node):
         :param str argument: Not used.
         """
         super().__init__('hyperlink', options, argument)
-
-    # ------------------------------------------------------------------------------------------------------------------
-    def generate_html(self, file):
-        """
-        Generates the HTML code for this node.
-
-        :param file file: The output stream to with the generated HTML will be written.
-        """
-        file.write(Html.generate_element('a', self.get_html_attributes(), self._argument))
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_html_attributes(self):
@@ -108,6 +98,15 @@ class HyperlinkNode(Node):
 
         except error.URLError:
             print("Warning! - Invalid url address: '%s'" % self._options['href'])
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def get_command(self):
+        """
+        Returns the command of this node, i.e. hyperlink.
+
+        :rtype: str
+        """
+        return 'hyperlink'
 
     # ------------------------------------------------------------------------------------------------------------------
     def is_phrasing(self):

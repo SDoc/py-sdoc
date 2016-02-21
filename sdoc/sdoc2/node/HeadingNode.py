@@ -7,7 +7,6 @@ Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
 import sdoc
-from sdoc.helper.Html import Html
 from sdoc.sdoc2 import node_store
 from sdoc.sdoc2.node.Node import Node
 from sdoc.sdoc2.node.TextNode import TextNode
@@ -28,17 +27,6 @@ class HeadingNode(Node):
         :param str argument: The title of this heading.
         """
         super().__init__(name, options, argument)
-
-    # ------------------------------------------------------------------------------------------------------------------
-    def generate_html(self, file):
-        """
-        Generates the HTML code for this node.
-
-        :param file file: The output stream to with the generated HTML will be written.
-        """
-        file.write(Html.generate_element('h%d' % self.get_hierarchy_level(), {}, self._argument))
-
-        super().generate_html(file)
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_hierarchy_name(self):

@@ -360,7 +360,7 @@ class NodeStore:
         self.nodes[1].prepare_content_tree()
 
     # ------------------------------------------------------------------------------------------------------------------
-    def generate_html(self):
+    def generate(self):
         """
         Generates HTML code based on the content tree.
 
@@ -369,14 +369,8 @@ class NodeStore:
         """
         file = open('output.html', 'w')
 
-        file.write('<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="NL" lang="NL">')
-        file.write('<head><meta charset="UTF-8"/><title>sdoc</title></head>')
-        file.write('<body>')
+        decorator = self.create_format_decorator('document', self.nodes[1])
+        decorator.generate(self.nodes[1], file)
 
-        self.nodes[1].generate_html(file)
-
-        file.write('</body>')
-        file.write('</html>')
-        file.close()
 
 # ----------------------------------------------------------------------------------------------------------------------
