@@ -1,0 +1,19 @@
+language: python
+python:
+  - '3.2'
+  - '3.3'
+  - '3.4'
+  - '3.5'
+  - '3.5-dev'
+  - 'nightly'
+  - 'pypy'
+
+sudo: true
+
+install:
+  - cd $HOME
+  - pip3 install antlr4-python3-runtime
+
+script: 
+  - cd $TRAVIS_BUILD_DIR
+  - python3 -m unittest test/*.py
