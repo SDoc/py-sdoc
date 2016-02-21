@@ -1,5 +1,6 @@
 **/__pycache__
 .idea/
+SDoc.egg-info/
 bin/phing
 dist/
 doc/

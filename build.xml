@@ -70,7 +70,7 @@
     </target>
 
     <!-- Uploads a distribution to PyPI -->
-    <target name="upload" depends="dist">
+    <target name="upload">
         <loadfile property="VERSION" file=".version"/>
         <exec command="twine upload dist/SDoc-${VERSION}.tar.gz" passthru="true" checkreturn="true"/>
     </target>
