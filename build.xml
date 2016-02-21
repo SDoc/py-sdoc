@@ -1,5 +1,5 @@
 <project name="SDoc" default="build" basedir=".">
-    <taskdef name="readSemanticVersion" classname="vendor.setbased.phing-extensions.src.Task.readSemanticVersionTask"/>
+    <taskdef name="ReadSemanticVersion" classname="vendor.setbased.phing-extensions.src.Task.ReadSemanticVersionTask"/>
     <property name="BUILD_DIR" value="./build"/>
     <property name="VERSION" value="0.0.0"/>
     <property name="ANTLR4" value="java -jar /usr/local/lib/antlr-4.5.1-complete.jar"/>

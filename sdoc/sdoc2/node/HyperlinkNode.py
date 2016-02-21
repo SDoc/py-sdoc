@@ -34,7 +34,6 @@ class HyperlinkNode(Node):
 
         :param file file: The output stream to with the generated HTML will be written.
         """
-
         file.write(Html.generate_element('a', self.get_html_attributes(), self._argument))
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -106,13 +105,14 @@ class HyperlinkNode(Node):
                     # If host of redirected is the same, reset 'href' option
                     if response.getheader('Location').startswith('https://' + url):
                         self._options['href'].replace('http://', 'https://')
+
         except error.URLError:
             print("Warning! - Invalid url address: '%s'" % self._options['href'])
 
     # ------------------------------------------------------------------------------------------------------------------
     def is_phrasing(self):
         """
-        Returns False.
+        Returns True.
 
         :rtype: bool
         """
@@ -135,6 +135,7 @@ class HyperlinkNode(Node):
         :rtype: bool
         """
         return False
+
 
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_inline_command('hyperlink', HyperlinkNode)
