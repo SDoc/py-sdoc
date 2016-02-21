@@ -87,6 +87,15 @@ class Node:
         return False
 
     # ------------------------------------------------------------------------------------------------------------------
+    def get_enumerable_name(self):
+        """
+        Returns name of an enumerable node.
+
+        :type: str|bool
+        """
+        return False
+
+    # ------------------------------------------------------------------------------------------------------------------
     @abc.abstractmethod
     def get_command(self):
         """
@@ -183,5 +192,15 @@ class Node:
             node.prepare_content_tree()
 
             node_store.out_scope(node)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def enumerate(self, numbers):
+        for node_id in self._child_nodes:
+            node = node_store.in_scope(node_id)
+
+            node.enumerate(numbers)
+
+            node_store.out_scope(node)
+
 
 # ----------------------------------------------------------------------------------------------------------------------

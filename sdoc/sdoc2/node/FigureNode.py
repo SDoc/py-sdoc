@@ -34,6 +34,15 @@ class FigureNode(Node):
         return 'figure'
 
     # ------------------------------------------------------------------------------------------------------------------
+    def get_enumerable_name(self):
+        """
+        Returns the enumerable name of this node, i.e. item.
+
+        :type: str
+        """
+        return 'figure'
+
+    # ------------------------------------------------------------------------------------------------------------------
     def is_block_command(self):
         """
         Returns False.
@@ -51,6 +60,23 @@ class FigureNode(Node):
         """
         return True
 
+    # ------------------------------------------------------------------------------------------------------------------
+    def enumerate(self, numbers):
+        # implement similar method get_current_enumeration
+        # use heading.get_current_enumeration(1) for getting chapter number
+        # if first level different => restart from 1
+        # else increment
+
+        # If we don't have figures count, create it.
+        if 'figures' not in numbers:
+            numbers['figures'] = 1
+
+        # Set number on figure node.
+        chapter = numbers['sectioning'].split('.')[0]
+        self._options['number'] = chapter + '.' + str(numbers['figures'])
+
+        # Increment number.
+        numbers['figures'] += 1
 
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_inline_command('figure', FigureNode)

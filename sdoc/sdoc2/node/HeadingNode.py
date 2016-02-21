@@ -38,6 +38,15 @@ class HeadingNode(Node):
         return 'sectioning'
 
     # ------------------------------------------------------------------------------------------------------------------
+    def get_enumerable_name(self):
+        """
+        Returns the enumerable name of this node, i.e. sectioning.
+
+        :type: str
+        """
+        return 'sectioning'
+
+    # ------------------------------------------------------------------------------------------------------------------
     def is_block_command(self):
         """
         Returns False.
@@ -54,6 +63,53 @@ class HeadingNode(Node):
         :rtype: bool
         """
         return True
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def get_current_enumeration(self, level):
+        """
+        Returns the current heading number at a level.
+
+        :param int level: The heading level.
+
+        :rtype: str
+        """
+        pass
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def enumerate(self, numbers):
+        if 'sectioning' not in numbers:
+            numbers['sectioning'] = '1'
+        else:
+            # Split info to set level.
+            numbers_level = numbers['sectioning'].split('.')
+
+            if len(numbers_level) == self.get_hierarchy_level():
+                numbers_level[-1] = str(int(numbers_level[-1]) + 1)
+            else:
+                numbers_level.append('1')
+
+            numbers['sectioning'] = '.'.join(numbers_level)
+
+        # xxx use get_current_enumeration
+        # xxx increment last level.
+
+        # Set number to node.
+        self._options['number'] = numbers['sectioning']
+
+        print("======")
+        print(numbers['sectioning'])
+        if 'figures' in numbers:
+            print(numbers['figures'])
+
+        # Jump to another level.
+        super().enumerate(numbers)
+
+        # Set number of figures to 1.
+        numbers['figures'] = 1
+
+        # Trim numbers to get_hierarchy_level.
+        numbers_level = numbers['sectioning'].split('.')
+        numbers['sectioning'] = '.'.join(numbers_level[:self.get_hierarchy_level()])
 
     # ------------------------------------------------------------------------------------------------------------------
     def prepare_content_tree(self):

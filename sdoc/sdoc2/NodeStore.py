@@ -62,6 +62,14 @@ class NodeStore:
         :type: dict[int,sdoc.sdoc2.node.Node.Node]
         """
 
+        self._enumerable_numbers = {}
+        """
+        XXXX
+        XXX {'sectioning' = '1.1', 'figure' = '1.4'}
+
+        :type: dict[str,str]
+        """
+
     # ------------------------------------------------------------------------------------------------------------------
     def end_block_node(self, command):
         """
@@ -358,10 +366,18 @@ class NodeStore:
         Note: Temporary solution. In phase 2 (when implementing other output formats) replace with decorator pattern or
               inheritance.
         """
-        self.nodes[1].set_numbers()
+        self.enumerate()
         file = open('output.html', 'w')
 
         decorator = self.create_format_decorator('document', self.nodes[1])
         decorator.generate(self.nodes[1], file)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def enumerate(self):
+        """
+        Sets numbers to numerable nodes.
+        """
+        self.nodes[1].enumerate(self._enumerable_numbers)
+
 
 # ----------------------------------------------------------------------------------------------------------------------

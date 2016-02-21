@@ -8,6 +8,7 @@ Licence MIT
 # ----------------------------------------------------------------------------------------------------------------------
 from sdoc.sdoc2 import node_store
 from sdoc.sdoc2.node.HeadingNode import HeadingNode
+from sdoc.sdoc2.node.Node import Node
 from sdoc.sdoc2.node.TextNode import TextNode
 
 
@@ -42,6 +43,10 @@ class ParagraphNode(HeadingNode):
         :rtype: bool
         """
         return False
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def enumerate(self, numbers):
+        pass
 
     # ------------------------------------------------------------------------------------------------------------------
     def is_inline_command(self):

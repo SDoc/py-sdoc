@@ -23,7 +23,8 @@ class FigureHtmlDecorator(HtmlDecorator):
         :param sdoc.sdoc2.node.FigureNode.FigureNode node: The figure node.
         :param file file: The output file.
         """
-        file.write(Html.generate_element('b', {}, 'FIGURE'))
+        text_in_tag = '%s %s' % (node._options['number'], '---FIGURE---')
+        file.write(Html.generate_element('h3', {}, text_in_tag))
 
         super().generate(node, file)
 

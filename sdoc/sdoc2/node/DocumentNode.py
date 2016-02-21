@@ -8,7 +8,6 @@ Licence MIT
 # ----------------------------------------------------------------------------------------------------------------------
 from sdoc.sdoc2 import node_store
 from sdoc.sdoc2.node.Node import Node
-from sdoc.sdoc2.node.ChapterNode import ChapterNode
 
 
 class DocumentNode(Node):
@@ -85,21 +84,6 @@ class DocumentNode(Node):
         :rtype: bool
         """
         return False
-
-    # ------------------------------------------------------------------------------------------------------------------
-    def set_numbers(self):
-        """
-        Sets numbers to chapter nodes.
-        """
-        number = 1
-        for node_id in self._child_nodes:
-            node = node_store.in_scope(node_id)
-
-            if isinstance(node, ChapterNode):
-                node.set_numbers(str(number))
-                number += 1
-
-            node_store.out_scope(node)
 
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_block_command('document', DocumentNode)
