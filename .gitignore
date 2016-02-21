@@ -1,8 +1,8 @@
 **/__pycache__
 .idea/
 bin/phing
-bin/yuicompressor.jar
-doc
+dist/
+doc/
 vendor/
 composer.lock
 test*.*

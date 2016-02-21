@@ -72,7 +72,7 @@
     <!-- Uploads a distribution to PyPI -->
     <target name="upload" depends="dist">
         <loadfile property="VERSION" file=".version"/>
-        <exec command="twine upload dist/PyStratum-${VERSION}.tar.gz" passthru="true" checkreturn="true"/>
+        <exec command="twine upload dist/SDoc-${VERSION}.tar.gz" passthru="true" checkreturn="true"/>
     </target>
 
     <target name="antlr1">
