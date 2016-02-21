@@ -15,6 +15,7 @@ class ItemizeNode(Node):
     """
     SDoc2 node for itemize.
     """
+
     # ------------------------------------------------------------------------------------------------------------------
     def __init__(self, options):
         """
@@ -23,6 +24,10 @@ class ItemizeNode(Node):
         :param dict[str,str] options: The options of this itemize.
         """
         super().__init__('itemize', options)
+
+        self._hierarchy_level = 0
+
+        node_store.first = True
 
     # ------------------------------------------------------------------------------------------------------------------
     def generate_html(self, file):
@@ -45,13 +50,17 @@ class ItemizeNode(Node):
         return 'itemize'
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_hierarchy_level(self):
+    def get_hierarchy_level(self, parent_hierarchy_level=-1):
         """
-        Returns 0.
+        Returns parent_hierarchy_level + 1.
+
+        :param int parent_hierarchy_level: The level of the parent in the hierarchy.
 
         :rtype: int
         """
-        return 0
+        self._hierarchy_level = parent_hierarchy_level + 1
+
+        return self._hierarchy_level
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_hierarchy_name(self):
@@ -78,7 +87,7 @@ class ItemizeNode(Node):
 
         :rtype: bool
         """
-        return True
+        return self._hierarchy_level == 0
 
     # ------------------------------------------------------------------------------------------------------------------
     def is_inline_command(self):
@@ -110,6 +119,7 @@ class ItemizeNode(Node):
                 raise RuntimeError("Node: id:%s, %s is not instance of 'ItemNode'" % (str(node.id), node.name))
 
             node_store.out_scope(node)
+
 
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_block_command('itemize', ItemizeNode)

@@ -34,7 +34,7 @@ class Sub5SectionNode(HeadingNode):
         return 'sub5section'
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_hierarchy_level(self):
+    def get_hierarchy_level(self, parent_hierarchy_level=-1):
         """
         Returns 7.
 

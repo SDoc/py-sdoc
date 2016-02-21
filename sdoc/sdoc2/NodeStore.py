@@ -143,7 +143,7 @@ class NodeStore:
         self.block_creators[command] = constructor
 
     # ------------------------------------------------------------------------------------------------------------------
-    def create_inline_node(self, command, options=dict, argument=''):
+    def create_inline_node(self, command, options=dict, argument='', position=None):
         """
         Creates a node based an inline command.
 
@@ -152,16 +152,20 @@ class NodeStore:
         :param str command: The inline command.
         :param dict options: The options.
         :param str argument: The argument of the inline command.
+        :param None|sdoc.sdoc2.Position.Position position: The position of the node definition.
 
         :rtype: sdoc.sdoc2.node.Node.Node
         """
         if command not in self.inline_creators:
-            # @todo position
-            raise RuntimeError("Unknown inline command '%s'." % command)
+            # @todo set error status
+            constructor = self.block_creators['unknown']
 
-        # Create the new node.
-        constructor = self.inline_creators[command]
+        else:
+            # Create the new node.
+            constructor = self.inline_creators[command]
+
         node = constructor(options, argument)
+        node.position = position
 
         # Store the node and assign ID.
         self.store_node(node)
@@ -169,7 +173,7 @@ class NodeStore:
         return node
 
     # ------------------------------------------------------------------------------------------------------------------
-    def create_block_node(self, command, options=dict):
+    def create_block_node(self, command, options=dict, position=None):
         """
         Creates a node based on a block command.
 
@@ -177,16 +181,20 @@ class NodeStore:
 
         :param str command: The inline command.
         :param dict[str,str] options: The options.
+        :param None|sdoc.sdoc2.Position.Position position: The position of the node definition.
 
         :rtype: sdoc.sdoc2.node.Node.Node
         """
         if command not in self.block_creators:
-            # @todo position
-            raise RuntimeError("Unknown block command '%s'." % command)
+            constructor = self.block_creators['unknown']
+            # @todo set error status
 
-        # Create the new node.
-        constructor = self.block_creators[command]
+        else:
+            # Create the new node.
+            constructor = self.block_creators[command]
+
         node = constructor(options)
+        node.position = position
 
         # Store the node and assign ID.
         self.store_node(node)
@@ -194,18 +202,19 @@ class NodeStore:
         return node
 
     # ------------------------------------------------------------------------------------------------------------------
-    def append_inline_node(self, command, options, argument):
+    def append_inline_node(self, command, options, argument, position):
         """
         Creates a node based an inline command and appends it to the end of the content tree.
 
         :param str command: The inline command.
         :param dict options: The options.
         :param str argument: The argument of the inline command.
+        :param sdoc.sdoc2.Position.Position position: The position of the node definition.
 
         :rtype: sdoc.sdoc2.node.Node.Node
         """
         # Create the inline node.
-        node = self.create_inline_node(command, options, argument)
+        node = self.create_inline_node(command, options, argument, position)
 
         # Add the node to the node store.
         self._append_to_content_tree(node)
@@ -213,17 +222,18 @@ class NodeStore:
         return node
 
     # ------------------------------------------------------------------------------------------------------------------
-    def append_block_node(self, command, options):
+    def append_block_node(self, command, options, position):
         """
         Creates a node based on a block command and appends it to the end of the content tree.
 
         :param str command: The inline command.
         :param dict options: The options.
+        :param sdoc.sdoc2.Position.Position position: The position of the node definition.
 
         :rtype: sdoc.sdoc2.node.Node.Node
         """
         # Create the block node.
-        node = self.create_block_node(command, options)
+        node = self.create_block_node(command, options, position)
 
         # Add the node to the node store.
         self._append_to_content_tree(node)
@@ -260,7 +270,6 @@ class NodeStore:
         :param sdoc.sdoc2.node.Node.Node node: The new node.
         """
         node_hierarchy_name = node.get_hierarchy_name()
-        node_hierarchy_level = node.get_hierarchy_level()
         parent_found = False
         while self.nested_nodes and not parent_found:
             parent_node = self.nested_nodes[-1]
@@ -269,13 +278,12 @@ class NodeStore:
                 if node.is_hierarchy_root():
                     parent_found = True
                 else:
-                    # @todo position of this node
-                    # @todo position of block node.
-                    raise RuntimeError("Improper nesting of node '%s' and node '%s'." %
-                                       (parent_node.name, node.name))
+                    raise RuntimeError("Improper nesting of node '%s' at %s and node '%s' at %s." %
+                                       (parent_node.name, parent_node.position, node.name, node.position))
 
             if not parent_found:
                 parent_hierarchy_level = parent_node.get_hierarchy_level()
+                node_hierarchy_level = node.get_hierarchy_level(parent_hierarchy_level)
                 if parent_hierarchy_level >= node_hierarchy_level and len(self.nested_nodes) > 1:
                     self.nested_nodes.pop()
                 else:
@@ -283,11 +291,12 @@ class NodeStore:
 
         parent_node = self.nested_nodes[-1]
         parent_hierarchy_level = parent_node.get_hierarchy_level()
+        node_hierarchy_level = node.get_hierarchy_level(parent_hierarchy_level)
 
         if node_hierarchy_level - parent_hierarchy_level > 1:
             # @todo position
-            print("Warning improper nesting of levels: %d %d." %
-                  (parent_hierarchy_level, node_hierarchy_level))
+            print("Warning improper nesting of levels: %d at %s and %d at %s." %
+                  (parent_hierarchy_level, parent_node.position, node_hierarchy_level, node.position))
 
     # ------------------------------------------------------------------------------------------------------------------
     def store_node(self, node):

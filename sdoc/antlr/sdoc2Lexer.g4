@@ -12,7 +12,7 @@ END:        '\\end'      -> pushMode(MODE_BLOCK_ARG);
 POSITION:   '\\position' -> pushMode(MODE_INLINE_ARG);
 
 // All other tokens starting with \ are considered SDoc2 line commands.
-SDOC2_COMMAND: '\\'[a-z_]+  -> pushMode(MODE_INLINE_ARG);
+SDOC2_COMMAND: '\\'[a-z_][a-z0-9_]*  -> pushMode(MODE_INLINE_ARG);
 
 
 mode MODE_BLOCK_ARG;

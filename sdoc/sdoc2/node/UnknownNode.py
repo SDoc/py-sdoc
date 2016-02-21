@@ -10,67 +10,51 @@ from sdoc.sdoc2 import node_store
 from sdoc.sdoc2.node.Node import Node
 
 
-class DocumentNode(Node):
+class UnknownNode(Node):
     """
-    SDoc2 node for documents.
+    SDoc2 node for development testing.
     """
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, options):
+    def __init__(self, options, argument=''):
         """
         Object constructor.
 
-        :param dict[str,str] options: The options of this document.
+        :param dict[str,str] options: The options of this smile.
+        :param str argument: Not used.
         """
-        super().__init__('document', options)
+        super().__init__('unknown', options, argument)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def generate_html(self, file):
+        """
+        Generates the HTML code for this node.
+
+        :param file file: The output stream to with the generated HTML will be written.
+        """
+        file.write('??')
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_command(self):
         """
-        Returns the command of this node, i.e. document.
+        Returns the command of this node, i.e. smile.
 
         :rtype: str
         """
-        return 'document'
-
-    # ------------------------------------------------------------------------------------------------------------------
-    def get_hierarchy_level(self, parent_hierarchy_level=-1):
-        """
-        Returns 0.
-
-        :rtype: int
-        """
-        return 1
-
-    # ------------------------------------------------------------------------------------------------------------------
-    def get_hierarchy_name(self):
-        """
-        Returns 'sectioning'.
-
-        :rtype: str
-        """
-        return 'sectioning'
+        return 'unknown'
 
     # ------------------------------------------------------------------------------------------------------------------
     def is_block_command(self):
         """
-        Returns True.
+        Returns False.
 
         :rtype: bool
         """
-        return True
-
-    # ------------------------------------------------------------------------------------------------------------------
-    def is_document_root(self):
-        """
-        Returns True.
-        :rtype: bool
-        """
-        return True
+        return False
 
     # ------------------------------------------------------------------------------------------------------------------
     def is_inline_command(self):
         """
-        Returns False.
+        Returns True.
 
         :rtype: bool
         """
@@ -79,11 +63,13 @@ class DocumentNode(Node):
     # ------------------------------------------------------------------------------------------------------------------
     def is_phrasing(self):
         """
-        Returns False.
+        Returns True.
 
         :rtype: bool
         """
-        return False
+        return True
+
 
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_block_command('document', DocumentNode)
+node_store.register_block_command('unknown', UnknownNode)
+node_store.register_inline_command('unknown', UnknownNode)

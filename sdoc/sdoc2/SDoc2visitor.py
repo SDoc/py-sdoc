@@ -6,8 +6,11 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
+import re
+
 from sdoc import sdoc2
 from sdoc.antlr.sdoc2ParserVisitor import sdoc2ParserVisitor
+from sdoc.sdoc2.Position import Position
 
 
 class SDoc2Visitor(sdoc2ParserVisitor):
@@ -20,6 +23,41 @@ class SDoc2Visitor(sdoc2ParserVisitor):
         self._output = None
         """
         Object for streaming the generated output. This object MUST implement the write method.
+        """
+
+        self._sdoc1_file_name = ''
+        """
+        The original file name at SDoc1 level.
+
+        :type: str
+        """
+
+        self._sdoc1_line = 0
+        """
+        The offset of for computing the current line at SDoc1 level.
+
+        :type: int
+        """
+
+        self._sdoc1_column = 0
+        """
+        The offset of for computing the current column at SDoc1 level.
+
+        :type: int
+        """
+
+        self._sdoc2_line = 0
+        """
+        The line position of the last \position command.
+
+        :type: int
+        """
+
+        self._sdoc2_column = 0
+        """
+        The last column position of the last \position command.
+
+        :type: int
         """
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -53,6 +91,25 @@ class SDoc2Visitor(sdoc2ParserVisitor):
         return options
 
     # ------------------------------------------------------------------------------------------------------------------
+    def get_position(self, token):
+        """
+        Returns the position of the token in the original SDoc1 source file.
+
+        :param token:
+
+        :rtype: sdoc.sdoc2.Position.Position
+        """
+        line_number = token.line
+        column = token.column
+
+        if self._sdoc2_line == line_number:
+            column = self._sdoc1_column + (column - self._sdoc2_column)
+
+        line_number = self._sdoc1_line + (line_number - self._sdoc2_line)
+
+        return Position(self._sdoc1_file_name, line_number, column, -1, -1)
+
+    # ------------------------------------------------------------------------------------------------------------------
     def set_output(self, output):
         """
         Sets the object for streaming the generated output.
@@ -80,7 +137,7 @@ class SDoc2Visitor(sdoc2ParserVisitor):
         """
         command = ctx.BLOCK_ARG_ARG().getText()
 
-        sdoc2.node_store.append_block_node(command, self._get_options(ctx))
+        sdoc2.node_store.append_block_node(command, self._get_options(ctx), self.get_position(ctx.start))
 
     # ------------------------------------------------------------------------------------------------------------------
     def visitCmd_end(self, ctx):
@@ -94,6 +151,26 @@ class SDoc2Visitor(sdoc2ParserVisitor):
         sdoc2.node_store.end_block_node(command)
 
     # ------------------------------------------------------------------------------------------------------------------
+    def visitCmd_position(self, ctx):
+        """
+        Visit a parse tree produced by a position command.
+
+        :param sdoc.antlr.sdoc2Parser.sdoc2Parser.Cmd_positionContext ctx: The parse tree.
+        """
+        argument = ctx.INLINE_ARG_ARG()
+        parts = re.match(r'(.+):([0-9]+)\.([0-9]+)', str(argument))
+        if not parts:
+            raise RuntimeError('%s is not a valid position' % argument)
+
+        self._sdoc1_file_name = parts.group(1)
+        self._sdoc1_line = int(parts.group(2))
+        self._sdoc1_column = int(parts.group(3))
+
+        token = ctx.stop
+        self._sdoc2_line = token.line
+        self._sdoc2_column = token.column + len(token.text)
+
+    # ------------------------------------------------------------------------------------------------------------------
     def visitCmd_sdoc2(self, ctx):
         """
         Visit a parse tree produced by a inline command.
@@ -103,7 +180,10 @@ class SDoc2Visitor(sdoc2ParserVisitor):
         command = ctx.SDOC2_COMMAND().getText()
         argument = ctx.INLINE_ARG_ARG()
 
-        sdoc2.node_store.append_inline_node(command[1:], self._get_options(ctx), argument.getText() if argument else '')
+        sdoc2.node_store.append_inline_node(command[1:],
+                                            self._get_options(ctx),
+                                            argument.getText() if argument else '',
+                                            self.get_position(ctx.start))
 
     # ------------------------------------------------------------------------------------------------------------------
     def visitText(self, ctx):
@@ -112,6 +192,6 @@ class SDoc2Visitor(sdoc2ParserVisitor):
 
         :param sdoc.antlr.sdoc2Parser.sdoc2Parser.TextContext ctx: The parse tree.
         """
-        sdoc2.node_store.append_inline_node('TEXT', {}, ctx.TEXT().getText())
+        sdoc2.node_store.append_inline_node('TEXT', {}, ctx.TEXT().getText(), self.get_position(ctx.start))
 
 # ----------------------------------------------------------------------------------------------------------------------

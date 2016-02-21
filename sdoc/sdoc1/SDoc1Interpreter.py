@@ -6,6 +6,8 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
+import os
+
 import antlr4
 
 from sdoc.antlr.sdoc1Lexer import sdoc1Lexer
@@ -32,7 +34,7 @@ class SDoc1Interpreter:
         tokens = antlr4.CommonTokenStream(lexer)
         parser = sdoc1Parser(tokens)
         tree = parser.sdoc()
-        visitor = SDoc1Visitor()
+        visitor = SDoc1Visitor(root_dir=os.path.dirname(os.path.realpath(infile)))
 
         visitor.set_output(out_stream)
         visitor.visit(tree)

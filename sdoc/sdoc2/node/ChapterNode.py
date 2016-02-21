@@ -36,7 +36,7 @@ class ChapterNode(HeadingNode):
         return 'chapter'
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_hierarchy_level(self):
+    def get_hierarchy_level(self, parent_hierarchy_level=-1):
         """
         Returns 1.
 
