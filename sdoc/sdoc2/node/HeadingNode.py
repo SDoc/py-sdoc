@@ -65,51 +65,118 @@ class HeadingNode(Node):
         return True
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_current_enumeration(self, level):
+    def first_node_numerate(self, numbers):
         """
-        Returns the current heading number at a level.
+        Creates a first heading node number.
 
-        :param int level: The heading level.
+        :param dict[str,str] numbers: The number of last node.
 
         :rtype: str
         """
-        pass
+        if self.get_hierarchy_level() == 1:
+            numbers['heading'] = '1'
+
+            return numbers['heading']
+
+        else:
+            # If we start not from chapter add additional '0' for missing headers.
+            arr = []
+            for i in range(self.get_hierarchy_level()-1):
+                arr.append('0')
+            # And set '1' to the header.
+            arr.append('1')
+
+            return '.'.join(arr)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def other_nodes_numerate(self, numbers):
+        """
+        Creates number to all heading nodes exclude first.
+
+        :param dict[str,str] numbers: The number of last node.
+
+        :rtype: str
+        """
+        numbers_level = numbers['heading'].split('.')
+
+        # If hierarchy level bigger than we had in numeration, add additional '0's and '1' in the
+        # end to new header.
+        if self.get_hierarchy_level() > len(numbers_level):
+            adding = self.get_hierarchy_level() - len(numbers_level)
+            for i in range(adding-1):
+                numbers_level.append('0')
+            numbers_level.append('1')
+
+        # If we stays on the same level, increment number of last header number.
+        elif self.get_hierarchy_level() == len(numbers_level):
+            numbers_level[-1] = str(int(numbers_level[-1]) + 1)
+
+        # Add new number of level if we returned to same level.
+        else:
+            numbers_level = list()
+            numbers_level.append('1')
+
+        return '.'.join(numbers_level)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    @staticmethod
+    def trim_levels(string_of_numbers):
+        """
+        Strips all starting '0's and add one starting '0' symbol if number starts from '0'.
+
+        :param str string_of_numbers: String with header node number.
+
+        :rtype: str
+        """
+        if string_of_numbers.startswith('0'):
+            string_of_numbers = string_of_numbers.lstrip('0.')
+            string_of_numbers = '0.%s' % string_of_numbers
+
+        return string_of_numbers
 
     # ------------------------------------------------------------------------------------------------------------------
     def enumerate(self, numbers):
-        if 'sectioning' not in numbers:
-            numbers['sectioning'] = '1'
+        """
+        Sets number to heading nodes.
+
+        :param dict[str,str] numbers: The number of last node.
+        """
+
+        # Method1 get_numeration(numbers,level)
+        # if numbers['heading'] not set:
+        #  get_numeration(numbers,3) => '0.0.0'
+        #  get_numeration(numbers,1) => '0'
+
+        # if numbers['heading'] is '1'
+        #  get_numeration(numbers,3) => '1.0.0'
+        #  get_numeration(numbers,2) => '1.0.0'
+        #  get_numeration(numbers,1) => '1'
+
+        # if numbers['heading'] is '1.2.3.4'
+        #  get_numeration(numbers,3) => '1.2.3'
+        #  get_numeration(numbers,2) => '1.2'
+        #  get_numeration(numbers,1) => '1'
+
+        # Method2 increment_last_level(numbers)
+        # '0' => '1'
+        # '1' => '2'
+        # '1.0.0.0' => '1.0.0.1'
+        # '1.2.3.4' => '1.2.3.4'
+
+        if 'heading' not in numbers:
+            numbers['heading'] = self.first_node_numerate(numbers)
         else:
-            # Split info to set level.
-            numbers_level = numbers['sectioning'].split('.')
+            numbers['heading'] = self.other_nodes_numerate(numbers)
 
-            if len(numbers_level) == self.get_hierarchy_level():
-                numbers_level[-1] = str(int(numbers_level[-1]) + 1)
-            else:
-                numbers_level.append('1')
-
-            numbers['sectioning'] = '.'.join(numbers_level)
-
-        # xxx use get_current_enumeration
-        # xxx increment last level.
-
-        # Set number to node.
-        self._options['number'] = numbers['sectioning']
-
-        print("======")
-        print(numbers['sectioning'])
-        if 'figures' in numbers:
-            print(numbers['figures'])
+        # Set number to header.
+        self._options['number'] = self.trim_levels(numbers['heading'])
 
         # Jump to another level.
         super().enumerate(numbers)
 
-        # Set number of figures to 1.
-        numbers['figures'] = 1
-
         # Trim numbers to get_hierarchy_level.
-        numbers_level = numbers['sectioning'].split('.')
-        numbers['sectioning'] = '.'.join(numbers_level[:self.get_hierarchy_level()])
+        numbers_level = numbers['heading'].split('.')
+        numbers['heading'] = '.'.join(numbers_level[:self.get_hierarchy_level()])
 
     # ------------------------------------------------------------------------------------------------------------------
     def prepare_content_tree(self):

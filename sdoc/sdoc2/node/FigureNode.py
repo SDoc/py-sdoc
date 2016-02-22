@@ -61,22 +61,55 @@ class FigureNode(Node):
         return True
 
     # ------------------------------------------------------------------------------------------------------------------
+    def check_chapter(self, numbers):
+        """
+        Checks the chapter. If it changes, sets numeration to '1'.
+
+        :param dict[str,str] numbers: The number of last node.
+        """
+
+        numbers_level = numbers['heading'].split('.')
+        current_figure_number = numbers['figures'].split('.')
+
+        if numbers_level[0] > current_figure_number[0]:
+            current_figure_number[0] = numbers_level[0]
+            current_figure_number[-1] = '1'
+
+        numbers['figures'] = '.'.join(current_figure_number)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def increment_number(self, numbers):
+        """
+        Increments number of the current figure.
+
+        :param dict[str,str] numbers: The number of last node.
+        """
+        numbers_level = numbers['figures'].split('.')
+        numbers_level[-1] = str(int(numbers_level[-1]) + 1)
+        numbers['figures'] = '.'.join(numbers_level)
+
+    # ------------------------------------------------------------------------------------------------------------------
     def enumerate(self, numbers):
-        # implement similar method get_current_enumeration
-        # use heading.get_current_enumeration(1) for getting chapter number
-        # if first level different => restart from 1
-        # else increment
+        """
+        Sets number to the figure node.
+
+        :param dict[str,str] numbers: The number of last node.
+        """
+        # xxx use
+        # XXX HeadingNode.get_numeration(numbers,1)
 
         # If we don't have figures count, create it.
         if 'figures' not in numbers:
-            numbers['figures'] = 1
+            numbers['figures'] = '%s.%s' % (numbers['heading'].split('.')[0], '1')
+
+        # Reset number to 1 if chapter changed.
+        self.check_chapter(numbers)
 
         # Set number on figure node.
-        chapter = numbers['sectioning'].split('.')[0]
-        self._options['number'] = chapter + '.' + str(numbers['figures'])
+        self._options['number'] = numbers['figures']
 
         # Increment number.
-        numbers['figures'] += 1
+        self.increment_number(numbers)
 
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_inline_command('figure', FigureNode)
