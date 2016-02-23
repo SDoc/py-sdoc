@@ -29,4 +29,4 @@ class SmileHtmlFormatter(HtmlFormatter):
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_format_decorator('smile', 'html', SmileHtmlFormatter)
+node_store.register_formatter('smile', 'html', SmileHtmlFormatter)

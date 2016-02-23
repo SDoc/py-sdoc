@@ -29,4 +29,4 @@ class ItemHtmlFormatter(HtmlFormatter):
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_format_decorator('item', 'html', ItemHtmlFormatter)
+node_store.register_formatter('item', 'html', ItemHtmlFormatter)

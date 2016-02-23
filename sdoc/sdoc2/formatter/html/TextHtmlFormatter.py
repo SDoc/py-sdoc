@@ -29,4 +29,4 @@ class TextHtmlFormatter(HtmlFormatter):
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_format_decorator('TEXT', 'html', TextHtmlFormatter)
+node_store.register_formatter('TEXT', 'html', TextHtmlFormatter)

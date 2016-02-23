@@ -33,4 +33,4 @@ class DocumentHtmlFormatter(HtmlFormatter):
         file.close()
 
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_format_decorator('document', 'html', DocumentHtmlFormatter)
+node_store.register_formatter('document', 'html', DocumentHtmlFormatter)

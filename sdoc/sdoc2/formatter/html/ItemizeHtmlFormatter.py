@@ -28,4 +28,4 @@ class ItemizeHtmlFormatter(HtmlFormatter):
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_format_decorator('itemize', 'html', ItemizeHtmlFormatter)
+node_store.register_formatter('itemize', 'html', ItemizeHtmlFormatter)

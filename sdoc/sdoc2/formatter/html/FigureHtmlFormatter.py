@@ -30,4 +30,4 @@ class FigureHtmlFormatter(HtmlFormatter):
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_format_decorator('figure', 'html', FigureHtmlFormatter)
+node_store.register_formatter('figure', 'html', FigureHtmlFormatter)

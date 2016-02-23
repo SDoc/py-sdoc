@@ -27,4 +27,4 @@ class HyperlinkHtmlFormatter(HtmlFormatter):
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_format_decorator('hyperlink', 'html', HyperlinkHtmlFormatter)
+node_store.register_formatter('hyperlink', 'html', HyperlinkHtmlFormatter)

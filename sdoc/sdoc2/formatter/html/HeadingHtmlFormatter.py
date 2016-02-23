@@ -30,10 +30,10 @@ class HeadingHtmlFormatter(HtmlFormatter):
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_format_decorator('chapter', 'html', HeadingHtmlFormatter)
-node_store.register_format_decorator('section', 'html', HeadingHtmlFormatter)
-node_store.register_format_decorator('subsection', 'html', HeadingHtmlFormatter)
-node_store.register_format_decorator('sub2section', 'html', HeadingHtmlFormatter)
-node_store.register_format_decorator('sub3section', 'html', HeadingHtmlFormatter)
-node_store.register_format_decorator('sub4section', 'html', HeadingHtmlFormatter)
-node_store.register_format_decorator('sub5section', 'html', HeadingHtmlFormatter)
+node_store.register_formatter('chapter', 'html', HeadingHtmlFormatter)
+node_store.register_formatter('section', 'html', HeadingHtmlFormatter)
+node_store.register_formatter('subsection', 'html', HeadingHtmlFormatter)
+node_store.register_formatter('sub2section', 'html', HeadingHtmlFormatter)
+node_store.register_formatter('sub3section', 'html', HeadingHtmlFormatter)
+node_store.register_formatter('sub4section', 'html', HeadingHtmlFormatter)
+node_store.register_formatter('sub5section', 'html', HeadingHtmlFormatter)

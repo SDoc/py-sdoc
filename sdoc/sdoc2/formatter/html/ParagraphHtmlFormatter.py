@@ -28,4 +28,4 @@ class ParagraphHtmlFormatter(HtmlFormatter):
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_format_decorator('paragraph', 'html', ParagraphHtmlFormatter)
+node_store.register_formatter('paragraph', 'html', ParagraphHtmlFormatter)

@@ -41,9 +41,9 @@ class NodeStore:
         :type: str
         """
 
-        self.format_decorators = {}
+        self._formatters = {}
         """
-        Map from format to map from inline and block commands to output format decorator creators.
+        Map from format name to map from inline and block commands to format creators.
 
         :type: dict[str,dict[str,callable]]
         """
@@ -126,18 +126,18 @@ class NodeStore:
         self.inline_creators[command] = constructor
 
     # ------------------------------------------------------------------------------------------------------------------
-    def register_format_decorator(self, command, output_format, decorator):
+    def register_formatter(self, command, output_format, formatter):
         """
-        Registers a output format decorator constructor for an inline command.
+        Registers a output formatter constructor for a command.
 
-        :param str command: The name of the inline command.
-        :param str output_format: The output format the decorator generates.
-        :param callable decorator: The decorator for generating the content of the node in the output format.
+        :param str command: The name of the command.
+        :param str output_format: The output format the formatter generates.
+        :param callable formatter: The formatter for generating the content of the node in the output format.
         """
-        if output_format not in self.format_decorators:
-            self.format_decorators[output_format] = {}
+        if output_format not in self._formatters:
+            self._formatters[output_format] = {}
 
-        self.format_decorators[output_format][command] = decorator
+        self._formatters[output_format][command] = formatter
 
     # ------------------------------------------------------------------------------------------------------------------
     def register_block_command(self, command, constructor):
@@ -248,26 +248,26 @@ class NodeStore:
         return node
 
     # ------------------------------------------------------------------------------------------------------------------
-    def create_format_decorator(self, command, parent):
+    def create_formatter(self, command, parent):
         """
-        Creates a decorator for generating the output of nodes in the requested output format.
+        Creates a formatter for generating the output of nodes in the requested output format.
 
         :param str command: The inline of block command.
-        :param sdoc.sdoc2.formatter.Formatter.Formatter parent: The parent decorator.
+        :param sdoc.sdoc2.formatter.Formatter.Formatter parent: The parent formatter.
 
         :rtype: sdoc.sdoc2.formatter.Formatter.Formatter
         """
-        if self.format not in self.format_decorators:
+        if self.format not in self._formatters:
             raise RuntimeError("Unknown output format '%s'." % self.format)
 
-        if command not in self.format_decorators[self.format]:
-            # @todo use defaut none decorator with warning
-            raise RuntimeError("Unknown decorator '%s' for format '%s'." % command, self.format)
+        if command not in self._formatters[self.format]:
+            # @todo use default none decorator with warning
+            raise RuntimeError("Unknown formatter '%s' for format '%s'." % command, self.format)
 
-        constructor = self.format_decorators[self.format][command]
-        decorator = constructor(parent)
+        constructor = self._formatters[self.format][command]
+        formatter = constructor(parent)
 
-        return decorator
+        return formatter
 
     # ------------------------------------------------------------------------------------------------------------------
     def _adjust_hierarchy(self, node):
@@ -369,14 +369,11 @@ class NodeStore:
     # ------------------------------------------------------------------------------------------------------------------
     def generate(self):
         """
-        Generates HTML code based on the content tree.
-
-        Note: Temporary solution. In phase 2 (when implementing other output formats) replace with decorator pattern or
-              inheritance.
+        Generates the documnt.
         """
         file = open('output.html', 'w')
 
-        decorator = self.create_format_decorator('document', self.nodes[1])
-        decorator.generate(self.nodes[1], file)
+        formatter = self.create_formatter('document', self.nodes[1])
+        formatter.generate(self.nodes[1], file)
 
 # ----------------------------------------------------------------------------------------------------------------------
