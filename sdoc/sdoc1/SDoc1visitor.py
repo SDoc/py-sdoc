@@ -6,6 +6,8 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
+import os
+
 import antlr4
 
 import sdoc
@@ -24,7 +26,12 @@ class SDoc1Visitor(sdoc1ParserVisitor):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self):
+    def __init__(self, root_dir=os.getcwd()):
+        """
+        Object constructor.
+
+        :param str root_dir: The root directory for including sub-documents.
+        """
         self._output = None
         """
         Object for streaming the generated output. This object MUST implement the write method.
@@ -49,6 +56,13 @@ class SDoc1Visitor(sdoc1ParserVisitor):
         The options.
 
         :type: dict
+        """
+
+        self._root_dir = root_dir
+        """
+        The root directory for including sub-documents.
+
+        :type: str
         """
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -92,7 +106,14 @@ class SDoc1Visitor(sdoc1ParserVisitor):
         else:
             token = ctx.stop
 
-        filename = token.getInputStream().fileName  # Replace fileName with get_source_name() when implemented in ANTLR.
+        stream = token.getInputStream()
+        if hasattr(stream, 'fileName'):
+            # antlr4.FileStream.FileStream
+            filename = stream.fileName  # Replace fileName with get_source_name() when implemented in ANTLR.
+        else:
+            # Input stream is a antlr4.InputStream.InputStream.
+            filename = ''
+
         line_number = token.line
         column = token.column
 
@@ -232,9 +253,9 @@ class SDoc1Visitor(sdoc1ParserVisitor):
         expression = ctx.expression()
 
         if expression is not None:
-            print(expression.accept(self).debug(), end='')
+            print(expression.accept(self).debug())
         else:
-            print(self._global_scope.debug(), end='')
+            print(self._global_scope.debug())
 
         self.put_position(ctx, 'stop')
 
@@ -316,14 +337,21 @@ class SDoc1Visitor(sdoc1ParserVisitor):
 
         # Open a stream for the sub-document.
         file_name = sdoc.unescape(ctx.SIMPLE_ARG().getText())
-        stream = antlr4.FileStream(file_name)
+        if not os.path.isabs(file_name):
+            file_name = os.path.join(self._root_dir, file_name + '.sdoc')
+        print("Including %s" % os.path.relpath(file_name))
+        stream = antlr4.FileStream(file_name, 'utf-8')
+
+        # root_dir
 
         # Create a new lexer and parser for the sub-document.
         lexer = sdoc1Lexer(stream)
         tokens = antlr4.CommonTokenStream(lexer)
         parser = sdoc1Parser(tokens)
         tree = parser.sdoc()
-        visitor = SDoc1Visitor()
+
+        # Create a visitor.
+        visitor = SDoc1Visitor(root_dir=os.path.dirname(os.path.realpath(file_name)))
 
         # Set or inherit properties from the parser of the parent document.
         visitor._include_level = self._include_level + 1
@@ -349,7 +377,7 @@ class SDoc1Visitor(sdoc1ParserVisitor):
         line_number = token.line
         message = sdoc.unescape(ctx.SIMPLE_ARG().getText())
 
-        print('Notice (%s:%d): %s' % (filename, line_number, message))
+        print('Notice: %s at %s:%d' % (message, os.path.relpath(filename), line_number))
 
         self.put_position(ctx, 'stop')
 

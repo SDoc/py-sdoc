@@ -1,3 +1,4 @@
+import os
 import sys
 import unittest
 from io import StringIO
@@ -12,18 +13,24 @@ class SDocTestCase(unittest.TestCase):
     def run_output_test(self, sdoc):
         self.old_stdout, sys.stdout = sys.stdout, StringIO()
 
-        stream = antlr4.InputStream(sdoc)
-        lexer = sdoc1Lexer(stream)
+        in_stream = antlr4.InputStream(sdoc)
+        out_stream = open('t.tmp', 'wt')  # @todo fix temp name
+
+        lexer = sdoc1Lexer(in_stream)
         tokens = antlr4.CommonTokenStream(lexer)
         parser = sdoc1Parser(tokens)
         tree = parser.sdoc()
+
         visitor = SDoc1Visitor()
-        visitor.set_output(sys.stdout)
+        visitor.set_output(out_stream)
         visitor.visit(tree)
 
         output = sys.stdout.getvalue().strip()
 
         sys.stdout = self.old_stdout
+
+        out_stream.close()
+        os.unlink('t.tmp')
 
         return output
 

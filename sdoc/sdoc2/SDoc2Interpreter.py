@@ -56,7 +56,7 @@ class SDoc2Interpreter:
         :param str infile: The input filename with the SDoc2 document.
         :param str outfile: The output filename with the target document.
         """
-        in_stream = antlr4.FileStream(infile)
+        in_stream = antlr4.FileStream(infile, 'utf-8')
 
         lexer = sdoc2Lexer(in_stream)
         tokens = antlr4.CommonTokenStream(lexer)

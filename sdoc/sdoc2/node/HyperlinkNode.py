@@ -95,6 +95,7 @@ class HyperlinkNode(Node):
                     # If host of redirected is the same, reset 'href' option
                     if response.getheader('Location').startswith('https://' + url):
                         self._options['href'].replace('http://', 'https://')
+
         except error.URLError:
             print("Warning! - Invalid url address: '%s'" % self._options['href'])
 
@@ -110,7 +111,7 @@ class HyperlinkNode(Node):
     # ------------------------------------------------------------------------------------------------------------------
     def is_phrasing(self):
         """
-        Returns False.
+        Returns True.
 
         :rtype: bool
         """
@@ -133,6 +134,7 @@ class HyperlinkNode(Node):
         :rtype: bool
         """
         return False
+
 
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_inline_command('hyperlink', HyperlinkNode)

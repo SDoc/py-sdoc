@@ -60,7 +60,12 @@ class Node:
         :type: list[int]
         """
 
-        # @todo position of this node in source
+        self.position = None
+        """
+        The position where this node is defined.
+
+        :type: None|sdoc.sdoc2.Position.Position
+        """
 
     # ------------------------------------------------------------------------------------------------------------------
     def print_info(self, level):
@@ -106,9 +111,11 @@ class Node:
         raise NotImplementedError()
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_hierarchy_level(self):
+    def get_hierarchy_level(self, parent_hierarchy_level=-1):
         """
         Returns the hierarchy level if this node is a part of a hierarchy.
+
+        :param int parent_hierarchy_level: The hierarchy level of the parent node in the same hierarchy.
 
         :rtype: int
         """

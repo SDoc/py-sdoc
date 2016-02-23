@@ -25,6 +25,8 @@ class ItemNode(Node):
         """
         super().__init__('item', options, argument)
 
+        self._hierarchy_level = 0
+
     # ------------------------------------------------------------------------------------------------------------------
     def get_command(self):
         """
@@ -35,13 +37,20 @@ class ItemNode(Node):
         return 'item'
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_hierarchy_level(self):
+    def get_hierarchy_level(self, parent_hierarchy_level=-1):
         """
-        Returns 1.
+        Returns parent_hierarchy_level.
+
+        :param int parent_hierarchy_level: The level of the parent in the hierarchy.
 
         :rtype: int
         """
-        return 1
+        if node_store.first:
+            self._hierarchy_level = parent_hierarchy_level + 1
+        else:
+            self._hierarchy_level = parent_hierarchy_level
+
+        return self._hierarchy_level
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_hierarchy_name(self):
@@ -90,8 +99,8 @@ class ItemNode(Node):
             if isinstance(node, TextNode):
                 node.prune_whitespace()
 
-            if not node.is_phrasing():
-                raise RuntimeError("Node: id:%s, %s is not phrasing" % (str(node.id), node.name))
+            # if not node.is_phrasing():
+            #    raise RuntimeError("Node: id:%s, %s is not phrasing" % (str(node.id), node.name))
 
             node_store.out_scope(node)
 
