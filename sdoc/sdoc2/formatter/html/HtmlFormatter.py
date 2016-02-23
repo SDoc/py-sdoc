@@ -6,10 +6,10 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-from sdoc.sdoc2.decorator.Decorator import Decorator
+from sdoc.sdoc2.formatter.Formatter import Formatter
 
 
-class HtmlDecorator(Decorator):
+class HtmlFormatter(Formatter):
     """
     Abstract parent class for all decorators for generating the output of nodes in HTML.
     """
@@ -17,7 +17,7 @@ class HtmlDecorator(Decorator):
         """
         Object constructor.
 
-        :param Decorator decorator: The decorator of the parent node.
+        :param Formatter decorator: The decorator of the parent node.
         :return:
         """
         # @todo File stuff.

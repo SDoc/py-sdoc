@@ -8,12 +8,12 @@ Licence MIT
 # ----------------------------------------------------------------------------------------------------------------------
 from sdoc.helper.Html import Html
 from sdoc.sdoc2 import node_store
-from sdoc.sdoc2.decorator.html.HtmlDecorator import HtmlDecorator
+from sdoc.sdoc2.decorator.html.HtmlFormatter import HtmlFormatter
 
 
-class SmileHtmlDecorator(HtmlDecorator):
+class SmileHtmlFormatter(HtmlFormatter):
     """
-    HtmlDecorator for generating HTML code for smile.
+    HtmlFormatter for generating HTML code for smile.
     """
     # ------------------------------------------------------------------------------------------------------------------
     def generate(self, node, file):
@@ -29,4 +29,4 @@ class SmileHtmlDecorator(HtmlDecorator):
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_format_decorator('smile', 'html', SmileHtmlDecorator)
+node_store.register_format_decorator('smile', 'html', SmileHtmlFormatter)

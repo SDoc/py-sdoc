@@ -6,28 +6,26 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-from sdoc.helper.Html import Html
 from sdoc.sdoc2 import node_store
-from sdoc.sdoc2.decorator.html.HtmlDecorator import HtmlDecorator
+from sdoc.sdoc2.decorator.html.HtmlFormatter import HtmlFormatter
 
 
-class FigureHtmlDecorator(HtmlDecorator):
+class ItemizeHtmlFormatter(HtmlFormatter):
     """
-    HtmlDecorator for generating HTML code for figures.
+    HtmlFormatter for generating HTML code for itemize.
     """
     # ------------------------------------------------------------------------------------------------------------------
     def generate(self, node, file):
         """
-        Generates the HTML code for a figure node.
+        Generates the HTML code for an itemize node.
 
-        :param sdoc.sdoc2.node.FigureNode.FigureNode node: The figure node.
+        :param sdoc.sdoc2.node.ItemizeNode.ItemizeNode node: The itemize node.
         :param file file: The output file.
         """
-        text_in_tag = '%s %s' % (node._options['number'], '---FIGURE---')
-        file.write(Html.generate_element('h3', {}, text_in_tag))
-
+        file.write('<ul>')
         super().generate(node, file)
+        file.write('</ul>')
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_format_decorator('figure', 'html', FigureHtmlDecorator)
+node_store.register_format_decorator('itemize', 'html', ItemizeHtmlFormatter)

@@ -8,12 +8,12 @@ Licence MIT
 # ----------------------------------------------------------------------------------------------------------------------
 from sdoc.helper.Html import Html
 from sdoc.sdoc2 import node_store
-from sdoc.sdoc2.decorator.html.HtmlDecorator import HtmlDecorator
+from sdoc.sdoc2.decorator.html.HtmlFormatter import HtmlFormatter
 
 
-class HeadingHtmlDecorator(HtmlDecorator):
+class HeadingHtmlFormatter(HtmlFormatter):
     """
-    HtmlDecorator for generating HTML code for headings.
+    HtmlFormatter for generating HTML code for headings.
     """
     # ------------------------------------------------------------------------------------------------------------------
     def generate(self, node, file):
@@ -30,10 +30,10 @@ class HeadingHtmlDecorator(HtmlDecorator):
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_format_decorator('chapter', 'html', HeadingHtmlDecorator)
-node_store.register_format_decorator('section', 'html', HeadingHtmlDecorator)
-node_store.register_format_decorator('subsection', 'html', HeadingHtmlDecorator)
-node_store.register_format_decorator('sub2section', 'html', HeadingHtmlDecorator)
-node_store.register_format_decorator('sub3section', 'html', HeadingHtmlDecorator)
-node_store.register_format_decorator('sub4section', 'html', HeadingHtmlDecorator)
-node_store.register_format_decorator('sub5section', 'html', HeadingHtmlDecorator)
+node_store.register_format_decorator('chapter', 'html', HeadingHtmlFormatter)
+node_store.register_format_decorator('section', 'html', HeadingHtmlFormatter)
+node_store.register_format_decorator('subsection', 'html', HeadingHtmlFormatter)
+node_store.register_format_decorator('sub2section', 'html', HeadingHtmlFormatter)
+node_store.register_format_decorator('sub3section', 'html', HeadingHtmlFormatter)
+node_store.register_format_decorator('sub4section', 'html', HeadingHtmlFormatter)
+node_store.register_format_decorator('sub5section', 'html', HeadingHtmlFormatter)

@@ -253,9 +253,9 @@ class NodeStore:
         Creates a decorator for generating the output of nodes in the requested output format.
 
         :param str command: The inline of block command.
-        :param sdoc.sdoc2.decorator.Decorator.Decorator parent: The parent decorator.
+        :param sdoc.sdoc2.decorator.Formatter.Formatter parent: The parent decorator.
 
-        :rtype: sdoc.sdoc2.decorator.Decorator.Decorator
+        :rtype: sdoc.sdoc2.decorator.Formatter.Formatter
         """
         if self.format not in self.format_decorators:
             raise RuntimeError("Unknown output format '%s'." % self.format)

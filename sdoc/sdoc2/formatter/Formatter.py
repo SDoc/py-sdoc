@@ -10,7 +10,7 @@ import abc
 from sdoc.sdoc2 import node_store
 
 
-class Decorator:
+class Formatter:
     """
     Abstract parent class for all decorators for generating the output of nodes in requested format.
     """
