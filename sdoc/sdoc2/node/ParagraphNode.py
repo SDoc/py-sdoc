@@ -46,7 +46,12 @@ class ParagraphNode(HeadingNode):
 
     # ------------------------------------------------------------------------------------------------------------------
     def enumerate(self, numbers):
-        pass # XXX use method from Node
+        """
+        Overrides the method and uses parent enumerate method.
+
+        :param dict[str,str] numbers: The number of last node.
+        """
+        Node.enumerate(self, numbers)
 
     # ------------------------------------------------------------------------------------------------------------------
     def is_inline_command(self):

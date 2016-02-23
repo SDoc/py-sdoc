@@ -8,6 +8,7 @@ Licence MIT
 # ----------------------------------------------------------------------------------------------------------------------
 from sdoc.sdoc2 import node_store
 from sdoc.sdoc2.node.Node import Node
+from sdoc.sdoc2.node.HeadingNode import HeadingNode
 
 
 class FigureNode(Node):
@@ -61,32 +62,39 @@ class FigureNode(Node):
         return True
 
     # ------------------------------------------------------------------------------------------------------------------
-    def check_chapter(self, numbers):
+    @staticmethod
+    def _new_chapter(numbers, level):
         """
-        Checks the chapter. If it changes, sets numeration to '1'.
+        Resets data to new chapter.
 
         :param dict[str,str] numbers: The number of last node.
+        :param int level: The level which we need to have.
         """
+        chapter = HeadingNode._get_numeration(numbers, level)
 
-        numbers_level = numbers['heading'].split('.')
-        current_figure_number = numbers['figures'].split('.')
+        if 'figures' not in numbers:
+            numbers['figures'] = '%s.%s' % (chapter, '0')
 
-        if numbers_level[0] > current_figure_number[0]:
-            current_figure_number[0] = numbers_level[0]
-            current_figure_number[-1] = '1'
+        else:
+            numbers_level = numbers['figures'].split('.')
+            if chapter > numbers_level[0]:
+                numbers_level[0] = chapter
+                numbers_level[-1] = '0'
 
-        numbers['figures'] = '.'.join(current_figure_number)
+            numbers['figures'] = '.'.join(numbers_level)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def increment_number(self, numbers):
+    @staticmethod
+    def _increment_last_level(numbers):
         """
-        Increments number of the current figure.
+        Increment the last level of the figure node.
 
         :param dict[str,str] numbers: The number of last node.
         """
-        numbers_level = numbers['figures'].split('.')
-        numbers_level[-1] = str(int(numbers_level[-1]) + 1)
-        numbers['figures'] = '.'.join(numbers_level)
+        heading_numbers = numbers['figures'].split('.')
+        heading_numbers[-1] = str(int(heading_numbers[-1]) + 1)
+
+        numbers['figures'] = '.'.join(heading_numbers)
 
     # ------------------------------------------------------------------------------------------------------------------
     def enumerate(self, numbers):
@@ -95,21 +103,10 @@ class FigureNode(Node):
 
         :param dict[str,str] numbers: The number of last node.
         """
-        # xxx use
-        # XXX HeadingNode.get_numeration(numbers,1)
+        self._new_chapter(numbers, 1)
+        self._increment_last_level(numbers)
 
-        # If we don't have figures count, create it.
-        if 'figures' not in numbers:
-            numbers['figures'] = '%s.%s' % (numbers['heading'].split('.')[0], '1')
-
-        # Reset number to 1 if chapter changed.
-        self.check_chapter(numbers)
-
-        # Set number on figure node.
         self._options['number'] = numbers['figures']
-
-        # Increment number.
-        self.increment_number(numbers)
 
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_inline_command('figure', FigureNode)
