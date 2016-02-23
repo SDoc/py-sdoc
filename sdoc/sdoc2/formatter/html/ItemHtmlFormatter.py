@@ -7,7 +7,7 @@ Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
 from sdoc.sdoc2 import node_store
-from sdoc.sdoc2.decorator.html.HtmlFormatter import HtmlFormatter
+from sdoc.sdoc2.formatter.html.HtmlFormatter import HtmlFormatter
 
 
 class ItemHtmlFormatter(HtmlFormatter):
