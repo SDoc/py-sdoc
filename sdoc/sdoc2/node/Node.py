@@ -68,6 +68,16 @@ class Node:
         """
 
     # ------------------------------------------------------------------------------------------------------------------
+    @property
+    def argument(self):
+        """
+        Getter for argument.
+
+        :rtype: str
+        """
+        return self._argument
+
+    # ------------------------------------------------------------------------------------------------------------------
     def print_info(self, level):
         """
         Temp function for development.

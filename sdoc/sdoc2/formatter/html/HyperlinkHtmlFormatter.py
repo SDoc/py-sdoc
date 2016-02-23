@@ -23,7 +23,7 @@ class HyperlinkHtmlFormatter(HtmlFormatter):
         :param sdoc.sdoc2.node.HyperlinkNode.HyperlinkNode node: The hyperlink node.
         :param file file: The output file.
         """
-        file.write(Html.generate_element('a', node.get_html_attributes(), node._argument))
+        file.write(Html.generate_element('a', node.get_html_attributes(), node.argument))
 
 
 # ----------------------------------------------------------------------------------------------------------------------

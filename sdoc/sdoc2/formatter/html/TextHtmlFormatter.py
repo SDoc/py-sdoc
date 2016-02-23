@@ -23,7 +23,7 @@ class TextHtmlFormatter(HtmlFormatter):
         :param sdoc.sdoc2.node.TextNode.TextNode node: The text node.
         :param file file: The output file.
         """
-        file.write(Html.escape(node._argument))
+        file.write(Html.escape(node.argument))
 
         super().generate(node, file)
 
