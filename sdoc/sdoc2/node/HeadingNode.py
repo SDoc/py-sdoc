@@ -38,15 +38,6 @@ class HeadingNode(Node):
         return 'sectioning'
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_enumerable_name(self):
-        """
-        Returns the enumerable name of this node, i.e. sectioning.
-
-        :type: str
-        """
-        return 'sectioning'
-
-    # ------------------------------------------------------------------------------------------------------------------
     def is_block_command(self):
         """
         Returns False.
@@ -82,22 +73,22 @@ class HeadingNode(Node):
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def _get_numeration(numbers, level):
+    def get_numeration(enumerable_numbers, level):
         """
-        Creates enumeration bounding on level.
+        Returns the current enumeration of headings at a heading level.
 
-        :param dict[str,str] numbers: The number of last node.
-        :param int level: The level which we need to have.
+        :param dict[str,str] enumerable_numbers: The current numbers of enumerable nodes.
+        :param int level: The level of nested heading.
 
         :rtype: str
         """
-        if 'heading' not in numbers:
+        if 'heading' not in enumerable_numbers:
             heading_numbers = []
 
             for i in range(level):
                 heading_numbers.append('0')
         else:
-            heading_numbers = numbers['heading'].split('.')
+            heading_numbers = enumerable_numbers['heading'].split('.')
 
             if level > len(heading_numbers):
                 for num in range(level-len(heading_numbers)):
@@ -107,32 +98,32 @@ class HeadingNode(Node):
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def _increment_last_level(numbers):
+    def _increment_last_level(enumerable_numbers):
         """
-        Increments the last level in number of the node.
+        Increments the last level in number of a heading number.
 
-        :param dict[str,str] numbers: The number of last node.
+        :param dict[str,str] enumerable_numbers: The current numbers of enumerable nodes.
 
         :rtype: str
         """
-        heading_numbers = numbers['heading'].split('.')
+        heading_numbers = enumerable_numbers['heading'].split('.')
         heading_numbers[-1] = str(int(heading_numbers[-1]) + 1)
 
         return '.'.join(heading_numbers)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def enumerate(self, numbers):
+    def enumerate(self, enumerable_numbers):
         """
         Sets number to heading nodes.
 
-        :param dict[str,str] numbers: The number of last node.
+        :param dict[str,str] enumerable_numbers: The current numbers of enumerable nodes.
         """
-        numbers['heading'] = self._get_numeration(numbers, self.get_hierarchy_level())
-        numbers['heading'] = self._increment_last_level(numbers)
+        enumerable_numbers['heading'] = self.get_numeration(enumerable_numbers, self.get_hierarchy_level())
+        enumerable_numbers['heading'] = self._increment_last_level(enumerable_numbers)
 
-        self._options['number'] = self._trim_levels(numbers['heading'])
+        self._options['number'] = self._trim_levels(enumerable_numbers['heading'])
 
-        super().enumerate(numbers)
+        super().enumerate(enumerable_numbers)
 
     # ------------------------------------------------------------------------------------------------------------------
     def prepare_content_tree(self):

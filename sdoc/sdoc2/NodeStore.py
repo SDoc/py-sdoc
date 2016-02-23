@@ -64,8 +64,7 @@ class NodeStore:
 
         self._enumerable_numbers = {}
         """
-        XXXX
-        XXX {'sectioning' = '1.1', 'figure' = '1.4'}
+        The current numbers of enumerable nodes (e.g. headings, figures).
 
         :type: dict[str,str]
         """

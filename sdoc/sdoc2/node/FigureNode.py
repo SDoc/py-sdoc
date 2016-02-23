@@ -13,7 +13,7 @@ from sdoc.sdoc2.node.HeadingNode import HeadingNode
 
 class FigureNode(Node):
     """
-    SDoc2 node for figures.
+    A stub for SDoc2 node for figures.
     """
     # ------------------------------------------------------------------------------------------------------------------
     def __init__(self, options, argument):
@@ -31,15 +31,6 @@ class FigureNode(Node):
         Returns the command of this node, i.e. smile.
 
         :rtype: str
-        """
-        return 'figure'
-
-    # ------------------------------------------------------------------------------------------------------------------
-    def get_enumerable_name(self):
-        """
-        Returns the enumerable name of this node, i.e. item.
-
-        :type: str
         """
         return 'figure'
 
@@ -63,50 +54,51 @@ class FigureNode(Node):
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def _new_chapter(numbers, level):
+    def _get_numeration(enumerable_numbers):
         """
-        Resets data to new chapter.
+        Returns the current enumeration of figures.
 
-        :param dict[str,str] numbers: The number of last node.
-        :param int level: The level which we need to have.
+        :param dict[str,str] enumerable_numbers: The current numbers of enumerable nodes.
         """
-        chapter = HeadingNode._get_numeration(numbers, level)
+        chapter = HeadingNode.get_numeration(enumerable_numbers, 1)
 
-        if 'figures' not in numbers:
-            numbers['figures'] = '%s.%s' % (chapter, '0')
+        if 'figures' not in enumerable_numbers:
+            enumerable_numbers['figures'] = '%s.%s' % (chapter, '0')
 
         else:
-            numbers_level = numbers['figures'].split('.')
+            numbers_level = enumerable_numbers['figures'].split('.')
             if chapter > numbers_level[0]:
                 numbers_level[0] = chapter
                 numbers_level[-1] = '0'
 
-            numbers['figures'] = '.'.join(numbers_level)
+            enumerable_numbers['figures'] = '.'.join(numbers_level)
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def _increment_last_level(numbers):
+    def _increment_last_level(enumerable_numbers):
         """
-        Increment the last level of the figure node.
+        Increments the last level of figures enumeration.
 
-        :param dict[str,str] numbers: The number of last node.
+        :param dict[str,str] enumerable_numbers: The current numbers of enumerable nodes.
         """
-        heading_numbers = numbers['figures'].split('.')
+        heading_numbers = enumerable_numbers['figures'].split('.')
         heading_numbers[-1] = str(int(heading_numbers[-1]) + 1)
 
-        numbers['figures'] = '.'.join(heading_numbers)
+        enumerable_numbers['figures'] = '.'.join(heading_numbers)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def enumerate(self, numbers):
+    def enumerate(self, enumerable_numbers):
         """
-        Sets number to the figure node.
+        Sets the number of this figure node.
 
-        :param dict[str,str] numbers: The number of last node.
+        :param dict[str,str] enumerable_numbers: The current numbers of enumerable nodes.
         """
-        self._new_chapter(numbers, 1)
-        self._increment_last_level(numbers)
+        self._get_numeration(enumerable_numbers)
+        self._increment_last_level(enumerable_numbers)
 
-        self._options['number'] = numbers['figures']
+        self._options['number'] = enumerable_numbers['figures']
+
+        super().enumerate(enumerable_numbers)
 
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_inline_command('figure', FigureNode)

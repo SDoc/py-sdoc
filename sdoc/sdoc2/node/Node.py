@@ -92,15 +92,6 @@ class Node:
         return False
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_enumerable_name(self):
-        """
-        Returns name of an enumerable node.
-
-        :type: str|bool
-        """
-        return False
-
-    # ------------------------------------------------------------------------------------------------------------------
     @abc.abstractmethod
     def get_command(self):
         """

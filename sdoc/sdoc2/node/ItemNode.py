@@ -62,15 +62,6 @@ class ItemNode(Node):
         return 'item'
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_enumerable_name(self):
-        """
-        Returns the enumerable name of this node, i.e. item.
-
-        :type: str
-        """
-        return 'item'
-
-    # ------------------------------------------------------------------------------------------------------------------
     def is_block_command(self):
         """
         Returns False.
