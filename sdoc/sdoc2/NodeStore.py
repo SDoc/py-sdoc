@@ -150,7 +150,7 @@ class NodeStore:
         self.block_creators[command] = constructor
 
     # ------------------------------------------------------------------------------------------------------------------
-    def create_inline_node(self, command, options=dict, argument='', position=None):
+    def create_inline_node(self, command, options=None, argument='', position=None):
         """
         Creates a node based an inline command.
 
@@ -180,7 +180,7 @@ class NodeStore:
         return node
 
     # ------------------------------------------------------------------------------------------------------------------
-    def create_block_node(self, command, options=dict, position=None):
+    def create_block_node(self, command, options, position=None):
         """
         Creates a node based on a block command.
 
@@ -262,7 +262,7 @@ class NodeStore:
 
         if command not in self._formatters[self.format]:
             # @todo use default none decorator with warning
-            raise RuntimeError("Unknown formatter '%s' for format '%s'." % command, self.format)
+            raise RuntimeError("Unknown formatter '%s' for format '%s'." % (command, self.format))
 
         constructor = self._formatters[self.format][command]
         formatter = constructor(parent)
@@ -367,6 +367,10 @@ class NodeStore:
         self.nodes[1].prepare_content_tree()
 
     # ------------------------------------------------------------------------------------------------------------------
+    def enumerate(self):
+        self.nodes[1].enumerate(self._enumerable_numbers)
+
+    # ------------------------------------------------------------------------------------------------------------------
     def generate(self):
         """
         Generates the documnt.
@@ -375,5 +379,16 @@ class NodeStore:
 
         formatter = self.create_formatter('document', self.nodes[1])
         formatter.generate(self.nodes[1], file)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def get_enumerated_items(self):
+        """
+        Returns a list with a tuple with command and number of enumerated nodes.
+
+        Thi method is intended for unit test only.
+
+        :rtype: list[(str,str)]
+        """
+        return self.nodes[1].get_enumerated_items()
 
 # ----------------------------------------------------------------------------------------------------------------------
