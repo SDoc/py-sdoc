@@ -95,5 +95,49 @@ class ItemNode(Node):
 
             node_store.out_scope(node)
 
+    # ------------------------------------------------------------------------------------------------------------------
+    @staticmethod
+    def _increment_last_level(number):
+        """
+        Increments the last level in number of the item node.
+
+        :param dict[str,str] numbers: The number of last node.
+
+        :rtype: str
+        """
+        heading_numbers = number.split('.')
+        heading_numbers[-1] = str(int(heading_numbers[-1]) + 1)
+
+        return '.'.join(heading_numbers)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def strip_start_point(self, number):
+        """
+        Removes start point if it in the number.
+
+        :param str number: The number of last node.
+
+        :rtype: str
+        """
+        return number.lstrip('.')
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def enumerate(self, numbers):
+        """
+        Sets number for item nodes.
+
+        :param dict[str,str] numbers: The number of last node.
+        """
+        numbers['item'] = self.strip_start_point(numbers['item'])
+        numbers['item'] = self._increment_last_level(numbers['item'])
+
+        temp_number = numbers['item']
+
+        print(numbers['item'])
+        super().enumerate(numbers)
+
+        numbers['item'] = self._increment_last_level(temp_number)
+
+
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_inline_command('item', ItemNode)

@@ -30,6 +30,10 @@ class ItemizeNode(Node):
         node_store.first = True
 
     # ------------------------------------------------------------------------------------------------------------------
+    def end_command(self):
+        # do something to fix hierarchy level
+        pass
+    # ------------------------------------------------------------------------------------------------------------------
     def get_command(self):
         """
         Returns the command of this node, i.e. itemize.
@@ -108,6 +112,46 @@ class ItemizeNode(Node):
                 raise RuntimeError("Node: id:%s, %s is not instance of 'ItemNode'" % (str(node.id), node.name))
 
             node_store.out_scope(node)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def level_down(self, number):
+        """
+        Downs the level of hierarchy.
+
+        :param str number: The number of last node.
+
+        :rtype: str
+        """
+        number_list = number.split('.')
+        number = '.'.join(number_list[:-1])
+
+        return number
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def level_up(self, numbers):
+        """
+        Ups the level of hierarchy.
+
+        :param dict[str,str] numbers: The number of last node.
+        """
+        if 'item' in numbers:
+            numbers['item'] += '.0'
+        else:
+            numbers['item'] = '0'
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def enumerate(self, numbers):
+        """
+        Passing over all child nodes, for numeration.
+
+        :param dict[str,str] numbers: The number of last node.
+        """
+        self.level_up(numbers)
+
+        print('------itemize-----')
+        super().enumerate(numbers)
+
+        numbers['item'] = self.level_down(numbers['item'])
 
 
 # ----------------------------------------------------------------------------------------------------------------------

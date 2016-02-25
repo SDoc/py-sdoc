@@ -180,6 +180,15 @@ class Node:
         self._child_nodes.append(child_node.id)
 
     # ------------------------------------------------------------------------------------------------------------------
+    @abc.abstractmethod
+    def end_command(self):
+        """
+        This method will be called by the SDoc2 visitor when the \end command of a block command is
+        parsed.
+        """
+        pass
+
+    # ------------------------------------------------------------------------------------------------------------------
     def prepare_content_tree(self):
         """
         Prepares this node for further processing.
@@ -188,6 +197,20 @@ class Node:
             node = node_store.in_scope(node_id)
 
             node.prepare_content_tree()
+
+            node_store.out_scope(node)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def enumerate(self, numbers):
+        """
+        Passing over all child nodes, for numeration.
+
+        :param dict[str,str] numbers: The number of last node.
+        """
+        for node_id in self._child_nodes:
+            node = node_store.in_scope(node_id)
+
+            node.enumerate(numbers)
 
             node_store.out_scope(node)
 

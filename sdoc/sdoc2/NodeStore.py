@@ -62,6 +62,13 @@ class NodeStore:
         :type: dict[int,sdoc.sdoc2.node.Node.Node]
         """
 
+        self._enumerable_numbers = {}
+        """
+        The numbers of last indentation level of each type of nodes.
+
+        :type: dict[str,str]
+        """
+
     # ------------------------------------------------------------------------------------------------------------------
     def end_block_node(self, command):
         """
@@ -254,6 +261,7 @@ class NodeStore:
             raise RuntimeError("Unknown output format '%s'." % self.format)
 
         if command not in self.format_decorators[self.format]:
+            print(command)
             # @todo use defaut none decorator with warning
             raise RuntimeError("Unknown decorator '%s' for format '%s'." % command, self.format)
 
@@ -367,6 +375,10 @@ class NodeStore:
         Note: Temporary solution. In phase 2 (when implementing other output formats) replace with decorator pattern or
               inheritance.
         """
+        # test case
+        self.nodes[1].enumerate(self._enumerable_numbers)
+        # ---------
+
         file = open('output.html', 'w')
 
         decorator = self.create_format_decorator('document', self.nodes[1])
