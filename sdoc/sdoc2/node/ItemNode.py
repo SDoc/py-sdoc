@@ -45,10 +45,7 @@ class ItemNode(Node):
 
         :rtype: int
         """
-        if node_store.first:
-            self._hierarchy_level = parent_hierarchy_level + 1
-        else:
-            self._hierarchy_level = parent_hierarchy_level
+        self._hierarchy_level = parent_hierarchy_level + 1
 
         return self._hierarchy_level
 

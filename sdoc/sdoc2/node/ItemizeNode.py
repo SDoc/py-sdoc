@@ -33,6 +33,7 @@ class ItemizeNode(Node):
     def end_command(self):
         # do something to fix hierarchy level
         pass
+    
     # ------------------------------------------------------------------------------------------------------------------
     def get_command(self):
         """
@@ -148,7 +149,6 @@ class ItemizeNode(Node):
         """
         self.level_up(numbers)
 
-        print('------itemize-----')
         super().enumerate(numbers)
 
         numbers['item'] = self.level_down(numbers['item'])
