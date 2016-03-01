@@ -33,7 +33,7 @@ class ItemizeNode(Node):
     def end_command(self):
         # do something to fix hierarchy level
         pass
-    
+
     # ------------------------------------------------------------------------------------------------------------------
     def get_command(self):
         """
@@ -117,7 +117,7 @@ class ItemizeNode(Node):
     # ------------------------------------------------------------------------------------------------------------------
     def level_down(self, number):
         """
-        Downs the level of hierarchy.
+        Decrements the level of hierarchy.
 
         :param str number: The number of last node.
 
@@ -131,7 +131,7 @@ class ItemizeNode(Node):
     # ------------------------------------------------------------------------------------------------------------------
     def level_up(self, numbers):
         """
-        Ups the level of hierarchy.
+        Increments the level of hierarchy.
 
         :param dict[str,str] numbers: The number of last node.
         """

@@ -385,14 +385,10 @@ class NodeStore:
         Note: Temporary solution. In phase 2 (when implementing other output formats) replace with decorator pattern or
               inheritance.
         """
-        # test case
-        self.nodes[1].print_info(0)
-        # ---------
+        file = open('output.html', 'w')
 
-        # file = open('output.html', 'w')
-
-        # decorator = self.create_format_decorator('document', self.nodes[1])
-        # decorator.generate(self.nodes[1], file)
+        decorator = self.create_format_decorator('document', self.nodes[1])
+        decorator.generate(self.nodes[1], file)
 
 
 # ----------------------------------------------------------------------------------------------------------------------

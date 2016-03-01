@@ -98,7 +98,7 @@ class ItemNode(Node):
         """
         Increments the last level in number of the item node.
 
-        :param dict[str,str] numbers: The number of last node.
+        :param str number: The number of last node.
 
         :rtype: str
         """
@@ -128,13 +128,7 @@ class ItemNode(Node):
         numbers['item'] = self.strip_start_point(numbers['item'])
         numbers['item'] = self._increment_last_level(numbers['item'])
 
-        temp_number = numbers['item']
-
-        print(numbers['item'])
         super().enumerate(numbers)
-
-        numbers['item'] = self._increment_last_level(temp_number)
-
 
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_inline_command('item', ItemNode)
