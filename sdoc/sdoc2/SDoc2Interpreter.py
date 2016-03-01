@@ -31,7 +31,7 @@ class SDoc2Interpreter:
 
         # Import all node modules.
         self.importing('/node/')
-        self.importing('/decorator/html/')
+        self.importing('/formatter/html/')
 
     # ------------------------------------------------------------------------------------------------------------------
     def importing(self, path):

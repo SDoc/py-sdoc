@@ -7,12 +7,12 @@ Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
 from sdoc.sdoc2 import node_store
-from sdoc.sdoc2.decorator.html.HtmlDecorator import HtmlDecorator
+from sdoc.sdoc2.formatter.html.HtmlFormatter import HtmlFormatter
 
 
-class DocumentHtmlDecorator(HtmlDecorator):
+class DocumentHtmlFormatter(HtmlFormatter):
     """
-    HtmlDecorator for generating HTML code for document.
+    HtmlFormatter for generating HTML code for document.
     """
     # ------------------------------------------------------------------------------------------------------------------
     def generate(self, node, file):
@@ -33,4 +33,4 @@ class DocumentHtmlDecorator(HtmlDecorator):
         file.close()
 
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_format_decorator('document', 'html', DocumentHtmlDecorator)
+node_store.register_formatter('document', 'html', DocumentHtmlFormatter)

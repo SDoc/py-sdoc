@@ -128,6 +128,8 @@ class ItemNode(Node):
         numbers['item'] = self.strip_start_point(numbers['item'])
         numbers['item'] = self._increment_last_level(numbers['item'])
 
+        self._options['number'] = numbers['item']
+
         super().enumerate(numbers)
 
 # ----------------------------------------------------------------------------------------------------------------------

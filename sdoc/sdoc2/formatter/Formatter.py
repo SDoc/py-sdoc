@@ -10,9 +10,9 @@ import abc
 from sdoc.sdoc2 import node_store
 
 
-class Decorator:
+class Formatter:
     """
-    Abstract parent class for all decorators for generating the output of nodes in requested format.
+    Abstract parent class for all formatters for generating the output of nodes in a requested format.
     """
     # ------------------------------------------------------------------------------------------------------------------
     @abc.abstractmethod
@@ -27,8 +27,8 @@ class Decorator:
         for node_id in node._child_nodes:  # @todo fix access
             child_node = node_store.in_scope(node_id)
 
-            decorator = node_store.create_format_decorator(child_node.get_command(), self)
-            decorator.generate(child_node, file)
+            formatter = node_store.create_formatter(child_node.get_command(), self)
+            formatter.generate(child_node, file)
 
             node_store.out_scope(child_node)
 

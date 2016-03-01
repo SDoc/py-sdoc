@@ -6,26 +6,27 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
+from sdoc.helper.Html import Html
 from sdoc.sdoc2 import node_store
-from sdoc.sdoc2.decorator.html.HtmlDecorator import HtmlDecorator
+from sdoc.sdoc2.formatter.html.HtmlFormatter import HtmlFormatter
 
 
-class ParagraphHtmlDecorator(HtmlDecorator):
+class SmileHtmlFormatter(HtmlFormatter):
     """
-    HtmlDecorator for generating HTML code for paragraph.
+    HtmlFormatter for generating HTML code for smile.
     """
     # ------------------------------------------------------------------------------------------------------------------
     def generate(self, node, file):
         """
-        Generates the HTML code for a paragraph node.
+        Generates the HTML code for a smile node.
 
-        :param sdoc.sdoc2.node.ParagraphNode.ParagraphNode node: The paragraph node.
+        :param sdoc.sdoc2.node.SmileNode.SmileNode node: The smile node.
         :param file file: The output file.
         """
-        file.write('<p>')
+        file.write(Html.generate_element('b', {}, 'SMILE'))
+
         super().generate(node, file)
-        file.write('</p>')
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_format_decorator('paragraph', 'html', ParagraphHtmlDecorator)
+node_store.register_formatter('smile', 'html', SmileHtmlFormatter)

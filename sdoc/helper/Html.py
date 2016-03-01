@@ -96,7 +96,7 @@ class Html:
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def generate_element(tag_name, attributes=dict, inner_text='', is_html=False):
+    def generate_element(tag_name, attributes=None, inner_text='', is_html=False):
         """
         Generates HTML code for an element.
 
@@ -121,7 +121,7 @@ class Html:
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def generate_tag(tag_name, attributes=dict):
+    def generate_tag(tag_name, attributes=None):
         """
         Generates HTML code for a start tag of an element.
 
@@ -141,7 +141,7 @@ class Html:
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def generate_void_element(tag_name, attributes=dict):
+    def generate_void_element(tag_name, attributes=None):
         """
         Generates HTML code for an element.
 

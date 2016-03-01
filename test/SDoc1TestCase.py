@@ -8,9 +8,19 @@ from sdoc.antlr.sdoc1Parser import sdoc1Parser
 from sdoc.sdoc1.SDoc1visitor import SDoc1Visitor
 
 
-class SDocTestCase(unittest.TestCase):
+class SDoc1TestCase(unittest.TestCase):
+    """
+    Parent class for SDoc1 test cases.
+    """
     # ------------------------------------------------------------------------------------------------------------------
-    def run_output_test(self, sdoc):
+    def run_sdoc1(self, sdoc):
+        """
+        Runs the SDoc1 parser for an SDoc document and returns the output.
+
+        :param str sdoc: The SDoc document.
+
+        :rtype: str
+        """
         self.old_stdout, sys.stdout = sys.stdout, StringIO()
 
         in_stream = antlr4.InputStream(sdoc)

@@ -42,6 +42,7 @@ class Sub5SectionNode(HeadingNode):
         """
         return 7
 
+
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_inline_command('sub5section', Sub5SectionNode)
 node_store.register_inline_command('subsubsubsubsubsection', Sub5SectionNode)
