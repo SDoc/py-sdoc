@@ -46,7 +46,7 @@ class ArrayDataType(DataType):
                     # The longest key is a string. Add 2 positions for quotes.
                     longest += 2
 
-        for key in dict(sorted(self._elements.items(), key=lambda x: str(x), reverse=True)):
+        for key in sorted(self._elements, key=lambda x: str(x)):
             # Checking the key type, and setting quotes.
             if isinstance(key, int):
                 str1 = " " + " " * indent + "{}".format(key).ljust(longest, " ")

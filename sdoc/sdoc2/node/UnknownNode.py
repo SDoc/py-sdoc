@@ -25,15 +25,6 @@ class UnknownNode(Node):
         super().__init__('unknown', options, argument)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def generate_html(self, file):
-        """
-        Generates the HTML code for this node.
-
-        :param file file: The output stream to with the generated HTML will be written.
-        """
-        file.write('??')
-
-    # ------------------------------------------------------------------------------------------------------------------
     def get_command(self):
         """
         Returns the command of this node, i.e. smile.

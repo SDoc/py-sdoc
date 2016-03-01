@@ -56,6 +56,76 @@ class HeadingNode(Node):
         return True
 
     # ------------------------------------------------------------------------------------------------------------------
+    @staticmethod
+    def _trim_levels(string_of_numbers):
+        """
+        Strips all starting '0's and add one starting '0' symbol if number starts from '0'.
+
+        :param str string_of_numbers: String with header node number.
+
+        :rtype: str
+        """
+        if string_of_numbers.startswith('0'):
+            string_of_numbers = string_of_numbers.lstrip('0.')
+            string_of_numbers = '0.%s' % string_of_numbers
+
+        return string_of_numbers
+
+    # ------------------------------------------------------------------------------------------------------------------
+    @staticmethod
+    def get_numeration(enumerable_numbers, level):
+        """
+        Returns the current enumeration of headings at a heading level.
+
+        :param dict[str,str] enumerable_numbers: The current numbers of enumerable nodes.
+        :param int level: The level of nested heading.
+
+        :rtype: str
+        """
+        if 'heading' not in enumerable_numbers:
+            heading_numbers = []
+
+            for i in range(level):
+                heading_numbers.append('0')
+        else:
+            heading_numbers = enumerable_numbers['heading'].split('.')
+
+            if level > len(heading_numbers):
+                for num in range(level-len(heading_numbers)):
+                    heading_numbers.append('0')
+
+        return '.'.join(heading_numbers[:level])
+
+    # ------------------------------------------------------------------------------------------------------------------
+    @staticmethod
+    def _increment_last_level(enumerable_numbers):
+        """
+        Increments the last level in number of a heading number.
+
+        :param dict[str,str] enumerable_numbers: The current numbers of enumerable nodes.
+
+        :rtype: str
+        """
+        heading_numbers = enumerable_numbers['heading'].split('.')
+        heading_numbers[-1] = str(int(heading_numbers[-1]) + 1)
+
+        return '.'.join(heading_numbers)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def enumerate(self, enumerable_numbers):
+        """
+        Sets number to heading nodes.
+
+        :param dict[str,str] enumerable_numbers: The current numbers of enumerable nodes.
+        """
+        enumerable_numbers['heading'] = self.get_numeration(enumerable_numbers, self.get_hierarchy_level())
+        enumerable_numbers['heading'] = self._increment_last_level(enumerable_numbers)
+
+        self._options['number'] = self._trim_levels(enumerable_numbers['heading'])
+
+        super().enumerate(enumerable_numbers)
+
+    # ------------------------------------------------------------------------------------------------------------------
     def prepare_content_tree(self):
         """
         Prepares the content tree. Create paragraph nodes.

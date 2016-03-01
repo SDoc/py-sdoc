@@ -17,7 +17,7 @@ class Node:
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, name, options=dict, argument=''):
+    def __init__(self, name, options=None, argument=''):
         """
         Object constructor.
 
@@ -46,7 +46,7 @@ class Node:
         :type: str
         """
 
-        self._options = options
+        self._options = options if options else {}
         """
         The options of this node.
 
@@ -66,6 +66,16 @@ class Node:
 
         :type: None|sdoc.sdoc2.Position.Position
         """
+
+    # ------------------------------------------------------------------------------------------------------------------
+    @property
+    def argument(self):
+        """
+        Getter for argument.
+
+        :rtype: str
+        """
+        return self._argument
 
     # ------------------------------------------------------------------------------------------------------------------
     def print_info(self, level):
@@ -190,5 +200,46 @@ class Node:
             node.prepare_content_tree()
 
             node_store.out_scope(node)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def enumerate(self, enumerable_numbers):
+        """
+        Enumerates all enumerable nodes such as chapters, sections, figures, and, items.
+
+        :param enumerable_numbers: The current enumerable numbers.
+        """
+        for node_id in self._child_nodes:
+            node = node_store.in_scope(node_id)
+
+            node.enumerate(enumerable_numbers)
+
+            node_store.out_scope(node)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def get_enumerated_items(self):
+        """
+        Returns a list with a tuple with command and number of enumerated child nodes.
+
+        Thi method is intended for unit test only.
+
+        :rtype: list[(str,str)]
+        """
+        items = list()
+
+        # First append the enumeration of this node (if any).
+        if 'number' in self._options:
+            items.append((self.get_command(), self._options['number']))
+
+        # Second append the enumeration of child nodes (if any).
+        for node_id in self._child_nodes:
+            node = node_store.in_scope(node_id)
+
+            tmp = node.get_enumerated_items()
+            if tmp:
+                items.append(tmp)
+
+            node_store.out_scope(node)
+
+        return items
 
 # ----------------------------------------------------------------------------------------------------------------------

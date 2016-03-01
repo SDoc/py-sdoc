@@ -42,7 +42,7 @@ class Sub2SectionNode(HeadingNode):
         """
         return 4
 
+
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_inline_command('sub2section', Sub2SectionNode)
 node_store.register_inline_command('subsubsection', Sub2SectionNode)
-
