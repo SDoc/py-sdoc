@@ -4,6 +4,7 @@ import csv
 import unittest
 
 import sdoc
+from sdoc.sdoc2 import node_store
 from sdoc.sdoc2.SDoc2Interpreter import SDoc2Interpreter
 
 
@@ -61,35 +62,35 @@ class SDoc2EnumerationTest(unittest.TestCase):
                          self.csv_to_tuple(file_name + '.csv'))
 
     # ------------------------------------------------------------------------------------------------------------------
-    def testDebug01(self):
+    def testEnumeration01(self):
         """
         Test case with right numeration of nodes.
         """
         self.run_test('test01.sdoc')
 
     # ------------------------------------------------------------------------------------------------------------------
-    def testDebug02(self):
+    def testEnumeration02(self):
         """
         Test case with wrong numeration of nodes.
         """
         self.run_test('test02.sdoc')
 
     # ------------------------------------------------------------------------------------------------------------------
-    def testDebug03(self):
+    def testEnumeration03(self):
         """
         Test case with different figure numeration of nodes.
         """
         self.run_test('test03.sdoc')
 
     # ------------------------------------------------------------------------------------------------------------------
-    def testDebug04(self):
+    def testEnumeration04(self):
         """
         Test case with item and itemize nodes.
         """
         self.run_test('test04.sdoc')
 
     # ------------------------------------------------------------------------------------------------------------------
-    def testDebug05(self):
+    def testEnumeration05(self):
         """
         Test case of general numbering of all type of nodes.
         """

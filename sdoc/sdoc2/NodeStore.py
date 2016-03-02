@@ -6,6 +6,20 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 
+inline_creators = {}
+"""
+Map from inline commands to node creators.
+
+:type: dict[str,callable]
+"""
+
+block_creators = {}
+"""
+Map from block commands to object creators.
+
+:type: dict[str,callable]
+"""
+
 
 class NodeStore:
     """
@@ -18,19 +32,6 @@ class NodeStore:
     def __init__(self):
         """
         Object constructor.
-        """
-        self.inline_creators = {}
-        """
-        Map from inline commands to node creators.
-
-        :type: dict[str,callable]
-        """
-
-        self.block_creators = {}
-        """
-        Map from block commands to object creators.
-
-        :type: dict[str,callable]
         """
 
         self.format = 'html'
@@ -115,14 +116,15 @@ class NodeStore:
         pass
 
     # ------------------------------------------------------------------------------------------------------------------
-    def register_inline_command(self, command, constructor):
+    @staticmethod
+    def register_inline_command(command, constructor):
         """
         Registers a node constructor for an inline command.
 
         :param str command: The name of the inline command.
         :param callable constructor: The node constructor.
         """
-        self.inline_creators[command] = constructor
+        inline_creators[command] = constructor
 
     # ------------------------------------------------------------------------------------------------------------------
     def register_formatter(self, command, output_format, formatter):
@@ -139,14 +141,15 @@ class NodeStore:
         self._formatters[output_format][command] = formatter
 
     # ------------------------------------------------------------------------------------------------------------------
-    def register_block_command(self, command, constructor):
+    @staticmethod
+    def register_block_command(command, constructor):
         """
         Registers a node constructor for a block command.
 
         :param string command: The name of the inline command.
         :param callable constructor: The node constructor.
         """
-        self.block_creators[command] = constructor
+        block_creators[command] = constructor
 
     # ------------------------------------------------------------------------------------------------------------------
     def create_inline_node(self, command, options=None, argument='', position=None):
@@ -162,15 +165,15 @@ class NodeStore:
 
         :rtype: sdoc.sdoc2.node.Node.Node
         """
-        if command not in self.inline_creators:
+        if command not in inline_creators:
             # @todo set error status
-            constructor = self.block_creators['unknown']
+            constructor = inline_creators['unknown']
             node = constructor(options, argument)
             node.name = command
 
         else:
             # Create the new node.
-            constructor = self.inline_creators[command]
+            constructor = inline_creators[command]
             node = constructor(options, argument)
 
         node.position = position
@@ -193,13 +196,13 @@ class NodeStore:
 
         :rtype: sdoc.sdoc2.node.Node.Node
         """
-        if command not in self.block_creators:
-            constructor = self.block_creators['unknown']
+        if command not in block_creators:
+            constructor = block_creators['unknown']
             # @todo set error status
 
         else:
             # Create the new node.
-            constructor = self.block_creators[command]
+            constructor = block_creators[command]
 
         node = constructor(options)
         node.position = position
