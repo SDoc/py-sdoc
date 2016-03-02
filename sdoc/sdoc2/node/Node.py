@@ -237,7 +237,7 @@ class Node:
 
         # First append the enumeration of this node (if any).
         if 'number' in self._options:
-            items.append((self.get_command(), self._options['number']))
+            items.append((self.get_command(), self._options['number'], self._argument))
 
         # Second append the enumeration of child nodes (if any).
         for node_id in self._child_nodes:

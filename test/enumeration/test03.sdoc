@@ -1,0 +1,24 @@
+\begin{document}
+
+\figure{}
+\figure{}
+
+\section{Section 1}
+
+\subsection{Subsection 1}
+
+\subsubsection{Subsubsection 1}
+
+\figure{}
+
+\section{Section 2}
+
+\chapter{Chapter 1}
+\figure{}
+\figure{}
+
+\chapter{Chapter 2}
+\figure{}
+\figure{}
+
+\end{document}
