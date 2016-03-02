@@ -7,7 +7,6 @@ Licence MIT
 """
 
 
-# ----------------------------------------------------------------------------------------------------------------------
 class NodeStore:
     """
     Class for creating, storing, and retrieving nodes.
@@ -248,7 +247,7 @@ class NodeStore:
         return node
 
     # ------------------------------------------------------------------------------------------------------------------
-    def create_formatter(self, command, parent):
+    def create_formatter(self, command, parent=None):
         """
         Creates a formatter for generating the output of nodes in the requested output format.
 
@@ -308,7 +307,7 @@ class NodeStore:
     # ------------------------------------------------------------------------------------------------------------------
     def store_node(self, node):
         """
-        Stores a node. IF the node was not stored before assigns an ID to this node, otherwise the node replaces the
+        Stores a node. If the node was not stored before assigns an ID to this node, otherwise the node replaces the
         node stored under the same ID. Returns the ID if the node.
 
         :param sdoc.sdoc2.node.Node.Node node: The node.
@@ -373,19 +372,19 @@ class NodeStore:
     # ------------------------------------------------------------------------------------------------------------------
     def generate(self):
         """
-        Generates the documnt.
+        Generates the document.
         """
         file = open('output.html', 'w')
 
-        formatter = self.create_formatter('document', self.nodes[1])
+        formatter = self.create_formatter('document')
         formatter.generate(self.nodes[1], file)
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_enumerated_items(self):
         """
-        Returns a list with a tuple with command and number of enumerated nodes.
+        Returns a list with tuples with command and number of enumerated nodes.
 
-        Thi method is intended for unit test only.
+        This method is intended for unit test only.
 
         :rtype: list[(str,str)]
         """

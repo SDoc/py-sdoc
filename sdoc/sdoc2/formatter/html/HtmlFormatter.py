@@ -18,7 +18,6 @@ class HtmlFormatter(Formatter):
         Object constructor.
 
         :param Formatter formatter: The formatter of the parent node.
-        :return:
         """
         # @todo File stuff.
         pass
