@@ -1,0 +1,34 @@
+\begin{document}
+
+\section{Section without chapter}
+
+\figure{}
+\figure{}
+
+\begin{itemize}
+\item{} must be 1
+\item{} must be 2
+\item{} must be 3
+\end{itemize}
+
+\subsection{Subsection without chapter}
+
+\chapter{Chapter 1}
+
+\section{Section 1.1}
+
+\figure{}
+\figure{}
+
+\begin{itemize}
+\item{} must be 1
+\item{} must be 2
+\item{} must be 3
+    \begin{itemize}
+    \item{} must be 3.1
+    \item{} must be 3.2
+    \item{} must be 3.3
+    \end{itemize}
+\end{itemize}
+
+\end{document}

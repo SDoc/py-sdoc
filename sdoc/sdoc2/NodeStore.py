@@ -94,6 +94,8 @@ class NodeStore:
         # Pop the last node of the block stack.
         self.nested_nodes.pop()
 
+        node.end_command()
+
     # ------------------------------------------------------------------------------------------------------------------
     def in_scope(self, node_id):
         """
@@ -351,6 +353,14 @@ class NodeStore:
             # Add the node to the list of child nodes of its parent node.
             if len(self.nested_nodes):
                 parent_node = self.nested_nodes[-1]
+
+                # Pop from stack the last one if we have two Item nodes in a row
+                # for setting parent on Itemize, not on previous Item
+                if type(parent_node) == type(node):
+                    # @todo create pretty check if two nodes in a row are the same types -> ItemNode
+                    self.nested_nodes.pop()
+                    parent_node = self.nested_nodes[-1]
+
                 parent_node._child_nodes.append(node.id)
 
             # Block commands and hierarchical nodes must be appended to the nested nodes.
@@ -388,6 +398,8 @@ class NodeStore:
 
         :rtype: list[(str,str)]
         """
+        self.enumerate()
+
         return self.nodes[1].get_enumerated_items()
 
 # ----------------------------------------------------------------------------------------------------------------------

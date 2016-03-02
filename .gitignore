@@ -6,4 +6,3 @@ dist/
 doc/
 vendor/
 composer.lock
-test*.*

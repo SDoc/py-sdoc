@@ -190,6 +190,15 @@ class Node:
         self._child_nodes.append(child_node.id)
 
     # ------------------------------------------------------------------------------------------------------------------
+    @abc.abstractmethod
+    def end_command(self):
+        """
+        This method will be called by the SDoc2 visitor when the \end command of a block command is
+        parsed.
+        """
+        pass
+
+    # ------------------------------------------------------------------------------------------------------------------
     def prepare_content_tree(self):
         """
         Prepares this node for further processing.
@@ -228,7 +237,7 @@ class Node:
 
         # First append the enumeration of this node (if any).
         if 'number' in self._options:
-            items.append((self.get_command(), self._options['number']))
+            items.append((self.get_command(), self._options['number'], self._argument))
 
         # Second append the enumeration of child nodes (if any).
         for node_id in self._child_nodes:
