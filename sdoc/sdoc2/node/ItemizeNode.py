@@ -30,11 +30,6 @@ class ItemizeNode(Node):
         node_store.first = True
 
     # ------------------------------------------------------------------------------------------------------------------
-    def end_command(self):
-        # do something to fix hierarchy level
-        pass
-
-    # ------------------------------------------------------------------------------------------------------------------
     def get_command(self):
         """
         Returns the command of this node, i.e. itemize.

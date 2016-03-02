@@ -94,8 +94,6 @@ class NodeStore:
         # Pop the last node of the block stack.
         self.nested_nodes.pop()
 
-        node.end_command()
-
     # ------------------------------------------------------------------------------------------------------------------
     def in_scope(self, node_id):
         """
@@ -167,12 +165,14 @@ class NodeStore:
         if command not in self.inline_creators:
             # @todo set error status
             constructor = self.block_creators['unknown']
+            node = constructor(options, argument)
+            node.name = command
 
         else:
             # Create the new node.
             constructor = self.inline_creators[command]
+            node = constructor(options, argument)
 
-        node = constructor(options, argument)
         node.position = position
 
         # Store the node and assign ID.
@@ -354,10 +354,8 @@ class NodeStore:
             if len(self.nested_nodes):
                 parent_node = self.nested_nodes[-1]
 
-                # Pop from stack the last one if we have two Item nodes in a row
-                # for setting parent on Itemize, not on previous Item
-                if type(parent_node) == type(node):
-                    # @todo create pretty check if two nodes in a row are the same types -> ItemNode
+                # Pop from stack if we have two list element nodes (e.g. item nodes) in a row.
+                if node.is_list_element() and type(parent_node) == type(node):
                     self.nested_nodes.pop()
                     parent_node = self.nested_nodes[-1]
 
@@ -398,8 +396,6 @@ class NodeStore:
 
         :rtype: list[(str,str)]
         """
-        self.enumerate()
-
         return self.nodes[1].get_enumerated_items()
 
 # ----------------------------------------------------------------------------------------------------------------------

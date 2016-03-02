@@ -77,6 +77,15 @@ class ItemNode(Node):
         return True
 
     # ------------------------------------------------------------------------------------------------------------------
+    def is_list_element(self):
+        """
+        Returns True.
+
+        :rtype: bool
+        """
+        return True
+
+    # ------------------------------------------------------------------------------------------------------------------
     def prepare_content_tree(self):
         """
         Method which checks if all child nodes is phrasing.

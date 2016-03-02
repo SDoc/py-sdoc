@@ -181,6 +181,15 @@ class Node:
         return False
 
     # ------------------------------------------------------------------------------------------------------------------
+    def is_list_element(self):
+        """
+        Returns True if this node is a list element, e.g. an item in itemize. Otherwise returns False.
+
+        :rtype: bool
+        """
+        return False
+
+    # ------------------------------------------------------------------------------------------------------------------
     def append_child_node(self, child_node):
         """
         Appends a child node to the list of child nodes of the node.
@@ -188,15 +197,6 @@ class Node:
         :param sdoc.sdoc2.node.Node.Node child_node: The new child node
         """
         self._child_nodes.append(child_node.id)
-
-    # ------------------------------------------------------------------------------------------------------------------
-    @abc.abstractmethod
-    def end_command(self):
-        """
-        This method will be called by the SDoc2 visitor when the \end command of a block command is
-        parsed.
-        """
-        pass
 
     # ------------------------------------------------------------------------------------------------------------------
     def prepare_content_tree(self):
