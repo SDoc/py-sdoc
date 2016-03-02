@@ -45,10 +45,7 @@ class ItemNode(Node):
 
         :rtype: int
         """
-        if node_store.first:
-            self._hierarchy_level = parent_hierarchy_level + 1
-        else:
-            self._hierarchy_level = parent_hierarchy_level
+        self._hierarchy_level = parent_hierarchy_level + 1
 
         return self._hierarchy_level
 
@@ -94,6 +91,46 @@ class ItemNode(Node):
             #    raise RuntimeError("Node: id:%s, %s is not phrasing" % (str(node.id), node.name))
 
             node_store.out_scope(node)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    @staticmethod
+    def _increment_last_level(number):
+        """
+        Increments the last level in number of the item node.
+
+        :param str number: The number of last node.
+
+        :rtype: str
+        """
+        heading_numbers = number.split('.')
+        heading_numbers[-1] = str(int(heading_numbers[-1]) + 1)
+
+        return '.'.join(heading_numbers)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def strip_start_point(self, number):
+        """
+        Removes start point if it in the number.
+
+        :param str number: The number of last node.
+
+        :rtype: str
+        """
+        return number.lstrip('.')
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def enumerate(self, numbers):
+        """
+        Sets number for item nodes.
+
+        :param dict[str,str] numbers: The number of last node.
+        """
+        numbers['item'] = self.strip_start_point(numbers['item'])
+        numbers['item'] = self._increment_last_level(numbers['item'])
+
+        self._options['number'] = numbers['item']
+
+        super().enumerate(numbers)
 
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_inline_command('item', ItemNode)
