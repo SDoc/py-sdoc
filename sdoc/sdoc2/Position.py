@@ -59,7 +59,7 @@ class Position:
 
     # ------------------------------------------------------------------------------------------------------------------
     def __str__(self):
-        return "%s:%d.%d" % (os.path.relpath(self.file_name), self.start_line, self.start_column+1)
+        return "{0!s}:{1:d}.{2:d}".format(os.path.relpath(self.file_name), self.start_line, self.start_column+1)
 
 
 # ----------------------------------------------------------------------------------------------------------------------

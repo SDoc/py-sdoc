@@ -105,7 +105,7 @@ class ItemizeNode(Node):
             node = in_scope(node_id)
 
             if not isinstance(node, ItemNode):
-                raise RuntimeError("Node: id:%s, %s is not instance of 'ItemNode'" % (str(node.id), node.name))
+                raise RuntimeError("Node: id:{0!s}, {1!s} is not instance of 'ItemNode'".format(str(node.id), node.name))
 
             out_scope(node)
 

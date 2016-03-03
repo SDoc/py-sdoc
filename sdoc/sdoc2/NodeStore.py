@@ -82,7 +82,7 @@ class NodeStore:
 
         if not self.nested_nodes:
             # @todo position
-            raise RuntimeError("Unexpected \\end{%s}." % command)
+            raise RuntimeError("Unexpected \\end{{{0!s}}}.".format(command))
 
         # Get the last node on the block stack.
         node = self.nested_nodes[-1]
@@ -90,7 +90,7 @@ class NodeStore:
         if node.name != command:
             # @todo position \end
             # @todo position \begin
-            raise RuntimeError("\\begin{%s} and \\end{%s} do not match." % (node.name, command))
+            raise RuntimeError("\\begin{{{0!s}}} and \\end{{{1!s}}} do not match.".format(node.name, command))
 
         # Pop the last node of the block stack.
         self.nested_nodes.pop()
@@ -262,11 +262,11 @@ class NodeStore:
         :rtype: sdoc.sdoc2.formatter.Formatter.Formatter
         """
         if self.format not in self._formatters:
-            raise RuntimeError("Unknown output format '%s'." % self.format)
+            raise RuntimeError("Unknown output format '{0!s}'.".format(self.format))
 
         if command not in self._formatters[self.format]:
             # @todo use default none decorator with warning
-            raise RuntimeError("Unknown formatter '%s' for format '%s'." % (command, self.format))
+            raise RuntimeError("Unknown formatter '{0!s}' for format '{1!s}'.".format(command, self.format))
 
         constructor = self._formatters[self.format][command]
         formatter = constructor(parent)
@@ -289,8 +289,7 @@ class NodeStore:
                 if node.is_hierarchy_root():
                     parent_found = True
                 else:
-                    raise RuntimeError("Improper nesting of node '%s' at %s and node '%s' at %s." %
-                                       (parent_node.name, parent_node.position, node.name, node.position))
+                    raise RuntimeError("Improper nesting of node '{0!s}' at {1!s} and node '{2!s}' at {3!s}.".format(parent_node.name, parent_node.position, node.name, node.position))
 
             if not parent_found:
                 parent_hierarchy_level = parent_node.get_hierarchy_level()
@@ -306,8 +305,7 @@ class NodeStore:
 
         if node_hierarchy_level - parent_hierarchy_level > 1:
             # @todo position
-            print("Warning improper nesting of levels: %d at %s and %d at %s." %
-                  (parent_hierarchy_level, parent_node.position, node_hierarchy_level, node.position))
+            print("Warning improper nesting of levels: {0:d} at {1!s} and {2:d} at {3!s}.".format(parent_hierarchy_level, parent_node.position, node_hierarchy_level, node.position))
 
     # ------------------------------------------------------------------------------------------------------------------
     def store_node(self, node):
@@ -339,7 +337,7 @@ class NodeStore:
             # The first node must be a document root.
             if not node.is_document_root():
                 # @todo position of block node.
-                raise RuntimeError("Node %s is not a document root" % node.name)
+                raise RuntimeError("Node {0!s} is not a document root".format(node.name))
 
             self.nested_nodes.append(node)
 
@@ -347,7 +345,7 @@ class NodeStore:
             # All other nodes must not be a document root.
             if node.is_document_root():
                 # @todo position of block node.
-                raise RuntimeError("Unexpected %s. Node is document root" % node.name)
+                raise RuntimeError("Unexpected {0!s}. Node is document root".format(node.name))
 
             # If the node is a part of a hierarchy adjust the nested nodes stack.
             if node.get_hierarchy_name():
