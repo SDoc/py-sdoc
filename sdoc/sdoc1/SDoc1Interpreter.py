@@ -37,7 +37,7 @@ class SDoc1Interpreter:
         tree = parser.sdoc()
         visitor = SDoc1Visitor(root_dir=os.path.dirname(os.path.realpath(infile)))
 
-        visitor.set_output(out_stream)
+        visitor.output = out_stream
         visitor.visit(tree)
 
         out_stream.close()

@@ -66,18 +66,40 @@ class SDoc1Visitor(sdoc1ParserVisitor):
         """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def set_output(self, output):
+    @property
+    def output(self):
         """
-        Sets the object for streaming the generated output.
+        Getter fro output.
 
-        :param output: This object MUST implement the write method.
+        :rtype: T
+        """
+        return self._output
+
+    # ------------------------------------------------------------------------------------------------------------------
+    @output.setter
+    def output(self, output):
+        """
+        Setter for output.
+
+        :param T output: This object MUST implement the write method.
         """
         self._output = output
 
     # ------------------------------------------------------------------------------------------------------------------
-    def _set_global_scope(self, scope):
+    @property
+    def global_scope(self):
         """
-        Sets the global scope for variables.
+        Getter for global_scope.
+
+        :rtype: sdoc.sdoc1.data_type.ArrayDataType.ArrayDataType
+        """
+        return self._global_scope
+
+    # ------------------------------------------------------------------------------------------------------------------
+    @global_scope.setter
+    def global_scope(self, scope):
+        """
+        Setter for global_scope.
 
         :param sdoc.sdoc1.data_type.ArrayDataType.ArrayDataType scope: The global scope.
         """
@@ -352,8 +374,8 @@ class SDoc1Visitor(sdoc1ParserVisitor):
 
         # Set or inherit properties from the parser of the parent document.
         visitor._include_level = self._include_level + 1
-        visitor.set_output(self._output)
-        visitor._set_global_scope(self._global_scope)
+        visitor.output = self._output
+        visitor.global_scope = self._global_scope
 
         # Run the visitor on the parse tree.
         visitor.visit(tree)

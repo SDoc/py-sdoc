@@ -23,7 +23,7 @@ class HeadingHtmlFormatter(HtmlFormatter):
         :param sdoc.sdoc2.node.HeadingNode.HeadingNode node: The heading node.
         :param file file: The output file.
         """
-        text_in_tag = '{0!s} {1!s}'.format(node._options['number'], node.argument)
+        text_in_tag = '{0!s} {1!s}'.format(node.get_option_value['number'], node.argument)
         file.write(Html.generate_element('h{0:d}'.format(node.get_hierarchy_level()), {}, text_in_tag))
 
         super().generate(node, file)
