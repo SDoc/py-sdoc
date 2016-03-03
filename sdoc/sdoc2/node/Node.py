@@ -84,7 +84,7 @@ class Node:
 
         :param int level: the level of block commands.
         """
-        print("%s%4d %s" % (' ' * 4 * level, self.id, self.name))
+        print("{0!s}{1:4d} {2!s}".format(' ' * 4 * level, self.id, self.name))
         for node_id in self._child_nodes:
             node = in_scope(node_id)
 

@@ -34,7 +34,7 @@ class TextNode(Node):
 
         :param int level: the level of block commands.
         """
-        print("%s%4d %s %s" % (' ' * 4 * level, self.id, self.name, ''))
+        print("{0!s}{1:4d} {2!s} {3!s}".format(' ' * 4 * level, self.id, self.name, ''))
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_command(self):
