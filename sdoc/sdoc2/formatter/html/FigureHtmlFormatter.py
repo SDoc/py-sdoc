@@ -23,8 +23,19 @@ class FigureHtmlFormatter(HtmlFormatter):
         :param sdoc.sdoc2.node.FigureNode.FigureNode node: The figure node.
         :param file file: The output file.
         """
-        text_in_tag = '%s %s' % (node._options['number'], '---FIGURE---')
-        file.write(Html.generate_element('h3', {}, text_in_tag))
+        # Creating dicts with attributes for each type of element.
+        img_attributes = {'src': node.get_option_value('filename'),
+                          'width': node.get_option_value('width'),
+                          'height': node.get_option_value('height'),
+                          'caption': node.get_option_value('caption')}
+        div_attributes = {'class': node.get_option_value('class')}
+
+        # Creating elements.
+        img_element = Html.generate_void_element('img', img_attributes)
+        div_img_element = Html.generate_element('div', div_attributes, img_element, True)
+
+        # Write elements into html file.
+        file.write(div_img_element)
 
         super().generate(node, file)
 
