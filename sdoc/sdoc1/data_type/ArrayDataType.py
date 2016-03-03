@@ -40,8 +40,8 @@ class ArrayDataType(DataType):
 
         # Find the length of the longest key.
         for (key, value) in self._elements.items():
-            if len("%s" % key) >= longest:
-                longest = len("%s" % key)
+            if len("{0!s}".format(key)) >= longest:
+                longest = len("{0!s}".format(key))
                 if isinstance(key, str):
                     # The longest key is a string. Add 2 positions for quotes.
                     longest += 2
@@ -119,7 +119,7 @@ class ArrayDataType(DataType):
         @todo consider key must be int or str
         """
         if not key.is_scalar():
-            raise RuntimeError("Key '%s' is not a scalar." % str(key))
+            raise RuntimeError("Key '{0!s}' is not a scalar.".format(str(key)))
 
         self._elements[key.get_value()] = value.dereference()
 
@@ -135,7 +135,7 @@ class ArrayDataType(DataType):
         :rtype: sdoc.sdoc1.data_type.DataType.DataType
         """
         if name not in self._elements:
-            raise RuntimeError("Identifier '%s' does not have a value." % name)
+            raise RuntimeError("Identifier '{0!s}' does not have a value.".format(name))
 
         return self._elements[name]
 

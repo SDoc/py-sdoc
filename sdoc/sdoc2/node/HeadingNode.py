@@ -68,7 +68,7 @@ class HeadingNode(Node):
         """
         if string_of_numbers.startswith('0'):
             string_of_numbers = string_of_numbers.lstrip('0.')
-            string_of_numbers = '0.%s' % string_of_numbers
+            string_of_numbers = '0.{0!s}'.format(string_of_numbers)
 
         return string_of_numbers
 

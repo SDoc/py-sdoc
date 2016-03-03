@@ -65,10 +65,10 @@ class HyperlinkNode(Node):
         """
         if not request.urlparse(url).scheme:
             if url.startswith('ftp.'):
-                url = 'ftp://%s' % url
+                url = 'ftp://{0!s}'.format(url)
                 self._options['href'] = url
             else:
-                url = 'http://%s' % url
+                url = 'http://{0!s}'.format(url)
                 self._options['href'] = url
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -82,7 +82,7 @@ class HyperlinkNode(Node):
 
             # Check if we can connect to host.
             if response.getcode() not in range(200, 400):
-                print("Warning! - Cannot connect to: '%s'" % self._options['href'])
+                print("Warning! - Cannot connect to: '{0!s}'".format(self._options['href']))
             else:
                 # If we connected, check the redirect.
                 url = self._options['href'].lstrip('(http://)|(https://)')
@@ -97,7 +97,7 @@ class HyperlinkNode(Node):
                         self._options['href'].replace('http://', 'https://')
 
         except error.URLError:
-            print("Warning! - Invalid url address: '%s'" % self._options['href'])
+            print("Warning! - Invalid url address: '{0!s}'".format(self._options['href']))
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_command(self):

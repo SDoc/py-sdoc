@@ -120,7 +120,7 @@ class SDoc1Visitor(sdoc1ParserVisitor):
         if position == 'stop':
             column += len(token.text)
 
-        self.stream('\\position{%s:%d.%d}' % (sdoc.escape(filename), line_number, column))
+        self.stream('\\position{{{0!s}:{1:d}.{2:d}}}'.format(sdoc.escape(filename), line_number, column))
 
     # ------------------------------------------------------------------------------------------------------------------
     def visit(self, tree):
@@ -146,7 +146,7 @@ class SDoc1Visitor(sdoc1ParserVisitor):
         # Left hand side must be an identifier.
         # @todo implement array element.
         if not isinstance(left_hand_side, IdentifierDataType):
-            raise RuntimeError("Left hand side '%s' is not an identifier." % str(left_hand_side))
+            raise RuntimeError("Left hand side '{0!s}' is not an identifier.".format(str(left_hand_side)))
             # @todo more verbose logging, own exception class
 
         return left_hand_side.set_value(right_hand_side)
@@ -189,11 +189,11 @@ class SDoc1Visitor(sdoc1ParserVisitor):
         # First get the value of key.
         expression = ctx.expression().accept(self)
         if not expression.is_defined():
-            raise RuntimeError('%s is not defined.' % ctx.expression().getText())
+            raise RuntimeError('{0!s} is not defined.'.format(ctx.expression().getText()))
 
         postfix_expression = ctx.postfixExpression().accept(self)
         if not isinstance(postfix_expression, IdentifierDataType):
-            raise RuntimeError("'%s' is not an identifier." % ctx.postfixExpression().getText())
+            raise RuntimeError("'{0!s}' is not an identifier.".format(ctx.postfixExpression().getText()))
             # @todo more verbose logging, own exception class
 
         return postfix_expression.get_array_element(expression)
@@ -336,7 +336,7 @@ class SDoc1Visitor(sdoc1ParserVisitor):
         file_name = sdoc.unescape(ctx.SIMPLE_ARG().getText())
         if not os.path.isabs(file_name):
             file_name = os.path.join(self._root_dir, file_name + '.sdoc')
-        print("Including %s" % os.path.relpath(file_name))
+        print("Including {0!s}".format(os.path.relpath(file_name)))
         stream = antlr4.FileStream(file_name, 'utf-8')
 
         # root_dir
@@ -374,7 +374,7 @@ class SDoc1Visitor(sdoc1ParserVisitor):
         line_number = token.line
         message = sdoc.unescape(ctx.SIMPLE_ARG().getText())
 
-        print('Notice: %s at %s:%d' % (message, os.path.relpath(filename), line_number))
+        print('Notice: {0!s} at {1!s}:{2:d}'.format(message, os.path.relpath(filename), line_number))
 
         self.put_position(ctx, 'stop')
 

@@ -47,12 +47,12 @@ class IdentifierDataType(DataType):
         :rtype: str
         """
         if not self._scope.has_element(self._name):
-            return "'%s' = %s" % (self._name, 'UNDEFINED')
+            return "'{0!s}' = {1!s}".format(self._name, 'UNDEFINED')
 
         # Setting first indentation.
-        first_indent = len("%s = " % self._name)
+        first_indent = len("{0!s} = ".format(self._name))
 
-        return "%s = %s" % (self._name, self._scope.get_reference(self._name).debug(first_indent))
+        return "{0!s} = {1!s}".format(self._name, self._scope.get_reference(self._name).debug(first_indent))
 
     # ------------------------------------------------------------------------------------------------------------------
     def dereference(self):

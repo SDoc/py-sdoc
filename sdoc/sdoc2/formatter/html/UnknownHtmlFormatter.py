@@ -24,7 +24,7 @@ class UnknownHtmlFormatter(HtmlFormatter):
         :param sdoc.sdoc2.node.ParagraphNode.ParagraphNode node: The paragraph node.
         :param file file: The output file.
         """
-        html = 'Unknown SDoc2 command <span style="font-weight:bold">%s</span> at %s' % (
+        html = 'Unknown SDoc2 command <span style="font-weight:bold">{0!s}</span> at {1!s}'.format(
             Html.escape(node.name), Html.escape(str(node.position)))
         file.write(Html.generate_element('span', {'style': 'color:red'}, html, True))
 
