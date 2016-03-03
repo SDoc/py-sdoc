@@ -6,7 +6,7 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-from sdoc.sdoc2 import node_store
+from sdoc.sdoc2 import node_store, in_scope, out_scope
 from sdoc.sdoc2.node.Node import Node
 from sdoc.sdoc2.node.ItemNode import ItemNode
 
@@ -102,12 +102,12 @@ class ItemizeNode(Node):
         Method which checks if all child nodes is instance of sdoc.sdoc2.node.ItemNode.ItemNode.
         """
         for node_id in self._child_nodes:
-            node = node_store.in_scope(node_id)
+            node = in_scope(node_id)
 
             if not isinstance(node, ItemNode):
                 raise RuntimeError("Node: id:%s, %s is not instance of 'ItemNode'" % (str(node.id), node.name))
 
-            node_store.out_scope(node)
+            out_scope(node)
 
     # ------------------------------------------------------------------------------------------------------------------
     def level_down(self, number):

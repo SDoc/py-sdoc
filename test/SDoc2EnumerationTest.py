@@ -1,11 +1,11 @@
+import glob
 import os
 import ast
 import csv
 import unittest
 
-import sdoc
-from sdoc.sdoc2 import node_store
-from sdoc.sdoc2.SDoc2Interpreter import SDoc2Interpreter
+from sdoc.SDoc import SDoc
+from sdoc.sdoc2 import in_scope
 
 
 class SDoc2EnumerationTest(unittest.TestCase):
@@ -49,49 +49,23 @@ class SDoc2EnumerationTest(unittest.TestCase):
         return items_tuple
 
     # ------------------------------------------------------------------------------------------------------------------
-    def run_test(self, sdoc_name):
-        data_dir = os.path.dirname(os.path.abspath(__file__)) + '/enumeration/'
+    def testNumbering(self):
+        test_file_names = glob.glob(os.path.dirname(os.path.abspath(__file__)) + "/enumeration/*.sdoc")
 
-        pre, ext = os.path.splitext(sdoc_name)
-        file_name = data_dir + pre
+        for test_file_name in sorted(test_file_names):
+            with self.subTest(test_file_name=test_file_name):
+                pre, ext = os.path.splitext(test_file_name)
+                csv_file_name = pre + '.csv'
 
-        sdoc2 = SDoc2Interpreter()
-        sdoc2.process(file_name + '.sdoc', '')
+                sdoc = SDoc()
+                sdoc.test_sdoc2(test_file_name)
 
-        self.assertEqual(self.create_list_of_items(sdoc.sdoc2.node_store.get_enumerated_items()),
-                         self.csv_to_tuple(file_name + '.csv'))
+                root = in_scope(1)
+                numbers = root.get_enumerated_items()
 
-    # ------------------------------------------------------------------------------------------------------------------
-    def testEnumeration01(self):
-        """
-        Test case with right numeration of nodes.
-        """
-        self.run_test('test01.sdoc')
+                actual = self.create_list_of_items(numbers)
+                expected = self.csv_to_tuple(csv_file_name)
 
-    # ------------------------------------------------------------------------------------------------------------------
-    def testEnumeration02(self):
-        """
-        Test case with wrong numeration of nodes.
-        """
-        self.run_test('test02.sdoc')
+                self.assertEqual(actual, expected)
 
-    # ------------------------------------------------------------------------------------------------------------------
-    def testEnumeration03(self):
-        """
-        Test case with different figure numeration of nodes.
-        """
-        self.run_test('test03.sdoc')
-
-    # ------------------------------------------------------------------------------------------------------------------
-    def testEnumeration04(self):
-        """
-        Test case with item and itemize nodes.
-        """
-        self.run_test('test04.sdoc')
-
-    # ------------------------------------------------------------------------------------------------------------------
-    def testEnumeration05(self):
-        """
-        Test case of general numbering of all type of nodes.
-        """
-        self.run_test('test05.sdoc')
+# ----------------------------------------------------------------------------------------------------------------------

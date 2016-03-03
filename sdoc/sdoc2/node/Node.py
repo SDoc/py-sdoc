@@ -8,7 +8,7 @@ Licence MIT
 # ----------------------------------------------------------------------------------------------------------------------
 import abc
 
-from sdoc.sdoc2 import node_store
+from sdoc.sdoc2 import in_scope, out_scope
 
 
 class Node:
@@ -86,11 +86,11 @@ class Node:
         """
         print("%s%4d %s" % (' ' * 4 * level, self.id, self.name))
         for node_id in self._child_nodes:
-            node = node_store.in_scope(node_id)
+            node = in_scope(node_id)
 
             node.print_info(level + 1)
 
-            node_store.out_scope(node)
+            out_scope(node)
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_hierarchy_name(self):
@@ -204,11 +204,11 @@ class Node:
         Prepares this node for further processing.
         """
         for node_id in self._child_nodes:
-            node = node_store.in_scope(node_id)
+            node = in_scope(node_id)
 
             node.prepare_content_tree()
 
-            node_store.out_scope(node)
+            out_scope(node)
 
     # ------------------------------------------------------------------------------------------------------------------
     def enumerate(self, enumerable_numbers):
@@ -218,11 +218,11 @@ class Node:
         :param enumerable_numbers: The current enumerable numbers.
         """
         for node_id in self._child_nodes:
-            node = node_store.in_scope(node_id)
+            node = in_scope(node_id)
 
             node.enumerate(enumerable_numbers)
 
-            node_store.out_scope(node)
+            out_scope(node)
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_enumerated_items(self):
@@ -241,13 +241,13 @@ class Node:
 
         # Second append the enumeration of child nodes (if any).
         for node_id in self._child_nodes:
-            node = node_store.in_scope(node_id)
+            node = in_scope(node_id)
 
             tmp = node.get_enumerated_items()
             if tmp:
                 items.append(tmp)
 
-            node_store.out_scope(node)
+            out_scope(node)
 
         return items
 

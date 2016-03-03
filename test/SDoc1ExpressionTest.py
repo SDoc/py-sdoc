@@ -1,10 +1,11 @@
 import glob
 import os
+import unittest
 
-from test.SDoc1TestCase import SDoc1TestCase
+from sdoc.SDoc import SDoc
 
 
-class SDoc1ExpressionTest(SDoc1TestCase):
+class SDoc1ExpressionTest(unittest.TestCase):
     """
     Test cases for SDoc1 expressions.
     """
@@ -15,15 +16,14 @@ class SDoc1ExpressionTest(SDoc1TestCase):
 
         for test_file_name in sorted(test_file_names):
             with self.subTest(test_file_name=test_file_name):
-                with open(test_file_name, 'r') as file:
-                    sdoc1 = file.read()
-
                 pre, ext = os.path.splitext(test_file_name)
                 text_file_name = pre + '.txt'
                 with open(text_file_name, 'r') as file:
                     text = file.read()
 
-                output = self.run_sdoc1(sdoc1)
-                self.assertEqual(output, text)
+                sdoc = SDoc()
+                (stdout, sdoc2) = sdoc.test_sdoc1(test_file_name)
+
+                self.assertEqual(stdout, text)
 
 # ----------------------------------------------------------------------------------------------------------------------

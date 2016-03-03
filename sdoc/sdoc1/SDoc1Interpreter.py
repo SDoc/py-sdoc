@@ -39,4 +39,6 @@ class SDoc1Interpreter:
         visitor.set_output(out_stream)
         visitor.visit(tree)
 
+        out_stream.close()
+
 # ----------------------------------------------------------------------------------------------------------------------

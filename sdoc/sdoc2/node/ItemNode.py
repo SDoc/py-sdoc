@@ -6,7 +6,8 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-from sdoc.sdoc2 import node_store
+from sdoc.SDoc import SDoc
+from sdoc.sdoc2 import node_store, in_scope, out_scope
 from sdoc.sdoc2.node.Node import Node
 from sdoc.sdoc2.node.TextNode import TextNode
 
@@ -15,6 +16,7 @@ class ItemNode(Node):
     """
     SDoc2 node for items.
     """
+
     # ------------------------------------------------------------------------------------------------------------------
     def __init__(self, options, argument):
         """
@@ -91,7 +93,7 @@ class ItemNode(Node):
         Method which checks if all child nodes is phrasing.
         """
         for node_id in self._child_nodes:
-            node = node_store.in_scope(node_id)
+            node = in_scope(node_id)
 
             if isinstance(node, TextNode):
                 node.prune_whitespace()
@@ -99,7 +101,7 @@ class ItemNode(Node):
             # if not node.is_phrasing():
             #    raise RuntimeError("Node: id:%s, %s is not phrasing" % (str(node.id), node.name))
 
-            node_store.out_scope(node)
+            out_scope(node)
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
@@ -140,6 +142,7 @@ class ItemNode(Node):
         self._options['number'] = numbers['item']
 
         super().enumerate(numbers)
+
 
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_inline_command('item', ItemNode)
