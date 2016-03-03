@@ -202,14 +202,16 @@ class SDoc:
         self._nodes_paths.append(os.path.dirname(__file__) + '/sdoc2/node')
 
     # ------------------------------------------------------------------------------------------------------------------
-    def _create_node_store(self):
+    @staticmethod
+    def _create_node_store():
         """
         Creates the node store (for storing nodes).
         """
         sdoc.sdoc2.node_store = NodeStore()
 
     # ------------------------------------------------------------------------------------------------------------------
-    def importing(self, path):
+    @staticmethod
+    def importing(path):
         """
         Imports modules from specific path.
 
@@ -246,7 +248,8 @@ class SDoc:
         interpreter1.process(main_filename, temp_filename)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def run_sdoc2(self, temp_filename):
+    @staticmethod
+    def run_sdoc2(temp_filename):
         """
         Run the SDoc2 parser.
 

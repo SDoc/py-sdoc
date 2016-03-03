@@ -173,7 +173,7 @@ class HeadingNode(Node):
         paragraph_node = None
 
         for node_id in self._child_nodes:
-            node =in_scope(node_id)
+            node = in_scope(node_id)
 
             if node.is_phrasing():
                 if not paragraph_node:

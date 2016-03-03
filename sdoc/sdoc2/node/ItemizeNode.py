@@ -110,7 +110,8 @@ class ItemizeNode(Node):
             out_scope(node)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def level_down(self, number):
+    @staticmethod
+    def level_down(number):
         """
         Decrements the level of hierarchy.
 
@@ -124,7 +125,8 @@ class ItemizeNode(Node):
         return number
 
     # ------------------------------------------------------------------------------------------------------------------
-    def level_up(self, numbers):
+    @staticmethod
+    def level_up(numbers):
         """
         Increments the level of hierarchy.
 

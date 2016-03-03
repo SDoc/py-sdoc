@@ -20,7 +20,8 @@ class SDoc1Interpreter:
     Class for processing SDoc1 documents.
     """
     # ------------------------------------------------------------------------------------------------------------------
-    def process(self, infile, outfile):
+    @staticmethod
+    def process(infile, outfile):
         """
         Processes a SDoc1 document.
 

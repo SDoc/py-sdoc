@@ -48,14 +48,14 @@ class SDoc2Visitor(sdoc2ParserVisitor):
 
         self._sdoc2_line = 0
         """
-        The line position of the last \position command.
+        The line position of the last position command.
 
         :type: int
         """
 
         self._sdoc2_column = 0
         """
-        The last column position of the last \position command.
+        The last column position of the last position command.
 
         :type: int
         """

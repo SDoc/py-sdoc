@@ -10,7 +10,6 @@ import re
 import sdoc
 from sdoc.sdoc2 import node_store
 from sdoc.sdoc2.node.Node import Node
-from sdoc.sdoc2.node.EndParagraphNode import EndParagraphNode
 
 
 class TextNode(Node):

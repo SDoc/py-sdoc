@@ -96,7 +96,7 @@ class SDoc1Visitor(sdoc1ParserVisitor):
     # ------------------------------------------------------------------------------------------------------------------
     def put_position(self, ctx, position):
         """
-        Puts a \position SDoc2 command on the output stream.
+        Puts a position SDoc2 command on the output stream.
 
         :param ParserRuleContext ctx: The context tree.
         :param str position: Either start or stop.
@@ -292,9 +292,6 @@ class SDoc1Visitor(sdoc1ParserVisitor):
                 child = ctx.getChild(i)
                 i += 1
                 data = child.accept(self)
-                """
-                :type: sdoc.sdoc1.data_type.DataType.DataType
-                """
 
                 # Skip }
                 i += 1
