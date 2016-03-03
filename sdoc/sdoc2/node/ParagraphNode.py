@@ -46,13 +46,13 @@ class ParagraphNode(HeadingNode):
         return False
 
     # ------------------------------------------------------------------------------------------------------------------
-    def enumerate(self, numbers):
+    def number(self, numbers):
         """
-        Overrides the method and uses parent enumerate method.
+        Overrides the HeadingNode implementation withe the (original) Node implementation.
 
         :param dict[str,str] numbers: The number of last node.
         """
-        Node.enumerate(self, numbers)
+        Node.number(self, numbers)
 
     # ------------------------------------------------------------------------------------------------------------------
     def is_inline_command(self):
@@ -68,10 +68,10 @@ class ParagraphNode(HeadingNode):
         """
         Removes spaces from end of a paragraph.
         """
-        first = self._child_nodes[0]
-        last = self._child_nodes[-1]
+        first = self.child_nodes[0]
+        last = self.child_nodes[-1]
 
-        for node_id in self._child_nodes:
+        for node_id in self.child_nodes:
             node = in_scope(node_id)
 
             if isinstance(node, TextNode):
