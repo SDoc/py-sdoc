@@ -1,3 +1,11 @@
+"""
+SDoc
+
+Copyright 2016 Set Based IT Consultancy
+
+Licence MIT
+"""
+# ----------------------------------------------------------------------------------------------------------------------
 import glob
 import os
 import ast
@@ -50,6 +58,9 @@ class SDoc2EnumerationTest(unittest.TestCase):
 
     # ------------------------------------------------------------------------------------------------------------------
     def testNumbering(self):
+        """
+        Runs all test cases in the test/enumeration directory.
+        """
         test_file_names = glob.glob(os.path.dirname(os.path.abspath(__file__)) + "/enumeration/*.sdoc")
 
         for test_file_name in sorted(test_file_names):
@@ -67,5 +78,6 @@ class SDoc2EnumerationTest(unittest.TestCase):
                 expected = self.csv_to_tuple(csv_file_name)
 
                 self.assertEqual(actual, expected)
+
 
 # ----------------------------------------------------------------------------------------------------------------------
