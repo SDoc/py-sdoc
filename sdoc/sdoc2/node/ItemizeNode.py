@@ -101,7 +101,7 @@ class ItemizeNode(Node):
         """
         Method which checks if all child nodes is instance of sdoc.sdoc2.node.ItemNode.ItemNode.
         """
-        for node_id in self._child_nodes:
+        for node_id in self.child_nodes:
             node = in_scope(node_id)
 
             if not isinstance(node, ItemNode):
@@ -138,7 +138,7 @@ class ItemizeNode(Node):
             numbers['item'] = '0'
 
     # ------------------------------------------------------------------------------------------------------------------
-    def enumerate(self, numbers):
+    def number(self, numbers):
         """
         Passing over all child nodes, for numeration.
 
@@ -146,7 +146,7 @@ class ItemizeNode(Node):
         """
         self.level_up(numbers)
 
-        super().enumerate(numbers)
+        super().number(numbers)
 
         numbers['item'] = self.level_down(numbers['item'])
 

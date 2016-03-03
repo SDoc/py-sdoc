@@ -91,7 +91,7 @@ class ItemNode(Node):
         """
         Method which checks if all child nodes is phrasing.
         """
-        for node_id in self._child_nodes:
+        for node_id in self.child_nodes:
             node = in_scope(node_id)
 
             if isinstance(node, TextNode):
@@ -129,7 +129,7 @@ class ItemNode(Node):
         return number.lstrip('.')
 
     # ------------------------------------------------------------------------------------------------------------------
-    def enumerate(self, numbers):
+    def number(self, numbers):
         """
         Sets number for item nodes.
 
@@ -140,7 +140,7 @@ class ItemNode(Node):
 
         self._options['number'] = numbers['item']
 
-        super().enumerate(numbers)
+        super().number(numbers)
 
 
 # ----------------------------------------------------------------------------------------------------------------------

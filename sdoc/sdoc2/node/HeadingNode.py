@@ -113,9 +113,9 @@ class HeadingNode(Node):
         return '.'.join(heading_numbers)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def enumerate(self, enumerable_numbers):
+    def number(self, enumerable_numbers):
         """
-        Sets number to heading nodes.
+        Sets number of heading nodes.
 
         :param dict[str,str] enumerable_numbers: The current numbers of enumerable nodes.
         """
@@ -124,7 +124,7 @@ class HeadingNode(Node):
 
         self._options['number'] = self._trim_levels(enumerable_numbers['heading'])
 
-        super().enumerate(enumerable_numbers)
+        super().number(enumerable_numbers)
 
     # ------------------------------------------------------------------------------------------------------------------
     def prepare_content_tree(self):
@@ -147,7 +147,7 @@ class HeadingNode(Node):
         """
         new_child_nodes = []
 
-        for node_id in self._child_nodes:
+        for node_id in self.child_nodes:
             node = in_scope(node_id)
 
             if isinstance(node, TextNode):
@@ -159,7 +159,7 @@ class HeadingNode(Node):
 
             out_scope(node)
 
-        self._child_nodes = new_child_nodes
+        self.child_nodes = new_child_nodes
 
     # ------------------------------------------------------------------------------------------------------------------
     def create_paragraphs(self):
@@ -172,7 +172,7 @@ class HeadingNode(Node):
         new_child_nodes = []
         paragraph_node = None
 
-        for node_id in self._child_nodes:
+        for node_id in self.child_nodes:
             node = in_scope(node_id)
 
             if node.is_phrasing():
@@ -200,6 +200,6 @@ class HeadingNode(Node):
             # paragraph_node = None
 
         # Setting child nodes.
-        self._child_nodes = new_child_nodes
+        self.child_nodes = new_child_nodes
 
 # ----------------------------------------------------------------------------------------------------------------------

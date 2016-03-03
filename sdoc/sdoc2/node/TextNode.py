@@ -109,7 +109,7 @@ class TextNode(Node):
                 text_ids.append(end_paragraph_node.id)
 
             # Checking where we need to add paragraph.
-            if len(text_ids):
+            if text_ids:
                 if list_of_texts[-1]:
                     text_ids.pop()
 

@@ -284,7 +284,7 @@ class SDoc1Visitor(sdoc1ParserVisitor):
             child = ctx.getChild(i)
             token_text = child.getText()
             i += 1
-            if token_text == '\\if' or token_text == '\\elif':
+            if token_text in ['\\if', '\\elif']:
                 # Skip {
                 i += 1
 

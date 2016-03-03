@@ -25,7 +25,7 @@ class Formatter:
         :param file file: The output file.
         """
 
-        for node_id in node._child_nodes:  # @todo fix access
+        for node_id in node.child_nodes:  # @todo fix access
             child_node = in_scope(node_id)
 
             formatter = node_store.create_formatter(child_node.get_command(), self)

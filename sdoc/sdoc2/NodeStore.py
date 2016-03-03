@@ -354,7 +354,7 @@ class NodeStore:
                 self._adjust_hierarchy(node)
 
             # Add the node to the list of child nodes of its parent node.
-            if len(self.nested_nodes):
+            if self.nested_nodes:
                 parent_node = self.nested_nodes[-1]
 
                 # Pop from stack if we have two list element nodes (e.g. item nodes) in a row.
@@ -362,7 +362,7 @@ class NodeStore:
                     self.nested_nodes.pop()
                     parent_node = self.nested_nodes[-1]
 
-                parent_node._child_nodes.append(node.id)
+                parent_node.child_nodes.append(node.id)
 
             # Block commands and hierarchical nodes must be appended to the nested nodes.
             if node.is_block_command() or node.get_hierarchy_name():
@@ -377,8 +377,11 @@ class NodeStore:
         self.nodes[1].prepare_content_tree()
 
     # ------------------------------------------------------------------------------------------------------------------
-    def enumerate(self):
-        self.nodes[1].enumerate(self._enumerable_numbers)
+    def number_numerable(self):
+        """
+        Numbers all numerable nodes such as chapters, sections, figures, and, items.
+        """
+        self.nodes[1].number(self._enumerable_numbers)
 
     # ------------------------------------------------------------------------------------------------------------------
     def generate(self):
