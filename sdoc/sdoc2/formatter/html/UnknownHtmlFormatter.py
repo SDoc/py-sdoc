@@ -6,6 +6,7 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
+from sdoc.helper.Html import Html
 from sdoc.sdoc2 import node_store
 from sdoc.sdoc2.formatter.html.HtmlFormatter import HtmlFormatter
 
@@ -14,6 +15,7 @@ class UnknownHtmlFormatter(HtmlFormatter):
     """
     HtmlFormatter for generating HTML code for paragraph.
     """
+
     # ------------------------------------------------------------------------------------------------------------------
     def generate(self, node, file):
         """
@@ -22,7 +24,9 @@ class UnknownHtmlFormatter(HtmlFormatter):
         :param sdoc.sdoc2.node.ParagraphNode.ParagraphNode node: The paragraph node.
         :param file file: The output file.
         """
-        file.write('<b>Unknown SDoc2 command</b>')
+        html = 'Unknown SDoc2 command <span style="font-weight:bold">%s</span> at %s' % (
+            Html.escape(node.name), Html.escape(str(node.position)))
+        file.write(Html.generate_element('span', {'style': 'color:red'}, html, True))
 
 
 # ----------------------------------------------------------------------------------------------------------------------

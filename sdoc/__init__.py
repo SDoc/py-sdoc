@@ -7,8 +7,10 @@ Licence MIT
 """
 import re
 
-
 # ----------------------------------------------------------------------------------------------------------------------
+from sdoc.SDoc import SDoc
+
+
 def escape(text):
     """
     Returns an escaped string that is svae to use in SDoc.
@@ -17,6 +19,7 @@ def escape(text):
 
     :rtype: str
     """
+
     def replace(matchobj):
         return '\\' + matchobj.group(0)
 
@@ -32,9 +35,17 @@ def unescape(text):
 
     :rtype: str
     """
+
     def replace(matchobj):
         return matchobj.group(0)[1:]
 
     return re.sub(r'\\.', replace, text)
 
+
 # ----------------------------------------------------------------------------------------------------------------------
+def main():
+    """
+    The main of the sdoc program.
+    """
+    sdoc = SDoc()
+    sdoc.main()

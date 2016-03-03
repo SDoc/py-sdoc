@@ -1,0 +1,17 @@
+\begin{document}
+
+\chapter{HTML Manual}
+
+\section{First section}
+
+\subsection{First sub}
+
+\subsubsection{First subsub}
+
+\subsection{Second sub}
+
+\chapter{Second chapter}
+
+\section{Last Section}
+
+\end{document}

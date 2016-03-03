@@ -7,7 +7,8 @@ Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
 import sdoc
-from sdoc.sdoc2 import node_store
+from sdoc.SDoc import SDoc
+from sdoc.sdoc2 import in_scope, out_scope
 from sdoc.sdoc2.node.Node import Node
 from sdoc.sdoc2.node.TextNode import TextNode
 from sdoc.sdoc2.node.EndParagraphNode import EndParagraphNode
@@ -147,7 +148,7 @@ class HeadingNode(Node):
         new_child_nodes = []
 
         for node_id in self._child_nodes:
-            node = node_store.in_scope(node_id)
+            node = in_scope(node_id)
 
             if isinstance(node, TextNode):
                 list_ids = node.split_by_paragraph()
@@ -156,7 +157,7 @@ class HeadingNode(Node):
             else:
                 new_child_nodes.append(node.id)
 
-            node_store.out_scope(node)
+            out_scope(node)
 
         self._child_nodes = new_child_nodes
 
@@ -172,7 +173,7 @@ class HeadingNode(Node):
         paragraph_node = None
 
         for node_id in self._child_nodes:
-            node = node_store.in_scope(node_id)
+            node =in_scope(node_id)
 
             if node.is_phrasing():
                 if not paragraph_node:
@@ -191,7 +192,7 @@ class HeadingNode(Node):
                 if not isinstance(node, EndParagraphNode):
                     new_child_nodes.append(node.id)
 
-            node_store.out_scope(node)
+            out_scope(node)
 
         if paragraph_node:
             paragraph_node.prune_whitespace()

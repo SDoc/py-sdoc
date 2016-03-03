@@ -6,8 +6,21 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 
+inline_creators = {}
+"""
+Map from inline commands to node creators.
 
-# ----------------------------------------------------------------------------------------------------------------------
+:type: dict[str,callable]
+"""
+
+block_creators = {}
+"""
+Map from block commands to object creators.
+
+:type: dict[str,callable]
+"""
+
+
 class NodeStore:
     """
     Class for creating, storing, and retrieving nodes.
@@ -19,19 +32,6 @@ class NodeStore:
     def __init__(self):
         """
         Object constructor.
-        """
-        self.inline_creators = {}
-        """
-        Map from inline commands to node creators.
-
-        :type: dict[str,callable]
-        """
-
-        self.block_creators = {}
-        """
-        Map from block commands to object creators.
-
-        :type: dict[str,callable]
         """
 
         self.format = 'html'
@@ -116,14 +116,15 @@ class NodeStore:
         pass
 
     # ------------------------------------------------------------------------------------------------------------------
-    def register_inline_command(self, command, constructor):
+    @staticmethod
+    def register_inline_command(command, constructor):
         """
         Registers a node constructor for an inline command.
 
         :param str command: The name of the inline command.
         :param callable constructor: The node constructor.
         """
-        self.inline_creators[command] = constructor
+        inline_creators[command] = constructor
 
     # ------------------------------------------------------------------------------------------------------------------
     def register_formatter(self, command, output_format, formatter):
@@ -140,14 +141,15 @@ class NodeStore:
         self._formatters[output_format][command] = formatter
 
     # ------------------------------------------------------------------------------------------------------------------
-    def register_block_command(self, command, constructor):
+    @staticmethod
+    def register_block_command(command, constructor):
         """
         Registers a node constructor for a block command.
 
         :param string command: The name of the inline command.
         :param callable constructor: The node constructor.
         """
-        self.block_creators[command] = constructor
+        block_creators[command] = constructor
 
     # ------------------------------------------------------------------------------------------------------------------
     def create_inline_node(self, command, options=None, argument='', position=None):
@@ -163,15 +165,17 @@ class NodeStore:
 
         :rtype: sdoc.sdoc2.node.Node.Node
         """
-        if command not in self.inline_creators:
+        if command not in inline_creators:
             # @todo set error status
-            constructor = self.block_creators['unknown']
+            constructor = inline_creators['unknown']
+            node = constructor(options, argument)
+            node.name = command
 
         else:
             # Create the new node.
-            constructor = self.inline_creators[command]
+            constructor = inline_creators[command]
+            node = constructor(options, argument)
 
-        node = constructor(options, argument)
         node.position = position
 
         # Store the node and assign ID.
@@ -192,13 +196,13 @@ class NodeStore:
 
         :rtype: sdoc.sdoc2.node.Node.Node
         """
-        if command not in self.block_creators:
-            constructor = self.block_creators['unknown']
+        if command not in block_creators:
+            constructor = block_creators['unknown']
             # @todo set error status
 
         else:
             # Create the new node.
-            constructor = self.block_creators[command]
+            constructor = block_creators[command]
 
         node = constructor(options)
         node.position = position
@@ -248,7 +252,7 @@ class NodeStore:
         return node
 
     # ------------------------------------------------------------------------------------------------------------------
-    def create_formatter(self, command, parent):
+    def create_formatter(self, command, parent=None):
         """
         Creates a formatter for generating the output of nodes in the requested output format.
 
@@ -308,7 +312,7 @@ class NodeStore:
     # ------------------------------------------------------------------------------------------------------------------
     def store_node(self, node):
         """
-        Stores a node. IF the node was not stored before assigns an ID to this node, otherwise the node replaces the
+        Stores a node. If the node was not stored before assigns an ID to this node, otherwise the node replaces the
         node stored under the same ID. Returns the ID if the node.
 
         :param sdoc.sdoc2.node.Node.Node node: The node.
@@ -352,6 +356,12 @@ class NodeStore:
             # Add the node to the list of child nodes of its parent node.
             if len(self.nested_nodes):
                 parent_node = self.nested_nodes[-1]
+
+                # Pop from stack if we have two list element nodes (e.g. item nodes) in a row.
+                if node.is_list_element() and type(parent_node) == type(node):
+                    self.nested_nodes.pop()
+                    parent_node = self.nested_nodes[-1]
+
                 parent_node._child_nodes.append(node.id)
 
             # Block commands and hierarchical nodes must be appended to the nested nodes.
@@ -373,19 +383,19 @@ class NodeStore:
     # ------------------------------------------------------------------------------------------------------------------
     def generate(self):
         """
-        Generates the documnt.
+        Generates the document.
         """
         file = open('output.html', 'w')
 
-        formatter = self.create_formatter('document', self.nodes[1])
+        formatter = self.create_formatter('document')
         formatter.generate(self.nodes[1], file)
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_enumerated_items(self):
         """
-        Returns a list with a tuple with command and number of enumerated nodes.
+        Returns a list with tuples with command and number of enumerated nodes.
 
-        Thi method is intended for unit test only.
+        This method is intended for unit test only.
 
         :rtype: list[(str,str)]
         """

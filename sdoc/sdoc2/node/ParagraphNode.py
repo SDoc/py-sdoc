@@ -6,7 +6,7 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-from sdoc.sdoc2 import node_store
+from sdoc.sdoc2 import node_store, in_scope, out_scope
 from sdoc.sdoc2.node.HeadingNode import HeadingNode
 from sdoc.sdoc2.node.Node import Node
 from sdoc.sdoc2.node.TextNode import TextNode
@@ -16,6 +16,7 @@ class ParagraphNode(HeadingNode):
     """
     SDoc2 node for paragraphs.
     """
+
     # ------------------------------------------------------------------------------------------------------------------
     def __init__(self, options, argument):
         """
@@ -71,7 +72,7 @@ class ParagraphNode(HeadingNode):
         last = self._child_nodes[-1]
 
         for node_id in self._child_nodes:
-            node = node_store.in_scope(node_id)
+            node = in_scope(node_id)
 
             if isinstance(node, TextNode):
                 if node.id == first:
@@ -81,7 +82,8 @@ class ParagraphNode(HeadingNode):
                 if node.id != last and node.id != first:
                     node.prune_whitespace()
 
-            node_store.out_scope(node)
+            out_scope(node)
+
 
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_inline_command('paragraph', ParagraphNode)

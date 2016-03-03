@@ -1,0 +1,31 @@
+\begin{document}
+    \begin{itemize}
+    \item{} \smile{} must be 1
+    \item{} must be 2
+        \begin{itemize}
+        \item{} must be 2.1
+        \item{} must be 2.2
+        \item{} must be 2.3
+             \begin{itemize}
+             \item{} must be 2.3.1
+             \item{} must be 2.3.2
+             \item{} must be 2.3.3
+             \end{itemize}
+        \item{} must be 2.4
+        \item{} must be 2.5
+        \end{itemize}
+    \item{} must be 3
+    \item{} must be 4
+    \item{} must be 5
+        \begin{itemize}
+        \item{} must be 5.1
+        \item{} must be 5.2
+        \item{} must be 5.3
+        \end{itemize}
+    \end{itemize}
+
+    \begin{itemize}
+    \item{} must be 1
+    \item{} must be 2
+    \end{itemize}
+\end{document}

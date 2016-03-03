@@ -27,7 +27,7 @@ class UnknownNode(Node):
     # ------------------------------------------------------------------------------------------------------------------
     def get_command(self):
         """
-        Returns the command of this node, i.e. smile.
+        Returns the command of this node, i.e. unknown.
 
         :rtype: str
         """
