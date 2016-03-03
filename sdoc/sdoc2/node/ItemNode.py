@@ -6,7 +6,6 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-from sdoc.SDoc import SDoc
 from sdoc.sdoc2 import node_store, in_scope, out_scope
 from sdoc.sdoc2.node.Node import Node
 from sdoc.sdoc2.node.TextNode import TextNode
@@ -92,7 +91,7 @@ class ItemNode(Node):
         """
         Method which checks if all child nodes is phrasing.
         """
-        for node_id in self._child_nodes:
+        for node_id in self.child_nodes:
             node = in_scope(node_id)
 
             if isinstance(node, TextNode):
@@ -130,7 +129,7 @@ class ItemNode(Node):
         return number.lstrip('.')
 
     # ------------------------------------------------------------------------------------------------------------------
-    def enumerate(self, numbers):
+    def number(self, numbers):
         """
         Sets number for item nodes.
 
@@ -141,7 +140,7 @@ class ItemNode(Node):
 
         self._options['number'] = numbers['item']
 
-        super().enumerate(numbers)
+        super().number(numbers)
 
 
 # ----------------------------------------------------------------------------------------------------------------------

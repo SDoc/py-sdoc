@@ -53,7 +53,7 @@ class Node:
         :type: dict[str,int|str]
         """
 
-        self._child_nodes = []
+        self.child_nodes = []
         """
         The ID's of the SDoc2 child nodes of this SDoc2 node.
 
@@ -84,8 +84,8 @@ class Node:
 
         :param int level: the level of block commands.
         """
-        print("%s%4d %s" % (' ' * 4 * level, self.id, self.name))
-        for node_id in self._child_nodes:
+        print("{0!s}{1:4d} {2!s}".format(' ' * 4 * level, self.id, self.name))
+        for node_id in self.child_nodes:
             node = in_scope(node_id)
 
             node.print_info(level + 1)
@@ -196,14 +196,14 @@ class Node:
 
         :param sdoc.sdoc2.node.Node.Node child_node: The new child node
         """
-        self._child_nodes.append(child_node.id)
+        self.child_nodes.append(child_node.id)
 
     # ------------------------------------------------------------------------------------------------------------------
     def prepare_content_tree(self):
         """
         Prepares this node for further processing.
         """
-        for node_id in self._child_nodes:
+        for node_id in self.child_nodes:
             node = in_scope(node_id)
 
             node.prepare_content_tree()
@@ -211,16 +211,16 @@ class Node:
             out_scope(node)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def enumerate(self, enumerable_numbers):
+    def number(self, numbers):
         """
-        Enumerates all enumerable nodes such as chapters, sections, figures, and, items.
+        Numbers all numerable nodes such as chapters, sections, figures, and, items.
 
-        :param enumerable_numbers: The current enumerable numbers.
+        :param numbers: The current numbers.
         """
-        for node_id in self._child_nodes:
+        for node_id in self.child_nodes:
             node = in_scope(node_id)
 
-            node.enumerate(enumerable_numbers)
+            node.number(numbers)
 
             out_scope(node)
 
@@ -240,7 +240,7 @@ class Node:
             items.append((self.get_command(), self._options['number'], self._argument))
 
         # Second append the enumeration of child nodes (if any).
-        for node_id in self._child_nodes:
+        for node_id in self.child_nodes:
             node = in_scope(node_id)
 
             tmp = node.get_enumerated_items()

@@ -1,0 +1,9 @@
+bin/sdoc
+sdoc/antlr/sdoc1Lexer.py
+sdoc/antlr/sdoc1Parser.py
+sdoc/antlr/sdoc1ParserVisitor.py
+sdoc/antlr/sdoc2Lexer.py
+sdoc/antlr/sdoc2Parser.py
+sdoc/antlr/sdoc2ParserVisitor.py
+test/SDoc1ExpressionTest.py
+test/SDoc2EnumerationTest.py

@@ -20,7 +20,8 @@ class SDoc1Interpreter:
     Class for processing SDoc1 documents.
     """
     # ------------------------------------------------------------------------------------------------------------------
-    def process(self, infile, outfile):
+    @staticmethod
+    def process(infile, outfile):
         """
         Processes a SDoc1 document.
 
@@ -36,7 +37,7 @@ class SDoc1Interpreter:
         tree = parser.sdoc()
         visitor = SDoc1Visitor(root_dir=os.path.dirname(os.path.realpath(infile)))
 
-        visitor.set_output(out_stream)
+        visitor.output = out_stream
         visitor.visit(tree)
 
         out_stream.close()

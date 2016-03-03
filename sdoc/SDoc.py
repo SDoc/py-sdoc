@@ -130,15 +130,15 @@ class SDoc:
         # Read the target format of the document.
         target_format = config.get('sdoc', 'format', fallback=None)
         if not target_format:
-            raise SDocError("Option 'format' in section 'sdoc' not set in config file '%s'" %
-                            self._args.config_filename)
+            raise SDocError("Option 'format' in section 'sdoc' not set in config file '{0!s}'".format(
+                    self._args.config_filename))
 
         # Read the class name for formatting the SDoc2 nodes into the target format.
         section = 'format_' + target_format
         class_name = config.get(section, 'class', fallback=None)
         if not class_name:
-            raise SDocError("Option 'class' in section '%s' not set in config file '%s'" %
-                            (section, self._args.config_filename))
+            raise SDocError("Option 'class' in section '{0!s}' not set in config file '{1!s}'".
+                            format(section, self._args.config_filename))
 
         # Import the class.
         parts = class_name.split('.')
@@ -161,11 +161,11 @@ class SDoc:
         self._temp_dir = config.get('sdoc', 'temp_dir', fallback=self._temp_dir)
 
         if not self._temp_dir:
-            raise SDocError("Option 'temp_dir' in section 'sdoc' not set correctly in config file '%s'" %
-                            self._args.config_filename)
+            raise SDocError("Option 'temp_dir' in section 'sdoc' not set correctly in config file '{0!s}'".
+                            format(self._args.config_filename))
 
         if not os.access(self._temp_dir, os.W_OK):
-            raise SDocError("Directory '%s' is not writable" % self._temp_dir)
+            raise SDocError("Directory '{0!s}' is not writable".format(self._temp_dir))
 
     # ------------------------------------------------------------------------------------------------------------------
     def _config_set_target_dir(self, config):
@@ -177,11 +177,11 @@ class SDoc:
         self._target_dir = config.get('sdoc', 'target_dir', fallback=self._target_dir)
 
         if not self._target_dir:
-            raise SDocError("Option 'target_dir' in section 'sdoc' not set correctly in config file '%s'" %
-                            self._args.config_filename)
+            raise SDocError("Option 'target_dir' in section 'sdoc' not set correctly in config file '{0!s}'".
+                            format(self._args.config_filename))
 
         if not os.access(self._target_dir, os.W_OK):
-            raise SDocError("Directory '%s' is not writable" % self._target_dir)
+            raise SDocError("Directory '{0!s}' is not writable".format(self._target_dir))
 
     # ------------------------------------------------------------------------------------------------------------------
     def _read_config_file(self):
@@ -202,14 +202,16 @@ class SDoc:
         self._nodes_paths.append(os.path.dirname(__file__) + '/sdoc2/node')
 
     # ------------------------------------------------------------------------------------------------------------------
-    def _create_node_store(self):
+    @staticmethod
+    def _create_node_store():
         """
         Creates the node store (for storing nodes).
         """
         sdoc.sdoc2.node_store = NodeStore()
 
     # ------------------------------------------------------------------------------------------------------------------
-    def importing(self, path):
+    @staticmethod
+    def importing(path):
         """
         Imports modules from specific path.
 
@@ -246,7 +248,8 @@ class SDoc:
         interpreter1.process(main_filename, temp_filename)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def run_sdoc2(self, temp_filename):
+    @staticmethod
+    def run_sdoc2(temp_filename):
         """
         Run the SDoc2 parser.
 

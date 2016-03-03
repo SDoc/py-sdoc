@@ -66,18 +66,40 @@ class SDoc1Visitor(sdoc1ParserVisitor):
         """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def set_output(self, output):
+    @property
+    def output(self):
         """
-        Sets the object for streaming the generated output.
+        Getter fro output.
 
-        :param output: This object MUST implement the write method.
+        :rtype: T
+        """
+        return self._output
+
+    # ------------------------------------------------------------------------------------------------------------------
+    @output.setter
+    def output(self, output):
+        """
+        Setter for output.
+
+        :param T output: This object MUST implement the write method.
         """
         self._output = output
 
     # ------------------------------------------------------------------------------------------------------------------
-    def _set_global_scope(self, scope):
+    @property
+    def global_scope(self):
         """
-        Sets the global scope for variables.
+        Getter for global_scope.
+
+        :rtype: sdoc.sdoc1.data_type.ArrayDataType.ArrayDataType
+        """
+        return self._global_scope
+
+    # ------------------------------------------------------------------------------------------------------------------
+    @global_scope.setter
+    def global_scope(self, scope):
+        """
+        Setter for global_scope.
 
         :param sdoc.sdoc1.data_type.ArrayDataType.ArrayDataType scope: The global scope.
         """
@@ -96,7 +118,7 @@ class SDoc1Visitor(sdoc1ParserVisitor):
     # ------------------------------------------------------------------------------------------------------------------
     def put_position(self, ctx, position):
         """
-        Puts a \position SDoc2 command on the output stream.
+        Puts a position SDoc2 command on the output stream.
 
         :param ParserRuleContext ctx: The context tree.
         :param str position: Either start or stop.
@@ -120,7 +142,7 @@ class SDoc1Visitor(sdoc1ParserVisitor):
         if position == 'stop':
             column += len(token.text)
 
-        self.stream('\\position{%s:%d.%d}' % (sdoc.escape(filename), line_number, column))
+        self.stream('\\position{{{0!s}:{1:d}.{2:d}}}'.format(sdoc.escape(filename), line_number, column))
 
     # ------------------------------------------------------------------------------------------------------------------
     def visit(self, tree):
@@ -146,7 +168,7 @@ class SDoc1Visitor(sdoc1ParserVisitor):
         # Left hand side must be an identifier.
         # @todo implement array element.
         if not isinstance(left_hand_side, IdentifierDataType):
-            raise RuntimeError("Left hand side '%s' is not an identifier." % str(left_hand_side))
+            raise RuntimeError("Left hand side '{0!s}' is not an identifier.".format(str(left_hand_side)))
             # @todo more verbose logging, own exception class
 
         return left_hand_side.set_value(right_hand_side)
@@ -189,11 +211,11 @@ class SDoc1Visitor(sdoc1ParserVisitor):
         # First get the value of key.
         expression = ctx.expression().accept(self)
         if not expression.is_defined():
-            raise RuntimeError('%s is not defined.' % ctx.expression().getText())
+            raise RuntimeError('{0!s} is not defined.'.format(ctx.expression().getText()))
 
         postfix_expression = ctx.postfixExpression().accept(self)
         if not isinstance(postfix_expression, IdentifierDataType):
-            raise RuntimeError("'%s' is not an identifier." % ctx.postfixExpression().getText())
+            raise RuntimeError("'{0!s}' is not an identifier.".format(ctx.postfixExpression().getText()))
             # @todo more verbose logging, own exception class
 
         return postfix_expression.get_array_element(expression)
@@ -284,7 +306,7 @@ class SDoc1Visitor(sdoc1ParserVisitor):
             child = ctx.getChild(i)
             token_text = child.getText()
             i += 1
-            if token_text == '\\if' or token_text == '\\elif':
+            if token_text in ['\\if', '\\elif']:
                 # Skip {
                 i += 1
 
@@ -292,9 +314,6 @@ class SDoc1Visitor(sdoc1ParserVisitor):
                 child = ctx.getChild(i)
                 i += 1
                 data = child.accept(self)
-                """
-                :type: sdoc.sdoc1.data_type.DataType.DataType
-                """
 
                 # Skip }
                 i += 1
@@ -339,7 +358,7 @@ class SDoc1Visitor(sdoc1ParserVisitor):
         file_name = sdoc.unescape(ctx.SIMPLE_ARG().getText())
         if not os.path.isabs(file_name):
             file_name = os.path.join(self._root_dir, file_name + '.sdoc')
-        print("Including %s" % os.path.relpath(file_name))
+        print("Including {0!s}".format(os.path.relpath(file_name)))
         stream = antlr4.FileStream(file_name, 'utf-8')
 
         # root_dir
@@ -355,8 +374,8 @@ class SDoc1Visitor(sdoc1ParserVisitor):
 
         # Set or inherit properties from the parser of the parent document.
         visitor._include_level = self._include_level + 1
-        visitor.set_output(self._output)
-        visitor._set_global_scope(self._global_scope)
+        visitor.output = self._output
+        visitor.global_scope = self._global_scope
 
         # Run the visitor on the parse tree.
         visitor.visit(tree)
@@ -377,7 +396,7 @@ class SDoc1Visitor(sdoc1ParserVisitor):
         line_number = token.line
         message = sdoc.unescape(ctx.SIMPLE_ARG().getText())
 
-        print('Notice: %s at %s:%d' % (message, os.path.relpath(filename), line_number))
+        print('Notice: {0!s} at {1!s}:{2:d}'.format(message, os.path.relpath(filename), line_number))
 
         self.put_position(ctx, 'stop')
 

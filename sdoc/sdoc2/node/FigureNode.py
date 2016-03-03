@@ -63,7 +63,7 @@ class FigureNode(Node):
         chapter = HeadingNode.get_numeration(enumerable_numbers, 1)
 
         if 'figures' not in enumerable_numbers:
-            enumerable_numbers['figures'] = '%s.%s' % (chapter, '0')
+            enumerable_numbers['figures'] = '{0!s}.{1!s}'.format(chapter, '0')
 
         else:
             numbers_level = enumerable_numbers['figures'].split('.')
@@ -87,7 +87,7 @@ class FigureNode(Node):
         enumerable_numbers['figures'] = '.'.join(heading_numbers)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def enumerate(self, enumerable_numbers):
+    def number(self, enumerable_numbers):
         """
         Sets the number of this figure node.
 
@@ -98,7 +98,7 @@ class FigureNode(Node):
 
         self._options['number'] = enumerable_numbers['figures']
 
-        super().enumerate(enumerable_numbers)
+        super().number(enumerable_numbers)
 
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_inline_command('figure', FigureNode)

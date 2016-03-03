@@ -10,7 +10,6 @@ import re
 import sdoc
 from sdoc.sdoc2 import node_store
 from sdoc.sdoc2.node.Node import Node
-from sdoc.sdoc2.node.EndParagraphNode import EndParagraphNode
 
 
 class TextNode(Node):
@@ -35,7 +34,7 @@ class TextNode(Node):
 
         :param int level: the level of block commands.
         """
-        print("%s%4d %s %s" % (' ' * 4 * level, self.id, self.name, ''))
+        print("{0!s}{1:4d} {2!s} {3!s}".format(' ' * 4 * level, self.id, self.name, ''))
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_command(self):
@@ -110,7 +109,7 @@ class TextNode(Node):
                 text_ids.append(end_paragraph_node.id)
 
             # Checking where we need to add paragraph.
-            if len(text_ids):
+            if text_ids:
                 if list_of_texts[-1]:
                     text_ids.pop()
 
