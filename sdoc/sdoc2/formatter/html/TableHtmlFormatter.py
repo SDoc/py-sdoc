@@ -26,7 +26,7 @@ class TableHtmlFormatter(HtmlFormatter):
         # Attributes for table.
         table_attrs = {'class': node.get_option_value('class')}
 
-        if node.table_header:
+        if node.column_headers:
             rows = self.generate_table_with_header(node)
         else:
             rows = self.generate_table(node)
@@ -48,7 +48,7 @@ class TableHtmlFormatter(HtmlFormatter):
         columns = ''
         rows = ''
 
-        for row in node.table:
+        for row in node.rows:
             for column in row:
                 columns += Html.generate_element('td', {}, column)
             rows += Html.generate_element('tr', {}, columns, True)
@@ -70,14 +70,14 @@ class TableHtmlFormatter(HtmlFormatter):
         columns = ''
         rows = ''
 
-        for column in node.table_header:
+        for column in node.column_headers:
             table_header += Html.generate_element('th', {}, column, True)
         table_header = Html.generate_element('tr', {}, table_header, True)
 
         header_column_counter = 0
-        for row in node.table:
+        for row in node.rows:
             for col in row:
-                align = TableHtmlFormatter.get_align(node.table_aligns, header_column_counter)
+                align = TableHtmlFormatter.get_align(node.alignments, header_column_counter)
                 columns += Html.generate_element('td', {'style': "text-align: {0}".format(align)}, col)
                 header_column_counter += 1
             rows += Html.generate_element('tr', {}, columns, True)
