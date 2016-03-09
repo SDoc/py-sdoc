@@ -1,0 +1,103 @@
+"""
+SDoc
+
+Copyright 2016 Set Based IT Consultancy
+
+Licence MIT
+"""
+# ----------------------------------------------------------------------------------------------------------------------
+from sdoc.helper.Html import Html
+from sdoc.sdoc2 import node_store
+from sdoc.sdoc2.formatter.html.HtmlFormatter import HtmlFormatter
+
+
+class TableHtmlFormatter(HtmlFormatter):
+    """
+    HtmlFormatter for generating HTML code for table.
+    """
+    # ------------------------------------------------------------------------------------------------------------------
+    def generate(self, node, file):
+        """
+        Generates the HTML code for a table node.
+
+        :param sdoc.sdoc2.node.TableNode.TableNode node: The table node.
+        :param file file: The output file.
+        """
+        # Attributes for table.
+        table_attrs = {'class': node.get_option_value('class')}
+
+        if 'table_header' in node._options:
+            rows = self.generate_table_with_header(node)
+        else:
+            rows = self.generate_table(node)
+
+        html_table = Html.generate_element('table', table_attrs, rows, True)
+
+        file.write(html_table)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    @staticmethod
+    def generate_table(node):
+        """
+        Generates table without header.
+
+        :param sdoc.sdoc2.node.TableNode.TableNode node: The table node.
+
+        :rtype: str
+        """
+        columns = ''
+        rows = ''
+
+        for row in node._options['table']:
+            for column in row:
+                columns += Html.generate_element('td', {}, column)
+            rows += Html.generate_element('tr', {}, columns, True)
+            columns = ''
+
+        return rows
+
+    # ------------------------------------------------------------------------------------------------------------------
+    @staticmethod
+    def generate_table_with_header(node):
+        """
+        Generates table with header.
+
+        :param sdoc.sdoc2.node.TableNode.TableNode node: The table node.
+
+        :rtype: str
+        """
+        table_header = ''
+        columns = ''
+        rows = ''
+
+        for column in node._options['table_header']:
+            table_header += Html.generate_element('th', {}, column, True)
+
+        for row in node._options['table']:
+            for col in range(len(row)):
+                align = TableHtmlFormatter.get_align(node._options['table_aligns'], col)
+                columns += Html.generate_element('td', {'align': align}, row[col])
+            rows += Html.generate_element('tr', {}, columns, True)
+            columns = ''
+
+        return table_header + rows
+
+    # ------------------------------------------------------------------------------------------------------------------
+    @staticmethod
+    def get_align(align_list, column):
+        """
+        Returns the align or None.
+
+        :param list[mixed] align_list: The list with alignments.
+        :param int column: The number of column.
+
+        :rtype: mixed
+        """
+        try:
+            return align_list[column]
+        except IndexError:
+            return None
+
+
+# ----------------------------------------------------------------------------------------------------------------------
+node_store.register_formatter('table', 'html', TableHtmlFormatter)
