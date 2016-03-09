@@ -27,6 +27,27 @@ class TableNode(Node):
         """
         super().__init__('table', options)
 
+        self.rows = []
+        """
+        The table rows.
+
+        :type: list[list[str]]
+        """
+
+        self.column_headers = []
+        """
+        The column headers of the table (if any).
+
+        :type: list[str]
+        """
+
+        self.alignments = []
+        """
+        The text alignments in the table columns.
+
+        :type: list[str|None]
+        """
+
     # ------------------------------------------------------------------------------------------------------------------
     def get_command(self):
         """
@@ -62,54 +83,54 @@ class TableNode(Node):
         for node_id in self.child_nodes:
             node = in_scope(node_id)
 
-            self.create_table(node)
+            self.extract_table(node)
 
             node.prepare_content_tree()
 
             out_scope(node)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def create_table(self, node):
+    def extract_table(self, node):
         """
-        Splits text of a TextNode. Creates a table.
+        Extract the table data from a TextNode.
 
         :param sdoc.sdoc2.node.Node.Node node: The node which may be interpreted as table.
         """
-        temp_table_items = node._argument.split('\n')
+        temp_table_items = node.argument.split('\n')
 
-        # Remove empty elements.
+        # Remove empty rows.
         while '' in temp_table_items:
             temp_table_items.remove('')
 
-        # Create a table.
-        table = []
+        # Derive table data.
+        rows = []
         for item in temp_table_items:
             string = io.StringIO(item)
             reader = csv.reader(string, delimiter='|')
             for line in reader:
                 row = line
-                table.append(row)
+                rows.append(row)
 
-        if self.is_header_exist(table):
-            self._options['table_header'] = table[0]
-            self._options['table'] = table[2:]
-            self._options['table_aligns'] = self.set_column_alignments(table[1])
+        if self.has_header(rows):
+            self.column_headers = rows[0]
+            self.rows = rows[2:]
+            self.alignments = self.get_column_alignments(rows[1])
         else:
-            self._options['table'] = table
+            self.rows = rows
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def is_header_exist(header_array):
+    def has_header(row):
         """
-        Checks if header is in the table.
+        Returns True if the table has a table header.
 
-        :param list header_array: List with the data.
+        :param list[str] row: The second row of the table.
 
         :rtype: bool
         """
         is_header = True
-        for align in header_array[1]:
-            header_part = re.findall('[:]?[-]+[:]?', align)
+        for align in row[1]:
+            header_part = re.findall(':?---+-*:?', align)
             if not header_part:
                 is_header = False
                 break
@@ -118,24 +139,25 @@ class TableNode(Node):
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def set_column_alignments(align_array):
+    def get_column_alignments(row):
         """
         Sets alignments on table columns.
 
-        :param list align_array: List of alignments.
+        :param list[str] row: The row with hyphens for creating column headers.
 
-        :rtype: list[mixed]
+        :rtype: list[str]
         """
         alignments = []
-        for align in align_array:
-            if align.strip().startswith(':') and align.strip().endswith(':'):
+        for hyphens in row:
+            hyphens = hyphens.strip()
+            if hyphens.startswith(':') and hyphens.endswith(':'):
                 alignments.append('center')
-            elif align.strip().startswith(':'):
+            elif hyphens.startswith(':'):
                 alignments.append('left')
-            elif align.strip().endswith(':'):
+            elif hyphens.endswith(':'):
                 alignments.append('right')
             else:
-                alignments.append(None)
+                alignments.append('')
 
         return alignments
 
