@@ -27,7 +27,7 @@ class FigureHtmlFormatter(HtmlFormatter):
         img_attributes = {'src': node.get_option_value('filename'),
                           'width': node.get_option_value('width'),
                           'height': node.get_option_value('height'),
-                          'caption': node.get_option_value('caption')}
+                          'alt': node.get_option_value('caption')}
         div_attributes = {'class': node.get_option_value('class')}
 
         # Creating elements.
