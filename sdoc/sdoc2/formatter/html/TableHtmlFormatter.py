@@ -26,7 +26,7 @@ class TableHtmlFormatter(HtmlFormatter):
         # Attributes for table.
         table_attrs = {'class': node.get_option_value('class')}
 
-        if 'table_header' in node._options:
+        if node._table_header:
             rows = self.generate_table_with_header(node)
         else:
             rows = self.generate_table(node)
@@ -48,7 +48,7 @@ class TableHtmlFormatter(HtmlFormatter):
         columns = ''
         rows = ''
 
-        for row in node._options['table']:
+        for row in node._table:
             for column in row:
                 columns += Html.generate_element('td', {}, column)
             rows += Html.generate_element('tr', {}, columns, True)
@@ -70,12 +70,12 @@ class TableHtmlFormatter(HtmlFormatter):
         columns = ''
         rows = ''
 
-        for column in node._options['table_header']:
+        for column in node._table_header:
             table_header += Html.generate_element('th', {}, column, True)
 
-        for row in node._options['table']:
+        for row in node._table:
             for col in range(len(row)):
-                align = TableHtmlFormatter.get_align(node._options['table_aligns'], col)
+                align = TableHtmlFormatter.get_align(node._table_aligns, col)
                 columns += Html.generate_element('td', {'align': align}, row[col])
             rows += Html.generate_element('tr', {}, columns, True)
             columns = ''
@@ -88,10 +88,10 @@ class TableHtmlFormatter(HtmlFormatter):
         """
         Returns the align or None.
 
-        :param list[mixed] align_list: The list with alignments.
+        :param list[str|None] align_list: The list with alignments.
         :param int column: The number of column.
 
-        :rtype: mixed
+        :rtype: list[str|None] | None
         """
         try:
             return align_list[column]

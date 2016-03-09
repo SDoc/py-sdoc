@@ -27,6 +27,27 @@ class TableNode(Node):
         """
         super().__init__('table', options)
 
+        self._table = None
+        """
+        The table with items.
+
+        :type: list[list[str]]
+        """
+
+        self._table_header = None
+        """
+        The header of the table (If header is exists).
+
+        :type: list[str]
+        """
+
+        self._table_aligns = None
+        """
+        The alignment for each column of the table (If header is exists).
+
+        :type: list[str|None]
+        """
+
     # ------------------------------------------------------------------------------------------------------------------
     def get_command(self):
         """
@@ -91,11 +112,11 @@ class TableNode(Node):
                 table.append(row)
 
         if self.is_header_exist(table):
-            self._options['table_header'] = table[0]
-            self._options['table'] = table[2:]
-            self._options['table_aligns'] = self.set_column_alignments(table[1])
+            self._table_header = table[0]
+            self._table = table[2:]
+            self._table_aligns = self.set_column_alignments(table[1])
         else:
-            self._options['table'] = table
+            self._table = table
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
@@ -103,7 +124,7 @@ class TableNode(Node):
         """
         Checks if header is in the table.
 
-        :param list header_array: List with the data.
+        :param list[str] header_array: List with the data.
 
         :rtype: bool
         """
@@ -122,9 +143,9 @@ class TableNode(Node):
         """
         Sets alignments on table columns.
 
-        :param list align_array: List of alignments.
+        :param list[str|None] align_array: List of alignments.
 
-        :rtype: list[mixed]
+        :rtype: list[str|None]
         """
         alignments = []
         for align in align_array:
