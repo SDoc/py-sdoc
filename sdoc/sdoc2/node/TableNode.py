@@ -109,6 +109,7 @@ class TableNode(Node):
             reader = csv.reader(string, delimiter='|')
             for line in reader:
                 row = line
+                row = self.prune_whitespace(row)
                 rows.append(row)
 
         if self.has_header(rows):
@@ -160,6 +161,23 @@ class TableNode(Node):
                 alignments.append('')
 
         return alignments
+
+    # ------------------------------------------------------------------------------------------------------------------
+    @staticmethod
+    def prune_whitespace(row):
+        """
+        Strips whitespaces from the text of an each cell.
+
+        :param list[str] row: The row with text of an each cell.
+        :rtype: list[str]
+        """
+        clear_row = []
+        for item in row:
+            clear_text = item.strip()
+            clear_text = re.sub('\s+', ' ', clear_text)
+            clear_row.append(clear_text)
+
+        return clear_row
 
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_block_command('table', TableNode)
