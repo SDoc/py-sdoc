@@ -73,12 +73,15 @@ class TableHtmlFormatter(HtmlFormatter):
         for column in node._table_header:
             table_header += Html.generate_element('th', {}, column, True)
 
+        header_column_counter = 0
         for row in node._table:
-            for col in range(len(row)):
-                align = TableHtmlFormatter.get_align(node._table_aligns, col)
-                columns += Html.generate_element('td', {'align': align}, row[col])
+            for col in row:
+                align = TableHtmlFormatter.get_align(node._table_aligns, header_column_counter)
+                columns += Html.generate_element('td', {'align': align}, col)
+                header_column_counter += 1
             rows += Html.generate_element('tr', {}, columns, True)
             columns = ''
+            header_column_counter = 0
 
         return table_header + rows
 
