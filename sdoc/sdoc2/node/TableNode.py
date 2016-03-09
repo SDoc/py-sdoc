@@ -27,21 +27,21 @@ class TableNode(Node):
         """
         super().__init__('table', options)
 
-        self._table = None
+        self.table = []
         """
         The table with items.
 
         :type: list[list[str]]
         """
 
-        self._table_header = None
+        self.table_header = []
         """
         The header of the table (If header is exists).
 
         :type: list[str]
         """
 
-        self._table_aligns = None
+        self.table_aligns = []
         """
         The alignment for each column of the table (If header is exists).
 
@@ -112,11 +112,11 @@ class TableNode(Node):
                 table.append(row)
 
         if self.is_header_exist(table):
-            self._table_header = table[0]
-            self._table = table[2:]
-            self._table_aligns = self.set_column_alignments(table[1])
+            self.table_header = table[0]
+            self.table = table[2:]
+            self.table_aligns = self.set_column_alignments(table[1])
         else:
-            self._table = table
+            self.table = table
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
