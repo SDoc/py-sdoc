@@ -8,6 +8,7 @@ SDoc
     :target: https://travis-ci.org/SDoc/py-sdoc
 .. image:: https://api.codacy.com/project/badge/grade/c38b7d6290094ec4a56ccb13c01cccaa
     :target: https://www.codacy.com/app/p-r-water/py-sdoc    
+.. image:: https://scrutinizer-ci.com/g/SDoc/py-sdoc/badges/quality-score.png?b=master
+    :target: https://scrutinizer-ci.com/g/SDoc/py-sdoc/?branch=master
 
 A super format document preparation system for SAAS and multi tenant applications.
-
