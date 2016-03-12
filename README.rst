@@ -3,6 +3,8 @@ SDoc
 
 .. image:: https://badges.gitter.im/SDoc/py-sdoc.svg
    :alt: Join the chat at https://gitter.im/SDoc/py-sdoc
+.. image:: https://badge.fury.io/py/sdoc.svg
+   :target: https://badge.fury.io/py/sdoc
    :target: https://gitter.im/SDoc/py-sdoc?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
 .. image:: https://travis-ci.org/SDoc/py-sdoc.svg?branch=master
     :target: https://travis-ci.org/SDoc/py-sdoc
