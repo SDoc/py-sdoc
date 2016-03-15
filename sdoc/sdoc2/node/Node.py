@@ -7,8 +7,7 @@ Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
 import abc
-
-from sdoc.sdoc2 import in_scope, out_scope
+from sdoc.sdoc2 import in_scope, out_scope, node_store
 
 
 class Node:
@@ -65,6 +64,13 @@ class Node:
         The position where this node is defined.
 
         :type: None|sdoc.sdoc2.Position.Position
+        """
+
+        self.labels = []
+        """
+        The list of labels in the node.
+
+        :type:
         """
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -250,5 +256,65 @@ class Node:
             out_scope(node)
 
         return items
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def parse_labels(self):
+        """
+        Parses all labels and call methods to collect labels.and for
+        """
+        self.modify_label_list()
+
+        if self.labels:
+            self.set_id_heading_node()
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def modify_label_list(self):
+        """
+        Creates label list for each heading node, and for node_store. Removes label nodes from child list.
+        """
+        for node_id in self.child_nodes:
+            node = in_scope(node_id)
+
+            if node.get_command() == 'label':
+                # Appending in Node labels list.
+                self.labels.append(node.id)
+
+                # Appending in NodeStore labels list.
+                if node._argument not in node_store.labels:
+                    node_store.labels[node._argument] = self._options['number']
+                else:
+                    raise NameError('Duplicate label', node._argument)
+
+                # Removing node from child nodes.
+                self.child_nodes.remove(node.id)
+
+            node.parse_labels()
+
+            out_scope(node)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def set_id_heading_node(self):
+        """
+        Sets id to heading node. (Argument of first label)
+        """
+        node = in_scope(self.labels[0])
+        self._options['id'] = node._argument
+        out_scope(node)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def change_ref_argument(self):
+        """
+        Changes reference argument on number of depending heading node.
+        """
+        for node_id in self.child_nodes:
+            node = in_scope(node_id)
+
+            if node._argument in node_store.labels and node.get_command() == 'ref':
+                node._options['href'] = node._argument
+                node._argument = node_store.labels[node._argument]
+
+            node.change_ref_argument()
+
+            out_scope(node)
 
 # ----------------------------------------------------------------------------------------------------------------------

@@ -10,31 +10,29 @@ from sdoc.sdoc2 import node_store
 from sdoc.sdoc2.node.Node import Node
 
 
-class EndParagraphNode(Node):
+class ReferenceNode(Node):
     """
-    SDoc2 node for end of paragraphs.
+    SDoc2 node for references.
+    """
 
-    Note: End of paragraphs will are temporary used during the content tree preparation. Before and after the content
-          preparation end of paragraph nodes do not exist.
-    """
     # ------------------------------------------------------------------------------------------------------------------
     def __init__(self, options, argument):
         """
         Object constructor.
 
-        :param dict[str,str] options: Not used.
-        :param str argument: Not used.
+        :param dict[str,str] options: The options of this reference.
+        :param str argument: The title of this reference.
         """
-        super().__init__('end_paragraph', options, argument)
+        super().__init__('ref', options, argument)
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_command(self):
         """
-        Returns the command of this node, i.e. end_paragraph.
+        Returns the command of this node, i.e. reference.
 
         :rtype: str
         """
-        return 'end_paragraph'
+        return 'ref'
 
     # ------------------------------------------------------------------------------------------------------------------
     def is_block_command(self):
@@ -48,18 +46,20 @@ class EndParagraphNode(Node):
     # ------------------------------------------------------------------------------------------------------------------
     def is_inline_command(self):
         """
-        Returns False.
+        Returns True.
 
         :rtype: bool
         """
-        return False
+        return True
 
     # ------------------------------------------------------------------------------------------------------------------
-    def prepare_content_tree(self):
+    def is_phrasing(self):
         """
-        Not implemented for end paragraph nodes.
+        Returns True.
+
+        :rtype: bool
         """
-        raise NotImplementedError()
+        return True
 
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_inline_command('end_paragraph', EndParagraphNode)
+node_store.register_inline_command('ref', ReferenceNode)
