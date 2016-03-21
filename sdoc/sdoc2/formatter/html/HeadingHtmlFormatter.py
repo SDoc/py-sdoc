@@ -26,7 +26,7 @@ class HeadingHtmlFormatter(HtmlFormatter):
         # Set id attribute to heading node.
         attributes = {'id': node.get_option_value('id')}
 
-        text_in_tag = '{0!s} {1!s}'.format(node.get_option_value('number'), node.argument)
+        text_in_tag = '{0!s}'.format(node.argument)
         file.write(Html.generate_element('h{0:d}'.format(node.get_hierarchy_level()), attributes, text_in_tag))
 
         super().generate(node, file)

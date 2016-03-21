@@ -281,7 +281,7 @@ class Node:
 
                 # Appending in NodeStore labels list.
                 if node._argument not in node_store.labels:
-                    node_store.labels[node._argument] = self._options['number']
+                    node_store.labels[node._argument] = self._argument
                 else:
                     raise NameError('Duplicate label', node._argument)
 
@@ -310,7 +310,7 @@ class Node:
             node = in_scope(node_id)
 
             if node._argument in node_store.labels and node.get_command() == 'ref':
-                node._options['href'] = node._argument
+                node._options['href'] = '#{0}'.format(node._argument)
                 node._argument = node_store.labels[node._argument]
 
             node.change_ref_argument()

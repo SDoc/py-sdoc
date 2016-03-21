@@ -386,7 +386,7 @@ class NodeStore:
         """
         Numbers all numerable nodes such as chapters, sections, figures, and, items.
         """
-        self.nodes[1].number(self._enumerable_numbers)
+        #self.nodes[1].number(self._enumerable_numbers)
 
     # ------------------------------------------------------------------------------------------------------------------
     def generate(self):
