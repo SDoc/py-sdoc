@@ -69,6 +69,13 @@ class NodeStore:
         :type: dict[str,str]
         """
 
+        self.labels = {}
+        """
+        The identifiers of labels which refers on each heading node.
+
+        :type: dict[str,str]
+        """
+
     # ------------------------------------------------------------------------------------------------------------------
     def end_block_node(self, command):
         """
@@ -379,7 +386,7 @@ class NodeStore:
         """
         Numbers all numerable nodes such as chapters, sections, figures, and, items.
         """
-        self.nodes[1].number(self._enumerable_numbers)
+        #self.nodes[1].number(self._enumerable_numbers)
 
     # ------------------------------------------------------------------------------------------------------------------
     def generate(self):
@@ -401,5 +408,13 @@ class NodeStore:
         :rtype: list[(str,str)]
         """
         return self.nodes[1].get_enumerated_items()
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def parse_labels(self):
+        """
+        Method for parsing labels, setting additional arguments to nodes, and removing label nodes from tree.
+        """
+        self.nodes[1].parse_labels()
+        self.nodes[1].change_ref_argument()
 
 # ----------------------------------------------------------------------------------------------------------------------

@@ -131,6 +131,7 @@ class HeadingNode(Node):
         """
         Prepares the content tree. Create paragraph nodes.
         """
+
         super().prepare_content_tree()
 
         # Adding the id's of splitted text in 'new_child_nodes1' list.
