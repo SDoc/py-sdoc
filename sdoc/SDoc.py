@@ -295,9 +295,8 @@ class SDoc:
         output = sys.stdout.getvalue().strip()
         sys.stdout = old_stdout
 
-        fd = open(temp_filename, 'rt')
-        sdoc2 = fd.read()
-        fd.close()
+        with open(temp_filename, 'rt') as fd:
+            sdoc2 = fd.read()
 
         os.unlink(temp_filename)
 
@@ -328,9 +327,8 @@ class SDoc:
         output = sys.stdout.getvalue().strip()
         sys.stdout = old_stdout
 
-        fd = open(temp_filename, 'rt')
-        sdoc2 = fd.read()
-        fd.close()
+        with open(temp_filename, 'rt') as fd:
+            sdoc2 = fd.read()
 
         os.unlink(temp_filename)
 
