@@ -130,6 +130,10 @@ class TableNode(Node):
         :rtype: bool
         """
         is_header = True
+
+        if len(row) == 1:
+            return False
+
         for align in row[1]:
             header_part = re.findall(':?---+-*:?', align)
             if not header_part:
