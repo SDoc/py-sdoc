@@ -84,6 +84,16 @@ class Node:
         return self._argument
 
     # ------------------------------------------------------------------------------------------------------------------
+    @argument.setter
+    def argument(self, new_argument):
+        """
+        Setter for argument.
+
+        :param str new_argument: The new argument.
+        """
+        self._argument = new_argument
+
+    # ------------------------------------------------------------------------------------------------------------------
     def print_info(self, level):
         """
         Temp function for development.
@@ -138,6 +148,16 @@ class Node:
         :rtype: str
         """
         return self._options[option_name] if option_name in self._options else None
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def set_option_value(self, option, value):
+        """
+        Sets value for option.
+
+        :param str option: The name of an option
+        :param mixed value: The value of an option
+        """
+        self._options[option] = value
 
     # ------------------------------------------------------------------------------------------------------------------
     @abc.abstractmethod
@@ -280,10 +300,10 @@ class Node:
                 self.labels.append(node.id)
 
                 # Appending in NodeStore labels list.
-                if node._argument not in node_store.labels:
-                    node_store.labels[node._argument] = self._argument
+                if node.argument not in node_store.labels:
+                    node_store.labels[node.argument] = self.argument
                 else:
-                    raise NameError('Duplicate label', node._argument)
+                    raise NameError('Duplicate label', node.argument)
 
                 # Removing node from child nodes.
                 self.child_nodes.remove(node.id)
@@ -298,7 +318,7 @@ class Node:
         Sets id to heading node. (Argument of first label)
         """
         node = in_scope(self.labels[0])
-        self._options['id'] = node._argument
+        self._options['id'] = node.argument
         out_scope(node)
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -309,9 +329,9 @@ class Node:
         for node_id in self.child_nodes:
             node = in_scope(node_id)
 
-            if node._argument in node_store.labels and node.get_command() == 'ref':
-                node._options['href'] = '#{0}'.format(node._argument)
-                node._argument = node_store.labels[node._argument]
+            if node.argument in node_store.labels and node.get_command() == 'ref':
+                node.set_option_value('href', '#{0}'.format(node.argument))
+                node.argument = node_store.labels[node.argument]
 
             node.change_ref_argument()
 

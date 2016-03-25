@@ -29,17 +29,16 @@ class SDoc1Interpreter:
         :param str outfile: The output filename with the SDoc2 document.
         """
         in_stream = antlr4.FileStream(infile)
-        out_stream = open(outfile, 'wt')
 
-        lexer = sdoc1Lexer(in_stream)
-        tokens = antlr4.CommonTokenStream(lexer)
-        parser = sdoc1Parser(tokens)
-        tree = parser.sdoc()
-        visitor = SDoc1Visitor(root_dir=os.path.dirname(os.path.realpath(infile)))
+        with open(outfile, 'wt') as out_stream:
+            lexer = sdoc1Lexer(in_stream)
+            tokens = antlr4.CommonTokenStream(lexer)
+            parser = sdoc1Parser(tokens)
+            tree = parser.sdoc()
 
-        visitor.output = out_stream
-        visitor.visit(tree)
+            visitor = SDoc1Visitor(root_dir=os.path.dirname(os.path.realpath(infile)))
 
-        out_stream.close()
+            visitor.output = out_stream
+            visitor.visit(tree)
 
 # ----------------------------------------------------------------------------------------------------------------------
