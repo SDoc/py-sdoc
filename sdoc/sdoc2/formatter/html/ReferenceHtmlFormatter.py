@@ -24,12 +24,36 @@ class ReferenceHtmlFormatter(HtmlFormatter):
         :param sdoc.sdoc2.node.ReferenceNode.ReferenceNode node: The reference node.
         :param file file: The output file.
         """
+        self.write_into_file(node, file)
+
+        super().generate(node, file)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def generate_chapter(self, node, file):
+        """
+        Generates the HTML code for a reference node.
+
+        :param sdoc.sdoc2.node.ReferenceNode.ReferenceNode node: The reference node.
+        :param file file: The output file.
+        """
+        if file:
+            self.write_into_file(node, file)
+
+        super().generate_chapter(node, file)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def write_into_file(self, node, file):
+        """
+        Writes data into opened file.
+
+        :param sdoc.sdoc2.node.ReferenceNode.ReferenceNode node: The reference node.
+        :param file file: The output file.
+        """
         attributes = {'class': node.get_option_value('class'),
                       'href': node.get_option_value('href')}
 
         file.write(Html.generate_element('a', attributes, node._argument))
 
-        super().generate(node, file)
 
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_formatter('ref', 'html', ReferenceHtmlFormatter)

@@ -26,5 +26,15 @@ class LabelHtmlFormatter(HtmlFormatter):
         """
         super().generate(node, file)
 
+    # ------------------------------------------------------------------------------------------------------------------
+    def generate_chapter(self, node, file):
+        """
+        Generates the HTML code for a label node.
+
+        :param sdoc.sdoc2.node.LabelNode.LabelNode node: The label node.
+        :param file file: The output file.
+        """
+        super().generate_chapter(node, file)
+
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_formatter('label', 'html', LabelHtmlFormatter)

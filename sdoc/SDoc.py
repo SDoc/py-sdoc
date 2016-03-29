@@ -127,11 +127,17 @@ class SDoc:
 
         :param configparser.ConfigParser config: The config parser.
         """
+        available_formats = ['html']
+
         # Read the target format of the document.
         target_format = config.get('sdoc', 'format', fallback=None)
+        if target_format not in available_formats:
+            raise SDocError("The format '{0!s}' is not available in SDoc. Set another in config file '{1!s}'".format(
+                target_format, self._args.config_filename))
+
         if not target_format:
-            raise SDocError("Option 'format' in section 'sdoc' not set in config file '{0!s}'".format(
-                    self._args.config_filename))
+            raise SDocError("Option 'format' in section 'sdoc' not set in config file '{0!s}'"
+                            .format(self._args.config_filename))
 
         # Read the class name for formatting the SDoc2 nodes into the target format.
         section = 'format_' + target_format
@@ -141,12 +147,16 @@ class SDoc:
                             format(section, self._args.config_filename))
 
         # Import the class.
-        parts = class_name.split('.')
-        module = ".".join(parts[:-1])
-        __import__(module)
-        m = __import__(module)
-        for comp in parts[1:]:
-            m = getattr(m, comp)
+        try:
+            parts = class_name.split('.')
+            module = ".".join(parts[:-1])
+            __import__(module)
+            m = __import__(module)
+            for comp in parts[1:]:
+                m = getattr(m, comp)
+        except AttributeError:
+            raise SDocError("There is no module named '{0!s}'! Set name correctly in config file '{1!s}'"
+                            .format(class_name, self._args.config_filename))
 
         # Create the formatter.
         self._formatter = m(config[section])
@@ -249,15 +259,17 @@ class SDoc:
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def run_sdoc2(temp_filename):
+    def run_sdoc2(temp_filename, one_file, file_per_chapter):
         """
         Run the SDoc2 parser.
 
         :param str temp_filename: The name of the temporary file where the SDoc2 document is stored.
+        :param bool one_file: Info about generating one output file per one source file.
+        :param bool file_per_chapter: Info about generating one output file per on chapter of source file.
         """
         interpreter2 = SDoc2Interpreter()
         interpreter2.process(temp_filename)
-        sdoc.sdoc2.node_store.generate()
+        sdoc.sdoc2.node_store.generate(one_file, file_per_chapter)
 
     # ------------------------------------------------------------------------------------------------------------------
     def _run_sdoc(self):
@@ -269,9 +281,14 @@ class SDoc:
 
         self.run_sdoc1(main_filename, temp_filename)
 
-        self.run_sdoc2(temp_filename)
+        self.run_sdoc2(temp_filename, self._formatter.one_file, self._formatter.file_per_chapter)
 
-        sdoc.sdoc2.node_store.generate()
+        # Activate numbering nodes.
+        if self._formatter.enumerate:
+            sdoc.sdoc2.node_store.number_numerable()
+
+        # Start generating file with specific parameters.
+        sdoc.sdoc2.node_store.generate(self._formatter.one_file, self._formatter.file_per_chapter)
 
     # ------------------------------------------------------------------------------------------------------------------
     def test_sdoc1(self, main_filename):

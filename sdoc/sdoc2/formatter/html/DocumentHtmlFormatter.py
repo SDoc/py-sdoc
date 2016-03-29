@@ -32,5 +32,15 @@ class DocumentHtmlFormatter(HtmlFormatter):
         file.write('</html>')
         file.close()
 
+    # ------------------------------------------------------------------------------------------------------------------
+    def generate_chapter(self, node, file):
+        """
+        Passing the document node, because not used in generating chapters of a document.
+
+        :param sdoc.sdoc2.node.DocumentNode.DocumentNode node: The document node.
+        :param file file: The output file.
+        """
+        super().generate_chapter(node, file)
+
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_formatter('document', 'html', DocumentHtmlFormatter)

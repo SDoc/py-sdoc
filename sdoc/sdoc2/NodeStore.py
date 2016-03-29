@@ -21,6 +21,7 @@ Map from block commands to object creators.
 """
 
 
+
 class NodeStore:
     """
     Class for creating, storing, and retrieving nodes.
@@ -389,14 +390,23 @@ class NodeStore:
         self.nodes[1].number(self._enumerable_numbers)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def generate(self):
+    def generate(self, one_file=False, file_per_chapter=False):
         """
         Generates the document.
-        """
-        file = open('output.html', 'w')
 
-        formatter = self.create_formatter('document')
-        formatter.generate(self.nodes[1], file)
+        :param bool one_file: If True creates one output file for one source file.
+        :param bool file_per_chapter: If True creates one output file per one chapter of source file.
+        """
+        # Generates whole HTML output file.
+        if one_file:
+            general_file = open('output.html', 'w')
+            formatter = self.create_formatter('document')
+            formatter.generate(self.nodes[1], general_file)
+
+        # Generates in mode 'output file on each chapter'.
+        if file_per_chapter:
+            formatter = self.create_formatter('document')
+            formatter.generate_chapter(self.nodes[1], None)
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_enumerated_items(self):
