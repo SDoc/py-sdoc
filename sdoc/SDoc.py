@@ -341,6 +341,8 @@ class SDoc:
         interpreter2 = SDoc2Interpreter()
         interpreter2.process(temp_filename)
 
+        sdoc.sdoc2.node_store.number_numerable()
+
         output = sys.stdout.getvalue().strip()
         sys.stdout = old_stdout
 
