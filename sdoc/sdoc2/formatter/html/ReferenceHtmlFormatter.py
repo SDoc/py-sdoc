@@ -52,7 +52,7 @@ class ReferenceHtmlFormatter(HtmlFormatter):
         attributes = {'class': node.get_option_value('class'),
                       'href': node.get_option_value('href')}
 
-        file.write(Html.generate_element('a', attributes, node._argument))
+        file.write(Html.generate_element('a', attributes, node.argument))
 
 
 # ----------------------------------------------------------------------------------------------------------------------
