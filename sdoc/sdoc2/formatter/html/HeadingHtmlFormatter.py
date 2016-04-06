@@ -36,18 +36,16 @@ class HeadingHtmlFormatter(HtmlFormatter):
         :param file file: The output file.
         """
         if node.get_command() == 'chapter':
-            file = open('output_{0}.html'.format(node.argument), 'w')
+            with open('output_{0}.html'.format(node.argument), 'w') as file:
+                file.write('<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="NL" lang="NL">')
+                file.write('<head><meta charset="UTF-8"/><title>sdoc</title></head>')
+                file.write('<body>')
 
-            file.write('<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="NL" lang="NL">')
-            file.write('<head><meta charset="UTF-8"/><title>sdoc</title></head>')
-            file.write('<body>')
+                self.generate_heading_node(node, file)
+                super().generate_chapter(node, file)
 
-            self.generate_heading_node(node, file)
-            super().generate_chapter(node, file)
-
-            file.write('</body>')
-            file.write('</html>')
-            file.close()
+                file.write('</body>')
+                file.write('</html>')
         else:
             if file:
                 self.generate_heading_node(node, file)
