@@ -178,7 +178,7 @@ class TableNode(Node):
         clear_row = []
         for item in row:
             clear_text = item.strip()
-            clear_text = re.sub('\s+', ' ', clear_text)
+            clear_text = re.sub(r'\s+', ' ', clear_text)
             clear_row.append(clear_text)
 
         return clear_row
