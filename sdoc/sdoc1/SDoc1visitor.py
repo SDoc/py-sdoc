@@ -69,7 +69,7 @@ class SDoc1Visitor(sdoc1ParserVisitor):
     @property
     def output(self):
         """
-        Getter fro output.
+        Getter for output.
 
         :rtype: T
         """
@@ -84,6 +84,26 @@ class SDoc1Visitor(sdoc1ParserVisitor):
         :param T output: This object MUST implement the write method.
         """
         self._output = output
+
+    # ------------------------------------------------------------------------------------------------------------------
+    @property
+    def include_level(self):
+        """
+        Getter for include_level.
+
+        :rtype: T
+        """
+        return self._include_level
+
+    # ------------------------------------------------------------------------------------------------------------------
+    @include_level.setter
+    def include_level(self, include_level):
+        """
+        Setter for include_level.
+
+        :param int include_level: The include level.
+        """
+        self._include_level = include_level
 
     # ------------------------------------------------------------------------------------------------------------------
     @property
@@ -373,7 +393,7 @@ class SDoc1Visitor(sdoc1ParserVisitor):
         visitor = SDoc1Visitor(root_dir=os.path.dirname(os.path.realpath(file_name)))
 
         # Set or inherit properties from the parser of the parent document.
-        visitor._include_level = self._include_level + 1
+        visitor.include_level = self._include_level + 1
         visitor.output = self._output
         visitor.global_scope = self._global_scope
 

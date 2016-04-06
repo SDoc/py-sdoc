@@ -7,7 +7,6 @@ Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
 import sdoc
-from sdoc.SDoc import SDoc
 from sdoc.sdoc2 import in_scope, out_scope
 from sdoc.sdoc2.node.Node import Node
 from sdoc.sdoc2.node.TextNode import TextNode
