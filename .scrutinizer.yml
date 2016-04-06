@@ -2,6 +2,10 @@ checks:
     python:
         code_rating: true
         duplicate_code: true
+build:
+    dependencies:
+        before:
+            - pip install antlr4
 tools:
     pylint:
         python_version: '3'
