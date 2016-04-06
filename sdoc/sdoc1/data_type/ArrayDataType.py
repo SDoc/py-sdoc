@@ -14,6 +14,7 @@ class ArrayDataType(DataType):
     """
     Class for array data types.
     """
+
     # ------------------------------------------------------------------------------------------------------------------
     def __init__(self):
         self._elements = {}

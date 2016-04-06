@@ -13,6 +13,7 @@ class Format:
     """
     Abstract parent class for all formatters for generating output documents in a certain format.
     """
+
     # ------------------------------------------------------------------------------------------------------------------
     def __init__(self, config):
         """
@@ -26,6 +27,5 @@ class Format:
     @abc.abstractmethod
     def generate(self):
         pass
-
 
 # ----------------------------------------------------------------------------------------------------------------------
