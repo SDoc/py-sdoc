@@ -26,6 +26,20 @@ class ParagraphHtmlFormatter(HtmlFormatter):
         super().generate(node, file)
         file.write('</p>')
 
+    # ------------------------------------------------------------------------------------------------------------------
+    def generate_chapter(self, node, file):
+        """
+        Generates the HTML code for a paragraph node.
+
+        :param sdoc.sdoc2.node.ParagraphNode.ParagraphNode node: The paragraph node.
+        :param file file: The output file.
+        """
+        if file:
+            file.write('<p>')
+            super().generate_chapter(node, file)
+            file.write('</p>')
+        else:
+            super().generate_chapter(node, file)
 
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_formatter('paragraph', 'html', ParagraphHtmlFormatter)

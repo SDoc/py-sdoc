@@ -23,6 +23,31 @@ class FigureHtmlFormatter(HtmlFormatter):
         :param sdoc.sdoc2.node.FigureNode.FigureNode node: The figure node.
         :param file file: The output file.
         """
+        self.write_into_file(node, file)
+
+        super().generate(node, file)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def generate_chapter(self, node, file):
+        """
+        Generates the HTML code for a figure node.
+
+        :param sdoc.sdoc2.node.FigureNode.FigureNode node: The figure node.
+        :param file file: The output file.
+        """
+        if file:
+            self.write_into_file(node, file)
+
+        super().generate_chapter(node, file)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def write_into_file(self, node, file):
+        """
+        Writes data into opened HTML file.
+
+        :param sdoc.sdoc2.node.FigureNode.FigureNode node: The figure node.
+        :param file file: The output file.
+        """
         # Creating dicts with attributes for each type of element.
         img_attributes = {'src': node.get_option_value('filename'),
                           'width': node.get_option_value('width'),
@@ -36,8 +61,6 @@ class FigureHtmlFormatter(HtmlFormatter):
 
         # Write elements into html file.
         file.write(div_img_element)
-
-        super().generate(node, file)
 
 
 # ----------------------------------------------------------------------------------------------------------------------

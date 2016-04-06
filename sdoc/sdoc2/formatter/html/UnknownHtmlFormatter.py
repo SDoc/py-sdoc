@@ -24,6 +24,27 @@ class UnknownHtmlFormatter(HtmlFormatter):
         :param sdoc.sdoc2.node.ParagraphNode.ParagraphNode node: The paragraph node.
         :param file file: The output file.
         """
+        self.write_into_file(node, file)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def generate_chapter(self, node, file):
+        """
+        Generates the HTML code for a paragraph node.
+
+        :param sdoc.sdoc2.node.ParagraphNode.ParagraphNode node: The paragraph node.
+        :param file file: The output file.
+        """
+        if file:
+            self.write_into_file(node, file)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def write_into_file(self, node, file):
+        """
+        Writes into opened file.
+
+        :param sdoc.sdoc2.node.ParagraphNode.ParagraphNode node: The paragraph node.
+        :param file file: The output file.
+        """
         html = 'Unknown SDoc2 command <span style="font-weight:bold">{0!s}</span> at {1!s}'.format(
             Html.escape(node.name), Html.escape(str(node.position)))
         file.write(Html.generate_element('span', {'style': 'color:red'}, html, True))

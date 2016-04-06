@@ -25,6 +25,16 @@ class HyperlinkHtmlFormatter(HtmlFormatter):
         """
         file.write(Html.generate_element('a', node.get_html_attributes(), node.argument))
 
+    # ------------------------------------------------------------------------------------------------------------------
+    def generate_chapter(self, node, file):
+        """
+        Generates the HTML code for a hyperlink node.
+
+        :param sdoc.sdoc2.node.HyperlinkNode.HyperlinkNode node: The hyperlink node.
+        :param file file: The output file.
+        """
+        if file:
+            file.write(Html.generate_element('a', node.get_html_attributes(), node.argument))
 
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_formatter('hyperlink', 'html', HyperlinkHtmlFormatter)
