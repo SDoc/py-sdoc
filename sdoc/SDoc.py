@@ -133,7 +133,7 @@ class SDoc:
         target_format = config.get('sdoc', 'format', fallback=None)
         if target_format not in available_formats:
             raise SDocError("The format '{0!s}' is not available in SDoc. Set another in config file '{1!s}'".format(
-                target_format, self._args.config_filename))
+                    target_format, self._args.config_filename))
 
         if not target_format:
             raise SDocError("Option 'format' in section 'sdoc' not set in config file '{0!s}'"

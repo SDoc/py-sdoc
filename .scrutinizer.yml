@@ -1,0 +1,16 @@
+checks:
+    python:
+        code_rating: true
+        duplicate_code: true
+build:
+    dependencies:
+        before:
+            - pip install antlr4-python3-runtime httplib2
+tools:
+    pylint:
+        python_version: '3'
+        config_file: pylintrc
+filter:
+    excluded_paths:
+        - test/*
+        - sdoc/antlr/*

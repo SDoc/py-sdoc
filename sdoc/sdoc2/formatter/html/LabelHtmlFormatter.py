@@ -6,7 +6,6 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-from sdoc.helper.Html import Html
 from sdoc.sdoc2 import node_store
 from sdoc.sdoc2.formatter.html.HtmlFormatter import HtmlFormatter
 
