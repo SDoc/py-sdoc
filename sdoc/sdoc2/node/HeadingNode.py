@@ -85,13 +85,13 @@ class HeadingNode(Node):
         if 'heading' not in enumerable_numbers:
             heading_numbers = []
 
-            for i in range(level):
+            for _ in range(level):
                 heading_numbers.append('0')
         else:
             heading_numbers = enumerable_numbers['heading'].split('.')
 
             if level > len(heading_numbers):
-                for num in range(level-len(heading_numbers)):
+                for _ in range(level-len(heading_numbers)):
                     heading_numbers.append('0')
 
         return '.'.join(heading_numbers[:level])
