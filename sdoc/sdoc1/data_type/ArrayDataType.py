@@ -40,7 +40,7 @@ class ArrayDataType(DataType):
         first = True
 
         # Find the length of the longest key.
-        for (key, value) in self._elements.items():
+        for key in self._elements:
             if len("{0!s}".format(key)) >= longest:
                 longest = len("{0!s}".format(key))
                 if isinstance(key, str):
@@ -51,7 +51,7 @@ class ArrayDataType(DataType):
             # Checking the key type, and setting quotes.
             if isinstance(key, int):
                 str1 = " " + " " * indent + "{}".format(key).ljust(longest, " ")
-            if isinstance(key, str):
+            elif isinstance(key, str):
                 str1 = " " + " " * indent + "'{}'".format(key).ljust(longest, " ")
 
             # Creating indentation level.
