@@ -397,26 +397,15 @@ class NodeStore:
         self.nodes[1].number(self._enumerable_numbers)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def generate(self, one_file=False, file_per_chapter=False):
+    @staticmethod
+    def generate(formatter):
         """
         Generates the document.
 
-        :param bool one_file: If True creates one output file for one source file.
-        :param bool file_per_chapter: If True creates one output file per one chapter of source file.
+        :param sdoc.format.Format.Format formatter: The format which will generate file.
         """
-        # Generates labels.
-        self.parse_labels()
-
-        # Generates whole HTML output file.
-        if one_file:
-            general_file = open('output.html', 'w')
-            formatter = self.create_formatter('document')
-            formatter.generate(self.nodes[1], general_file)
-
-        # Generates in mode 'output file on each chapter'.
-        if file_per_chapter:
-            formatter = self.create_formatter('document')
-            formatter.generate_chapter(self.nodes[1], None)
+        # Start generating file using specific formatter.
+        formatter.generate()
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_enumerated_items(self):
