@@ -118,7 +118,8 @@ class ItemNode(Node):
         return '.'.join(heading_numbers)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def strip_start_point(self, number):
+    @staticmethod
+    def strip_start_point(number):
         """
         Removes start point if it in the number.
 

@@ -296,11 +296,8 @@ class NodeStore:
                 if node.is_hierarchy_root():
                     parent_found = True
                 else:
-                    raise RuntimeError(
-                        "Improper nesting of node '{0!s}' at {1!s} and node '{2!s}' at {3!s}.".format(parent_node.name,
-                                                                                                      parent_node.position,
-                                                                                                      node.name,
-                                                                                                      node.position))
+                    raise RuntimeError("Improper nesting of node '{0!s}' at {1!s} and node '{2!s}' at {3!s}."
+                                       .format(parent_node.name, parent_node.position, node.name, node.position))
 
             if not parent_found:
                 parent_hierarchy_level = parent_node.get_hierarchy_level()
@@ -316,11 +313,8 @@ class NodeStore:
 
         if node_hierarchy_level - parent_hierarchy_level > 1:
             # @todo position
-            print(
-                "Warning improper nesting of levels: {0:d} at {1!s} and {2:d} at {3!s}.".format(parent_hierarchy_level,
-                                                                                                parent_node.position,
-                                                                                                node_hierarchy_level,
-                                                                                                node.position))
+            print("Warning improper nesting of levels: {0:d} at {1!s} and {2:d} at {3!s}."
+                  .format(parent_hierarchy_level, parent_node.position, node_hierarchy_level, node.position))
 
     # ------------------------------------------------------------------------------------------------------------------
     def store_node(self, node):

@@ -237,11 +237,17 @@ class SDoc:
 
     # ------------------------------------------------------------------------------------------------------------------
     def _import_nodes(self):
+        """
+        Imports nodes from path which is declared below.
+        """
         # @todo improve
         self.importing('/sdoc2/node/')
 
     # ------------------------------------------------------------------------------------------------------------------
     def _import_formatters(self):
+        """
+        Imports formatters from path which is declared below.
+        """
         # @todo improve
         self.importing('/sdoc2/formatter/html/')
 
