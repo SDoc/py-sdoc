@@ -404,6 +404,9 @@ class NodeStore:
         :param bool one_file: If True creates one output file for one source file.
         :param bool file_per_chapter: If True creates one output file per one chapter of source file.
         """
+        # Generates labels.
+        self.parse_labels()
+
         # Generates whole HTML output file.
         if one_file:
             general_file = open('output.html', 'w')
