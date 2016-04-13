@@ -397,7 +397,8 @@ class NodeStore:
         self.nodes[1].number(self._enumerable_numbers)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def generate(self, formatter):
+    @staticmethod
+    def generate(formatter):
         """
         Generates the document.
 
