@@ -145,7 +145,7 @@ class ArrayDataType(DataType):
         """
         Not implemented.
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_type_id(self):

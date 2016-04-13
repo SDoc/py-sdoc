@@ -38,7 +38,8 @@ class UnknownHtmlFormatter(HtmlFormatter):
             self.write_into_file(node, file)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def write_into_file(self, node, file):
+    @staticmethod
+    def write_into_file(node, file):
         """
         Writes into opened file.
 
