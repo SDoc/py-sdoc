@@ -12,7 +12,7 @@ import antlr4
 
 from sdoc.antlr.sdoc1Lexer import sdoc1Lexer
 from sdoc.antlr.sdoc1Parser import sdoc1Parser
-from sdoc.sdoc1.SDoc1visitor import SDoc1Visitor
+from sdoc.sdoc1.SDoc1Visitor import SDoc1Visitor
 
 
 class SDoc1Interpreter:
@@ -41,5 +41,7 @@ class SDoc1Interpreter:
 
             visitor.output = out_stream
             visitor.visit(tree)
+
+            return visitor.errors
 
 # ----------------------------------------------------------------------------------------------------------------------

@@ -72,6 +72,13 @@ class SDoc:
         :type: [str]
         """
 
+        self._errors = 0
+        """
+        The total number of errors encountered at SDoc level 1 and level 2.
+
+        :type: int
+        """
+
     # ------------------------------------------------------------------------------------------------------------------
     @property
     def target_dir(self):
@@ -246,8 +253,7 @@ class SDoc:
         self.importing('/sdoc2/formatter/html/')
 
     # ------------------------------------------------------------------------------------------------------------------
-    @staticmethod
-    def run_sdoc1(main_filename, temp_filename):
+    def run_sdoc1(self, main_filename, temp_filename):
         """
         Run the SDoc1 parser.
 
@@ -255,11 +261,10 @@ class SDoc:
         :param str temp_filename: The name of the temporary file where the SDoc2 document must be stored.
         """
         interpreter1 = SDoc1Interpreter()
-        interpreter1.process(main_filename, temp_filename)
+        self._errors += interpreter1.process(main_filename, temp_filename)
 
     # ------------------------------------------------------------------------------------------------------------------
-    @staticmethod
-    def run_sdoc2(temp_filename, one_file, file_per_chapter):
+    def run_sdoc2(self, temp_filename, one_file, file_per_chapter):
         """
         Run the SDoc2 parser.
 
@@ -268,7 +273,7 @@ class SDoc:
         :param bool file_per_chapter: Info about generating one output file per on chapter of source file.
         """
         interpreter2 = SDoc2Interpreter()
-        interpreter2.process(temp_filename)
+        self._errors += interpreter2.process(temp_filename)
         sdoc.sdoc2.node_store.generate(one_file, file_per_chapter)
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -358,23 +363,22 @@ class SDoc:
         """
         The main function the SDoc program.
         """
-        try:
-            self._parse_arguments()
+        self._parse_arguments()
 
-            self._read_config_file()
+        self._read_config_file()
 
-            self._create_node_store()
+        self._create_node_store()
 
-            self._import_nodes()
+        self._import_nodes()
 
-            self._import_formatters()
+        self._import_formatters()
 
-            self._run_sdoc()
+        self._run_sdoc()
 
-            exit(0)
+        if self._errors:
+            print()
+            print('The were {0:d} errors in total'.format(self._errors))
 
-        except RuntimeError as err:
-            print(err)
-            exit(-1)
+        exit(self._errors)
 
 # ----------------------------------------------------------------------------------------------------------------------

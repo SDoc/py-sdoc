@@ -8,6 +8,7 @@ Licence MIT
 # ----------------------------------------------------------------------------------------------------------------------
 import copy
 from sdoc.sdoc1.data_type.DataType import DataType
+from sdoc.sdoc1.error import DataTypeError
 
 
 class ArrayDataType(DataType):
@@ -120,7 +121,7 @@ class ArrayDataType(DataType):
         @todo consider key must be int or str
         """
         if not key.is_scalar():
-            raise RuntimeError("Key '{0!s}' is not a scalar.".format(str(key)))
+            raise DataTypeError("Key '{0!s}' is not a scalar.".format(str(key)))
 
         self._elements[key.get_value()] = value.dereference()
 
@@ -136,7 +137,7 @@ class ArrayDataType(DataType):
         :rtype: sdoc.sdoc1.data_type.DataType.DataType
         """
         if name not in self._elements:
-            raise RuntimeError("Identifier '{0!s}' does not have a value.".format(name))
+            raise DataTypeError("Identifier '{0!s}' does not have a value.".format(name))
 
         return self._elements[name]
 

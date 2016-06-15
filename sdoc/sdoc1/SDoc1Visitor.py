@@ -14,13 +14,15 @@ import sdoc
 from sdoc.antlr.sdoc1Lexer import sdoc1Lexer
 from sdoc.antlr.sdoc1Parser import sdoc1Parser
 from sdoc.antlr.sdoc1ParserVisitor import sdoc1ParserVisitor
+from sdoc.sdoc.SDocVisitor import SDocVisitor
 from sdoc.sdoc1.data_type.ArrayDataType import ArrayDataType
 from sdoc.sdoc1.data_type.IdentifierDataType import IdentifierDataType
 from sdoc.sdoc1.data_type.IntegerDataType import IntegerDataType
 from sdoc.sdoc1.data_type.StringDataType import StringDataType
+from sdoc.sdoc1.error import DataTypeError
 
 
-class SDoc1Visitor(sdoc1ParserVisitor):
+class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
     """
     Visitor for SDoc level 1.
     """
@@ -32,6 +34,8 @@ class SDoc1Visitor(sdoc1ParserVisitor):
 
         :param str root_dir: The root directory for including sub-documents.
         """
+        SDocVisitor.__init__(self)
+
         self._output = None
         """
         Object for streaming the generated output. This object MUST implement the write method.
@@ -188,10 +192,17 @@ class SDoc1Visitor(sdoc1ParserVisitor):
         # Left hand side must be an identifier.
         # @todo implement array element.
         if not isinstance(left_hand_side, IdentifierDataType):
-            raise RuntimeError("Left hand side '{0!s}' is not an identifier.".format(str(left_hand_side)))
-            # @todo more verbose logging, own exception class
+            message = "Left hand side '{0!s}' is not an identifier.".format(str(left_hand_side))
+            self._error(message, ctx.postfixExpression().start)
+            return
 
-        return left_hand_side.set_value(right_hand_side)
+        try:
+            value = left_hand_side.set_value(right_hand_side)
+        except DataTypeError as e:
+            self._error(e, ctx.assignmentExpression().start)
+            return None
+
+        return value
 
     # ------------------------------------------------------------------------------------------------------------------
     def visitLogicalAndExpressionAnd(self, ctx):
@@ -231,12 +242,15 @@ class SDoc1Visitor(sdoc1ParserVisitor):
         # First get the value of key.
         expression = ctx.expression().accept(self)
         if not expression.is_defined():
-            raise RuntimeError('{0!s} is not defined.'.format(ctx.expression().getText()))
+            message = '{0!s} is not defined.'.format(ctx.expression().getSymbol())
+            self._error(message, ctx.expression().start)
+            return
 
         postfix_expression = ctx.postfixExpression().accept(self)
         if not isinstance(postfix_expression, IdentifierDataType):
-            raise RuntimeError("'{0!s}' is not an identifier.".format(ctx.postfixExpression().getText()))
-            # @todo more verbose logging, own exception class
+            message = "'{0!s}' is not an identifier.".format(ctx.postfixExpression().getSymbol())
+            self._error(message, ctx.postfixExpression().start)
+            return
 
         return postfix_expression.get_array_element(expression)
 
@@ -372,37 +386,45 @@ class SDoc1Visitor(sdoc1ParserVisitor):
         """
         # Test the maximum include level.
         if self._include_level >= self._options['max_include_level']:
-            raise RuntimeError("Maximum include level exceeded.")  # @todo More verbose logging, own exception class.
+            message = 'Maximum include level exceeded'
+            self._error(message, ctx.INCLUDE().getSymbol())
+            return
 
         # Open a stream for the sub-document.
         file_name = sdoc.unescape(ctx.SIMPLE_ARG().getText())
         if not os.path.isabs(file_name):
             file_name = os.path.join(self._root_dir, file_name + '.sdoc')
-        print("Including {0!s}".format(os.path.relpath(file_name)))
-        stream = antlr4.FileStream(file_name, 'utf-8')
+        real_path = os.path.relpath(file_name)
+        print("Including {0!s}".format(real_path))
+        try:
+            stream = antlr4.FileStream(file_name, 'utf-8')
 
-        # root_dir
+            # root_dir
 
-        # Create a new lexer and parser for the sub-document.
-        lexer = sdoc1Lexer(stream)
-        tokens = antlr4.CommonTokenStream(lexer)
-        parser = sdoc1Parser(tokens)
-        tree = parser.sdoc()
+            # Create a new lexer and parser for the sub-document.
+            lexer = sdoc1Lexer(stream)
+            tokens = antlr4.CommonTokenStream(lexer)
+            parser = sdoc1Parser(tokens)
+            tree = parser.sdoc()
 
-        # Create a visitor.
-        visitor = SDoc1Visitor(root_dir=os.path.dirname(os.path.realpath(file_name)))
+            # Create a visitor.
+            visitor = SDoc1Visitor(root_dir=os.path.dirname(os.path.realpath(file_name)))
 
-        # Set or inherit properties from the parser of the parent document.
-        visitor.include_level = self._include_level + 1
-        visitor.output = self._output
-        visitor.global_scope = self._global_scope
+            # Set or inherit properties from the parser of the parent document.
+            visitor.include_level = self._include_level + 1
+            visitor.output = self._output
+            visitor.global_scope = self._global_scope
 
-        # Run the visitor on the parse tree.
-        visitor.visit(tree)
+            # Run the visitor on the parse tree.
+            visitor.visit(tree)
 
-        self.put_position(ctx, 'stop')
+            # Copy  properties from the child document.
+            self._errors += visitor.errors
 
-        # @todo test on errors and warnings from parser and pass back to parent parser
+            self.put_position(ctx, 'stop')
+        except FileNotFoundError as e:
+            message = 'Unable to open file {0!s}.\nCause: {1!s}'.format(real_path, e)
+            self._error(message, ctx.INCLUDE().getSymbol())
 
     # ------------------------------------------------------------------------------------------------------------------
     def visitCmd_notice(self, ctx):

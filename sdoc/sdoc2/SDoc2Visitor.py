@@ -10,16 +10,22 @@ import re
 
 from sdoc import sdoc2
 from sdoc.antlr.sdoc2ParserVisitor import sdoc2ParserVisitor
+from sdoc.sdoc.SDocVisitor import SDocVisitor
 from sdoc.sdoc2.Position import Position
 
 
-class SDoc2Visitor(sdoc2ParserVisitor):
+class SDoc2Visitor(sdoc2ParserVisitor, SDocVisitor):
     """
     Visitor for SDoc level 2.
     """
 
     # ------------------------------------------------------------------------------------------------------------------
     def __init__(self):
+        """
+        Object constructor.
+        """
+        SDocVisitor.__init__(self)
+
         self._output = None
         """
         Object for streaming the generated output. This object MUST implement the write method.
@@ -160,7 +166,8 @@ class SDoc2Visitor(sdoc2ParserVisitor):
         argument = ctx.INLINE_ARG_ARG()
         parts = re.match(r'(.+):([0-9]+)\.([0-9]+)', str(argument))
         if not parts:
-            raise RuntimeError('{0!s} is not a valid position'.format(argument))
+            self._error('{0!s} is not a valid position'.format(argument))
+            return
 
         self._sdoc1_file_name = parts.group(1)
         self._sdoc1_line = int(parts.group(2))
