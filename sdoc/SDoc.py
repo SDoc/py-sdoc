@@ -13,7 +13,7 @@ import os
 import sys
 from io import StringIO
 
-import sdoc
+from sdoc import sdoc2
 from sdoc.error import SDocError
 from sdoc.sdoc1.SDoc1Interpreter import SDoc1Interpreter
 from sdoc.sdoc2.NodeStore import NodeStore
@@ -224,7 +224,7 @@ class SDoc:
         """
         Creates the node store (for storing nodes).
         """
-        sdoc.sdoc2.node_store = NodeStore()
+        sdoc2.node_store = NodeStore()
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
@@ -292,7 +292,7 @@ class SDoc:
         self.run_sdoc2(temp_filename)
 
         # Start generating file with specific format.
-        sdoc.sdoc2.node_store.generate(self._formatter)
+        sdoc2.node_store.generate(self._formatter)
 
     # ------------------------------------------------------------------------------------------------------------------
     def test_sdoc1(self, main_filename):
@@ -317,11 +317,11 @@ class SDoc:
         sys.stdout = old_stdout
 
         with open(temp_filename, 'rt') as fd:
-            sdoc2 = fd.read()
+            doc2 = fd.read()
 
         os.unlink(temp_filename)
 
-        return output, sdoc2
+        return output, doc2
 
     # ------------------------------------------------------------------------------------------------------------------
     def test_sdoc2(self, main_filename):
@@ -345,17 +345,17 @@ class SDoc:
         interpreter2 = SDoc2Interpreter()
         interpreter2.process(temp_filename)
 
-        sdoc.sdoc2.node_store.number_numerable()
+        sdoc2.node_store.number_numerable()
 
         output = sys.stdout.getvalue().strip()
         sys.stdout = old_stdout
 
         with open(temp_filename, 'rt') as fd:
-            sdoc2 = fd.read()
+            doc2 = fd.read()
 
         os.unlink(temp_filename)
 
-        return output, sdoc2
+        return output, doc2
 
     # ------------------------------------------------------------------------------------------------------------------
     def main(self):
