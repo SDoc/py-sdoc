@@ -10,10 +10,10 @@ import os
 
 import antlr4
 
-import sdoc
 from sdoc.antlr.sdoc1Lexer import sdoc1Lexer
 from sdoc.antlr.sdoc1Parser import sdoc1Parser
 from sdoc.antlr.sdoc1ParserVisitor import sdoc1ParserVisitor
+from sdoc.helper.SDoc import SDoc
 from sdoc.sdoc.SDocVisitor import SDocVisitor
 from sdoc.sdoc1.data_type.ArrayDataType import ArrayDataType
 from sdoc.sdoc1.data_type.IdentifierDataType import IdentifierDataType
@@ -166,7 +166,7 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         if position == 'stop':
             column += len(token.text)
 
-        self.stream('\\position{{{0!s}:{1:d}.{2:d}}}'.format(sdoc.escape(filename), line_number, column))
+        self.stream('\\position{{{0!s}:{1:d}.{2:d}}}'.format(SDoc.escape(filename), line_number, column))
 
     # ------------------------------------------------------------------------------------------------------------------
     def visit(self, tree):
@@ -199,7 +199,7 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         try:
             value = left_hand_side.set_value(right_hand_side)
         except DataTypeError as e:
-            self._error(e, ctx.assignmentExpression().start)
+            self._error(str(e), ctx.assignmentExpression().start)
             return None
 
         return value
@@ -391,7 +391,7 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
             return
 
         # Open a stream for the sub-document.
-        file_name = sdoc.unescape(ctx.SIMPLE_ARG().getText())
+        file_name = SDoc.unescape(ctx.SIMPLE_ARG().getText())
         if not os.path.isabs(file_name):
             file_name = os.path.join(self._root_dir, file_name + '.sdoc')
         real_path = os.path.relpath(file_name)
@@ -436,7 +436,7 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         token = ctx.NOTICE().getSymbol()
         filename = token.getInputStream().fileName  # Replace fileName with get_source_name() when implemented in ANTLR.
         line_number = token.line
-        message = sdoc.unescape(ctx.SIMPLE_ARG().getText())
+        message = SDoc.unescape(ctx.SIMPLE_ARG().getText())
 
         print('Notice: {0!s} at {1!s}:{2:d}'.format(message, os.path.relpath(filename), line_number))
 
