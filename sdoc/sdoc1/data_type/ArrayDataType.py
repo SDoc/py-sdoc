@@ -25,7 +25,7 @@ class ArrayDataType(DataType):
         :param dict[mixed, sdoc.sdoc1.data_type.DataType.DataType]: The elements of this array.
         """
 
-        self._elements = copy.deepcopy(self._elements) if elements else {}
+        self._elements = copy.deepcopy(elements) if elements else {}
         """
         The elements in this array.
 
