@@ -296,11 +296,8 @@ class NodeStore:
                 if node.is_hierarchy_root():
                     parent_found = True
                 else:
-                    raise RuntimeError(
-                        "Improper nesting of node '{0!s}' at {1!s} and node '{2!s}' at {3!s}.".format(parent_node.name,
-                                                                                                      parent_node.position,
-                                                                                                      node.name,
-                                                                                                      node.position))
+                    raise RuntimeError("Improper nesting of node '{0!s}' at {1!s} and node '{2!s}' at {3!s}."
+                                       .format(parent_node.name, parent_node.position, node.name, node.position))
 
             if not parent_found:
                 parent_hierarchy_level = parent_node.get_hierarchy_level()
@@ -316,11 +313,8 @@ class NodeStore:
 
         if node_hierarchy_level - parent_hierarchy_level > 1:
             # @todo position
-            print(
-                "Warning improper nesting of levels: {0:d} at {1!s} and {2:d} at {3!s}.".format(parent_hierarchy_level,
-                                                                                                parent_node.position,
-                                                                                                node_hierarchy_level,
-                                                                                                node.position))
+            print("Warning improper nesting of levels: {0:d} at {1!s} and {2:d} at {3!s}."
+                  .format(parent_hierarchy_level, parent_node.position, node_hierarchy_level, node.position))
 
     # ------------------------------------------------------------------------------------------------------------------
     def store_node(self, node):
@@ -397,23 +391,15 @@ class NodeStore:
         self.nodes[1].number(self._enumerable_numbers)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def generate(self, one_file=False, file_per_chapter=False):
+    @staticmethod
+    def generate(formatter):
         """
         Generates the document.
 
-        :param bool one_file: If True creates one output file for one source file.
-        :param bool file_per_chapter: If True creates one output file per one chapter of source file.
+        :param sdoc.format.Format.Format formatter: The format which will generate file.
         """
-        # Generates whole HTML output file.
-        if one_file:
-            general_file = open('output.html', 'w')
-            formatter = self.create_formatter('document')
-            formatter.generate(self.nodes[1], general_file)
-
-        # Generates in mode 'output file on each chapter'.
-        if file_per_chapter:
-            formatter = self.create_formatter('document')
-            formatter.generate_chapter(self.nodes[1], None)
+        # Start generating file using specific formatter.
+        formatter.generate()
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_enumerated_items(self):

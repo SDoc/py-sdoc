@@ -6,8 +6,6 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-import abc
-
 from sdoc.sdoc2 import node_store, in_scope, out_scope
 
 
@@ -16,7 +14,6 @@ class Formatter:
     Abstract parent class for all formatters for generating the output of nodes in a requested format.
     """
     # ------------------------------------------------------------------------------------------------------------------
-    @abc.abstractmethod
     def generate(self, node, file):
         """
         Generates the representation of a node is the requested output format.
@@ -33,7 +30,6 @@ class Formatter:
             out_scope(child_node)
 
     # ------------------------------------------------------------------------------------------------------------------
-    @abc.abstractmethod
     def generate_chapter(self, node, file):
         """
         Generates the representation of a node is the requested output format.

@@ -42,7 +42,8 @@ class ReferenceHtmlFormatter(HtmlFormatter):
         super().generate_chapter(node, file)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def write_into_file(self, node, file):
+    @staticmethod
+    def write_into_file(node, file):
         """
         Writes data into opened file.
 
