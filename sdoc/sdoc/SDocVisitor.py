@@ -36,7 +36,7 @@ class SDocVisitor:
         return self._errors
 
     # ------------------------------------------------------------------------------------------------------------------
-    def _error(self, message, token):
+    def _error(self, message, token=None):
         """
         Logs an error.
 
