@@ -9,7 +9,7 @@ Licence MIT
 
 class Html:
     """
-    Static class with helper functions for generating HTML code.
+    Utility class with functions for generating HTML code.
     """
 
     # ------------------------------------------------------------------------------------------------------------------
