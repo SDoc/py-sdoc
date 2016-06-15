@@ -7,6 +7,7 @@ Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
 import copy
+
 from sdoc.sdoc1.data_type.DataType import DataType
 from sdoc.sdoc1.error import DataTypeError
 
@@ -17,8 +18,14 @@ class ArrayDataType(DataType):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self):
-        self._elements = {}
+    def __init__(self, elements=None):
+        """
+        Object constructor.
+
+        :param dict[mixed, sdoc.sdoc1.data_type.DataType.DataType]: The elements of this array.
+        """
+
+        self._elements = copy.deepcopy(self._elements) if elements else {}
         """
         The elements in this array.
 
@@ -79,10 +86,7 @@ class ArrayDataType(DataType):
 
         :rtype: ArrayDataType
         """
-        tmp = ArrayDataType()
-        tmp._elements = copy.deepcopy(self._elements)
-
-        return tmp
+        return ArrayDataType(self._elements)
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_array(self, key):
