@@ -81,6 +81,9 @@ EXPR_DIGIT
     :   [0-9]
     ;
 
+fragment
+ESCAPED_CHAR : '\\\\' | '\\\'';
+
 EXPR_STRING_CONSTANT
-    :   '\'' ~['\\\r\n]* '\''
+    :   '\'' ( ESCAPED_CHAR | ~['])*? '\''
     ;

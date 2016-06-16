@@ -279,7 +279,7 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
 
         :param sdoc1Parser.PrimaryExpressionStringConstantContext ctx: The context tree.
         """
-        return StringDataType(ctx.EXPR_STRING_CONSTANT().getText()[1:-1])
+        return StringDataType(ctx.EXPR_STRING_CONSTANT().getText()[1:-1].replace('\\\\', '\\').replace('\\\'', '\''))
 
     # ------------------------------------------------------------------------------------------------------------------
     def visitPrimaryExpressionSubExpression(self, ctx):
