@@ -169,6 +169,22 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         self.stream('\\position{{{0!s}:{1:d}.{2:d}}}'.format(SDoc.escape(filename), line_number, column))
 
     # ------------------------------------------------------------------------------------------------------------------
+    def _data_is_true(self, data, token=None):
+        """
+        Returns True if a data type evaluates to True, False if a data type evaluates to False, and None if an error
+        occurs.
+
+        :param sdoc.sdoc1.data_type.DataType.DataType data: The data.
+        :param antlr4.Token.CommonToken token: The token where data type is been used.
+        """
+        try:
+            return data.is_true()
+
+        except DataTypeError as e:
+            self._error(str(e), token)
+            return None
+
+    # ------------------------------------------------------------------------------------------------------------------
     def visit(self, tree):
         """
         Visits a parse tree produced by sdoc1
@@ -211,12 +227,16 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
 
         :param sdoc1Parser.LogicalAndExpressionAndContext ctx: The context tree.
         """
-        a = ctx.logicalAndExpression().accept(self)
-        b = ctx.equalityExpression().accept(self)
+        a_ctx = ctx.logicalAndExpression()
+        b_ctx = ctx.equalityExpression()
 
-        # @todo test a and b are defined
+        a = a_ctx.accept(self)
+        b = b_ctx.accept(self)
 
-        return IntegerDataType(1 if a.is_true() and b.is_true() else 0)
+        a_is_true = self._data_is_true(a, a_ctx.start)
+        b_is_true = self._data_is_true(b, b_ctx.start)
+
+        return IntegerDataType(1 if a_is_true and b_is_true else 0)
 
     # ------------------------------------------------------------------------------------------------------------------
     def visitLogicalOrExpressionLogicalOr(self, ctx):
@@ -225,12 +245,16 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
 
         :param sdoc1Parser.LogicalOrExpressionLogicalOrContext ctx: The context tree.
         """
-        a = ctx.logicalOrExpression().accept(self)
-        b = ctx.logicalAndExpression().accept(self)
+        a_ctx = ctx.logicalOrExpression()
+        b_ctx = ctx.logicalAndExpression()
 
-        # @todo test a and b are defined
+        a = a_ctx.accept(self)
+        b = b_ctx.accept(self)
 
-        return IntegerDataType(1 if a.is_true() or b.is_true() else 0)
+        a_is_true = self._data_is_true(a, a_ctx.start)
+        b_is_true = self._data_is_true(b, b_ctx.start)
+
+        return IntegerDataType(1 if a_is_true or b_is_true else 0)
 
     # ------------------------------------------------------------------------------------------------------------------
     def visitPostfixExpressionExpression(self, ctx):
@@ -352,7 +376,7 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
                 # Skip }
                 i += 1
 
-                if data.is_true():
+                if self._data_is_true(data, child.start):
                     # Child is the code inside the if or elif clause.
                     child = ctx.getChild(i)
                     self.put_position(child, 'start')
