@@ -1,6 +1,7 @@
-from setuptools import setup, find_packages
 from codecs import open
 from os import path
+
+from setuptools import setup, find_packages
 
 here = path.abspath(path.dirname(__file__))
 
@@ -49,6 +50,8 @@ setup(
     keywords='Documentation, SAAS',
 
     packages=find_packages(exclude=['build', 'test']),
+
+    install_requires=['antlr4'],
 
     entry_points={
         'console_scripts': [
