@@ -13,7 +13,7 @@ import os
 import sys
 from io import StringIO
 
-import sdoc
+from sdoc import sdoc2
 from sdoc.error import SDocError
 from sdoc.sdoc1.SDoc1Interpreter import SDoc1Interpreter
 from sdoc.sdoc2.NodeStore import NodeStore
@@ -70,6 +70,13 @@ class SDoc:
         A list with path names from with node modules must be imported.
 
         :type: [str]
+        """
+
+        self._errors = 0
+        """
+        The total number of errors encountered at SDoc level 1 and level 2.
+
+        :type: int
         """
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -217,7 +224,7 @@ class SDoc:
         """
         Creates the node store (for storing nodes).
         """
-        sdoc.sdoc2.node_store = NodeStore()
+        sdoc2.node_store = NodeStore()
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
@@ -237,17 +244,22 @@ class SDoc:
 
     # ------------------------------------------------------------------------------------------------------------------
     def _import_nodes(self):
+        """
+        Imports nodes from path which is declared below.
+        """
         # @todo improve
         self.importing('/sdoc2/node/')
 
     # ------------------------------------------------------------------------------------------------------------------
     def _import_formatters(self):
+        """
+        Imports formatters from path which is declared below.
+        """
         # @todo improve
         self.importing('/sdoc2/formatter/html/')
 
     # ------------------------------------------------------------------------------------------------------------------
-    @staticmethod
-    def run_sdoc1(main_filename, temp_filename):
+    def run_sdoc1(self, main_filename, temp_filename):
         """
         Run the SDoc1 parser.
 
@@ -255,18 +267,17 @@ class SDoc:
         :param str temp_filename: The name of the temporary file where the SDoc2 document must be stored.
         """
         interpreter1 = SDoc1Interpreter()
-        interpreter1.process(main_filename, temp_filename)
+        self._errors += interpreter1.process(main_filename, temp_filename)
 
     # ------------------------------------------------------------------------------------------------------------------
-    @staticmethod
-    def run_sdoc2(temp_filename):
+    def run_sdoc2(self, temp_filename):
         """
         Run the SDoc2 parser.
 
         :param str temp_filename: The name of the temporary file where the SDoc2 document is stored.
         """
         interpreter2 = SDoc2Interpreter()
-        interpreter2.process(temp_filename)
+        self._errors += interpreter2.process(temp_filename)
 
     # ------------------------------------------------------------------------------------------------------------------
     def _run_sdoc(self):
@@ -281,7 +292,7 @@ class SDoc:
         self.run_sdoc2(temp_filename)
 
         # Start generating file with specific format.
-        sdoc.sdoc2.node_store.generate(self._formatter)
+        sdoc2.node_store.generate(self._formatter)
 
     # ------------------------------------------------------------------------------------------------------------------
     def test_sdoc1(self, main_filename):
@@ -306,11 +317,11 @@ class SDoc:
         sys.stdout = old_stdout
 
         with open(temp_filename, 'rt') as fd:
-            sdoc2 = fd.read()
+            doc2 = fd.read()
 
         os.unlink(temp_filename)
 
-        return output, sdoc2
+        return output, doc2
 
     # ------------------------------------------------------------------------------------------------------------------
     def test_sdoc2(self, main_filename):
@@ -334,40 +345,39 @@ class SDoc:
         interpreter2 = SDoc2Interpreter()
         interpreter2.process(temp_filename)
 
-        sdoc.sdoc2.node_store.number_numerable()
+        sdoc2.node_store.number_numerable()
 
         output = sys.stdout.getvalue().strip()
         sys.stdout = old_stdout
 
         with open(temp_filename, 'rt') as fd:
-            sdoc2 = fd.read()
+            doc2 = fd.read()
 
         os.unlink(temp_filename)
 
-        return output, sdoc2
+        return output, doc2
 
     # ------------------------------------------------------------------------------------------------------------------
     def main(self):
         """
         The main function the SDoc program.
         """
-        try:
-            self._parse_arguments()
+        self._parse_arguments()
 
-            self._read_config_file()
+        self._read_config_file()
 
-            self._create_node_store()
+        self._create_node_store()
 
-            self._import_nodes()
+        self._import_nodes()
 
-            self._import_formatters()
+        self._import_formatters()
 
-            self._run_sdoc()
+        self._run_sdoc()
 
-            exit(0)
+        if self._errors:
+            print()
+            print('The were {0:d} errors in total'.format(self._errors))
 
-        except RuntimeError as err:
-            print(err)
-            exit(-1)
+        exit(self._errors)
 
 # ----------------------------------------------------------------------------------------------------------------------

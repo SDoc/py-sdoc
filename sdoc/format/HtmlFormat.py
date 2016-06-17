@@ -6,10 +6,9 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-import sdoc
+from sdoc import sdoc2
 from sdoc.error import SDocError
 from sdoc.format.Format import Format
-from sdoc.sdoc2 import node_store
 
 
 class HtmlFormat(Format):
@@ -108,20 +107,20 @@ class HtmlFormat(Format):
         """
         # Activate numbering nodes.
         if self.enumerate:
-            sdoc.sdoc2.node_store.number_numerable()
+            sdoc2.node_store.number_numerable()
 
         # Generate labels.
-        sdoc.sdoc2.node_store.parse_labels()
+        sdoc2.node_store.parse_labels()
 
         # Generate whole HTML output file.
         if self.one_file:
             general_file = open('output.html', 'w')
-            formatter = sdoc.sdoc2.node_store.create_formatter('document')
-            formatter.generate(sdoc.sdoc2.node_store.nodes[1], general_file)
+            formatter = sdoc2.node_store.create_formatter('document')
+            formatter.generate(sdoc2.node_store.nodes[1], general_file)
 
         # Generate in mode 'output file on each chapter'.
         if self.file_per_chapter:
-            formatter = sdoc.sdoc2.node_store.create_formatter('document')
-            formatter.generate_chapter(sdoc.sdoc2.node_store.nodes[1], None)
+            formatter = sdoc2.node_store.create_formatter('document')
+            formatter.generate_chapter(sdoc2.node_store.nodes[1], None)
 
 # ----------------------------------------------------------------------------------------------------------------------

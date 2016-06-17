@@ -1,6 +1,7 @@
-from setuptools import setup, find_packages
 from codecs import open
 from os import path
+
+from setuptools import setup, find_packages
 
 here = path.abspath(path.dirname(__file__))
 
@@ -10,7 +11,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 setup(
     name='SDoc',
 
-    version='0.0.1',
+    version='0.0.5',
 
     description='A super format documentation document preparation system for SAAS and multi tenant applications',
     long_description=long_description,
@@ -49,6 +50,8 @@ setup(
     keywords='Documentation, SAAS',
 
     packages=find_packages(exclude=['build', 'test']),
+
+    install_requires=['antlr4-python3-runtime', 'httplib2'],
 
     entry_points={
         'console_scripts': [

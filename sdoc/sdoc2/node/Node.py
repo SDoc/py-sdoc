@@ -303,6 +303,7 @@ class Node:
                 if node.argument not in node_store.labels:
                     node_store.labels[node.argument] = self.argument
                 else:
+                    # @todo log definitions of both labels
                     raise NameError('Duplicate label', node.argument)
 
                 # Removing node from child nodes.

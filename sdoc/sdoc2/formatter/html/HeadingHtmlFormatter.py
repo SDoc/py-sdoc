@@ -52,7 +52,8 @@ class HeadingHtmlFormatter(HtmlFormatter):
                 super().generate_chapter(node, file)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def generate_heading_node(self, node, file):
+    @staticmethod
+    def generate_heading_node(node, file):
         """
         Generates the HTML code for heading node.
 

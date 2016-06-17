@@ -11,13 +11,14 @@ import antlr4
 import sdoc
 from sdoc.antlr.sdoc2Lexer import sdoc2Lexer
 from sdoc.antlr.sdoc2Parser import sdoc2Parser
-from sdoc.sdoc2.SDoc2visitor import SDoc2Visitor
+from sdoc.sdoc2.SDoc2Visitor import SDoc2Visitor
 
 
 class SDoc2Interpreter:
     """
     Class for processing SDoc1 documents.
     """
+
     # ------------------------------------------------------------------------------------------------------------------
     def __init__(self):
         """
@@ -44,5 +45,6 @@ class SDoc2Interpreter:
 
         sdoc.sdoc2.node_store.prepare_content_tree()
 
+        return visitor.errors
 
 # ----------------------------------------------------------------------------------------------------------------------
