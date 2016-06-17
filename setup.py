@@ -11,7 +11,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 setup(
     name='SDoc',
 
-    version='0.0.3',
+    version='0.0.4',
 
     description='A super format documentation document preparation system for SAAS and multi tenant applications',
     long_description=long_description,
@@ -51,7 +51,7 @@ setup(
 
     packages=find_packages(exclude=['build', 'test']),
 
-    install_requires=['antlr4'],
+    install_requires=['antlr4-python3-runtime', 'httplib2'],
 
     entry_points={
         'console_scripts': [
