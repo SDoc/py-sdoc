@@ -98,6 +98,26 @@ class HeadingNode(Node):
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
+    def set_part_numeration(enumerable_numbers):
+        """
+        Sets and returns the part number. If we already haven't got a part, we set it to 1 (i.e. first part).
+        If we already have part, we increment part number, and reset heading nodes numbering.
+
+        This method changes original list with values!
+
+        :param dict[str,str] enumerable_numbers: The current numbers of enumerable nodes.
+
+        :rtype: str
+        """
+        if 'part' not in enumerable_numbers:
+            enumerable_numbers['part'] = '1'
+
+        else:
+            del enumerable_numbers['heading']
+            enumerable_numbers['part'] = str(int(enumerable_numbers['part']) + 1)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    @staticmethod
     def _increment_last_level(enumerable_numbers):
         """
         Increments the last level in number of a heading number.
@@ -118,10 +138,15 @@ class HeadingNode(Node):
 
         :param dict[str,str] enumerable_numbers: The current numbers of enumerable nodes.
         """
-        enumerable_numbers['heading'] = self.get_numeration(enumerable_numbers, self.get_hierarchy_level())
-        enumerable_numbers['heading'] = self._increment_last_level(enumerable_numbers)
+        if self.get_command() == 'part':
+            self.set_part_numeration(enumerable_numbers)
+            self._options['number'] = self._trim_levels(enumerable_numbers['part'])
 
-        self._options['number'] = self._trim_levels(enumerable_numbers['heading'])
+        else:
+            enumerable_numbers['heading'] = self.get_numeration(enumerable_numbers, self.get_hierarchy_level())
+            enumerable_numbers['heading'] = self._increment_last_level(enumerable_numbers)
+
+            self._options['number'] = self._trim_levels(enumerable_numbers['heading'])
 
         super().number(enumerable_numbers)
 
