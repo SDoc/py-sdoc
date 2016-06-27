@@ -301,7 +301,12 @@ class Node:
 
                 # Appending in NodeStore labels list.
                 if node.argument not in node_store.labels:
-                    node_store.labels[node.argument] = self.argument
+                    if self.get_option_value('number'):
+                        label_arg = "{} {}".format(self.get_option_value('number'), self.argument)
+                    else:
+                        label_arg = self.argument
+
+                    node_store.labels[node.argument] = label_arg
                 else:
                     # @todo log definitions of both labels
                     raise NameError('Duplicate label', node.argument)
