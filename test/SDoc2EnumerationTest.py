@@ -22,7 +22,8 @@ class SDoc2EnumerationTest(unittest.TestCase):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def create_list_of_items(self, nodes):
+    @staticmethod
+    def create_list_of_items(nodes):
         """
         Takes a list of lists/tuples, converts to string, removes extra nesting and creates a tuple.
 
@@ -37,7 +38,8 @@ class SDoc2EnumerationTest(unittest.TestCase):
         return ast.literal_eval(items_string)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def csv_to_tuple(self, file_name):
+    @staticmethod
+    def csv_to_tuple(file_name):
         """
         Reads a csv file, creates a tuple of csv objects.
 
@@ -57,7 +59,7 @@ class SDoc2EnumerationTest(unittest.TestCase):
         return items_tuple
 
     # ------------------------------------------------------------------------------------------------------------------
-    def testNumbering(self):
+    def test_numbering(self):
         """
         Runs all test cases in the test/enumeration directory.
         """
