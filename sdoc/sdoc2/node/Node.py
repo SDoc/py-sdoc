@@ -302,11 +302,14 @@ class Node:
                 # Appending in NodeStore labels list.
                 if node.argument not in node_store.labels:
                     if self.get_option_value('number'):
-                        label_arg = "{} {}".format(self.get_option_value('number'), self.argument)
+                        label_arg = self.get_option_value('number')
+                        title_attribute = self.argument
                     else:
                         label_arg = self.argument
+                        title_attribute = None
 
-                    node_store.labels[node.argument] = label_arg
+                    node_store.labels[node.argument] = {'argument': label_arg,
+                                                        'title': title_attribute}
                 else:
                     # @todo log definitions of both labels
                     raise NameError('Duplicate label', node.argument)
@@ -337,7 +340,11 @@ class Node:
 
             if node.argument in node_store.labels and node.get_command() == 'ref':
                 node.set_option_value('href', '#{0}'.format(node.argument))
-                node.argument = node_store.labels[node.argument]
+
+                if node_store.labels[node.argument]['title']:
+                    node.set_option_value('title', node_store.labels[node.argument]['title'])
+
+                node.argument = node_store.labels[node.argument]['argument']
 
             node.change_ref_argument()
 
