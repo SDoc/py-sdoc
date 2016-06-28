@@ -99,7 +99,12 @@ class TableHtmlFormatter(HtmlFormatter):
         for row in node.rows:
             for col in row:
                 align = TableHtmlFormatter.get_align(node.alignments, header_column_counter)
-                columns += Html.generate_element('td', {'style': "text-align: {0}".format(align)}, col)
+
+                if align:
+                    columns += Html.generate_element('td', {'style': "text-align: {0}".format(align)}, col)
+                else:
+                    columns += Html.generate_element('td', {}, col)
+
                 header_column_counter += 1
             rows += Html.generate_element('tr', {}, columns, True)
             columns = ''
