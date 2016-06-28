@@ -76,7 +76,7 @@
     </target>
 
     <!-- All steps for releasing a new version -->
-    <target name="new_version" depends="version,dist,upload"/>
+    <target name="new-version" depends="version,dist,upload"/>
 
     <target name="antlr1">
         <exec command="${ANTLR4} -Dlanguage=Python3 -visitor -no-listener -lib sdoc/antlr sdoc/antlr/sdoc1Lexer.g4" passthru="true" checkreturn="true"/>

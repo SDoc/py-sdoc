@@ -19,7 +19,7 @@ class SDoc1ExpressionTest(unittest.TestCase):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def testDebug(self):
+    def test_debug(self):
         """
         Runs all test cases in the test/debug directory.
         """
