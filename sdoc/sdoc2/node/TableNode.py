@@ -80,37 +80,78 @@ class TableNode(Node):
         """
         Prepares this node for further processing.
         """
+        table_nodes = []
+
         for node_id in self.child_nodes:
             node = in_scope(node_id)
 
-            self.extract_table(node)
-
+            table_nodes.append(node)
             node.prepare_content_tree()
 
             out_scope(node)
 
+        self.extract_table(table_nodes)
+
     # ------------------------------------------------------------------------------------------------------------------
-    def extract_table(self, node):
+    def extract_table(self, nodes):
         """
         Extract the table data from a TextNode.
 
-        :param sdoc.sdoc2.node.Node.Node node: The node which may be interpreted as table.
+        :param list[sdoc.sdoc2.node.Node.Node] nodes: The list with nodes.
         """
-        temp_table_items = node.argument.split('\n')
+        # Separate text node from other type of nodes
+        table_data = []
+        table_text_repr = ''
 
-        # Remove empty rows.
-        while '' in temp_table_items:
-            temp_table_items.remove('')
+        for node in nodes:
+            if node.get_command() == 'TEXT':
+                table_text_repr += node.argument
+            else:
+                table_data.append(table_text_repr)
+                table_data.append(node)
+                table_text_repr = ''
+
+        # Split by rows
+        splitted_data = []
+
+        for data in table_data:
+            if type(data) == str:
+                splitted_data.append(data.split('\n'))
+            else:
+                splitted_data.append(data)
+
+        for data in splitted_data:
+            if type(data) == list:
+                while '' in data:
+                    data.remove('')
 
         # Derive table data.
         rows = []
-        for item in temp_table_items:
-            string = io.StringIO(item)
-            reader = csv.reader(string, delimiter='|')
-            for line in reader:
-                row = line
-                row = self.prune_whitespace(row)
-                rows.append(row)
+
+        for item in splitted_data:
+            if type(item) == list:
+
+                if len(item) == 1:
+                    string = io.StringIO(item[0])
+                    reader = csv.reader(string, delimiter='|')
+                    for line in reader:
+                        row = line
+                        row = self.prune_whitespace(row)
+                        rows.append(row)
+
+                else:
+                    for data in item:
+                        string = io.StringIO(data)
+                        reader = csv.reader(string, delimiter='|')
+                        for line in reader:
+                            row = line
+                            row = self.prune_whitespace(row)
+                            rows.append(row)
+            else:
+                for row in rows:
+                    for index, data in enumerate(row):
+                        if not data:
+                            row[index] = item
 
         if self.has_header(rows):
             self.column_headers = rows[0]
@@ -118,6 +159,29 @@ class TableNode(Node):
             self.alignments = self.get_column_alignments(rows[1])
         else:
             self.rows = rows
+
+        # temp_table_items = node.argument.split('\n')
+        #
+        # # Remove empty rows.
+        # while '' in temp_table_items:
+        #     temp_table_items.remove('')
+        #
+        # # Derive table data.
+        # rows = []
+        # for item in temp_table_items:
+        #     string = io.StringIO(item)
+        #     reader = csv.reader(string, delimiter='|')
+        #     for line in reader:
+        #         row = line
+        #         row = self.prune_whitespace(row)
+        #         rows.append(row)
+        #
+        # if self.has_header(rows):
+        #     self.column_headers = rows[0]
+        #     self.rows = rows[2:]
+        #     self.alignments = self.get_column_alignments(rows[1])
+        # else:
+        #     self.rows = rows
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
