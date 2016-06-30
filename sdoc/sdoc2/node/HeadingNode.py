@@ -11,6 +11,7 @@ from sdoc.sdoc2 import in_scope, out_scope
 from sdoc.sdoc2.node.Node import Node
 from sdoc.sdoc2.node.TextNode import TextNode
 from sdoc.sdoc2.node.EndParagraphNode import EndParagraphNode
+from sdoc.sdoc2.helper.Enumerable import Enumerable
 
 
 class HeadingNode(Node):
@@ -56,72 +57,19 @@ class HeadingNode(Node):
         return True
 
     # ------------------------------------------------------------------------------------------------------------------
-    @staticmethod
-    def _trim_levels(string_of_numbers):
-        """
-        Strips all starting '0's and add one starting '0' symbol if number starts from '0'.
-
-        :param str string_of_numbers: String with header node number.
-
-        :rtype: str
-        """
-        if string_of_numbers.startswith('0'):
-            string_of_numbers = string_of_numbers.lstrip('0.')
-            string_of_numbers = '0.{0!s}'.format(string_of_numbers)
-
-        return string_of_numbers
-
-    # ------------------------------------------------------------------------------------------------------------------
-    @staticmethod
-    def get_numeration(enumerable_numbers, level):
-        """
-        Returns the current enumeration of headings at a heading level.
-
-        :param dict[str,str] enumerable_numbers: The current numbers of enumerable nodes.
-        :param int level: The level of nested heading.
-
-        :rtype: str
-        """
-        if 'heading' not in enumerable_numbers:
-            heading_numbers = []
-
-            for _ in range(level):
-                heading_numbers.append('0')
-        else:
-            heading_numbers = enumerable_numbers['heading'].split('.')
-
-            if level > len(heading_numbers):
-                for _ in range(level-len(heading_numbers)):
-                    heading_numbers.append('0')
-
-        return '.'.join(heading_numbers[:level])
-
-    # ------------------------------------------------------------------------------------------------------------------
-    @staticmethod
-    def _increment_last_level(enumerable_numbers):
-        """
-        Increments the last level in number of a heading number.
-
-        :param dict[str,str] enumerable_numbers: The current numbers of enumerable nodes.
-
-        :rtype: str
-        """
-        heading_numbers = enumerable_numbers['heading'].split('.')
-        heading_numbers[-1] = str(int(heading_numbers[-1]) + 1)
-
-        return '.'.join(heading_numbers)
-
-    # ------------------------------------------------------------------------------------------------------------------
     def number(self, enumerable_numbers):
         """
         Sets number of heading nodes.
 
-        :param dict[str,str] enumerable_numbers: The current numbers of enumerable nodes.
+        :param dict[str,sdoc.sdoc2.helper.Enumerable.Enumerable] enumerable_numbers:
         """
-        enumerable_numbers['heading'] = self.get_numeration(enumerable_numbers, self.get_hierarchy_level())
-        enumerable_numbers['heading'] = self._increment_last_level(enumerable_numbers)
+        if 'heading' not in enumerable_numbers:
+            enumerable_numbers['heading'] = Enumerable()
 
-        self._options['number'] = self._trim_levels(enumerable_numbers['heading'])
+        enumerable_numbers['heading'].get_numeration(self.get_hierarchy_level())
+        enumerable_numbers['heading'].increment_last_level()
+
+        self._options['number'] = enumerable_numbers['heading'].get_string()
 
         super().number(enumerable_numbers)
 

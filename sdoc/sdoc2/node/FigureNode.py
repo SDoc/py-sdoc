@@ -93,12 +93,15 @@ class FigureNode(Node):
 
         :param dict[str,str] enumerable_numbers: The current numbers of enumerable nodes.
         """
-        self._get_numeration(enumerable_numbers)
-        self._increment_last_level(enumerable_numbers)
+        pass
+        # NOT USED IN THIS CLASS
 
-        self._options['number'] = enumerable_numbers['figures']
-
-        super().number(enumerable_numbers)
+        # self._get_numeration(enumerable_numbers)
+        # self._increment_last_level(enumerable_numbers)
+        #
+        # self._options['number'] = enumerable_numbers['figures']
+        #
+        # super().number(enumerable_numbers)
 
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_inline_command('figure', FigureNode)
