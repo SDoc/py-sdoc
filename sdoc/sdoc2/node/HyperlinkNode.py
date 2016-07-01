@@ -86,9 +86,13 @@ class HyperlinkNode(Node):
             else:
                 # If we connected, check the redirect.
                 url = self._options['href'].lstrip('(http://)|(https://)')
+                splitted_url = url.split('/')
 
-                connection = httplib2.HTTPConnectionWithTimeout(url)
-                connection.request('HEAD', '/')
+                host = splitted_url[0]
+                address = '/'.join(splitted_url[1:])
+
+                connection = httplib2.HTTPConnectionWithTimeout(host)
+                connection.request('HEAD', address)
                 response = connection.getresponse()
 
                 if response.status in range(301, 304):
