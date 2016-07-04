@@ -58,20 +58,23 @@ class FigureNode(Node):
         """
         Returns the current enumeration of figures.
 
-        :param dict[str,str] enumerable_numbers: The current numbers of enumerable nodes.
+        :param dict[str, sdoc.sdoc2.helper.Enumerable.Enumerable] enumerable_numbers:
         """
-        chapter = HeadingNode.get_numeration(enumerable_numbers, 1)
+        if 'heading' in enumerable_numbers and enumerable_numbers['heading'].get_level(1):
+            chapter = enumerable_numbers['heading'].get_level(1)
+        else:
+            chapter = 0
 
         if 'figures' not in enumerable_numbers:
             enumerable_numbers['figures'] = '{0!s}.{1!s}'.format(chapter, '0')
 
         else:
             numbers_level = enumerable_numbers['figures'].split('.')
-            if chapter > numbers_level[0]:
+            if chapter > int(numbers_level[0]):
                 numbers_level[0] = chapter
                 numbers_level[-1] = '0'
 
-            enumerable_numbers['figures'] = '.'.join(numbers_level)
+            enumerable_numbers['figures'] = '.'.join(map(str, numbers_level))
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
@@ -93,15 +96,12 @@ class FigureNode(Node):
 
         :param dict[str,str] enumerable_numbers: The current numbers of enumerable nodes.
         """
-        pass
-        # NOT USED IN THIS CLASS
+        self._get_numeration(enumerable_numbers)
+        self._increment_last_level(enumerable_numbers)
 
-        # self._get_numeration(enumerable_numbers)
-        # self._increment_last_level(enumerable_numbers)
-        #
-        # self._options['number'] = enumerable_numbers['figures']
-        #
-        # super().number(enumerable_numbers)
+        self._options['number'] = enumerable_numbers['figures']
+
+        super().number(enumerable_numbers)
 
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_inline_command('figure', FigureNode)

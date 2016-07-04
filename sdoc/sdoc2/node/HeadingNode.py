@@ -66,8 +66,9 @@ class HeadingNode(Node):
         if 'heading' not in enumerable_numbers:
             enumerable_numbers['heading'] = Enumerable()
 
-        enumerable_numbers['heading'].get_numeration(self.get_hierarchy_level())
+        enumerable_numbers['heading'].generate_numeration(self.get_hierarchy_level())
         enumerable_numbers['heading'].increment_last_level()
+        enumerable_numbers['heading'].remove_starting_zeros()
 
         self._options['number'] = enumerable_numbers['heading'].get_string()
 
