@@ -8,7 +8,6 @@ Licence MIT
 # ----------------------------------------------------------------------------------------------------------------------
 from sdoc.sdoc2 import node_store
 from sdoc.sdoc2.node.Node import Node
-from sdoc.sdoc2.node.HeadingNode import HeadingNode
 
 
 class FigureNode(Node):

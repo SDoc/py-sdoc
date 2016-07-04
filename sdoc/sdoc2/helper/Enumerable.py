@@ -67,16 +67,16 @@ class Enumerable:
         """
         Removes starting multiple zero symbols. And lefts one if we have omitted levels.
         """
-        # Check if we have level 'bigger' than part.
-        if 1 in self._numerate_data:
-            # If first encountered level is equal 0, we start passing from level '2' to max level.
-            # If we have '0' we remove them until we not encountered '0', otherwise we go out the loop.
-            if self._numerate_data[1] == 0:
-                for key in range(2, max(self._numerate_data)):
-                    if self._numerate_data[key] == 0:
-                        del self._numerate_data[key]
-                    else:
-                        break
+        # Check if we have level 'bigger' than part and
+        # if first encountered level is equal 0, we start passing from level '2' to max level.
+        if 1 in self._numerate_data and self._numerate_data[1] == 0:
+            for key in range(2, max(self._numerate_data)):
+
+                # If we have '0' we remove them until we not encountered '0', otherwise we go out the loop.
+                if self._numerate_data[key] == 0:
+                    del self._numerate_data[key]
+                else:
+                    break
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_string(self):
