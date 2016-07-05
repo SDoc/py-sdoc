@@ -299,8 +299,7 @@ class Node:
                 # Appending in Node labels list.
                 self.labels.append(node.id)
 
-                # Appending in NodeStore labels list.
-                if node.argument not in node_store.labels:
+                self.append_label_list_in_node_store(node)
                     if self.get_option_value('number'):
                         label_arg = self.get_option_value('number')
                         title_attribute = self.argument
@@ -310,9 +309,6 @@ class Node:
 
                     node_store.labels[node.argument] = {'argument': label_arg,
                                                         'title': title_attribute}
-                else:
-                    # @todo log definitions of both labels
-                    raise NameError('Duplicate label', node.argument)
 
                 # Removing node from child nodes.
                 self.child_nodes.remove(node.id)
@@ -320,6 +316,27 @@ class Node:
             node.parse_labels()
 
             out_scope(node)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def append_label_list_in_node_store(self, node):
+        """
+        Appending in NodeStore labels list.
+
+        :param sdoc.sdoc2.node.Node.Node node: The current node.
+        """
+        if node.argument not in node_store.labels:
+            if self.argument:
+                node_store.labels[node.argument] = self.argument
+
+            else:
+                if 'number' in self._options:
+                    node_store.labels[node.argument] = self._options['number']
+                else:
+                    node_store.labels[node.argument] = node.argument
+
+        else:
+            # @todo log definitions of both labels
+            raise NameError('Duplicate label', node.argument)
 
     # ------------------------------------------------------------------------------------------------------------------
     def set_id_heading_node(self):
