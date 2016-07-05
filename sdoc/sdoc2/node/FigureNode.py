@@ -8,7 +8,6 @@ Licence MIT
 # ----------------------------------------------------------------------------------------------------------------------
 from sdoc.sdoc2 import node_store
 from sdoc.sdoc2.node.Node import Node
-from sdoc.sdoc2.node.HeadingNode import HeadingNode
 
 
 class FigureNode(Node):
@@ -58,20 +57,23 @@ class FigureNode(Node):
         """
         Returns the current enumeration of figures.
 
-        :param dict[str,str] enumerable_numbers: The current numbers of enumerable nodes.
+        :param dict[str, sdoc.sdoc2.helper.Enumerable.Enumerable] enumerable_numbers:
         """
-        chapter = HeadingNode.get_numeration(enumerable_numbers, 1)
+        if 'heading' in enumerable_numbers and enumerable_numbers['heading'].get_level(1):
+            chapter = enumerable_numbers['heading'].get_level(1)
+        else:
+            chapter = 0
 
         if 'figures' not in enumerable_numbers:
             enumerable_numbers['figures'] = '{0!s}.{1!s}'.format(chapter, '0')
 
         else:
             numbers_level = enumerable_numbers['figures'].split('.')
-            if chapter > numbers_level[0]:
+            if chapter > int(numbers_level[0]):
                 numbers_level[0] = chapter
                 numbers_level[-1] = '0'
 
-            enumerable_numbers['figures'] = '.'.join(numbers_level)
+            enumerable_numbers['figures'] = '.'.join(map(str, numbers_level))
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
