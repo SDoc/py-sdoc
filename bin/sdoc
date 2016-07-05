@@ -5,21 +5,8 @@ import sys
 
 sys.path.append(os.path.realpath(os.path.dirname(os.path.realpath(__file__)) + '/..'))
 
-from cleo import Application
-from sdoc.command import GenerateCommand
+from sdoc.Application.SdocApplication import SDoc
 
 
-# ----------------------------------------------------------------------------------------------------------------------
-class SDoc(Application):
-    """
-    The SDoc application.
-    """
-
-    # ------------------------------------------------------------------------------------------------------------------
-    def start_app(self):
-        self.add(GenerateCommand())
-        self.run()
-
-# ----------------------------------------------------------------------------------------------------------------------
 sdoc_application = SDoc()
 sdoc_application.start_app()
