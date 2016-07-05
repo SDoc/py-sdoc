@@ -300,15 +300,15 @@ class Node:
                 self.labels.append(node.id)
 
                 self.append_label_list_in_node_store(node)
-                    if self.get_option_value('number'):
-                        label_arg = self.get_option_value('number')
-                        title_attribute = self.argument
-                    else:
-                        label_arg = self.argument
-                        title_attribute = None
+                if self.get_option_value('number'):
+                    label_arg = self.get_option_value('number')
+                    title_attribute = self.argument
+                else:
+                    label_arg = self.argument
+                    title_attribute = None
 
-                    node_store.labels[node.argument] = {'argument': label_arg,
-                                                        'title': title_attribute}
+                node_store.labels[node.argument] = {'argument': label_arg,
+                                                    'title': title_attribute}
 
                 # Removing node from child nodes.
                 self.child_nodes.remove(node.id)
