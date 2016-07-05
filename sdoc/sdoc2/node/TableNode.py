@@ -99,7 +99,29 @@ class TableNode(Node):
 
         :param list[sdoc.sdoc2.node.Node.Node] nodes: The list with nodes.
         """
-        # Separate text node from other type of nodes
+        table_data = TableNode.separate_text_nodes(nodes)
+
+        splitted_data = TableNode.split_by_rows(table_data)
+
+        rows = self.derive_table_data(splitted_data)
+
+        if self.has_header(rows):
+            self.column_headers = rows[0]
+            self.rows = rows[2:]
+            self.alignments = self.get_column_alignments(rows[1])
+        else:
+            self.rows = rows
+
+    # ------------------------------------------------------------------------------------------------------------------
+    @staticmethod
+    def separate_text_nodes(nodes):
+        """
+        Separates text nodes from other type of nodes.
+
+        :param: list[mixed] nodes: The list with nodes.
+
+        :rtype: list[mixed]
+        """
         table_data = []
         table_text_repr = ''
 
@@ -111,7 +133,21 @@ class TableNode(Node):
                 table_data.append(node)
                 table_text_repr = ''
 
-        # Split by rows
+        if table_text_repr:
+            table_data.append(table_text_repr)
+
+        return table_data
+
+    # ------------------------------------------------------------------------------------------------------------------
+    @staticmethod
+    def split_by_rows(table_data):
+        """
+        Splits data by rows.
+
+        :param list[mixed] table_data:
+
+        :rtype: list[mixed]
+        """
         splitted_data = []
 
         for data in table_data:
@@ -122,66 +158,106 @@ class TableNode(Node):
 
         for data in splitted_data:
             if type(data) == list:
-                while '' in data:
-                    data.remove('')
+                for element in data:
+                    if element.isspace() or element == '':
+                        print('yeah!')
+                        data.remove(element)
 
-        # Derive table data.
+        for data in splitted_data:
+            print(data)
+
+        print()
+        print()
+
+        return splitted_data
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def derive_table_data(self, splitted_data):
+        """
+        Generates table data.
+
+        :param list[mixed] splitted_data: The splitted data.
+
+        :rtype: list[list[mixed]]
+        """
+        separated_data = TableNode.split_by_vertical_separators(splitted_data)
+
         rows = []
+
+        for item in separated_data:
+            row = []
+
+            for data in item:
+                if type(data) == str:
+                    string = io.StringIO(data)
+                    self.parse_vertical_separators(string, row)
+                else:
+                    row.append(data)
+
+            rows.append(row)
+
+        return rows
+
+    # ------------------------------------------------------------------------------------------------------------------
+    @staticmethod
+    def split_by_vertical_separators(splitted_data):
+        """
+        Splits data by vertical separators and creates rows with data.
+
+        :param list[mixed] splitted_data: The splitted data.
+
+        :rtype: list[list[mixed]]
+        """
+        # for item in splitted_data:
+        #     print(item)
+        #
+        # print()
+        # print()
+
+        rows = []
+        row = []
 
         for item in splitted_data:
             if type(item) == list:
 
-                if len(item) == 1:
-                    string = io.StringIO(item[0])
-                    reader = csv.reader(string, delimiter='|')
-                    for line in reader:
-                        row = line
-                        row = self.prune_whitespace(row)
-                        rows.append(row)
+                for element in item:
+                    if element.strip().startswith('|'):
+                        row.append(element)
 
-                else:
-                    for data in item:
-                        string = io.StringIO(data)
-                        reader = csv.reader(string, delimiter='|')
-                        for line in reader:
-                            row = line
-                            row = self.prune_whitespace(row)
+                    elif element.strip().endswith('|'):
+                        if row and type(row[-1]) != str:
                             rows.append(row)
+                            row = []
+                        row.append(element)
+
+                    else:
+                        if row and type(row[-1]) != str:
+                            rows.append(row)
+                            row = []
+                        rows.append([element])
             else:
-                for row in rows:
-                    for index, data in enumerate(row):
-                        if not data:
-                            row[index] = item
+                row.append(item)
 
-        if self.has_header(rows):
-            self.column_headers = rows[0]
-            self.rows = rows[2:]
-            self.alignments = self.get_column_alignments(rows[1])
-        else:
-            self.rows = rows
+        # print(rows)
+        # print()
+        # print()
+        return rows
 
-        # temp_table_items = node.argument.split('\n')
-        #
-        # # Remove empty rows.
-        # while '' in temp_table_items:
-        #     temp_table_items.remove('')
-        #
-        # # Derive table data.
-        # rows = []
-        # for item in temp_table_items:
-        #     string = io.StringIO(item)
-        #     reader = csv.reader(string, delimiter='|')
-        #     for line in reader:
-        #         row = line
-        #         row = self.prune_whitespace(row)
-        #         rows.append(row)
-        #
-        # if self.has_header(rows):
-        #     self.column_headers = rows[0]
-        #     self.rows = rows[2:]
-        #     self.alignments = self.get_column_alignments(rows[1])
-        # else:
-        #     self.rows = rows
+    # ------------------------------------------------------------------------------------------------------------------
+    def parse_vertical_separators(self, string, row):
+        """
+        Splits row by vertical separator for future output.
+
+        :param str string: The string which we will separate.
+        :param list[mixed] row: The list with the row in which we append data.
+        """
+        reader = csv.reader(string, delimiter='|')
+        for line in reader:
+            new_row = self.prune_whitespace(line)
+
+            for item in new_row:
+                if item:
+                    row.append(item)
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod

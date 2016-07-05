@@ -23,7 +23,7 @@ class SmileHtmlFormatter(HtmlFormatter):
         :param sdoc.sdoc2.node.SmileNode.SmileNode node: The smile node.
         :param file file: The output file.
         """
-        file.write(Html.generate_element('b', {}, 'SMILE'))
+        file.write(SmileHtmlFormatter.get_html(node))
 
         super().generate(node, file)
 
@@ -36,10 +36,21 @@ class SmileHtmlFormatter(HtmlFormatter):
         :param file file: The output file.
         """
         if file:
-            file.write(Html.generate_element('b', {}, 'SMILE'))
+            file.write(SmileHtmlFormatter.get_html(node))
 
         super().generate_chapter(node, file)
 
+    # ------------------------------------------------------------------------------------------------------------------
+    @staticmethod
+    def get_html(node):
+        """
+        Returns string with generated HTML tag.
+
+        :param sdoc.sdoc2.node.SmileNode.SmileNode node: The smile node.
+
+        :rtype: str
+        """
+        return Html.generate_element('b', {}, 'SMILE')
 
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_formatter('smile', 'html', SmileHtmlFormatter)

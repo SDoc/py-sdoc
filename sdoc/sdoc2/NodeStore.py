@@ -77,6 +77,18 @@ class NodeStore:
         """
 
     # ------------------------------------------------------------------------------------------------------------------
+    def get_formatter(self, output_type, name_formatter):
+        """
+        Returns the formatter for special type.
+
+        :param str output_type: The type of output formatter (e.g. 'html')
+        :param str name_formatter: The name of formatter (e.g. 'smile')
+
+        :rtype: sdoc.sdoc2.formatter.Formatter.Formatter
+        """
+        return self._formatters[output_type][name_formatter]
+
+    # ------------------------------------------------------------------------------------------------------------------
     def end_block_node(self, command):
         """
         Signals the end of a block command.
