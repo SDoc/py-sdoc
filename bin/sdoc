@@ -6,7 +6,7 @@ import sys
 sys.path.append(os.path.realpath(os.path.dirname(os.path.realpath(__file__)) + '/..'))
 
 from cleo import Application
-from command.generate_command import GenerateCommand
+from sdoc.command import GenerateCommand
 
 
 # ----------------------------------------------------------------------------------------------------------------------
