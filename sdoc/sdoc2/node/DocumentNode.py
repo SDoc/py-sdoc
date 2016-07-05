@@ -39,7 +39,7 @@ class DocumentNode(Node):
 
         :rtype: int
         """
-        return 1
+        return 0
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_hierarchy_name(self):

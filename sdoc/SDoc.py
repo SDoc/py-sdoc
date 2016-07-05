@@ -6,7 +6,6 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-import argparse
 import configparser
 import os
 
@@ -100,32 +99,12 @@ class SDoc:
         return self.temp_dir
 
     # ------------------------------------------------------------------------------------------------------------------
-    def _parse_arguments(self):
+    def set_arguments(self, config_filename, main_file):
         """
-        Parses the arguments for SDoc program.
+        Sets the arguments for SDoc program.
         """
-        parser = argparse.ArgumentParser(description='Description')
-
-        parser.add_argument(metavar='[main.sdoc]',
-                            nargs=1,
-                            dest='main',
-                            help='path to main SDoc document')
-
-        parser.add_argument('-c',
-                            '--config',
-                            metavar='<config.cfg>',
-                            required=True,
-                            dest='config_filename',
-                            help='path to configuration file')
-
-        parser.add_argument('-1',
-                            '--sdoc1-only',
-                            action='store_true',
-                            dest='sdoc1-only',
-                            default=False,
-                            help='runs only the SDoc1 parser')
-
-        self._args = parser.parse_args()
+        self._args = {'config_filename': config_filename,
+                      'main': main_file}
 
     # ------------------------------------------------------------------------------------------------------------------
     def _config_create_formatter(self, config):
@@ -140,18 +119,18 @@ class SDoc:
         target_format = config.get('sdoc', 'format', fallback=None)
         if target_format not in available_formats:
             raise SDocError("The format '{0!s}' is not available in SDoc. Set another in config file '{1!s}'"
-                            .format(target_format, self._args.config_filename))
+                            .format(target_format, self._args['config_filename']))
 
         if not target_format:
             raise SDocError("Option 'format' in section 'sdoc' not set in config file '{0!s}'"
-                            .format(self._args.config_filename))
+                            .format(self._args['config_filename']))
 
         # Read the class name for formatting the SDoc2 nodes into the target format.
         section = 'format_' + target_format
         class_name = config.get(section, 'class', fallback=None)
         if not class_name:
             raise SDocError("Option 'class' in section '{0!s}' not set in config file '{1!s}'".
-                            format(section, self._args.config_filename))
+                            format(section, self._args['config_filename']))
 
         # Import the class.
         try:
@@ -163,7 +142,7 @@ class SDoc:
                 m = getattr(m, comp)
         except AttributeError:
             raise SDocError("There is no module named '{0!s}'! Set name correctly in config file '{1!s}'"
-                            .format(class_name, self._args.config_filename))
+                            .format(class_name, self._args['config_filename']))
 
         # Create the formatter.
         self._formatter = m(config[section])
@@ -179,7 +158,7 @@ class SDoc:
 
         if not self._temp_dir:
             raise SDocError("Option 'temp_dir' in section 'sdoc' not set correctly in config file '{0!s}'".
-                            format(self._args.config_filename))
+                            format(self._args['config_filename']))
 
         if not os.access(self._temp_dir, os.W_OK):
             raise SDocError("Directory '{0!s}' is not writable".format(self._temp_dir))
@@ -195,7 +174,7 @@ class SDoc:
 
         if not self._target_dir:
             raise SDocError("Option 'target_dir' in section 'sdoc' not set correctly in config file '{0!s}'".
-                            format(self._args.config_filename))
+                            format(self._args['config_filename']))
 
         if not os.access(self._target_dir, os.W_OK):
             raise SDocError("Directory '{0!s}' is not writable".format(self._target_dir))
@@ -206,7 +185,7 @@ class SDoc:
         Reads the configuration file.
         """
         config = configparser.ConfigParser()
-        config.read(self._args.config_filename)
+        config.read(self._args['config_filename'])
 
         # Get the temp and target directory.
         self._config_set_temp_dir(config)
@@ -284,7 +263,7 @@ class SDoc:
         """
         Runs the SDoc1 and SDoc2 parser.
         """
-        main_filename = self._args.main[0]
+        main_filename = self._args['main']
         temp_filename = self._temp_dir + '/' + os.path.basename(main_filename) + '.sdoc2'
 
         self.run_sdoc1(main_filename, temp_filename)
@@ -362,8 +341,6 @@ class SDoc:
         """
         The main function the SDoc program.
         """
-        self._parse_arguments()
-
         self._read_config_file()
 
         self._create_node_store()
