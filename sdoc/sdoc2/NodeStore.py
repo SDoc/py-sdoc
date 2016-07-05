@@ -5,6 +5,7 @@ Copyright 2016 Set Based IT Consultancy
 
 Licence MIT
 """
+# ----------------------------------------------------------------------------------------------------------------------
 
 inline_creators = {}
 """
@@ -66,7 +67,7 @@ class NodeStore:
         """
         The current numbers of enumerable nodes (e.g. headings, figures).
 
-        :type: dict[str,str]
+        :type: dict[str,sdoc.sdoc2.helper.Enumerable.Enumerable]
         """
 
         self.labels = {}
