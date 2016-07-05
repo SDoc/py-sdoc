@@ -6,6 +6,7 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
+from sdoc.helper.Html import Html
 from sdoc.sdoc2 import node_store
 from sdoc.sdoc2.formatter.html.HtmlFormatter import HtmlFormatter
 
@@ -22,7 +23,9 @@ class ItemHtmlFormatter(HtmlFormatter):
         :param sdoc.sdoc2.node.ItemNode.ItemNode node: The item node.
         :param file file: The output file.
         """
-        file.write('<li>')
+        attributes = {'id': node.get_option_value('id')}
+
+        file.write('<li {}>'.format(Html.generate_attribute('id', attributes['id'])))
         node.prepare_content_tree()
         super().generate(node, file)
         file.write('</li>')
@@ -36,11 +39,12 @@ class ItemHtmlFormatter(HtmlFormatter):
         :param file file: The output file.
         """
         if file:
-            file.write('<li>')
+            attributes = {'id': node.get_option_value('id')}
+
+            file.write('<li {}>'.format(Html.generate_attribute('id', attributes['id'])))
             node.prepare_content_tree()
             super().generate_chapter(node, file)
             file.write('</li>')
-
 
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_formatter('item', 'html', ItemHtmlFormatter)

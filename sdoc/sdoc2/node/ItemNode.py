@@ -95,7 +95,7 @@ class ItemNode(Node):
             node = in_scope(node_id)
 
             if isinstance(node, TextNode):
-                node.prune_whitespace()
+                node.prune_whitespace(leading=True, trailing=True)
 
             # if not node.is_phrasing():
             #    raise RuntimeError("Node: id:%s, %s is not phrasing" % (str(node.id), node.name))
