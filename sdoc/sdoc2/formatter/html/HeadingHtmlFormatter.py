@@ -24,7 +24,6 @@ class HeadingHtmlFormatter(HtmlFormatter):
         :param file file: The output file.
         """
         self.generate_heading_node(node, file)
-
         super().generate(node, file)
 
     # ------------------------------------------------------------------------------------------------------------------
