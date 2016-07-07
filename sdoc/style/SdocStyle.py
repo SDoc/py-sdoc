@@ -21,5 +21,12 @@ class SdocStyle(CleoStyle):
         style = OutputFormatterStyle('green', None, ['bold'])
         output.get_formatter().set_style('fso', style)
 
-# ----------------------------------------------------------------------------------------------------------------------
+        # Style for errors.
+        style = OutputFormatterStyle('red', None, ['bold'])
+        output.get_formatter().set_style('err', style)
 
+        # Style for warnings.
+        style = OutputFormatterStyle('yellow', None, ['bold'])
+        output.get_formatter().set_style('warn', style)
+
+# ----------------------------------------------------------------------------------------------------------------------

@@ -9,6 +9,7 @@ Licence MIT
 from cleo import Command
 
 from sdoc.SDoc import SDoc
+from sdoc.style.SdocStyle import SdocStyle
 
 
 class SDoc2Command(Command):
@@ -31,9 +32,11 @@ class SDoc2Command(Command):
         """
         Reads the arguments and starts SDoc application.
         """
+        self.output = SdocStyle(self.input, self.output)
+
         main_sdoc_file = self.argument('main_sdoc_file')
 
-        sdoc = SDoc()
+        sdoc = SDoc(self.output)
         sdoc.test_sdoc2(main_sdoc_file)
 
 # ----------------------------------------------------------------------------------------------------------------------
