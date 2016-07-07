@@ -33,7 +33,7 @@ class SDoc1ExpressionTest(unittest.TestCase):
                     text = file.read()
 
                 sdoc = SDoc()
-                (stdout, sdoc2) = sdoc.test_sdoc1(test_file_name)
+                (stdout, sdoc2) = sdoc.test_sdoc1(test_file_name, test_file_name)
 
                 self.assertEqual(stdout, text)
 
