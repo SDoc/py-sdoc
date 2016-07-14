@@ -181,13 +181,14 @@ class TableNode(Node):
             row = []
 
             for data in item:
-                if isinstance(data, str):
+                if data and isinstance(data, str) and not data.isspace():
                     string = io.StringIO(data)
                     self.parse_vertical_separators(string, row)
                 else:
                     row.append(data)
 
-            rows.append(row)
+            if row:
+                rows.append(row)
 
         return rows
 
