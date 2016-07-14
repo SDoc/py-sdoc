@@ -8,4 +8,3 @@ from sdoc.SDoc import SDoc
 
 sdoc = SDoc()
 sdoc.main()
-

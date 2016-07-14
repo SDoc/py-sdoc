@@ -90,20 +90,20 @@ class TableNode(Node):
 
             out_scope(node)
 
-        self.extract_table(table_nodes)
+        self.generate_table(table_nodes)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def extract_table(self, nodes):
+    def generate_table(self, nodes):
         """
-        Extract the table data from a TextNode.
+        Generates the table node.
 
         :param list[sdoc.sdoc2.node.Node.Node] nodes: The list with nodes.
         """
-        table_data = TableNode.separate_text_nodes(nodes)
+        table_data = TableNode.divide_text_nodes(nodes)
 
-        splitted_data = TableNode.split_by_rows(table_data)
+        splitted_data = TableNode.split_by_new_lines(table_data)
 
-        rows = self.derive_table_data(splitted_data)
+        rows = self.generate_output_rows(splitted_data)
 
         if self.has_header(rows):
             self.column_headers = rows[0]
@@ -114,9 +114,9 @@ class TableNode(Node):
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def separate_text_nodes(nodes):
+    def divide_text_nodes(nodes):
         """
-        Separates text nodes from other type of nodes.
+        Divides text nodes from other type of nodes.
 
         :param: list[mixed] nodes: The list with nodes.
 
@@ -140,9 +140,9 @@ class TableNode(Node):
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def split_by_rows(table_data):
+    def split_by_new_lines(table_data):
         """
-        Splits data by rows.
+        Splits data by newline symbols.
 
         :param list[mixed] table_data:
 
@@ -151,30 +151,23 @@ class TableNode(Node):
         splitted_data = []
 
         for data in table_data:
-            if type(data) == str:
+            if isinstance(data, str):
                 splitted_data.append(data.split('\n'))
             else:
                 splitted_data.append(data)
 
         for data in splitted_data:
-            if type(data) == list:
+            if isinstance(data, list):
                 for element in data:
                     if element.isspace() or element == '':
-                        print('yeah!')
                         data.remove(element)
-
-        for data in splitted_data:
-            print(data)
-
-        print()
-        print()
 
         return splitted_data
 
     # ------------------------------------------------------------------------------------------------------------------
-    def derive_table_data(self, splitted_data):
+    def generate_output_rows(self, splitted_data):
         """
-        Generates table data.
+        Generates the rows for final representation.
 
         :param list[mixed] splitted_data: The splitted data.
 
@@ -188,7 +181,7 @@ class TableNode(Node):
             row = []
 
             for data in item:
-                if type(data) == str:
+                if isinstance(data, str):
                     string = io.StringIO(data)
                     self.parse_vertical_separators(string, row)
                 else:
@@ -208,40 +201,57 @@ class TableNode(Node):
 
         :rtype: list[list[mixed]]
         """
-        # for item in splitted_data:
-        #     print(item)
-        #
-        # print()
-        # print()
-
         rows = []
         row = []
 
         for item in splitted_data:
-            if type(item) == list:
-
+            # If we have a list we pass for each element.
+            # In list we have only text elements.
+            if isinstance(item, list):
                 for element in item:
+
+                    # If element starts with '|' we just add element to row.
                     if element.strip().startswith('|'):
                         row.append(element)
 
+                    # If element ends with '|' we add row to rows list, reset row to empty list
+                    # and append there current element. We do it because we know that if string ends with '|',
+                    # after it we have non-text element.
                     elif element.strip().endswith('|'):
-                        if row and type(row[-1]) != str:
-                            rows.append(row)
-                            row = []
+                        row = TableNode.reset_data(row, rows)
                         row.append(element)
 
+                    # If we have element which not starts and not ends in '|' we do this block.
                     else:
-                        if row and type(row[-1]) != str:
-                            rows.append(row)
-                            row = []
+                        # If last added element of row is not string we add row to rows list, reset row to empty.
+                        if row and not isinstance(row[-1], str):
+                            row = TableNode.reset_data(row, rows)
+                        # And just add full element with text like a row to list of rows.
                         rows.append([element])
+
+            # Do this block if element is not a list.
             else:
+                # If last added element not ends with '|' we add row to rows list, and reset row to empty list.
+                if row and not row[-1].strip().endswith('|'):
+                    row = TableNode.reset_data(row, rows)
+                # Add item to row.
                 row.append(item)
 
-        # print(rows)
-        # print()
-        # print()
         return rows
+
+    # ------------------------------------------------------------------------------------------------------------------
+    @staticmethod
+    def reset_data(row, rows):
+        """
+        Appends row with data to list of rows, and clear row from any elements.
+
+        Warning! This method changes original list 'rows'.
+
+        :param list[mixed] row: The row with elements
+        :param list[list[mixed]] rows: The list with many rows.
+        """
+        rows.append(row)
+        return []
 
     # ------------------------------------------------------------------------------------------------------------------
     def parse_vertical_separators(self, string, row):
@@ -261,20 +271,20 @@ class TableNode(Node):
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def has_header(row):
+    def has_header(rows):
         """
         Returns True if the table has a table header.
 
-        :param list[str] row: The second row of the table.
+        :param list[str] rows: The second row of the table.
 
         :rtype: bool
         """
         is_header = True
 
-        if len(row) == 1:
+        if len(rows) == 1:
             return False
 
-        for align in row[1]:
+        for align in rows[1]:
             header_part = re.findall(':?---+-*:?', align)
             if not header_part:
                 is_header = False
