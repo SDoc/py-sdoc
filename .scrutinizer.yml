@@ -7,10 +7,10 @@ before_commands:
 build:
     dependencies:
         before:
-            - pip install antlr4-python3-runtime
-            - pip install httplib2
-            - pip install cleo
-            - pip install coverage
+            - pip3 install antlr4-python3-runtime
+            - pip3 install httplib2
+            - pip3 install cleo
+            - pip3 install coverage
     tests:
         override:
             -
