@@ -9,6 +9,7 @@ Licence MIT
 from sdoc.helper.Html import Html
 from sdoc.sdoc2 import node_store
 from sdoc.sdoc2.formatter.html.HtmlFormatter import HtmlFormatter
+from sdoc.sdoc2.node.ReferenceNode import ReferenceNode
 
 
 class TableHtmlFormatter(HtmlFormatter):
@@ -96,14 +97,12 @@ class TableHtmlFormatter(HtmlFormatter):
         table_header = Html.generate_element('tr', {}, table_header, True)
 
         header_column_counter = 0
+
         for row in node.rows:
             for col in row:
                 align = TableHtmlFormatter.get_align(node.alignments, header_column_counter)
 
-                if align:
-                    columns += Html.generate_element('td', {'style': "text-align: {0}".format(align)}, col)
-                else:
-                    columns += Html.generate_element('td', {}, col)
+                columns += TableHtmlFormatter.generate_column(align, col)
 
                 header_column_counter += 1
             rows += Html.generate_element('tr', {}, columns, True)
@@ -111,6 +110,37 @@ class TableHtmlFormatter(HtmlFormatter):
             header_column_counter = 0
 
         return table_header + rows
+
+    # ------------------------------------------------------------------------------------------------------------------
+    @staticmethod
+    def generate_column(align, col):
+        """
+        Returns the 'column' with HTML data.
+
+        :param mixed col: The column in a table.
+
+        :rtype: str
+        """
+        if isinstance(col, str):
+            if align:
+                column = Html.generate_element('td', {'style': "text-align: {0}".format(align)}, col)
+            else:
+                column = Html.generate_element('td', {}, col)
+
+        else:
+            # Generates html in nested node ('col') with specified formatter.
+            formatter = node_store.get_formatter('html', col.get_command())
+            node_html = formatter.get_html(col)
+
+            if align:
+                column = Html.generate_element('td',
+                                               {'style': "text-align: {0}".format(align)},
+                                               node_html,
+                                               is_html=True)
+            else:
+                column = Html.generate_element('td', {}, node_html, is_html=True)
+
+        return column
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
