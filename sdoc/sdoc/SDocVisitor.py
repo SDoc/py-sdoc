@@ -14,12 +14,12 @@ class SDocVisitor:
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, styled_output):
+    def __init__(self, io):
         """
         Object constructor.
         """
 
-        self._styled_output = styled_output
+        self._io = io
         """
         Styled output formatter.
 
@@ -57,8 +57,6 @@ class SDocVisitor:
         line_number = token.line
         column_number = token.column + 1
         if token:
-            self._styled_output.writeln("<err>Error</err> at {0!s}:{1:d}.{2:d}:"
-                                        .format(filename, line_number, column_number))
-        self._styled_output.writeln(message)
+            self._io.error('Error at {0!s}:{1:d}.{2:d}:'.format(filename, line_number, column_number))
 
 # ----------------------------------------------------------------------------------------------------------------------

@@ -30,12 +30,12 @@ class NodeStore:
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, styled_output):
+    def __init__(self, io):
         """
         Object constructor.
         """
 
-        self._styled_output = styled_output
+        self._io = io
         """
         Styled output formatter.
 
@@ -333,7 +333,7 @@ class NodeStore:
 
         if node_hierarchy_level - parent_hierarchy_level > 1:
             # @todo position
-            self._styled_output.writeln(("<warn>Warning</warn> improper nesting of levels:"
+            self._io.writeln(("<warn>Warning</warn> improper nesting of levels:"
                                          "{0:d} at {1!s} and {2:d} at {3!s}.")
                                         .format(parent_hierarchy_level, parent_node.position,
                                                 node_hierarchy_level, node.position))

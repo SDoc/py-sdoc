@@ -6,18 +6,16 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-from cleo import Command
-
 from sdoc.SDoc import SDoc
+from sdoc.command.BaseCommand import BaseCommand
 from sdoc.style.SdocStyle import SdocStyle
 
 
-class GenerateCommand(Command):
+class SDocCommand(BaseCommand):
     """
     Generates the target document(s)
     """
-
-    name = 'generate'
+    name = 'sdoc'
 
     arguments = [
         {
@@ -37,13 +35,12 @@ class GenerateCommand(Command):
         """
         Reads the arguments and starts SDoc application.
         """
-        self.output = SdocStyle(self.input, self.output)
+        self._io = SdocStyle(self.input, self.output)
 
-        config_filename = self.argument('config.cfg')
-        main_sdoc_file = self.argument('main.sdoc')
+        sdoc = SDoc()
+        sdoc.io = self._io
+        sdoc.config_path = self.argument('config.cfg')
 
-        sdoc = SDoc(self.output)
-        sdoc.set_arguments(config_filename, main_sdoc_file)
-        sdoc.main()
+        return sdoc.run_sdoc(self.argument('main.sdoc'))
 
 # ----------------------------------------------------------------------------------------------------------------------

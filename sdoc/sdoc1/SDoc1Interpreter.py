@@ -21,12 +21,12 @@ class SDoc1Interpreter:
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, styled_output):
+    def __init__(self, io):
         """
         Object constructor.
         """
 
-        self._styled_output = styled_output
+        self._io = io
         """
         Styled output formatter.
 
@@ -49,7 +49,7 @@ class SDoc1Interpreter:
             parser = sdoc1Parser(tokens)
             tree = parser.sdoc()
 
-            visitor = SDoc1Visitor(self._styled_output, root_dir=os.path.dirname(os.path.realpath(infile)))
+            visitor = SDoc1Visitor(self._io, root_dir=os.path.dirname(os.path.realpath(infile)))
 
             visitor.output = out_stream
             visitor.visit(tree)

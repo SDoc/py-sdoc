@@ -6,17 +6,15 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-from cleo import Command
-
 from sdoc.SDoc import SDoc
+from sdoc.command.BaseCommand import BaseCommand
 from sdoc.style.SdocStyle import SdocStyle
 
 
-class SDoc1Command(Command):
+class SDoc1Command(BaseCommand):
     """
     Parses a SDoc1 document and generates a SDoc2 document
     """
-
     name = 'sdoc1'
 
     arguments = [
@@ -37,12 +35,11 @@ class SDoc1Command(Command):
         """
         Reads the arguments and starts SDoc1 application.
         """
-        main_sdoc_file = self.argument('main.sdoc')
-        output_file = self.argument('output.sdoc2')
-        self.output = SdocStyle(self.input, self.output)
+        self._io = SdocStyle(self.input, self.output)
 
+        sdoc = SDoc()
+        sdoc.io = self._io
 
-        sdoc = SDoc(self.output)
-        sdoc.test_sdoc1(main_sdoc_file, output_file)
+        return sdoc.run_sdoc1(self.argument('main.sdoc'), self.argument('output.sdoc2'))
 
 # ----------------------------------------------------------------------------------------------------------------------

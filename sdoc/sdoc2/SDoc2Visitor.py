@@ -20,13 +20,16 @@ class SDoc2Visitor(sdoc2ParserVisitor, SDocVisitor):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, styled_output):
+    def __init__(self, sdoc1_path, io):
         """
         Object constructor.
-        """
-        SDocVisitor.__init__(self, styled_output)
 
-        self._styled_output = styled_output
+        :param str sdoc1_path: The the path to the original SDoc1 document.
+        :param cleo.styles.output_style.OutputStyle io: The IO object.
+        """
+        SDocVisitor.__init__(self, io)
+
+        self._io = io
         """
         Styled output formatter.
 
@@ -38,7 +41,7 @@ class SDoc2Visitor(sdoc2ParserVisitor, SDocVisitor):
         Object for streaming the generated output. This object MUST implement the write method.
         """
 
-        self._sdoc1_file_name = ''
+        self._sdoc1_file_name = sdoc1_path
         """
         The original file name at SDoc1 level.
 

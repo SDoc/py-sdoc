@@ -6,13 +6,16 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-import glob
-import os
 import ast
 import csv
+import glob
+import os
 import unittest
 
-from sdoc.SDoc import SDoc
+from cleo import Application, CommandTester
+
+from sdoc import sdoc2
+from sdoc.command.SDoc2Command import SDoc2Command
 from sdoc.sdoc2 import in_scope
 
 
@@ -64,22 +67,29 @@ class SDoc2EnumerationTest(unittest.TestCase):
         Runs all test cases in the test/enumeration directory.
         """
         test_file_names = glob.glob(os.path.dirname(os.path.abspath(__file__)) + "/enumeration/*.sdoc")
+        config_path = glob.glob(os.path.dirname(os.path.abspath(__file__)) + "/enumeration/sdoc.cfg")
 
         for test_file_name in sorted(test_file_names):
             with self.subTest(test_file_name=test_file_name):
                 pre, ext = os.path.splitext(test_file_name)
                 csv_file_name = pre + '.csv'
 
-                sdoc = SDoc()
-                sdoc.test_sdoc2(test_file_name)
+                application = Application()
+                application.add(SDoc2Command())
+
+                command = application.find('sdoc2')
+                command_tester = CommandTester(command)
+                command_tester.execute([('command', command.get_name()),
+                                        ('config.cfg', config_path),
+                                        ('main.sdoc2', test_file_name)])
 
                 root = in_scope(1)
+                sdoc2.node_store.number_numerable()
                 numbers = root.get_enumerated_items()
 
                 actual = self.create_list_of_items(numbers)
                 expected = self.csv_to_tuple(csv_file_name)
 
                 self.assertEqual(actual, expected)
-
 
 # ----------------------------------------------------------------------------------------------------------------------

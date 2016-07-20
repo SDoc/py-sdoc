@@ -10,7 +10,9 @@ import glob
 import os
 import unittest
 
-from sdoc.SDoc import SDoc
+from cleo import Application, CommandTester
+
+from sdoc.command.SDoc1Command import SDoc1Command
 
 
 class SDoc1ExpressionTest(unittest.TestCase):
@@ -32,10 +34,15 @@ class SDoc1ExpressionTest(unittest.TestCase):
                 with open(text_file_name, 'r') as file:
                     text = file.read()
 
-                sdoc = SDoc()
-                (stdout, sdoc2) = sdoc.test_sdoc1(test_file_name, test_file_name)
+                application = Application()
+                application.add(SDoc1Command())
 
-                self.assertEqual(stdout, text)
+                command = application.find('sdoc1')
+                command_tester = CommandTester(command)
+                command_tester.execute([('command', command.get_name()),
+                                        ('main.sdoc', test_file_name),
+                                        ('output.sdoc2', 't.sdoc2')])
 
+                self.assertEqual(command_tester.get_display().rstrip(), text.rstrip())
 
 # ----------------------------------------------------------------------------------------------------------------------
