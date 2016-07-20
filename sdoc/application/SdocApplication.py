@@ -21,6 +21,11 @@ class SDoc(Application):
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_default_commands(self):
+        """
+        Returns the default commands of this application.
+
+        :rtype: list[cleo.Command]
+        """
         commands = Application.get_default_commands(self)
 
         self.add(GenerateCommand())
