@@ -20,11 +20,18 @@ class SDoc2Visitor(sdoc2ParserVisitor, SDocVisitor):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self):
+    def __init__(self, styled_output):
         """
         Object constructor.
         """
-        SDocVisitor.__init__(self)
+        SDocVisitor.__init__(self, styled_output)
+
+        self._styled_output = styled_output
+        """
+        Styled output formatter.
+
+        :type: sdoc.style.SdocStyle.SdocStyle
+        """
 
         self._output = None
         """

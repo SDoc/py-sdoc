@@ -21,8 +21,20 @@ class SDoc1Interpreter:
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    @staticmethod
-    def process(infile, outfile):
+    def __init__(self, styled_output):
+        """
+        Object constructor.
+        """
+
+        self._styled_output = styled_output
+        """
+        Styled output formatter.
+
+        :type: sdoc.style.SdocStyle.SdocStyle
+        """
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def process(self, infile, outfile):
         """
         Processes a SDoc1 document.
 
@@ -37,7 +49,7 @@ class SDoc1Interpreter:
             parser = sdoc1Parser(tokens)
             tree = parser.sdoc()
 
-            visitor = SDoc1Visitor(root_dir=os.path.dirname(os.path.realpath(infile)))
+            visitor = SDoc1Visitor(self._styled_output, root_dir=os.path.dirname(os.path.realpath(infile)))
 
             visitor.output = out_stream
             visitor.visit(tree)

@@ -51,7 +51,7 @@ setup(
 
     packages=find_packages(exclude=['build', 'test']),
 
-    install_requires=['antlr4-python3-runtime', 'httplib2'],
+    install_requires=['antlr4-python3-runtime', 'httplib2', 'cleo==0.4.1'],
 
     entry_points={
         'console_scripts': [

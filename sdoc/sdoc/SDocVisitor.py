@@ -14,10 +14,18 @@ class SDocVisitor:
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self):
+    def __init__(self, styled_output):
         """
         Object constructor.
         """
+
+        self._styled_output = styled_output
+        """
+        Styled output formatter.
+
+        :type: sdoc.style.SdocStyle.SdocStyle
+        """
+
         self._errors = 0
         """
         The error count.
@@ -49,7 +57,8 @@ class SDocVisitor:
         line_number = token.line
         column_number = token.column + 1
         if token:
-            print("Error at {0!s}:{1:d}.{2:d}:".format(filename, line_number, column_number))
-        print(message)
+            self._styled_output.writeln("<err>Error</err> at {0!s}:{1:d}.{2:d}:"
+                                        .format(filename, line_number, column_number))
+        self._styled_output.writeln(message)
 
 # ----------------------------------------------------------------------------------------------------------------------

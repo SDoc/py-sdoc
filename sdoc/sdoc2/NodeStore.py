@@ -30,9 +30,16 @@ class NodeStore:
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self):
+    def __init__(self, styled_output):
         """
         Object constructor.
+        """
+
+        self._styled_output = styled_output
+        """
+        Styled output formatter.
+
+        :type: sdoc.style.SdocStyle.SdocStyle
         """
 
         self.format = 'html'
@@ -76,6 +83,18 @@ class NodeStore:
 
         :type: dict[str,str]
         """
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def get_formatter(self, output_type, name_formatter):
+        """
+        Returns the formatter for special type.
+
+        :param str output_type: The type of output formatter (e.g. 'html')
+        :param str name_formatter: The name of formatter (e.g. 'smile')
+
+        :rtype: sdoc.sdoc2.formatter.Formatter.Formatter
+        """
+        return self._formatters[output_type][name_formatter]
 
     # ------------------------------------------------------------------------------------------------------------------
     def end_block_node(self, command):
@@ -314,8 +333,10 @@ class NodeStore:
 
         if node_hierarchy_level - parent_hierarchy_level > 1:
             # @todo position
-            print("Warning improper nesting of levels: {0:d} at {1!s} and {2:d} at {3!s}."
-                  .format(parent_hierarchy_level, parent_node.position, node_hierarchy_level, node.position))
+            self._styled_output.writeln(("<warn>Warning</warn> improper nesting of levels:"
+                                         "{0:d} at {1!s} and {2:d} at {3!s}.")
+                                        .format(parent_hierarchy_level, parent_node.position,
+                                                node_hierarchy_level, node.position))
 
     # ------------------------------------------------------------------------------------------------------------------
     def store_node(self, node):
