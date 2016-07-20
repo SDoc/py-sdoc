@@ -9,25 +9,19 @@ Licence MIT
 from cleo import Command
 
 from sdoc.SDoc import SDoc
-from sdoc.style.SdocStyle import SdocStyle
 
 
-class GenerateCommand(Command):
+class SDoc2Command(Command):
     """
-    Generates the target document(s)
+    Parses a SDoc2 document
     """
 
-    name = 'generate'
+    name = 'sdoc2'
 
     arguments = [
         {
-            'name':        'config.cfg',
-            'description': 'The name of the config file',
-            'required':    True
-        },
-        {
-            'name':        'main.sdoc',
-            'description': "The SDoc file",
+            'name':        'main.sdoc2',
+            'description': 'The SDoc2 document to parse',
             'required':    True
         }
     ]
@@ -37,13 +31,9 @@ class GenerateCommand(Command):
         """
         Reads the arguments and starts SDoc application.
         """
-        self.output = SdocStyle(self.input, self.output)
-
-        config_filename = self.argument('config.cfg')
-        main_sdoc_file = self.argument('main.sdoc')
+        main_sdoc_file = self.argument('main.sdoc2')
 
         sdoc = SDoc()
-        sdoc.set_arguments(config_filename, main_sdoc_file)
-        sdoc.main()
+        sdoc.test_sdoc2(main_sdoc_file)
 
 # ----------------------------------------------------------------------------------------------------------------------

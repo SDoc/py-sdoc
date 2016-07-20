@@ -274,11 +274,12 @@ class SDoc:
         sdoc2.node_store.generate(self._formatter)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def test_sdoc1(self, main_filename):
+    def test_sdoc1(self, main_filename, output_filename):
         """
         Parses a SDoc document and returns a tuple with the stdout and the resulting SDoc2 document.
 
         :param str main_filename: The name of the file with then main SDoc1 document.
+        :param str output_filename: The name of the file which will be outputted.
 
         :rtype: (str,str)
         """
@@ -288,7 +289,7 @@ class SDoc:
 
         old_stdout, sys.stdout = sys.stdout, StringIO()
 
-        temp_filename = main_filename + '.sdoc2'
+        temp_filename = output_filename + '.sdoc2'
         interpreter1 = SDoc1Interpreter()
         interpreter1.process(main_filename, temp_filename)
 
@@ -353,7 +354,7 @@ class SDoc:
 
         if self._errors:
             print()
-            print('The were {0:d} errors in total'.format(self._errors))
+            print('There were {0:d} errors in total'.format(self._errors))
 
         exit(self._errors)
 

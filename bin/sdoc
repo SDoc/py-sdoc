@@ -8,4 +8,4 @@ sys.path.insert(0, os.path.realpath(os.path.dirname(os.path.realpath(__file__)) 
 from sdoc.application.SdocApplication import SDoc
 
 sdoc_application = SDoc()
-sdoc_application.start_app()
+sdoc_application.run()

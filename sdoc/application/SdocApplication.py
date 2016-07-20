@@ -7,7 +7,10 @@ Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
 from cleo import Application
+
 from sdoc.command.GenerateCommand import GenerateCommand
+from sdoc.command.SDoc1Command import SDoc1Command
+from sdoc.command.SDoc2Command import SDoc2Command
 
 
 # ----------------------------------------------------------------------------------------------------------------------
@@ -17,8 +20,13 @@ class SDoc(Application):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def start_app(self):
+    def get_default_commands(self):
+        commands = Application.get_default_commands(self)
+
         self.add(GenerateCommand())
-        self.run()
+        self.add(SDoc1Command())
+        self.add(SDoc2Command())
+
+        return commands
 
 # ----------------------------------------------------------------------------------------------------------------------
