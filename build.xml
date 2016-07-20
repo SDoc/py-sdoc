@@ -58,6 +58,17 @@
                 </replaceregexp>
             </filterchain>
         </reflexive>
+        <reflexive>
+            <fileset dir=".">
+                <include name="sdoc/application/SdocApplication.py"/>
+            </fileset>
+            <filterchain>
+                <replaceregexp>
+                    <regexp pattern="Application.__init__\(self, 'SDoc', .*"
+                            replace="Application.__init__(self, 'SDoc', '${VERSION}')"/>
+                </replaceregexp>
+            </filterchain>
+        </reflexive>
         <gitcommit repository="." message="Release: ${VERSION}" allFiles="true"/>
         <gitpush repository="."/>
         <gittag repository="." name="${VERSION}"/>

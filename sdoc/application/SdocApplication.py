@@ -20,6 +20,13 @@ class SDoc(Application):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
+    def __init__(self):
+        """
+        Object constructor.
+        """
+        Application.__init__(self, 'SDoc', '0.0.7-dev')
+
+    # ------------------------------------------------------------------------------------------------------------------
     def get_default_commands(self):
         """
         Returns the default commands of this application.
