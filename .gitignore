@@ -1,8 +1,9 @@
 **/__pycache__
-.idea/
-SDoc.egg-info/
-bin/phing
-dist/
-doc/
-vendor/
-composer.lock
+/.idea/
+/SDoc.egg-info/
+/bin/phing
+/composer.lock
+/dist/
+/doc/
+/test/html/
+/vendor/
