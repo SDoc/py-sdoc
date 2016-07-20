@@ -4,6 +4,7 @@ build:
             - pip install antlr4-python3-runtime
             - pip install httplib2
             - pip install cleo
+            - pip install coverage
     tests:
         override:
             -
