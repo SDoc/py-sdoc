@@ -13,21 +13,21 @@ from sdoc.SDoc import SDoc
 
 class SDoc1Command(Command):
     """
-    This command starts executing sdoc1 component.
+    Parses a SDoc1 document and generates a SDoc2 document
     """
 
     name = 'sdoc1'
 
     arguments = [
         {
-            'name': 'main_sdoc_file',
-            'description': "The 'sdoc' file which we want to parse",
-            'required': True
+            'name':        'main.sdoc',
+            'description': 'The SDoc1 document to parse',
+            'required':    True
         },
         {
-            'name': 'output_file',
-            'description': "The file in which we want to output generated file",
-            'required': True
+            'name':        'output.sdoc2',
+            'description': 'The generated SDoc document',
+            'required':    True
         }
     ]
 
@@ -36,8 +36,8 @@ class SDoc1Command(Command):
         """
         Reads the arguments and starts SDoc1 application.
         """
-        main_sdoc_file = self.argument('main_sdoc_file')
-        output_file = self.argument('output_file')
+        main_sdoc_file = self.argument('main.sdoc')
+        output_file = self.argument('output.sdoc2')
 
         sdoc = SDoc()
         sdoc.test_sdoc1(main_sdoc_file, output_file)

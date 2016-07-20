@@ -14,21 +14,21 @@ from sdoc.style.SdocStyle import SdocStyle
 
 class GenerateCommand(Command):
     """
-    'This command starts executing SDoc app and generating output file(s).'
+    Generates the target document(s)
     """
 
     name = 'generate'
 
     arguments = [
         {
-            'name': 'config_file',
-            'description': 'The name of a config file which you want to use (e.g. config.cfg)',
-            'required': True
+            'name':        'config.cfg',
+            'description': 'The name of the config file',
+            'required':    True
         },
         {
-            'name': 'main_sdoc_file',
-            'description': "The SDoc file which we want to parse",
-            'required': True
+            'name':        'main.sdoc',
+            'description': "The SDoc file",
+            'required':    True
         }
     ]
 
@@ -39,8 +39,8 @@ class GenerateCommand(Command):
         """
         self.output = SdocStyle(self.input, self.output)
 
-        config_filename = self.argument('config_file')
-        main_sdoc_file = self.argument('main_sdoc_file')
+        config_filename = self.argument('config.cfg')
+        main_sdoc_file = self.argument('main.sdoc')
 
         sdoc = SDoc()
         sdoc.set_arguments(config_filename, main_sdoc_file)

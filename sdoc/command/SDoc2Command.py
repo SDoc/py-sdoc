@@ -13,16 +13,16 @@ from sdoc.SDoc import SDoc
 
 class SDoc2Command(Command):
     """
-    This command starts executing sdoc2 component.
+    Parses a SDoc2 document
     """
 
     name = 'sdoc2'
 
     arguments = [
         {
-            'name': 'main_sdoc_file',
-            'description': "The 'sdoc' file which we want to parse",
-            'required': True
+            'name':        'main.sdoc2',
+            'description': 'The SDoc2 document to parse',
+            'required':    True
         }
     ]
 
@@ -31,7 +31,7 @@ class SDoc2Command(Command):
         """
         Reads the arguments and starts SDoc application.
         """
-        main_sdoc_file = self.argument('main_sdoc_file')
+        main_sdoc_file = self.argument('main.sdoc2')
 
         sdoc = SDoc()
         sdoc.test_sdoc2(main_sdoc_file)

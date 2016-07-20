@@ -7,9 +7,10 @@ Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
 from cleo import Application
+
+from sdoc.command.GenerateCommand import GenerateCommand
 from sdoc.command.SDoc1Command import SDoc1Command
 from sdoc.command.SDoc2Command import SDoc2Command
-from sdoc.command.GenerateCommand import GenerateCommand
 
 
 # ----------------------------------------------------------------------------------------------------------------------
