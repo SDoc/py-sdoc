@@ -20,11 +20,17 @@ class SDoc2Interpreter:
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self):
+    def __init__(self, styled_output):
         """
         Object constructor.
         """
-        pass
+
+        self._styled_output = styled_output
+        """
+        Styled output formatter.
+
+        :type: sdoc.style.SdocStyle.SdocStyle
+        """
 
     # ------------------------------------------------------------------------------------------------------------------
     def process(self, infile):
@@ -39,7 +45,7 @@ class SDoc2Interpreter:
         tokens = antlr4.CommonTokenStream(lexer)
         parser = sdoc2Parser(tokens)
         tree = parser.sdoc()
-        visitor = SDoc2Visitor()
+        visitor = SDoc2Visitor(self._styled_output)
 
         visitor.visit(tree)
 

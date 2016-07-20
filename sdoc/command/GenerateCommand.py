@@ -42,7 +42,7 @@ class GenerateCommand(Command):
         config_filename = self.argument('config.cfg')
         main_sdoc_file = self.argument('main.sdoc')
 
-        sdoc = SDoc()
+        sdoc = SDoc(self.output)
         sdoc.set_arguments(config_filename, main_sdoc_file)
         sdoc.main()
 
