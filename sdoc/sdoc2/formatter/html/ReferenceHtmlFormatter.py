@@ -50,12 +50,23 @@ class ReferenceHtmlFormatter(HtmlFormatter):
         :param sdoc.sdoc2.node.ReferenceNode.ReferenceNode node: The reference node.
         :param file file: The output file.
         """
+        file.write(ReferenceHtmlFormatter.get_html(node))
+
+    # ------------------------------------------------------------------------------------------------------------------
+    @staticmethod
+    def get_html(node):
+        """
+        Returns string with generated HTML tag.
+
+        :param sdoc.sdoc2.node.ReferenceNode.ReferenceNode node: The reference node.
+
+        :rtype: str
+        """
         attributes = {'class': node.get_option_value('class'),
                       'href': node.get_option_value('href'),
                       'title': node.get_option_value('title')}
 
-        file.write(Html.generate_element('a', attributes, node.argument))
-
+        return Html.generate_element('a', attributes, node.argument)
 
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_formatter('ref', 'html', ReferenceHtmlFormatter)
