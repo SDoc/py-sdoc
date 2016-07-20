@@ -30,9 +30,16 @@ class NodeStore:
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self):
+    def __init__(self, styled_output):
         """
         Object constructor.
+        """
+
+        self._styled_output = styled_output
+        """
+        Styled output formatter.
+
+        :type: sdoc.style.SdocStyle.SdocStyle
         """
 
         self.format = 'html'
@@ -326,8 +333,10 @@ class NodeStore:
 
         if node_hierarchy_level - parent_hierarchy_level > 1:
             # @todo position
-            print("Warning improper nesting of levels: {0:d} at {1!s} and {2:d} at {3!s}."
-                  .format(parent_hierarchy_level, parent_node.position, node_hierarchy_level, node.position))
+            self._styled_output.writeln(("<warn>Warning</warn> improper nesting of levels:"
+                                         "{0:d} at {1!s} and {2:d} at {3!s}.")
+                                        .format(parent_hierarchy_level, parent_node.position,
+                                                node_hierarchy_level, node.position))
 
     # ------------------------------------------------------------------------------------------------------------------
     def store_node(self, node):
