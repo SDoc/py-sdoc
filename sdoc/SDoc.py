@@ -180,7 +180,7 @@ class SDoc:
                             .format(class_name, self._config_path))
 
         # Create the formatter.
-        self._formatter = m(config[section])
+        self._formatter = m(self._io, config[section])
 
     # ------------------------------------------------------------------------------------------------------------------
     def _config_set_temp_dir(self, config):
@@ -286,6 +286,8 @@ class SDoc:
         :param str sdoc1_path: The path of the SDoc1 document.
         :param str sdoc2_path: The path were the the SDoc2 document mut be stored.
         """
+        self._io.title('SDoc1')
+
         interpreter1 = SDoc1Interpreter(self._io)
         self._errors += interpreter1.process(sdoc1_path, sdoc2_path)
 
@@ -298,6 +300,9 @@ class SDoc:
 
         :param str sdoc2_path: The path of the SDoc2 document.
         """
+        self._io.writeln('')
+        self._io.title('SDoc2')
+
         interpreter2 = SDoc2Interpreter(self._io)
         self._errors += interpreter2.process(sdoc2_path)
 
@@ -317,6 +322,8 @@ class SDoc:
         self.run_sdoc2(temp_filename)
 
         # Start generating file with specific format.
+        self._io.writeln('')
+        self._io.title('Formatter')
         sdoc2.node_store.generate(self._formatter)
 
         if self._errors:

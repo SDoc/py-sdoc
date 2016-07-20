@@ -15,13 +15,19 @@ class Format:
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, config):
+    def __init__(self, io, config):
         """
         Object constructor.
 
+        :param cleo.styles.output_style.OutputStyle io: The IO object.
         :param configparser.SectionProxy config: The section in the config file for the target_format.
         """
-        pass
+        self._io = io
+        """
+        The IO object.
+
+        :type cleo.styles.output_style.OutputStyle:
+        """
 
     # ------------------------------------------------------------------------------------------------------------------
     @abc.abstractmethod

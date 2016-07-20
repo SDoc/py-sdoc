@@ -90,6 +90,6 @@ class SDoc2EnumerationTest(unittest.TestCase):
                 actual = self.create_list_of_items(numbers)
                 expected = self.csv_to_tuple(csv_file_name)
 
-                self.assertEqual(actual, expected)
+                self.assertEqual(expected, actual)
 
 # ----------------------------------------------------------------------------------------------------------------------

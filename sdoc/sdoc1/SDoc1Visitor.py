@@ -426,7 +426,7 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         if not os.path.isabs(file_name):
             file_name = os.path.join(self._root_dir, file_name + '.sdoc')
         real_path = os.path.relpath(file_name)
-        self._io.writeln("<fso>Including</fso> {0!s}".format(real_path))
+        self._io.writeln("Including <fso>{0!s}</fso>".format(real_path))
         try:
             stream = antlr4.FileStream(file_name, 'utf-8')
 
@@ -469,8 +469,7 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         line_number = token.line
         message = SDoc.unescape(ctx.SIMPLE_ARG().getText())
 
-        self._io.writeln('<fso>Notice:</fso> {0!s} at {1!s}:{2:d}'
-                                    .format(message, os.path.relpath(filename), line_number))
+        self._io.writeln('<notice>Notice: {0!s} at {1!s}:{2:d}'.format(message, os.path.relpath(filename), line_number))
 
         self.put_position(ctx, 'stop')
 

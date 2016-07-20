@@ -279,10 +279,11 @@ class NodeStore:
         return node
 
     # ------------------------------------------------------------------------------------------------------------------
-    def create_formatter(self, command, parent=None):
+    def create_formatter(self, io, command, parent=None):
         """
         Creates a formatter for generating the output of nodes in the requested output format.
 
+        :param cleo.styles.output_style.OutputStyle io: The IO object.
         :param str command: The inline of block command.
         :param sdoc.sdoc2.formatter.Formatter.Formatter parent: The parent formatter.
 
@@ -296,7 +297,7 @@ class NodeStore:
             raise RuntimeError("Unknown formatter '{0!s}' for format '{1!s}'.".format(command, self.format))
 
         constructor = self._formatters[self.format][command]
-        formatter = constructor(parent)
+        formatter = constructor(io, parent)
 
         return formatter
 

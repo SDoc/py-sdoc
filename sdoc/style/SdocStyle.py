@@ -29,4 +29,8 @@ class SdocStyle(CleoStyle):
         style = OutputFormatterStyle('yellow', None, ['bold'])
         output.get_formatter().set_style('warn', style)
 
+        # Style for SDoc1 notices.
+        style = OutputFormatterStyle('yellow')
+        output.get_formatter().set_style('notice', style)
+
 # ----------------------------------------------------------------------------------------------------------------------

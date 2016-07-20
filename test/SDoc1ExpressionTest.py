@@ -43,6 +43,6 @@ class SDoc1ExpressionTest(unittest.TestCase):
                                         ('main.sdoc', test_file_name),
                                         ('output.sdoc2', 't.sdoc2')])
 
-                self.assertEqual(command_tester.get_display().rstrip(), text.rstrip())
+                self.assertTrue(command_tester.get_display().rstrip().endswith(text.strip()))
 
 # ----------------------------------------------------------------------------------------------------------------------
