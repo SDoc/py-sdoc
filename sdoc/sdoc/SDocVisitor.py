@@ -56,7 +56,11 @@ class SDocVisitor:
         filename = token.getInputStream().fileName  # Replace fileName with get_source_name() when implemented in ANTLR.
         line_number = token.line
         column_number = token.column + 1
+        messages = []
         if token:
-            self._io.error('Error at {0!s}:{1:d}.{2:d}:'.format(filename, line_number, column_number))
+            messages.append('Error at {0!s}:{1:d}.{2:d}'.format(filename, line_number, column_number))
+        messages.append(message)
+        self._io.error(messages)
+
 
 # ----------------------------------------------------------------------------------------------------------------------
