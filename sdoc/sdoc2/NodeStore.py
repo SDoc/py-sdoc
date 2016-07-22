@@ -30,12 +30,12 @@ class NodeStore:
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, styled_output):
+    def __init__(self, io):
         """
         Object constructor.
         """
 
-        self._styled_output = styled_output
+        self._io = io
         """
         Styled output formatter.
 
@@ -279,10 +279,11 @@ class NodeStore:
         return node
 
     # ------------------------------------------------------------------------------------------------------------------
-    def create_formatter(self, command, parent=None):
+    def create_formatter(self, io, command, parent=None):
         """
         Creates a formatter for generating the output of nodes in the requested output format.
 
+        :param cleo.styles.output_style.OutputStyle io: The IO object.
         :param str command: The inline of block command.
         :param sdoc.sdoc2.formatter.Formatter.Formatter parent: The parent formatter.
 
@@ -296,7 +297,7 @@ class NodeStore:
             raise RuntimeError("Unknown formatter '{0!s}' for format '{1!s}'.".format(command, self.format))
 
         constructor = self._formatters[self.format][command]
-        formatter = constructor(parent)
+        formatter = constructor(io, parent)
 
         return formatter
 
@@ -333,7 +334,7 @@ class NodeStore:
 
         if node_hierarchy_level - parent_hierarchy_level > 1:
             # @todo position
-            self._styled_output.writeln(("<warn>Warning</warn> improper nesting of levels:"
+            self._io.writeln(("<warn>Warning</warn> improper nesting of levels:"
                                          "{0:d} at {1!s} and {2:d} at {3!s}.")
                                         .format(parent_hierarchy_level, parent_node.position,
                                                 node_hierarchy_level, node.position))

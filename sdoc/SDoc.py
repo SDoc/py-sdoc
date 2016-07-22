@@ -9,9 +9,6 @@ Licence MIT
 import configparser
 import os
 
-import sys
-from io import StringIO
-
 from sdoc import sdoc2
 from sdoc.error import SDocError
 from sdoc.sdoc1.SDoc1Interpreter import SDoc1Interpreter
@@ -23,25 +20,16 @@ class SDoc:
     """
     The SDoc program.
     """
-
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, styled_output):
+    def __init__(self):
         """
         Object contructor.
         """
-
-        self._styled_output = styled_output
+        self._io = None
         """
-        Styled output formatter.
+        The IO object.
 
-        :type: sdoc.style.SdocStyle.SdocStyle
-        """
-
-        self._args = None
-        """
-        The parsed arguments of this program.
-
-        :type: Namespace
+        :type: None|sdoc.style.SdocStyle.SdocStyle
         """
 
         self._formatter = None
@@ -61,6 +49,13 @@ class SDoc:
         self._temp_dir = '.'
         """
         The directory where temporary files are stored.
+
+        :type: str
+        """
+
+        self._config_path = ''
+        """
+        The path of the config file.
 
         :type: str
         """
@@ -88,6 +83,46 @@ class SDoc:
 
     # ------------------------------------------------------------------------------------------------------------------
     @property
+    def io(self):
+        """
+        Getter for io.
+
+        :rtype: cleo.styles.output_style.OutputStyle
+        """
+        return self._io
+
+    # ------------------------------------------------------------------------------------------------------------------
+    @io.setter
+    def io(self, io):
+        """
+        Setter for io.
+
+        :param cleo.styles.output_style.OutputStyle io: The IO object.
+        """
+        self._io = io
+
+    # ------------------------------------------------------------------------------------------------------------------
+    @property
+    def config_path(self):
+        """
+        Getter for config_path.
+
+        :rtype: str
+        """
+        return self._config_path
+
+    # ------------------------------------------------------------------------------------------------------------------
+    @config_path.setter
+    def config_path(self, config_path):
+        """
+        Setter for config_path.
+
+        :param cleo.styles.output_style.OutputStyle config_path: The path of the config file.
+        """
+        self._config_path = config_path
+
+    # ------------------------------------------------------------------------------------------------------------------
+    @property
     def target_dir(self):
         """
         Getter for target_dir.
@@ -107,14 +142,6 @@ class SDoc:
         return self.temp_dir
 
     # ------------------------------------------------------------------------------------------------------------------
-    def set_arguments(self, config_filename, main_file):
-        """
-        Sets the arguments for SDoc program.
-        """
-        self._args = {'config_filename': config_filename,
-                      'main': main_file}
-
-    # ------------------------------------------------------------------------------------------------------------------
     def _config_create_formatter(self, config):
         """
         Creates the formatter for generating the document in the target format.
@@ -127,18 +154,18 @@ class SDoc:
         target_format = config.get('sdoc', 'format', fallback=None)
         if target_format not in available_formats:
             raise SDocError("The format '{0!s}' is not available in SDoc. Set another in config file '{1!s}'"
-                            .format(target_format, self._args['config_filename']))
+                            .format(target_format, self._config_path))
 
         if not target_format:
             raise SDocError("Option 'format' in section 'sdoc' not set in config file '{0!s}'"
-                            .format(self._args['config_filename']))
+                            .format(self._config_path))
 
         # Read the class name for formatting the SDoc2 nodes into the target format.
         section = 'format_' + target_format
         class_name = config.get(section, 'class', fallback=None)
         if not class_name:
             raise SDocError("Option 'class' in section '{0!s}' not set in config file '{1!s}'".
-                            format(section, self._args['config_filename']))
+                            format(section, self._config_path))
 
         # Import the class.
         try:
@@ -150,10 +177,10 @@ class SDoc:
                 m = getattr(m, comp)
         except AttributeError:
             raise SDocError("There is no module named '{0!s}'! Set name correctly in config file '{1!s}'"
-                            .format(class_name, self._args['config_filename']))
+                            .format(class_name, self._config_path))
 
         # Create the formatter.
-        self._formatter = m(config[section])
+        self._formatter = m(self._io, config[section])
 
     # ------------------------------------------------------------------------------------------------------------------
     def _config_set_temp_dir(self, config):
@@ -166,7 +193,7 @@ class SDoc:
 
         if not self._temp_dir:
             raise SDocError("Option 'temp_dir' in section 'sdoc' not set correctly in config file '{0!s}'".
-                            format(self._args['config_filename']))
+                            format(self._config_path))
 
         if not os.access(self._temp_dir, os.W_OK):
             raise SDocError("Directory '{0!s}' is not writable".format(self._temp_dir))
@@ -182,7 +209,7 @@ class SDoc:
 
         if not self._target_dir:
             raise SDocError("Option 'target_dir' in section 'sdoc' not set correctly in config file '{0!s}'".
-                            format(self._args['config_filename']))
+                            format(self._config_path))
 
         if not os.access(self._target_dir, os.W_OK):
             raise SDocError("Directory '{0!s}' is not writable".format(self._target_dir))
@@ -193,7 +220,7 @@ class SDoc:
         Reads the configuration file.
         """
         config = configparser.ConfigParser()
-        config.read(self._args['config_filename'])
+        config.read(self._config_path)
 
         # Get the temp and target directory.
         self._config_set_temp_dir(config)
@@ -210,7 +237,7 @@ class SDoc:
         """
         Creates the node store (for storing nodes).
         """
-        sdoc2.node_store = NodeStore(self._styled_output)
+        sdoc2.node_store = NodeStore(self._io)
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
@@ -245,124 +272,64 @@ class SDoc:
         self.importing('/sdoc2/formatter/html/')
 
     # ------------------------------------------------------------------------------------------------------------------
-    def run_sdoc1(self, main_filename, temp_filename):
+    def init(self):
+        self._read_config_file()
+        self._create_node_store()
+        self._import_nodes()
+        self._import_formatters()
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def run_sdoc1(self, sdoc1_path, sdoc2_path):
         """
         Run the SDoc1 parser.
 
-        :param str main_filename: The name of the file with then main SDoc1 document.
-        :param str temp_filename: The name of the temporary file where the SDoc2 document must be stored.
+        :param str sdoc1_path: The path of the SDoc1 document.
+        :param str sdoc2_path: The path were the the SDoc2 document mut be stored.
         """
-        interpreter1 = SDoc1Interpreter(self._styled_output)
-        self._errors += interpreter1.process(main_filename, temp_filename)
+        self._io.title('SDoc1')
+
+        interpreter1 = SDoc1Interpreter(self._io)
+        self._errors += interpreter1.process(sdoc1_path, sdoc2_path)
+
+        return self._errors
 
     # ------------------------------------------------------------------------------------------------------------------
-    def run_sdoc2(self, temp_filename):
+    def run_sdoc2(self, sdoc2_path):
         """
         Run the SDoc2 parser.
 
-        :param str temp_filename: The name of the temporary file where the SDoc2 document is stored.
+        :param str sdoc2_path: The path of the SDoc2 document.
         """
-        interpreter2 = SDoc2Interpreter(self._styled_output)
-        self._errors += interpreter2.process(temp_filename)
+        self._io.writeln('')
+        self._io.title('SDoc2')
+
+        interpreter2 = SDoc2Interpreter(self._io)
+        self._errors += interpreter2.process(sdoc2_path)
+
+        return self._errors
 
     # ------------------------------------------------------------------------------------------------------------------
-    def _run_sdoc(self):
+    def run_sdoc(self, main_filename):
         """
         Runs the SDoc1 and SDoc2 parser.
+
+        :param str main_filename: The path of the SDoc1 document.
         """
-        main_filename = self._args['main']
+        self.init()
+
         temp_filename = self._temp_dir + '/' + os.path.basename(main_filename) + '.sdoc2'
-
         self.run_sdoc1(main_filename, temp_filename)
-
         self.run_sdoc2(temp_filename)
 
         # Start generating file with specific format.
+        self._io.writeln('')
+        self._io.title('Formatter')
         sdoc2.node_store.generate(self._formatter)
 
-    # ------------------------------------------------------------------------------------------------------------------
-    def test_sdoc1(self, main_filename, output_filename):
-        """
-        Parses a SDoc document and returns a tuple with the stdout and the resulting SDoc2 document.
-
-        :param str main_filename: The name of the file with then main SDoc1 document.
-        :param str output_filename: The name of the file which will be outputted.
-
-        :rtype: (str,str)
-        """
-        self._create_node_store()
-        self._import_nodes()
-        self._import_formatters()
-
-        old_stdout, sys.stdout = sys.stdout, StringIO()
-
-        temp_filename = output_filename + '.sdoc2'
-        interpreter1 = SDoc1Interpreter(self._styled_output)
-        interpreter1.process(main_filename, temp_filename)
-
-        output = sys.stdout.getvalue().strip()
-        sys.stdout = old_stdout
-
-        with open(temp_filename, 'rt') as fd:
-            doc2 = fd.read()
-
-        os.unlink(temp_filename)
-
-        return output, doc2
-
-    # ------------------------------------------------------------------------------------------------------------------
-    def test_sdoc2(self, main_filename):
-        """
-        Parses a SDoc document and returns a tuple with the stdout and the resulting SDoc2 document.
-
-        :param str main_filename: The name of the file with then main SDoc1 document.
-
-        :rtype: (str,str)
-        """
-        self._create_node_store()
-        self._import_nodes()
-        self._import_formatters()
-
-        old_stdout, sys.stdout = sys.stdout, StringIO()
-
-        temp_filename = main_filename + '.sdoc2'
-        interpreter1 = SDoc1Interpreter(self._styled_output)
-        interpreter1.process(main_filename, temp_filename)
-
-        interpreter2 = SDoc2Interpreter(self._styled_output)
-        interpreter2.process(temp_filename)
-
-        sdoc2.node_store.number_numerable()
-
-        output = sys.stdout.getvalue().strip()
-        sys.stdout = old_stdout
-
-        with open(temp_filename, 'rt') as fd:
-            doc2 = fd.read()
-
-        os.unlink(temp_filename)
-
-        return output, doc2
-
-    # ------------------------------------------------------------------------------------------------------------------
-    def main(self):
-        """
-        The main function the SDoc program.
-        """
-        self._read_config_file()
-
-        self._create_node_store()
-
-        self._import_nodes()
-
-        self._import_formatters()
-
-        self._run_sdoc()
-
         if self._errors:
-            self._styled_output.writeln(" ")
-            self._styled_output.writeln('There were <err>{0:d} errors</err> in total'.format(self._errors))
+            self._io.writeln(" ")
+            self._io.writeln('There were <err>{0:d} errors</err> in total'.format(self._errors))
 
-        exit(self._errors)
+        return self._errors
 
 # ----------------------------------------------------------------------------------------------------------------------

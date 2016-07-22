@@ -17,13 +17,14 @@ class HtmlFormat(Format):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, config):
+    def __init__(self, io, config):
         """
         Object constructor.
 
+        :param cleo.styles.output_style.OutputStyle io: The IO object.
         :param configparser.SectionProxy config: The section in the config file for the target_format.
         """
-        super().__init__(config)
+        super().__init__(io, config)
 
         self._enumerate = True
         """
@@ -114,13 +115,15 @@ class HtmlFormat(Format):
 
         # Generate whole HTML output file.
         if self.one_file:
-            general_file = open('output.html', 'w')
-            formatter = sdoc2.node_store.create_formatter('document')
+            file_name = 'output.html'
+            self._io.writeln('Writing <fso>{0!s}</fso>'.format(file_name))
+            general_file = open(file_name, 'wt', encoding='utf8')
+            formatter = sdoc2.node_store.create_formatter(self._io, 'document')
             formatter.generate(sdoc2.node_store.nodes[1], general_file)
 
         # Generate in mode 'output file on each chapter'.
         if self.file_per_chapter:
-            formatter = sdoc2.node_store.create_formatter('document')
+            formatter = sdoc2.node_store.create_formatter(self._io, 'document')
             formatter.generate_chapter(sdoc2.node_store.nodes[1], None)
 
 # ----------------------------------------------------------------------------------------------------------------------

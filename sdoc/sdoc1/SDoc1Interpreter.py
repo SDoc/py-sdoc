@@ -21,12 +21,12 @@ class SDoc1Interpreter:
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, styled_output):
+    def __init__(self, io):
         """
         Object constructor.
         """
 
-        self._styled_output = styled_output
+        self._io = io
         """
         Styled output formatter.
 
@@ -43,13 +43,14 @@ class SDoc1Interpreter:
         """
         in_stream = antlr4.FileStream(infile)
 
+        self._io.writeln('Writing <fso>{0!s}</fso>'.format(outfile))
         with open(outfile, 'wt') as out_stream:
             lexer = sdoc1Lexer(in_stream)
             tokens = antlr4.CommonTokenStream(lexer)
             parser = sdoc1Parser(tokens)
             tree = parser.sdoc()
 
-            visitor = SDoc1Visitor(self._styled_output, root_dir=os.path.dirname(os.path.realpath(infile)))
+            visitor = SDoc1Visitor(self._io, root_dir=os.path.dirname(os.path.realpath(infile)))
 
             visitor.output = out_stream
             visitor.visit(tree)

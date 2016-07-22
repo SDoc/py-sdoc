@@ -6,23 +6,28 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-from sdoc.sdoc2.formatter.Formatter import Formatter
+from cleo import Command
 
 
-class HtmlFormatter(Formatter):
+class BaseCommand(Command):
     """
-    Abstract parent class for all formatters for generating the output of nodes in HTML.
+    Abstract parent command for all out commands.
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io, formatter):
+    def __init__(self, name=None):
         """
         Object constructor.
 
-        :param cleo.styles.output_style.OutputStyle io: The IO object.
-        :param Formatter formatter: The formatter of the parent node.
+        :param str|None name: The name of the command.
         """
-        Formatter.__init__(self, io)
-        # @todo File stuff.
+        Command.__init__(self, name)
+
+        self._io = None
+        """
+        The IO object.
+
+        :type None|cleo.styles.output_style.OutputStyle:
+        """
 
 # ----------------------------------------------------------------------------------------------------------------------

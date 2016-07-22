@@ -14,12 +14,12 @@ class SDocVisitor:
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, styled_output):
+    def __init__(self, io):
         """
         Object constructor.
         """
 
-        self._styled_output = styled_output
+        self._io = io
         """
         Styled output formatter.
 
@@ -56,9 +56,11 @@ class SDocVisitor:
         filename = token.getInputStream().fileName  # Replace fileName with get_source_name() when implemented in ANTLR.
         line_number = token.line
         column_number = token.column + 1
+        messages = []
         if token:
-            self._styled_output.writeln("<err>Error</err> at {0!s}:{1:d}.{2:d}:"
-                                        .format(filename, line_number, column_number))
-        self._styled_output.writeln(message)
+            messages.append('Error at {0!s}:{1:d}.{2:d}'.format(filename, line_number, column_number))
+        messages.append(message)
+        self._io.error(messages)
+
 
 # ----------------------------------------------------------------------------------------------------------------------

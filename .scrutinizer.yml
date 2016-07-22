@@ -1,18 +1,36 @@
+before_commands:
+  - pip3 install antlr4-python3-runtime
+  - pip3 install httplib2
+  - pip3 install cleo
+  - pip3 install coverage
+
+build:
+    dependencies:
+        before:
+            - pip3 install antlr4-python3-runtime
+            - pip3 install httplib2
+            - pip3 install cleo
+            - pip3 install coverage
+    tests:
+        override:
+            -
+                command: coverage run -m unittest discover -s test -p *Test.py
+                coverage:
+                    file: '.coverage'
+                    config_file: '.coveragerc'
+                    format: 'py-cc'
+
 checks:
     python:
         code_rating: true
         duplicate_code: true
-build:
-    dependencies:
-        before:
-            - pip install antlr4-python3-runtime
-            - pip install httplib2
-            - pip install cleo
-tools:
-    pylint:
-        python_version: '3'
-        config_file: pylintrc
+
 filter:
     excluded_paths:
         - test/*
         - sdoc/antlr/*
+
+tools:
+    pylint:
+        python_version: '3'
+        config_file: pylintrc

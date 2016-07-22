@@ -59,6 +59,9 @@ class Position:
 
     # ------------------------------------------------------------------------------------------------------------------
     def __str__(self):
+        if not self.file_name:
+            return "{0:d}.{1:d}".format(self.start_line, self.start_column + 1)
+
         return "{0!s}:{1:d}.{2:d}".format(os.path.relpath(self.file_name), self.start_line, self.start_column+1)
 
 

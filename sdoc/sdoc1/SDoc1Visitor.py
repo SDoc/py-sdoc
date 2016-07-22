@@ -28,15 +28,15 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, styled_output, root_dir=os.getcwd()):
+    def __init__(self, io, root_dir=os.getcwd()):
         """
         Object constructor.
 
         :param str root_dir: The root directory for including sub-documents.
         """
-        SDocVisitor.__init__(self, styled_output)
+        SDocVisitor.__init__(self, io)
 
-        self._styled_output = styled_output
+        self._io = io
         """
         Styled output formatter.
 
@@ -340,9 +340,9 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         expression = ctx.expression()
 
         if expression is not None:
-            self._styled_output.writeln(expression.accept(self).debug())
+            self._io.writeln(expression.accept(self).debug())
         else:
-            self._styled_output.writeln(self._global_scope.debug())
+            self._io.writeln(self._global_scope.debug())
 
         self.put_position(ctx, 'stop')
 
@@ -426,7 +426,7 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         if not os.path.isabs(file_name):
             file_name = os.path.join(self._root_dir, file_name + '.sdoc')
         real_path = os.path.relpath(file_name)
-        self._styled_output.writeln("<fso>Including</fso> {0!s}".format(real_path))
+        self._io.writeln("Including <fso>{0!s}</fso>".format(real_path))
         try:
             stream = antlr4.FileStream(file_name, 'utf-8')
 
@@ -439,7 +439,7 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
             tree = parser.sdoc()
 
             # Create a visitor.
-            visitor = SDoc1Visitor(self._styled_output, root_dir=os.path.dirname(os.path.realpath(file_name)))
+            visitor = SDoc1Visitor(self._io, root_dir=os.path.dirname(os.path.realpath(file_name)))
 
             # Set or inherit properties from the parser of the parent document.
             visitor.include_level = self._include_level + 1
@@ -469,8 +469,7 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         line_number = token.line
         message = SDoc.unescape(ctx.SIMPLE_ARG().getText())
 
-        self._styled_output.writeln('<fso>Notice:</fso> {0!s} at {1!s}:{2:d}'
-                                    .format(message, os.path.relpath(filename), line_number))
+        self._io.writeln('<notice>Notice: {0!s} at {1!s}:{2:d}'.format(message, os.path.relpath(filename), line_number))
 
         self.put_position(ctx, 'stop')
 
