@@ -414,6 +414,15 @@ class NodeStore:
         self.nodes[1].number(self._enumerable_numbers)
 
     # ------------------------------------------------------------------------------------------------------------------
+    def generate_toc(self):
+        """
+        Checks if we have table of contents in document. If yes, we generate table of contents.
+        """
+        for key, node in self.nodes.items():
+            if node.get_command() == 'toc':
+                node.generate_toc()
+
+    # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
     def generate(formatter):
         """
