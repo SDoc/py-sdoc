@@ -15,14 +15,15 @@ class Sub2SectionNode(HeadingNode):
     SDoc2 node for sub-subsections.
     """
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, options, argument):
+    def __init__(self, io, options, argument):
         """
         Object constructor.
 
+        :param None|cleo.styles.output_style.OutputStyle io: The IO object.
         :param dict[str,str] options: The options of this section.
         :param str argument: The title of this section.
         """
-        super().__init__('sub2section', options, argument)
+        super().__init__(io, 'sub2section', options, argument)
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_command(self):

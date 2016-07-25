@@ -37,6 +37,7 @@ class HeadingHtmlFormatter(HtmlFormatter):
         if node.get_command() == 'chapter':
             file_name = 'output_{0}.html'.format(node.argument)
             self._io.writeln('Writing <fso>{0!s}</fso>'.format(file_name))
+
             with open(file_name, 'wt', encoding='utf8') as file:
                 file.write('<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="NL" lang="NL">')
                 file.write('<head><meta charset="UTF-8"/><title>sdoc</title></head>')

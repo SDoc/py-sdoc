@@ -17,14 +17,15 @@ class ItemNode(Node):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, options, argument):
+    def __init__(self, io, options, argument):
         """
         Object constructor.
 
+        :param None|cleo.styles.output_style.OutputStyle io: The IO object.
         :param dict[str,str] options: The options of this item.
         :param str argument: Not used.
         """
-        super().__init__('item', options, argument)
+        super().__init__(io, 'item', options, argument)
 
         self._hierarchy_level = 0
 

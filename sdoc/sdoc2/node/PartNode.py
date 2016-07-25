@@ -16,14 +16,15 @@ class PartNode(HeadingNode):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, options, argument):
+    def __init__(self, io, options, argument):
         """
         PartNode constructor
 
+        :param None|cleo.styles.output_style.OutputStyle io: The IO object.
         :param dict[str, str] options: The options of this part.
         :param str argument: The title of this part.
         """
-        super().__init__('part', options, argument)
+        super().__init__(io, 'part', options, argument)
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_command(self):

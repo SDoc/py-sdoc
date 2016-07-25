@@ -16,14 +16,15 @@ class LabelNode(Node):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, options, argument):
+    def __init__(self, io, options, argument):
         """
         Object constructor.
 
+        :param None|cleo.styles.output_style.OutputStyle io: The IO object.
         :param dict[str,str] options: The options of this label.
         :param str argument: The title of this label.
         """
-        super().__init__('label', options, argument)
+        super().__init__(io, 'label', options, argument)
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_command(self):

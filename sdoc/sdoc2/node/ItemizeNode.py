@@ -17,13 +17,14 @@ class ItemizeNode(Node):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, options):
+    def __init__(self, io, options):
         """
         Object constructor.
 
+        :param None|cleo.styles.output_style.OutputStyle io: The IO object.
         :param dict[str,str] options: The options of this itemize.
         """
-        super().__init__('itemize', options)
+        super().__init__(io, 'itemize', options)
 
         self._hierarchy_level = 0
 

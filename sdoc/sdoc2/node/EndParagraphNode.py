@@ -18,14 +18,15 @@ class EndParagraphNode(Node):
           preparation end of paragraph nodes do not exist.
     """
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, options, argument):
+    def __init__(self, io, options, argument):
         """
         Object constructor.
 
+        :param None|cleo.styles.output_style.OutputStyle io: The IO object.
         :param dict[str,str] options: Not used.
         :param str argument: Not used.
         """
-        super().__init__('end_paragraph', options, argument)
+        super().__init__(io, 'end_paragraph', options, argument)
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_command(self):
