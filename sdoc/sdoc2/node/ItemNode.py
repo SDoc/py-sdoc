@@ -91,11 +91,21 @@ class ItemNode(Node):
         """
         Method which checks if all child nodes is phrasing.
         """
+        first = self.child_nodes[0]
+        last = self.child_nodes[-1]
+
         for node_id in self.child_nodes:
             node = in_scope(node_id)
 
             if isinstance(node, TextNode):
-                node.prune_whitespace(leading=True, trailing=True)
+                if node_id == first:
+                    node.prune_whitespace(leading=True)
+
+                elif node_id == last:
+                    node.prune_whitespace(trailing=True)
+
+                elif node_id == first and node_id == last:
+                    node.prune_whitespace(leading=True, trailing=True)
 
             # if not node.is_phrasing():
             #    raise RuntimeError("Node: id:%s, %s is not phrasing" % (str(node.id), node.name))

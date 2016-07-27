@@ -27,7 +27,6 @@ class Formatter:
         :type cleo.styles.output_style.OutputStyle:
         """
 
-
     # ------------------------------------------------------------------------------------------------------------------
     def generate(self, node, file):
         """
