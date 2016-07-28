@@ -13,6 +13,7 @@ class Formatter:
     """
     Abstract parent class for all formatters for generating the output of nodes in a requested format.
     """
+
     # ------------------------------------------------------------------------------------------------------------------
     def __init__(self, io):
         """
@@ -24,9 +25,8 @@ class Formatter:
         """
         The IO object.
 
-        :type cleo.styles.output_style.OutputStyle:
+        :type: cleo.styles.output_style.OutputStyle
         """
-
 
     # ------------------------------------------------------------------------------------------------------------------
     def generate(self, node, file):

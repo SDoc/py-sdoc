@@ -26,7 +26,7 @@ class Format:
         """
         The IO object.
 
-        :type cleo.styles.output_style.OutputStyle:
+        :type: cleo.styles.output_style.OutputStyle
         """
 
     # ------------------------------------------------------------------------------------------------------------------
