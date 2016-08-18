@@ -49,7 +49,7 @@ class Node:
         """
         The options of this node.
 
-        :type: dict[str,int|str]
+        :type: dict[str,mixed]
         """
 
         self.child_nodes = []

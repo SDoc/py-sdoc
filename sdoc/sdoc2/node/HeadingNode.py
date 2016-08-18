@@ -75,6 +75,13 @@ class HeadingNode(Node):
         super().number(enumerable_numbers)
 
     # ------------------------------------------------------------------------------------------------------------------
+    def set_toc_id(self):
+        """
+        Set ID for table of contents.
+        """
+        self._options['id'] = '#{}:{}'.format(self.name, self._options['number'])
+
+    # ------------------------------------------------------------------------------------------------------------------
     def prepare_content_tree(self):
         """
         Prepares the content tree. Create paragraph nodes.

@@ -93,6 +93,9 @@ class HtmlFormat(Format):
         # Generate labels.
         sdoc2.node_store.parse_labels()
 
+        # Generate table of contents.
+        sdoc2.node_store.generate_toc()
+
         # Generate whole HTML output file.
         if self._one_file:
             file_name = 'output.html'

@@ -64,6 +64,13 @@ class ParagraphNode(HeadingNode):
         return False
 
     # ------------------------------------------------------------------------------------------------------------------
+    def set_toc_id(self):
+        """
+        Don't do anything. Because we needn't this behaviour here.
+        """
+        pass
+
+    # ------------------------------------------------------------------------------------------------------------------
     def prune_whitespace(self):
         """
         Removes spaces from end of a paragraph.
