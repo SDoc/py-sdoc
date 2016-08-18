@@ -24,7 +24,7 @@ class SDoc(Application):
         """
         Object constructor.
         """
-        Application.__init__(self, 'SDoc', '0.0.7')
+        Application.__init__(self, 'SDoc', '0.0.8')
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_default_commands(self):
