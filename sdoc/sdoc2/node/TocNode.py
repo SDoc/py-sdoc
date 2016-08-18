@@ -25,7 +25,7 @@ class TocNode(Node):
         :param dict[str,str] options: The options of this table of contents.
         :param str argument: The argument of this TOC.
         """
-        super().__init__('toc', options, argument)
+        Node.__init__(self, 'toc', options, argument)
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_command(self):
