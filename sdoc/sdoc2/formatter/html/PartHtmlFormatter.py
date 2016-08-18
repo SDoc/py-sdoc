@@ -24,6 +24,7 @@ class PartHtmlFormatter(HtmlFormatter):
         :param sdoc.sdoc2.node.HeadingNode.HeadingNode node: The heading node.
         :param file file: The output file.
         """
+
         self.generate_part_node(node, file)
 
         HtmlFormatter.generate(self, node, file)

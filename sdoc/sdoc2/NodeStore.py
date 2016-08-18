@@ -195,13 +195,13 @@ class NodeStore:
         if command not in inline_creators:
             # @todo set error status
             constructor = inline_creators['unknown']
-            node = constructor(options, argument)
+            node = constructor(self._io, options, argument)
             node.name = command
 
         else:
             # Create the new node.
             constructor = inline_creators[command]
-            node = constructor(options, argument)
+            node = constructor(self._io, options, argument)
 
         node.position = position
 
@@ -231,7 +231,7 @@ class NodeStore:
             # Create the new node.
             constructor = block_creators[command]
 
-        node = constructor(options)
+        node = constructor(self._io, options)
         node.position = position
 
         # Store the node and assign ID.
@@ -334,10 +334,9 @@ class NodeStore:
 
         if node_hierarchy_level - parent_hierarchy_level > 1:
             # @todo position
-            self._io.writeln(("<warn>Warning</warn> improper nesting of levels:"
-                                         "{0:d} at {1!s} and {2:d} at {3!s}.")
-                                        .format(parent_hierarchy_level, parent_node.position,
-                                                node_hierarchy_level, node.position))
+            self._io.warning(("improper nesting of levels:{0:d} at {1!s} and {2:d} at {3!s}.")
+                             .format(parent_hierarchy_level, parent_node.position,
+                                     node_hierarchy_level, node.position))
 
     # ------------------------------------------------------------------------------------------------------------------
     def store_node(self, node):

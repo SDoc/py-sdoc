@@ -27,6 +27,7 @@ class HeadingHtmlFormatter(HtmlFormatter):
         HtmlFormatter.generate(self, node, file)
 
     # ------------------------------------------------------------------------------------------------------------------
+
     @staticmethod
     def generate_heading_node(node, file):
         """

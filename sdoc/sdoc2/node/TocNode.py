@@ -18,14 +18,15 @@ class TocNode(Node):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, options, argument):
+    def __init__(self, io, options, argument):
         """
         Object constructor.
 
+        :param None|cleo.styles.output_style.OutputStyle io: The IO object.
         :param dict[str,str] options: The options of this table of contents.
         :param str argument: The argument of this TOC.
         """
-        Node.__init__(self, 'toc', options, argument)
+        Node.__init__(self, io, 'toc', options, argument)
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_command(self):

@@ -18,14 +18,15 @@ class ParagraphNode(HeadingNode):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, options, argument):
+    def __init__(self, io, options, argument):
         """
         Object constructor.
 
+        :param None|cleo.styles.output_style.OutputStyle io: The IO object.
         :param dict[str,str] options: Not used.
         :param str argument: The text of this paragraph.
         """
-        super().__init__('paragraph', options, argument)
+        super().__init__(io, 'paragraph', options, argument)
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_command(self):

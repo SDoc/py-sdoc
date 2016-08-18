@@ -15,13 +15,14 @@ class DocumentNode(Node):
     SDoc2 node for documents.
     """
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, options):
+    def __init__(self, io, options):
         """
         Object constructor.
 
+        :param None|cleo.styles.output_style.OutputStyle io: The IO object.
         :param dict[str,str] options: The options of this document.
         """
-        super().__init__('document', options)
+        super().__init__(io, 'document', options)
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_command(self):

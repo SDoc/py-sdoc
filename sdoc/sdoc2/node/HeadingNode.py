@@ -19,15 +19,16 @@ class HeadingNode(Node):
     Abstract class for heading nodes.
     """
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, name, options, argument):
+    def __init__(self, io, name, options, argument):
         """
         Object constructor.
 
+        :param None|cleo.styles.output_style.OutputStyle io: The IO object.
         :param str name: The (command) name of this heading.
         :param dict[str,str] options: The options of this heading.
         :param str argument: The title of this heading.
         """
-        super().__init__(name, options, argument)
+        super().__init__(name, io, options, argument)
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_hierarchy_name(self):
