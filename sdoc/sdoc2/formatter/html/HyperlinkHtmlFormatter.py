@@ -26,17 +26,6 @@ class HyperlinkHtmlFormatter(HtmlFormatter):
         file.write(HyperlinkHtmlFormatter.get_html(node))
 
     # ------------------------------------------------------------------------------------------------------------------
-    def generate_chapter(self, node, file):
-        """
-        Generates the HTML code for a hyperlink node.
-
-        :param sdoc.sdoc2.node.HyperlinkNode.HyperlinkNode node: The hyperlink node.
-        :param file file: The output file.
-        """
-        if file:
-            file.write(HyperlinkHtmlFormatter.get_html(node))
-
-    # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
     def get_html(node):
         """

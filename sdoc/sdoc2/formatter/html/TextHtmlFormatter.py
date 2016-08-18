@@ -25,20 +25,7 @@ class TextHtmlFormatter(HtmlFormatter):
         """
         file.write(Html.escape(node.argument))
 
-        super().generate(node, file)
-
-    # ------------------------------------------------------------------------------------------------------------------
-    def generate_chapter(self, node, file):
-        """
-        Generates the HTML code for a text node.
-
-        :param sdoc.sdoc2.node.TextNode.TextNode node: The text node.
-        :param file file: The output file.
-        """
-        if file:
-            file.write(Html.escape(node.argument))
-
-        super().generate_chapter(node, file)
+        HtmlFormatter.generate(self, node, file)
 
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_formatter('TEXT', 'html', TextHtmlFormatter)

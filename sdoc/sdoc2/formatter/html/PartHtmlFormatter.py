@@ -25,7 +25,8 @@ class PartHtmlFormatter(HtmlFormatter):
         :param file file: The output file.
         """
         self.generate_part_node(node, file)
-        super().generate(node, file)
+
+        HtmlFormatter.generate(self, node, file)
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod

@@ -15,14 +15,13 @@ class HtmlFormatter(Formatter):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io, formatter):
+    def __init__(self, io, parent):
         """
         Object constructor.
 
         :param cleo.styles.output_style.OutputStyle io: The IO object.
-        :param Formatter formatter: The formatter of the parent node.
+        :param sdoc.sdoc2.formatter.Formatter.Formatter parent: The formatter for the parent node.
         """
-        Formatter.__init__(self, io)
-        # @todo File stuff.
+        Formatter.__init__(self, io, parent)
 
 # ----------------------------------------------------------------------------------------------------------------------

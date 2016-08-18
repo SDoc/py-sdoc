@@ -24,7 +24,7 @@ class HtmlFormat(Format):
         :param cleo.styles.output_style.OutputStyle io: The IO object.
         :param configparser.SectionProxy config: The section in the config file for the target_format.
         """
-        super().__init__(io, config)
+        Format.__init__(self, io, config)
 
         self._enumerate = True
         """
@@ -82,26 +82,6 @@ class HtmlFormat(Format):
         return self._enumerate
 
     # ------------------------------------------------------------------------------------------------------------------
-    @property
-    def file_per_chapter(self):
-        """
-        Getter for file_per_chapter attribute.
-
-        :rtype: bool
-        """
-        return self._file_per_chapter
-
-    # ------------------------------------------------------------------------------------------------------------------
-    @property
-    def one_file(self):
-        """
-        Getter for one_file attribute.
-
-        :rtype: bool
-        """
-        return self._one_file
-
-    # ------------------------------------------------------------------------------------------------------------------
     def generate(self):
         """
         Starts generating HTML file.
@@ -114,16 +94,16 @@ class HtmlFormat(Format):
         sdoc2.node_store.parse_labels()
 
         # Generate whole HTML output file.
-        if self.one_file:
+        if self._one_file:
             file_name = 'output.html'
             self._io.writeln('Writing <fso>{0!s}</fso>'.format(file_name))
             general_file = open(file_name, 'wt', encoding='utf8')
             formatter = sdoc2.node_store.create_formatter(self._io, 'document')
             formatter.generate(sdoc2.node_store.nodes[1], general_file)
+            self._errors = formatter.errors
 
         # Generate in mode 'output file on each chapter'.
-        if self.file_per_chapter:
-            formatter = sdoc2.node_store.create_formatter(self._io, 'document')
-            formatter.generate_chapter(sdoc2.node_store.nodes[1], None)
+        if self._file_per_chapter:
+            raise NotImplementedError()
 
 # ----------------------------------------------------------------------------------------------------------------------

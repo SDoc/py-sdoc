@@ -25,20 +25,7 @@ class SmileHtmlFormatter(HtmlFormatter):
         """
         file.write(SmileHtmlFormatter.get_html(node))
 
-        super().generate(node, file)
-
-    # ------------------------------------------------------------------------------------------------------------------
-    def generate_chapter(self, node, file):
-        """
-        Generates the HTML code for a smile node.
-
-        :param sdoc.sdoc2.node.SmileNode.SmileNode node: The smile node.
-        :param file file: The output file.
-        """
-        if file:
-            file.write(SmileHtmlFormatter.get_html(node))
-
-        super().generate_chapter(node, file)
+        HtmlFormatter.generate(self, node, file)
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod

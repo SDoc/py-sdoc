@@ -26,20 +26,7 @@ class ReferenceHtmlFormatter(HtmlFormatter):
         """
         self.write_into_file(node, file)
 
-        super().generate(node, file)
-
-    # ------------------------------------------------------------------------------------------------------------------
-    def generate_chapter(self, node, file):
-        """
-        Generates the HTML code for a reference node.
-
-        :param sdoc.sdoc2.node.ReferenceNode.ReferenceNode node: The reference node.
-        :param file file: The output file.
-        """
-        if file:
-            self.write_into_file(node, file)
-
-        super().generate_chapter(node, file)
+        HtmlFormatter.generate(self, node, file)
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod

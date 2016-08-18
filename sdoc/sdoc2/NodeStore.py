@@ -415,14 +415,16 @@ class NodeStore:
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def generate(formatter):
+    def generate(target_format):
         """
         Generates the document.
 
-        :param sdoc.format.Format.Format formatter: The format which will generate file.
+        :param sdoc.format.Format.Format target_format: The format which will generate file.
         """
         # Start generating file using specific formatter.
-        formatter.generate()
+        target_format.generate()
+
+        return target_format.errors
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_enumerated_items(self):

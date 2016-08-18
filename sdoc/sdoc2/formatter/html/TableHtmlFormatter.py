@@ -27,17 +27,6 @@ class TableHtmlFormatter(HtmlFormatter):
         self.write_into_file(node, file)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def generate_chapter(self, node, file):
-        """
-        Generates the HTML code for a table node.
-
-        :param sdoc.sdoc2.node.TableNode.TableNode node: The table node.
-        :param file file: The output file.
-        """
-        if file:
-            self.write_into_file(node, file)
-
-    # ------------------------------------------------------------------------------------------------------------------
     def write_into_file(self, node, file):
         """
         Writes data into opened file.

@@ -23,23 +23,8 @@ class ItemizeHtmlFormatter(HtmlFormatter):
         :param file file: The output file.
         """
         file.write('<ul>')
-        super().generate(node, file)
+        HtmlFormatter.generate(self, node, file)
         file.write('</ul>')
-
-    # ------------------------------------------------------------------------------------------------------------------
-    def generate_chapter(self, node, file):
-        """
-        Generates the HTML code for an itemize node.
-
-        :param sdoc.sdoc2.node.ItemizeNode.ItemizeNode node: The itemize node.
-        :param file file: The output file.
-        """
-        if file:
-            file.write('<ul>')
-            super().generate_chapter(node, file)
-            file.write('</ul>')
-        else:
-            super().generate_chapter(node, file)
 
 # ----------------------------------------------------------------------------------------------------------------------
 node_store.register_formatter('itemize', 'html', ItemizeHtmlFormatter)
