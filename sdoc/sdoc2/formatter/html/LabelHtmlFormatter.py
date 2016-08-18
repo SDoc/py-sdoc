@@ -6,7 +6,7 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-from sdoc.sdoc2 import node_store
+from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.formatter.html.HtmlFormatter import HtmlFormatter
 
 
@@ -25,5 +25,6 @@ class LabelHtmlFormatter(HtmlFormatter):
         """
         HtmlFormatter.generate(self, node, file)
 
+
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_formatter('label', 'html', LabelHtmlFormatter)
+NodeStore.register_formatter('label', 'html', LabelHtmlFormatter)

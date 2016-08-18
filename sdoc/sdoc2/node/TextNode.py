@@ -7,8 +7,9 @@ Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
 import re
+
 import sdoc
-from sdoc.sdoc2 import node_store
+from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.node.Node import Node
 
 
@@ -132,4 +133,4 @@ class TextNode(Node):
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_inline_command('TEXT', TextNode)
+NodeStore.register_inline_command('TEXT', TextNode)

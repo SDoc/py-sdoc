@@ -6,7 +6,7 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-from sdoc.sdoc2 import node_store
+from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.node.HeadingNode import HeadingNode
 
 
@@ -44,5 +44,6 @@ class ChapterNode(HeadingNode):
         """
         return 1
 
+
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_inline_command('chapter', ChapterNode)
+NodeStore.register_inline_command('chapter', ChapterNode)

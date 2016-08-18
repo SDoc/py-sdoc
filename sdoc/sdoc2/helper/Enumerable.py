@@ -5,6 +5,8 @@ Copyright 2016 Set Based IT Consultancy
 
 Licence MIT
 """
+
+
 # ----------------------------------------------------------------------------------------------------------------------
 
 
@@ -42,7 +44,7 @@ class Enumerable:
 
         :param int level: The level of nested heading.
         """
-        for num in range(level+1):
+        for num in range(level + 1):
             if num not in self._numerate_data:
                 self._numerate_data[num] = 0
 

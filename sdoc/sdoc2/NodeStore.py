@@ -21,6 +21,13 @@ Map from block commands to object creators.
 :type: dict[str,callable]
 """
 
+formatters = {}
+"""
+Map from format name to map from inline and block commands to format creators.
+
+:type: dict[str,dict[str,callable]]
+"""
+
 
 class NodeStore:
     """
@@ -47,13 +54,6 @@ class NodeStore:
         The output format.
 
         :type: str
-        """
-
-        self._formatters = {}
-        """
-        Map from format name to map from inline and block commands to format creators.
-
-        :type: dict[str,dict[str,callable]]
         """
 
         self.nested_nodes = []
@@ -85,7 +85,8 @@ class NodeStore:
         """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_formatter(self, output_type, name_formatter):
+    @staticmethod
+    def get_formatter(output_type, name_formatter):
         """
         Returns the formatter for special type.
 
@@ -94,7 +95,7 @@ class NodeStore:
 
         :rtype: sdoc.sdoc2.formatter.Formatter.Formatter
         """
-        return self._formatters[output_type][name_formatter]
+        return formatters[output_type][name_formatter]
 
     # ------------------------------------------------------------------------------------------------------------------
     def end_block_node(self, command):
@@ -154,7 +155,8 @@ class NodeStore:
         inline_creators[command] = constructor
 
     # ------------------------------------------------------------------------------------------------------------------
-    def register_formatter(self, command, output_format, formatter):
+    @staticmethod
+    def register_formatter(command, output_format, formatter):
         """
         Registers a output formatter constructor for a command.
 
@@ -162,10 +164,10 @@ class NodeStore:
         :param str output_format: The output format the formatter generates.
         :param callable formatter: The formatter for generating the content of the node in the output format.
         """
-        if output_format not in self._formatters:
-            self._formatters[output_format] = {}
+        if output_format not in formatters:
+            formatters[output_format] = {}
 
-        self._formatters[output_format][command] = formatter
+        formatters[output_format][command] = formatter
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
@@ -289,14 +291,14 @@ class NodeStore:
 
         :rtype: sdoc.sdoc2.formatter.Formatter.Formatter
         """
-        if self.format not in self._formatters:
+        if self.format not in formatters:
             raise RuntimeError("Unknown output format '{0!s}'.".format(self.format))
 
-        if command not in self._formatters[self.format]:
+        if command not in formatters[self.format]:
             # @todo use default none decorator with warning
             raise RuntimeError("Unknown formatter '{0!s}' for format '{1!s}'.".format(command, self.format))
 
-        constructor = self._formatters[self.format][command]
+        constructor = formatters[self.format][command]
         formatter = constructor(io, parent)
 
         return formatter

@@ -15,7 +15,7 @@ from cleo import Application, CommandTester
 from sdoc.command.SDocCommand import SDocCommand
 
 
-class SDoc2ReferencesTest(unittest.TestCase):
+class SDoc2WhitespaceInItemsTest(unittest.TestCase):
     """
     Test cases for SDoc2 references.
     """
@@ -30,9 +30,6 @@ class SDoc2ReferencesTest(unittest.TestCase):
 
         for test_file_name in sorted(test_file_names):
             with self.subTest(test_file_name=test_file_name):
-                pre, ext = os.path.splitext(test_file_name)
-                html_file_name = pre + '.html'
-
                 application = Application()
                 application.add(SDocCommand())
 
@@ -42,12 +39,12 @@ class SDoc2ReferencesTest(unittest.TestCase):
                                         ('config.cfg', config_path),
                                         ('main.sdoc', test_file_name)])
 
-                with open(html_file_name, 'r') as expected:
-                    with open('output.html', 'r') as actual:
+                with open('output.html', 'r') as actual:
+                    actual_text = actual.read()
 
-                        actual_text = actual.readlines()[0]
-
-                        for line in expected:
-                            self.assertTrue(line.strip() in actual_text)
+                self.assertIn('chapter <a href="#chap:bug" title="Bug">1</a> in', actual_text)
+                self.assertIn('sentence <a href="#chap:bug" title="Bug">1</a>.', actual_text)
+                self.assertIn('chapter <a href="#chap:bug" title="Bug">1</a> item', actual_text)
+                self.assertIn('item <a href="#chap:bug" title="Bug">1</a>.', actual_text)
 
 # ----------------------------------------------------------------------------------------------------------------------

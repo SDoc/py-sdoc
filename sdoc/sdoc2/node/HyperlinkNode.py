@@ -7,8 +7,10 @@ Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
 from urllib import request, error
+
 import httplib2
-from sdoc.sdoc2 import node_store
+
+from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.node.Node import Node
 
 
@@ -16,6 +18,7 @@ class HyperlinkNode(Node):
     """
     SDoc2 node for hyperlinks.
     """
+
     # ------------------------------------------------------------------------------------------------------------------
     def __init__(self, io, options, argument):
         """
@@ -142,4 +145,4 @@ class HyperlinkNode(Node):
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_inline_command('hyperlink', HyperlinkNode)
+NodeStore.register_inline_command('hyperlink', HyperlinkNode)

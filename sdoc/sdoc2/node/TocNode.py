@@ -7,8 +7,9 @@ Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
 from sdoc.sdoc2 import node_store
-from sdoc.sdoc2.node.Node import Node
+from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.node.HeadingNode import HeadingNode
+from sdoc.sdoc2.node.Node import Node
 from sdoc.sdoc2.node.ParagraphNode import ParagraphNode
 
 
@@ -66,12 +67,13 @@ class TocNode(Node):
             if not isinstance(node, ParagraphNode) and isinstance(node, HeadingNode):
                 node.set_toc_id()
 
-                data = {'id': node.get_option_value('id'),
-                        'arg': node.argument,
-                        'level': node.get_hierarchy_level(),
+                data = {'id':     node.get_option_value('id'),
+                        'arg':    node.argument,
+                        'level':  node.get_hierarchy_level(),
                         'number': node.get_option_value('number')}
 
                 self._options['ids'].append(data)
 
+
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_inline_command('toc', TocNode)
+NodeStore.register_inline_command('toc', TocNode)

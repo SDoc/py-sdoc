@@ -6,7 +6,7 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-from sdoc.sdoc2 import node_store
+from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.node.Node import Node
 
 
@@ -62,5 +62,6 @@ class ReferenceNode(Node):
         """
         return True
 
+
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_inline_command('ref', ReferenceNode)
+NodeStore.register_inline_command('ref', ReferenceNode)

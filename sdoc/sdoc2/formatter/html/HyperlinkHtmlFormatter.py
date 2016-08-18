@@ -7,7 +7,7 @@ Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
 from sdoc.helper.Html import Html
-from sdoc.sdoc2 import node_store
+from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.formatter.html.HtmlFormatter import HtmlFormatter
 
 
@@ -15,6 +15,7 @@ class HyperlinkHtmlFormatter(HtmlFormatter):
     """
     HtmlFormatter for generating HTML code for hyperlinks.
     """
+
     # ------------------------------------------------------------------------------------------------------------------
     def generate(self, node, file):
         """
@@ -37,5 +38,6 @@ class HyperlinkHtmlFormatter(HtmlFormatter):
         """
         return Html.generate_element('a', node.get_html_attributes(), node.argument)
 
+
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_formatter('hyperlink', 'html', HyperlinkHtmlFormatter)
+NodeStore.register_formatter('hyperlink', 'html', HyperlinkHtmlFormatter)

@@ -7,7 +7,7 @@ Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
 from sdoc.helper.Html import Html
-from sdoc.sdoc2 import node_store
+from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.formatter.html.HtmlFormatter import HtmlFormatter
 
 
@@ -45,5 +45,6 @@ class PartHtmlFormatter(HtmlFormatter):
         text_in_tag = '{0} {1!s}'.format('' if not number else number, node.argument)
         file.write(Html.generate_element('div', attributes, text_in_tag))
 
+
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_formatter('part', 'html', PartHtmlFormatter)
+NodeStore.register_formatter('part', 'html', PartHtmlFormatter)

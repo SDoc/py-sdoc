@@ -6,7 +6,7 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-from sdoc.sdoc2 import node_store
+from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.node.Node import Node
 
 
@@ -14,6 +14,7 @@ class SmileNode(Node):
     """
     SDoc2 node for development testing.
     """
+
     # ------------------------------------------------------------------------------------------------------------------
     def __init__(self, io, options, argument):
         """
@@ -63,4 +64,4 @@ class SmileNode(Node):
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_inline_command('smile', SmileNode)
+NodeStore.register_inline_command('smile', SmileNode)

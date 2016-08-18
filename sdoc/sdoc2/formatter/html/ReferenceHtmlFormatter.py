@@ -7,7 +7,7 @@ Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
 from sdoc.helper.Html import Html
-from sdoc.sdoc2 import node_store
+from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.formatter.html.HtmlFormatter import HtmlFormatter
 
 
@@ -50,10 +50,11 @@ class ReferenceHtmlFormatter(HtmlFormatter):
         :rtype: str
         """
         attributes = {'class': node.get_option_value('class'),
-                      'href': node.get_option_value('href'),
+                      'href':  node.get_option_value('href'),
                       'title': node.get_option_value('title')}
 
         return Html.generate_element('a', attributes, node.argument)
 
+
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_formatter('ref', 'html', ReferenceHtmlFormatter)
+NodeStore.register_formatter('ref', 'html', ReferenceHtmlFormatter)

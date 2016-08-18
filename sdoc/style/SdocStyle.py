@@ -4,7 +4,7 @@ from cleo.styles import CleoStyle
 
 class SdocStyle(CleoStyle):
     """
-    Output style for SDoc.
+    Output style for SDocApplication.
     """
 
     # ------------------------------------------------------------------------------------------------------------------

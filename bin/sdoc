@@ -5,7 +5,7 @@ import sys
 
 sys.path.insert(0, os.path.realpath(os.path.dirname(os.path.realpath(__file__)) + '/..'))
 
-from sdoc.application.SdocApplication import SDoc
+from sdoc.application.SDocApplication import SDocApplication
 
-sdoc_application = SDoc()
+sdoc_application = SDocApplication()
 sdoc_application.run()

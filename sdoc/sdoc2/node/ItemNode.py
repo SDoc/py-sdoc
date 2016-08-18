@@ -6,7 +6,8 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-from sdoc.sdoc2 import node_store, in_scope, out_scope
+from sdoc.sdoc2 import in_scope, out_scope
+from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.node.Node import Node
 from sdoc.sdoc2.node.TextNode import TextNode
 
@@ -156,4 +157,4 @@ class ItemNode(Node):
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_inline_command('item', ItemNode)
+NodeStore.register_inline_command('item', ItemNode)

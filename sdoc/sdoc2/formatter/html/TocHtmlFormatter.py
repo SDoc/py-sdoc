@@ -7,7 +7,7 @@ Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
 from sdoc.helper.Html import Html
-from sdoc.sdoc2 import node_store
+from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.formatter.html.HtmlFormatter import HtmlFormatter
 
 
@@ -89,5 +89,6 @@ class TocHtmlFormatter(HtmlFormatter):
         file.write('</a>')
         file.write('</li>')
 
+
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_formatter('toc', 'html', TocHtmlFormatter)
+NodeStore.register_formatter('toc', 'html', TocHtmlFormatter)

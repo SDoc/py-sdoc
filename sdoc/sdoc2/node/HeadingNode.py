@@ -8,16 +8,17 @@ Licence MIT
 # ----------------------------------------------------------------------------------------------------------------------
 import sdoc
 from sdoc.sdoc2 import in_scope, out_scope
+from sdoc.sdoc2.helper.Enumerable import Enumerable
+from sdoc.sdoc2.node.EndParagraphNode import EndParagraphNode
 from sdoc.sdoc2.node.Node import Node
 from sdoc.sdoc2.node.TextNode import TextNode
-from sdoc.sdoc2.node.EndParagraphNode import EndParagraphNode
-from sdoc.sdoc2.helper.Enumerable import Enumerable
 
 
 class HeadingNode(Node):
     """
     Abstract class for heading nodes.
     """
+
     # ------------------------------------------------------------------------------------------------------------------
     def __init__(self, io, name, options, argument):
         """

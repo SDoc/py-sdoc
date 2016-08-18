@@ -6,7 +6,7 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-from sdoc.sdoc2 import node_store
+from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.node.HeadingNode import HeadingNode
 
 
@@ -14,6 +14,7 @@ class SectionNode(HeadingNode):
     """
     SDoc2 node for sections.
     """
+
     # ------------------------------------------------------------------------------------------------------------------
     def __init__(self, io, options, argument):
         """
@@ -45,4 +46,4 @@ class SectionNode(HeadingNode):
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_inline_command('section', SectionNode)
+NodeStore.register_inline_command('section', SectionNode)

@@ -7,7 +7,7 @@ Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
 from sdoc.helper.Html import Html
-from sdoc.sdoc2 import node_store
+from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.formatter.html.HtmlFormatter import HtmlFormatter
 
 
@@ -15,6 +15,7 @@ class TextHtmlFormatter(HtmlFormatter):
     """
     HtmlFormatter for generating HTML code for text.
     """
+
     # ------------------------------------------------------------------------------------------------------------------
     def generate(self, node, file):
         """
@@ -27,5 +28,6 @@ class TextHtmlFormatter(HtmlFormatter):
 
         HtmlFormatter.generate(self, node, file)
 
+
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_formatter('TEXT', 'html', TextHtmlFormatter)
+NodeStore.register_formatter('TEXT', 'html', TextHtmlFormatter)

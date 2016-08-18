@@ -7,6 +7,7 @@ Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
 import abc
+
 from sdoc.sdoc2 import in_scope, out_scope, node_store
 
 
@@ -326,7 +327,7 @@ class Node:
                     title_attribute = None
 
                 node_store.labels[node.argument] = {'argument': label_arg,
-                                                    'title': title_attribute}
+                                                    'title':    title_attribute}
 
                 # Removing node from child nodes.
                 self.child_nodes.remove(node.id)

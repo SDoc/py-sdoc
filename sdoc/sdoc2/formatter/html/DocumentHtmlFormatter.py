@@ -6,7 +6,7 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-from sdoc.sdoc2 import node_store
+from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.formatter.html.HtmlFormatter import HtmlFormatter
 
 
@@ -14,6 +14,7 @@ class DocumentHtmlFormatter(HtmlFormatter):
     """
     HtmlFormatter for generating HTML code for document.
     """
+
     # ------------------------------------------------------------------------------------------------------------------
     def generate(self, node, file):
         """
@@ -32,5 +33,6 @@ class DocumentHtmlFormatter(HtmlFormatter):
         file.write('</html>')
         file.close()
 
+
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_formatter('document', 'html', DocumentHtmlFormatter)
+NodeStore.register_formatter('document', 'html', DocumentHtmlFormatter)

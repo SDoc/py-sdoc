@@ -6,7 +6,7 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-from sdoc.sdoc2 import node_store
+from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.node.Node import Node
 
 
@@ -14,6 +14,7 @@ class DocumentNode(Node):
     """
     SDoc2 node for documents.
     """
+
     # ------------------------------------------------------------------------------------------------------------------
     def __init__(self, io, options):
         """
@@ -86,5 +87,6 @@ class DocumentNode(Node):
         """
         return False
 
+
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_block_command('document', DocumentNode)
+NodeStore.register_block_command('document', DocumentNode)

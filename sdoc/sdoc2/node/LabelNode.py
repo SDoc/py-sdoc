@@ -6,7 +6,7 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-from sdoc.sdoc2 import node_store
+from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.node.Node import Node
 
 
@@ -53,5 +53,6 @@ class LabelNode(Node):
         """
         return True
 
+
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_inline_command('label', LabelNode)
+NodeStore.register_inline_command('label', LabelNode)

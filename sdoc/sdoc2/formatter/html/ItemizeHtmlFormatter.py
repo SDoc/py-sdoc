@@ -6,7 +6,7 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-from sdoc.sdoc2 import node_store
+from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.formatter.html.HtmlFormatter import HtmlFormatter
 
 
@@ -14,6 +14,7 @@ class ItemizeHtmlFormatter(HtmlFormatter):
     """
     HtmlFormatter for generating HTML code for itemize.
     """
+
     # ------------------------------------------------------------------------------------------------------------------
     def generate(self, node, file):
         """
@@ -26,5 +27,6 @@ class ItemizeHtmlFormatter(HtmlFormatter):
         HtmlFormatter.generate(self, node, file)
         file.write('</ul>')
 
+
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_formatter('itemize', 'html', ItemizeHtmlFormatter)
+NodeStore.register_formatter('itemize', 'html', ItemizeHtmlFormatter)

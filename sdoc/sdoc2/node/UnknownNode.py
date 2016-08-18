@@ -6,7 +6,7 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-from sdoc.sdoc2 import node_store
+from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.node.Node import Node
 
 
@@ -14,6 +14,7 @@ class UnknownNode(Node):
     """
     SDoc2 node for development testing.
     """
+
     # ------------------------------------------------------------------------------------------------------------------
     def __init__(self, io, options, argument=''):
         """
@@ -63,5 +64,5 @@ class UnknownNode(Node):
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_block_command('unknown', UnknownNode)
-node_store.register_inline_command('unknown', UnknownNode)
+NodeStore.register_block_command('unknown', UnknownNode)
+NodeStore.register_inline_command('unknown', UnknownNode)
