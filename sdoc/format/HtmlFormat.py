@@ -100,10 +100,10 @@ class HtmlFormat(Format):
         if self._one_file:
             file_name = 'output.html'
             self._io.writeln('Writing <fso>{0!s}</fso>'.format(file_name))
-            general_file = open(file_name, 'wt', encoding='utf8')
-            formatter = sdoc2.node_store.create_formatter(self._io, 'document')
-            formatter.generate(sdoc2.node_store.nodes[1], general_file)
-            self._errors = formatter.errors
+            with open(file_name, 'wt', encoding='utf8') as general_file:
+                formatter = sdoc2.node_store.create_formatter(self._io, 'document')
+                formatter.generate(sdoc2.node_store.nodes[1], general_file)
+                self._errors = formatter.errors
 
         # Generate in mode 'output file on each chapter'.
         if self._file_per_chapter:
