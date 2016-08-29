@@ -367,9 +367,11 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         token = ctx.ERROR().getSymbol()
         filename = token.getInputStream().fileName  # Replace fileName with get_source_name() when implemented in ANTLR.
         line_number = token.line
+        column = token.column + 1
         message = SDoc.unescape(ctx.SIMPLE_ARG().getText())
 
-        self._io.writeln('<error>Error: {0!s} at {1!s}:{2:d}</error>'.format(message, os.path.relpath(filename), line_number))
+        self._io.writeln('<error>Error: {0}</error>'.format(message))
+        self._io.writeln('<error>Error: at {0}:{1}.{2}</error>'.format(os.path.relpath(filename), line_number, column))
 
         self.put_position(ctx, 'stop')
 
@@ -485,7 +487,8 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         line_number = token.line
         message = SDoc.unescape(ctx.SIMPLE_ARG().getText())
 
-        self._io.writeln('<notice>Notice: {0!s} at {1!s}:{2:d}</notice>'.format(message, os.path.relpath(filename), line_number))
+        self._io.writeln(
+            '<notice>Notice: {0!s} at {1!s}:{2:d}</notice>'.format(message, os.path.relpath(filename), line_number))
 
         self.put_position(ctx, 'stop')
 

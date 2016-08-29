@@ -20,6 +20,7 @@ class SDoc:
     """
     The SDoc program.
     """
+
     # ------------------------------------------------------------------------------------------------------------------
     def __init__(self):
         """
@@ -279,26 +280,33 @@ class SDoc:
         self._import_formatters()
 
     # ------------------------------------------------------------------------------------------------------------------
-    def run_sdoc1(self, sdoc1_path, sdoc2_path):
+    def run_sdoc1(self, sdoc1_path, sdoc2_path, log_errors=True):
         """
         Run the SDoc1 parser.
 
         :param str sdoc1_path: The path of the SDoc1 document.
         :param str sdoc2_path: The path were the the SDoc2 document mut be stored.
+        :param bool log_errors: If true the number of errors will be logged.
         """
         self._io.title('SDoc1')
 
         interpreter1 = SDoc1Interpreter(self._io)
         self._errors += interpreter1.process(sdoc1_path, sdoc2_path)
 
+        if log_errors and self._errors:
+            self._io.writeln(" ")
+            self._io.title('Errors')
+            self._io.error('There were {0} errors in total'.format(self._errors))
+
         return self._errors
 
     # ------------------------------------------------------------------------------------------------------------------
-    def run_sdoc2(self, sdoc2_path):
+    def run_sdoc2(self, sdoc2_path, log_errors=True):
         """
         Run the SDoc2 parser.
 
         :param str sdoc2_path: The path of the SDoc2 document.
+        :param bool log_errors: If true the number of errors will be logged.
         """
         self._io.writeln('')
         self._io.title('SDoc2')
@@ -306,35 +314,48 @@ class SDoc:
         interpreter2 = SDoc2Interpreter(self._io)
         self._errors += interpreter2.process(sdoc2_path)
 
+        if log_errors and self._errors:
+            self._io.writeln(" ")
+            self._io.title('Errors')
+            self._io.error('There were {0} errors in total'.format(self._errors))
+
         return self._errors
 
     # ------------------------------------------------------------------------------------------------------------------
-    def run_format(self):
+    def run_format(self, log_errors=True):
         """
         Generates the target document in the specific format.
+
+        :param bool log_errors: If true the number of errors will be logged.
         """
         self._io.writeln('')
         self._io.title('Format')
 
         self._errors += sdoc2.node_store.generate(self._format)
 
+        if log_errors and self._errors:
+            self._io.writeln(" ")
+            self._io.title('Errors')
+            self._io.error('There were {0} errors in total'.format(self._errors))
+
         return self._errors
 
     # ------------------------------------------------------------------------------------------------------------------
-    def run_sdoc(self, main_filename):
+    def run_sdoc(self, main_filename, log_errors=True):
         """
         Runs the SDoc1 and SDoc2 parser.
 
         :param str main_filename: The path of the SDoc1 document.
+        :param bool log_errors: If true the number of errors will be logged.
         """
         self.init()
 
         temp_filename = self._temp_dir + '/' + os.path.basename(main_filename) + '.sdoc2'
-        self.run_sdoc1(main_filename, temp_filename)
-        self.run_sdoc2(temp_filename)
-        self.run_format()
+        self.run_sdoc1(main_filename, temp_filename, False)
+        self.run_sdoc2(temp_filename, False)
+        self.run_format(False)
 
-        if self._errors:
+        if log_errors and self._errors:
             self._io.writeln(" ")
             self._io.title('Errors')
             self._io.error('There were {0} errors in total'.format(self._errors))
