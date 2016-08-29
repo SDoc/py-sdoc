@@ -7,15 +7,15 @@ Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
 from sdoc.helper.Html import Html
-from sdoc.sdoc2 import node_store
+from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.formatter.html.HtmlFormatter import HtmlFormatter
-from sdoc.sdoc2.node.ReferenceNode import ReferenceNode
 
 
 class TableHtmlFormatter(HtmlFormatter):
     """
     HtmlFormatter for generating HTML code for table.
     """
+
     # ------------------------------------------------------------------------------------------------------------------
     def generate(self, node, file):
         """
@@ -25,17 +25,6 @@ class TableHtmlFormatter(HtmlFormatter):
         :param file file: The output file.
         """
         self.write_into_file(node, file)
-
-    # ------------------------------------------------------------------------------------------------------------------
-    def generate_chapter(self, node, file):
-        """
-        Generates the HTML code for a table node.
-
-        :param sdoc.sdoc2.node.TableNode.TableNode node: The table node.
-        :param file file: The output file.
-        """
-        if file:
-            self.write_into_file(node, file)
 
     # ------------------------------------------------------------------------------------------------------------------
     def write_into_file(self, node, file):
@@ -129,7 +118,7 @@ class TableHtmlFormatter(HtmlFormatter):
 
         else:
             # Generates html in nested node ('col') with specified formatter.
-            formatter = node_store.get_formatter('html', col.get_command())
+            formatter = NodeStore.get_formatter('html', col.get_command())
             node_html = formatter.get_html(col)
 
             if align:
@@ -160,4 +149,4 @@ class TableHtmlFormatter(HtmlFormatter):
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_formatter('table', 'html', TableHtmlFormatter)
+NodeStore.register_formatter('table', 'html', TableHtmlFormatter)

@@ -21,6 +21,13 @@ Map from block commands to object creators.
 :type: dict[str,callable]
 """
 
+formatters = {}
+"""
+Map from format name to map from inline and block commands to format creators.
+
+:type: dict[str,dict[str,callable]]
+"""
+
 
 class NodeStore:
     """
@@ -47,13 +54,6 @@ class NodeStore:
         The output format.
 
         :type: str
-        """
-
-        self._formatters = {}
-        """
-        Map from format name to map from inline and block commands to format creators.
-
-        :type: dict[str,dict[str,callable]]
         """
 
         self.nested_nodes = []
@@ -85,7 +85,8 @@ class NodeStore:
         """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_formatter(self, output_type, name_formatter):
+    @staticmethod
+    def get_formatter(output_type, name_formatter):
         """
         Returns the formatter for special type.
 
@@ -94,7 +95,7 @@ class NodeStore:
 
         :rtype: sdoc.sdoc2.formatter.Formatter.Formatter
         """
-        return self._formatters[output_type][name_formatter]
+        return formatters[output_type][name_formatter]
 
     # ------------------------------------------------------------------------------------------------------------------
     def end_block_node(self, command):
@@ -154,7 +155,8 @@ class NodeStore:
         inline_creators[command] = constructor
 
     # ------------------------------------------------------------------------------------------------------------------
-    def register_formatter(self, command, output_format, formatter):
+    @staticmethod
+    def register_formatter(command, output_format, formatter):
         """
         Registers a output formatter constructor for a command.
 
@@ -162,10 +164,10 @@ class NodeStore:
         :param str output_format: The output format the formatter generates.
         :param callable formatter: The formatter for generating the content of the node in the output format.
         """
-        if output_format not in self._formatters:
-            self._formatters[output_format] = {}
+        if output_format not in formatters:
+            formatters[output_format] = {}
 
-        self._formatters[output_format][command] = formatter
+        formatters[output_format][command] = formatter
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
@@ -195,13 +197,13 @@ class NodeStore:
         if command not in inline_creators:
             # @todo set error status
             constructor = inline_creators['unknown']
-            node = constructor(options, argument)
+            node = constructor(self._io, options, argument)
             node.name = command
 
         else:
             # Create the new node.
             constructor = inline_creators[command]
-            node = constructor(options, argument)
+            node = constructor(self._io, options, argument)
 
         node.position = position
 
@@ -231,7 +233,7 @@ class NodeStore:
             # Create the new node.
             constructor = block_creators[command]
 
-        node = constructor(options)
+        node = constructor(self._io, options)
         node.position = position
 
         # Store the node and assign ID.
@@ -289,14 +291,14 @@ class NodeStore:
 
         :rtype: sdoc.sdoc2.formatter.Formatter.Formatter
         """
-        if self.format not in self._formatters:
+        if self.format not in formatters:
             raise RuntimeError("Unknown output format '{0!s}'.".format(self.format))
 
-        if command not in self._formatters[self.format]:
+        if command not in formatters[self.format]:
             # @todo use default none decorator with warning
             raise RuntimeError("Unknown formatter '{0!s}' for format '{1!s}'.".format(command, self.format))
 
-        constructor = self._formatters[self.format][command]
+        constructor = formatters[self.format][command]
         formatter = constructor(io, parent)
 
         return formatter
@@ -334,10 +336,9 @@ class NodeStore:
 
         if node_hierarchy_level - parent_hierarchy_level > 1:
             # @todo position
-            self._io.writeln(("<warn>Warning</warn> improper nesting of levels:"
-                                         "{0:d} at {1!s} and {2:d} at {3!s}.")
-                                        .format(parent_hierarchy_level, parent_node.position,
-                                                node_hierarchy_level, node.position))
+            self._io.warning(("improper nesting of levels:{0:d} at {1!s} and {2:d} at {3!s}.")
+                             .format(parent_hierarchy_level, parent_node.position,
+                                     node_hierarchy_level, node.position))
 
     # ------------------------------------------------------------------------------------------------------------------
     def store_node(self, node):
@@ -414,15 +415,26 @@ class NodeStore:
         self.nodes[1].number(self._enumerable_numbers)
 
     # ------------------------------------------------------------------------------------------------------------------
+    def generate_toc(self):
+        """
+        Checks if we have table of contents in document. If yes, we generate table of contents.
+        """
+        for key, node in self.nodes.items():
+            if node.get_command() == 'toc':
+                node.generate_toc()
+
+    # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def generate(formatter):
+    def generate(target_format):
         """
         Generates the document.
 
-        :param sdoc.format.Format.Format formatter: The format which will generate file.
+        :param sdoc.format.Format.Format target_format: The format which will generate file.
         """
         # Start generating file using specific formatter.
-        formatter.generate()
+        target_format.generate()
+
+        return target_format.errors
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_enumerated_items(self):

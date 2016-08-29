@@ -6,7 +6,8 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-from sdoc.sdoc2 import node_store, in_scope, out_scope
+from sdoc.sdoc2 import in_scope, out_scope
+from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.node.Node import Node
 from sdoc.sdoc2.node.TextNode import TextNode
 
@@ -17,14 +18,15 @@ class ItemNode(Node):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, options, argument):
+    def __init__(self, io, options, argument):
         """
         Object constructor.
 
+        :param None|cleo.styles.output_style.OutputStyle io: The IO object.
         :param dict[str,str] options: The options of this item.
         :param str argument: Not used.
         """
-        super().__init__('item', options, argument)
+        super().__init__(io, 'item', options, argument)
 
         self._hierarchy_level = 0
 
@@ -91,11 +93,21 @@ class ItemNode(Node):
         """
         Method which checks if all child nodes is phrasing.
         """
+        first = self.child_nodes[0]
+        last = self.child_nodes[-1]
+
         for node_id in self.child_nodes:
             node = in_scope(node_id)
 
             if isinstance(node, TextNode):
-                node.prune_whitespace(leading=True, trailing=True)
+                if node_id == first:
+                    node.prune_whitespace(leading=True)
+
+                elif node_id == last:
+                    node.prune_whitespace(trailing=True)
+
+                elif node_id == first and node_id == last:
+                    node.prune_whitespace(leading=True, trailing=True)
 
             # if not node.is_phrasing():
             #    raise RuntimeError("Node: id:%s, %s is not phrasing" % (str(node.id), node.name))
@@ -145,4 +157,4 @@ class ItemNode(Node):
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_inline_command('item', ItemNode)
+NodeStore.register_inline_command('item', ItemNode)

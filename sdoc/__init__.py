@@ -6,14 +6,14 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-from sdoc.application.SdocApplication import SDoc
+from sdoc.application.SDocApplication import SDocApplication
 
 
 def main():
     """
     The main of the sdoc program.
     """
-    sdoc_application = SDoc()
+    sdoc_application = SDocApplication()
     sdoc_application.run()
 
 # ----------------------------------------------------------------------------------------------------------------------

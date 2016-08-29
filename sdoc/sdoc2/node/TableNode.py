@@ -6,10 +6,12 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-import re
 import csv
 import io
-from sdoc.sdoc2 import node_store, in_scope, out_scope
+import re
+
+from sdoc.sdoc2 import in_scope, out_scope
+from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.node.Node import Node
 
 
@@ -19,13 +21,14 @@ class TableNode(Node):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, options):
+    def __init__(self, in_out, options):
         """
         Object constructor.
 
+        :param None|cleo.styles.output_style.OutputStyle in_out: The IO object.
         :param dict[str,str] options: The options of this table.
         """
-        super().__init__('table', options)
+        super().__init__(in_out, 'table', options)
 
         self.rows = []
         """
@@ -334,5 +337,6 @@ class TableNode(Node):
 
         return clear_row
 
+
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_block_command('table', TableNode)
+NodeStore.register_block_command('table', TableNode)

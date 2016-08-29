@@ -6,9 +6,10 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-from sdoc.sdoc2 import node_store, in_scope, out_scope
-from sdoc.sdoc2.node.Node import Node
+from sdoc.sdoc2 import node_store, out_scope, in_scope
+from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.node.ItemNode import ItemNode
+from sdoc.sdoc2.node.Node import Node
 
 
 class ItemizeNode(Node):
@@ -17,13 +18,14 @@ class ItemizeNode(Node):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, options):
+    def __init__(self, io, options):
         """
         Object constructor.
 
+        :param None|cleo.styles.output_style.OutputStyle io: The IO object.
         :param dict[str,str] options: The options of this itemize.
         """
-        super().__init__('itemize', options)
+        super().__init__(io, 'itemize', options)
 
         self._hierarchy_level = 0
 
@@ -153,4 +155,4 @@ class ItemizeNode(Node):
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_block_command('itemize', ItemizeNode)
+NodeStore.register_block_command('itemize', ItemizeNode)

@@ -6,7 +6,8 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-from sdoc.sdoc2 import node_store, in_scope, out_scope
+from sdoc.sdoc2 import in_scope, out_scope
+from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.node.HeadingNode import HeadingNode
 from sdoc.sdoc2.node.Node import Node
 from sdoc.sdoc2.node.TextNode import TextNode
@@ -18,14 +19,15 @@ class ParagraphNode(HeadingNode):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, options, argument):
+    def __init__(self, io, options, argument):
         """
         Object constructor.
 
+        :param None|cleo.styles.output_style.OutputStyle io: The IO object.
         :param dict[str,str] options: Not used.
         :param str argument: The text of this paragraph.
         """
-        super().__init__('paragraph', options, argument)
+        super().__init__(io, 'paragraph', options, argument)
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_command(self):
@@ -64,6 +66,13 @@ class ParagraphNode(HeadingNode):
         return False
 
     # ------------------------------------------------------------------------------------------------------------------
+    def set_toc_id(self):
+        """
+        Don't do anything. Because we needn't this behaviour here.
+        """
+        pass
+
+    # ------------------------------------------------------------------------------------------------------------------
     def prune_whitespace(self):
         """
         Removes spaces from end of a paragraph.
@@ -86,4 +95,4 @@ class ParagraphNode(HeadingNode):
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_inline_command('paragraph', ParagraphNode)
+NodeStore.register_inline_command('paragraph', ParagraphNode)

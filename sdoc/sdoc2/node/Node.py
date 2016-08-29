@@ -7,6 +7,7 @@ Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
 import abc
+
 from sdoc.sdoc2 import in_scope, out_scope, node_store
 
 
@@ -16,14 +17,22 @@ class Node:
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, name, options=None, argument=''):
+    def __init__(self, io, name, options=None, argument=''):
         """
         Object constructor.
 
+        :param None|cleo.styles.output_style.OutputStyle io: The IO object.
         :param str name: The (command) name of this node.
         :param dict[str,str] options: The options of this node.
         :param str argument: The argument of this node (inline commands only).
         """
+        self._io = io
+        """
+        The IO object.
+
+        :type None|cleo.styles.output_style.OutputStyle:
+        """
+
         self.id = 0
         """
         The ID of this SDoc2 node.
@@ -49,7 +58,7 @@ class Node:
         """
         The options of this node.
 
-        :type: dict[str,int|str]
+        :type: dict[str,mixed]
         """
 
         self.child_nodes = []
@@ -72,6 +81,16 @@ class Node:
 
         :type:
         """
+
+    # ------------------------------------------------------------------------------------------------------------------
+    @property
+    def io(self):
+        """
+        Getter for io.
+
+        :rtype: cleo.styles.output_style.OutputStyle
+        """
+        return self._io
 
     # ------------------------------------------------------------------------------------------------------------------
     @property
@@ -100,7 +119,7 @@ class Node:
 
         :param int level: the level of block commands.
         """
-        print("{0!s}{1:4d} {2!s}".format(' ' * 4 * level, self.id, self.name))
+        self.io.writeln("{0!s}{1:4d} {2!s}".format(' ' * 4 * level, self.id, self.name))
         for node_id in self.child_nodes:
             node = in_scope(node_id)
 
@@ -308,7 +327,7 @@ class Node:
                     title_attribute = None
 
                 node_store.labels[node.argument] = {'argument': label_arg,
-                                                    'title': title_attribute}
+                                                    'title':    title_attribute}
 
                 # Removing node from child nodes.
                 self.child_nodes.remove(node.id)

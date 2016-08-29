@@ -7,8 +7,10 @@ Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
 from urllib import request, error
+
 import httplib2
-from sdoc.sdoc2 import node_store
+
+from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.node.Node import Node
 
 
@@ -16,15 +18,17 @@ class HyperlinkNode(Node):
     """
     SDoc2 node for hyperlinks.
     """
+
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, options, argument):
+    def __init__(self, io, options, argument):
         """
         Object constructor.
 
+        :param None|cleo.styles.output_style.OutputStyle io: The IO object.
         :param dict[str,str] options: The options of the hyperlink.
         :param str argument: Not used.
         """
-        super().__init__('hyperlink', options, argument)
+        super().__init__(io, 'hyperlink', options, argument)
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_html_attributes(self):
@@ -82,7 +86,7 @@ class HyperlinkNode(Node):
 
             # Check if we can connect to host.
             if response.getcode() not in range(200, 400):
-                print("Warning! - Cannot connect to: '{0!s}'".format(self._options['href']))
+                self.io.warning("Cannot connect to: '{0!s}'".format(self._options['href']))
             else:
                 # If we connected, check the redirect.
                 url = self._options['href'].lstrip('(http://)|(https://)')
@@ -101,7 +105,7 @@ class HyperlinkNode(Node):
                         self._options['href'].replace('http://', 'https://')
 
         except error.URLError:
-            print("Warning! - Invalid url address: '{0!s}'".format(self._options['href']))
+            self.io.warning("Invalid url address: '{0!s}'".format(self._options['href']))
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_command(self):
@@ -141,4 +145,4 @@ class HyperlinkNode(Node):
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_inline_command('hyperlink', HyperlinkNode)
+NodeStore.register_inline_command('hyperlink', HyperlinkNode)

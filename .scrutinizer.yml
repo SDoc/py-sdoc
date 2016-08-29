@@ -1,8 +1,8 @@
 before_commands:
-  - pip3 install antlr4-python3-runtime
-  - pip3 install httplib2
-  - pip3 install cleo
-  - pip3 install coverage
+  - sudo pip3 install antlr4-python3-runtime
+  - sudo pip3 install httplib2
+  - sudo pip3 install cleo
+  - sudo pip3 install coverage
 
 build:
     dependencies:

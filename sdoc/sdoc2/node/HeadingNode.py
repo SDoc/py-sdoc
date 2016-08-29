@@ -8,26 +8,28 @@ Licence MIT
 # ----------------------------------------------------------------------------------------------------------------------
 import sdoc
 from sdoc.sdoc2 import in_scope, out_scope
+from sdoc.sdoc2.helper.Enumerable import Enumerable
+from sdoc.sdoc2.node.EndParagraphNode import EndParagraphNode
 from sdoc.sdoc2.node.Node import Node
 from sdoc.sdoc2.node.TextNode import TextNode
-from sdoc.sdoc2.node.EndParagraphNode import EndParagraphNode
-from sdoc.sdoc2.helper.Enumerable import Enumerable
 
 
 class HeadingNode(Node):
     """
     Abstract class for heading nodes.
     """
+
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, name, options, argument):
+    def __init__(self, io, name, options, argument):
         """
         Object constructor.
 
+        :param None|cleo.styles.output_style.OutputStyle io: The IO object.
         :param str name: The (command) name of this heading.
         :param dict[str,str] options: The options of this heading.
         :param str argument: The title of this heading.
         """
-        super().__init__(name, options, argument)
+        super().__init__(name, io, options, argument)
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_hierarchy_name(self):
@@ -73,6 +75,14 @@ class HeadingNode(Node):
         self._options['number'] = enumerable_numbers['heading'].get_string()
 
         super().number(enumerable_numbers)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def set_toc_id(self):
+        """
+        Set ID for table of contents.
+        """
+        if 'id' not in self._options:
+            self._options['id'] = '#{}:{}'.format(self.name, self._options['number'])
 
     # ------------------------------------------------------------------------------------------------------------------
     def prepare_content_tree(self):

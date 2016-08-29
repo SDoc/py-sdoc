@@ -6,7 +6,7 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-from sdoc.sdoc2 import node_store
+from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.node.Node import Node
 
 
@@ -14,15 +14,17 @@ class FigureNode(Node):
     """
     A stub for SDoc2 node for figures.
     """
+
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, options, argument):
+    def __init__(self, io, options, argument):
         """
         Object constructor.
 
+        :param None|cleo.styles.output_style.OutputStyle io: The IO object.
         :param dict[str,str] options: The options of this figure.
         :param str argument: Not used.
         """
-        super().__init__('figure', options, argument)
+        super().__init__(io, 'figure', options, argument)
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_command(self):
@@ -102,5 +104,6 @@ class FigureNode(Node):
 
         super().number(enumerable_numbers)
 
+
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_inline_command('figure', FigureNode)
+NodeStore.register_inline_command('figure', FigureNode)

@@ -6,7 +6,7 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
-from sdoc.sdoc2 import node_store
+from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.formatter.html.HtmlFormatter import HtmlFormatter
 
 
@@ -14,6 +14,7 @@ class DocumentHtmlFormatter(HtmlFormatter):
     """
     HtmlFormatter for generating HTML code for document.
     """
+
     # ------------------------------------------------------------------------------------------------------------------
     def generate(self, node, file):
         """
@@ -22,25 +23,8 @@ class DocumentHtmlFormatter(HtmlFormatter):
         :param sdoc.sdoc2.node.DocumentNode.DocumentNode node: The document node.
         :param file file: The output file.
         """
-        file.write('<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="NL" lang="NL">')
-        file.write('<head><meta charset="UTF-8"/><title>sdoc</title></head>')
-        file.write('<body>')
+        HtmlFormatter.generate(self, node, file)
 
-        super().generate(node, file)
-
-        file.write('</body>')
-        file.write('</html>')
-        file.close()
-
-    # ------------------------------------------------------------------------------------------------------------------
-    def generate_chapter(self, node, file):
-        """
-        Passing the document node, because not used in generating chapters of a document.
-
-        :param sdoc.sdoc2.node.DocumentNode.DocumentNode node: The document node.
-        :param file file: The output file.
-        """
-        super().generate_chapter(node, file)
 
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_formatter('document', 'html', DocumentHtmlFormatter)
+NodeStore.register_formatter('document', 'html', DocumentHtmlFormatter)

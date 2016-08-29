@@ -26,8 +26,25 @@ class Format:
         """
         The IO object.
 
-        :type cleo.styles.output_style.OutputStyle:
+        :type: cleo.styles.output_style.OutputStyle
         """
+
+        self._errors = 0
+        """
+        The error count.
+
+        :type: int
+        """
+
+    # ------------------------------------------------------------------------------------------------------------------
+    @property
+    def errors(self):
+        """
+        Getter for the error count.
+
+        :rtype: int
+        """
+        return self._errors
 
     # ------------------------------------------------------------------------------------------------------------------
     @abc.abstractmethod

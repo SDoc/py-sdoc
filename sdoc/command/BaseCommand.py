@@ -27,7 +27,7 @@ class BaseCommand(Command):
         """
         The IO object.
 
-        :type None|cleo.styles.output_style.OutputStyle:
+        :type: None|cleo.styles.output_style.OutputStyle
         """
 
 # ----------------------------------------------------------------------------------------------------------------------

@@ -7,7 +7,7 @@ Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
 from sdoc.helper.Html import Html
-from sdoc.sdoc2 import node_store
+from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.formatter.html.HtmlFormatter import HtmlFormatter
 
 
@@ -15,6 +15,7 @@ class FigureHtmlFormatter(HtmlFormatter):
     """
     HtmlFormatter for generating HTML code for figures.
     """
+
     # ------------------------------------------------------------------------------------------------------------------
     def generate(self, node, file):
         """
@@ -25,20 +26,7 @@ class FigureHtmlFormatter(HtmlFormatter):
         """
         self.write_into_file(node, file)
 
-        super().generate(node, file)
-
-    # ------------------------------------------------------------------------------------------------------------------
-    def generate_chapter(self, node, file):
-        """
-        Generates the HTML code for a figure node.
-
-        :param sdoc.sdoc2.node.FigureNode.FigureNode node: The figure node.
-        :param file file: The output file.
-        """
-        if file:
-            self.write_into_file(node, file)
-
-        super().generate_chapter(node, file)
+        HtmlFormatter.generate(self, node, file)
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
@@ -50,10 +38,10 @@ class FigureHtmlFormatter(HtmlFormatter):
         :param file file: The output file.
         """
         # Creating dicts with attributes for each type of element.
-        img_attributes = {'src': node.get_option_value('filename'),
-                          'width': node.get_option_value('width'),
+        img_attributes = {'src':    node.get_option_value('filename'),
+                          'width':  node.get_option_value('width'),
                           'height': node.get_option_value('height'),
-                          'alt': node.get_option_value('caption')}
+                          'alt':    node.get_option_value('caption')}
         div_attributes = {'class': node.get_option_value('class')}
 
         # Creating elements.
@@ -65,4 +53,4 @@ class FigureHtmlFormatter(HtmlFormatter):
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_formatter('figure', 'html', FigureHtmlFormatter)
+NodeStore.register_formatter('figure', 'html', FigureHtmlFormatter)

@@ -7,8 +7,9 @@ Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
 import re
+
 import sdoc
-from sdoc.sdoc2 import node_store
+from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.node.Node import Node
 
 
@@ -18,14 +19,15 @@ class TextNode(Node):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, options, argument):
+    def __init__(self, io, options, argument):
         """
         Object constructor.
 
+        :param None|cleo.styles.output_style.OutputStyle io: The IO object.
         :param dict[str,str] options: Not used.
         :param str argument: The actual text.
         """
-        super().__init__('TEXT', options, argument)
+        super().__init__(io, 'TEXT', options, argument)
 
     # ------------------------------------------------------------------------------------------------------------------
     def print_info(self, level):
@@ -34,7 +36,7 @@ class TextNode(Node):
 
         :param int level: the level of block commands.
         """
-        print("{0!s}{1:4d} {2!s} {3!s}".format(' ' * 4 * level, self.id, self.name, ''))
+        self.io.writeln("{0!s}{1:4d} {2!s} {3!s}".format(' ' * 4 * level, self.id, self.name, ''))
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_command(self):
@@ -101,7 +103,7 @@ class TextNode(Node):
 
             # Creating text and paragraph end nodes and put id's in list.
             for text in list_of_texts[:to]:
-                text_node = TextNode({}, text)
+                text_node = TextNode(self.io, {}, text)
                 sdoc.sdoc2.node_store.store_node(text_node)
                 text_ids.append(text_node.id)
 
@@ -131,4 +133,4 @@ class TextNode(Node):
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-node_store.register_inline_command('TEXT', TextNode)
+NodeStore.register_inline_command('TEXT', TextNode)

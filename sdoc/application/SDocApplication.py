@@ -14,9 +14,9 @@ from sdoc.command.SDoc2Command import SDoc2Command
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-class SDoc(Application):
+class SDocApplication(Application):
     """
-    The SDoc application.
+    The SDocApplication application.
     """
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -24,7 +24,7 @@ class SDoc(Application):
         """
         Object constructor.
         """
-        Application.__init__(self, 'SDoc', '0.0.7')
+        Application.__init__(self, 'SDocApplication', '0.0.11')
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_default_commands(self):

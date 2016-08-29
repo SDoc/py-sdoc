@@ -4,7 +4,7 @@ from cleo.styles import CleoStyle
 
 class SdocStyle(CleoStyle):
     """
-    Output style for SDoc.
+    Output style for SDocApplication.
     """
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -24,10 +24,6 @@ class SdocStyle(CleoStyle):
         # Style for errors.
         style = OutputFormatterStyle('red', None, ['bold'])
         output.get_formatter().set_style('err', style)
-
-        # Style for warnings.
-        style = OutputFormatterStyle('yellow', None, ['bold'])
-        output.get_formatter().set_style('warn', style)
 
         # Style for SDoc1 notices.
         style = OutputFormatterStyle('yellow')

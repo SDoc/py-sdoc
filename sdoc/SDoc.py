@@ -32,7 +32,7 @@ class SDoc:
         :type: None|sdoc.style.SdocStyle.SdocStyle
         """
 
-        self._formatter = None
+        self._format = None
         """
         The class for generation the document in the target format.
 
@@ -180,7 +180,7 @@ class SDoc:
                             .format(class_name, self._config_path))
 
         # Create the formatter.
-        self._formatter = m(self._io, config[section])
+        self._format = m(self._io, config[section])
 
     # ------------------------------------------------------------------------------------------------------------------
     def _config_set_temp_dir(self, config):
@@ -309,6 +309,18 @@ class SDoc:
         return self._errors
 
     # ------------------------------------------------------------------------------------------------------------------
+    def run_format(self):
+        """
+        Generates the target document in the specific format.
+        """
+        self._io.writeln('')
+        self._io.title('Format')
+
+        self._errors += sdoc2.node_store.generate(self._format)
+
+        return self._errors
+
+    # ------------------------------------------------------------------------------------------------------------------
     def run_sdoc(self, main_filename):
         """
         Runs the SDoc1 and SDoc2 parser.
@@ -320,15 +332,12 @@ class SDoc:
         temp_filename = self._temp_dir + '/' + os.path.basename(main_filename) + '.sdoc2'
         self.run_sdoc1(main_filename, temp_filename)
         self.run_sdoc2(temp_filename)
-
-        # Start generating file with specific format.
-        self._io.writeln('')
-        self._io.title('Formatter')
-        sdoc2.node_store.generate(self._formatter)
+        self.run_format()
 
         if self._errors:
             self._io.writeln(" ")
-            self._io.writeln('There were <err>{0:d} errors</err> in total'.format(self._errors))
+            self._io.title('Errors')
+            self._io.writeln('There were <err>{0} errors</err> in total'.format(self._errors))
 
         return self._errors
 
