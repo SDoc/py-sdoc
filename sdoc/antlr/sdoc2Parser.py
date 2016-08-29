@@ -1,4 +1,4 @@
-# Generated from sdoc/antlr/sdoc2Parser.g4 by ANTLR 4.5.1
+# Generated from sdoc/antlr/sdoc2Parser.g4 by ANTLR 4.5.3
 # encoding: utf-8
 from antlr4 import *
 from io import StringIO
@@ -97,7 +97,7 @@ class sdoc2Parser ( Parser ):
 
     def __init__(self, input:TokenStream):
         super().__init__(input)
-        self.checkVersion("4.5.1")
+        self.checkVersion("4.5.3")
         self._interp = ParserATNSimulator(self, self.atn, self.decisionsToDFA, self.sharedContextCache)
         self._predicates = None
 

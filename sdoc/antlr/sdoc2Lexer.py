@@ -1,4 +1,4 @@
-# Generated from sdoc/antlr/sdoc2Lexer.g4 by ANTLR 4.5.1
+# Generated from sdoc/antlr/sdoc2Lexer.g4 by ANTLR 4.5.3
 from antlr4 import *
 from io import StringIO
 
@@ -144,7 +144,7 @@ class sdoc2Lexer(Lexer):
 
     def __init__(self, input=None):
         super().__init__(input)
-        self.checkVersion("4.5.1")
+        self.checkVersion("4.5.3")
         self._interp = LexerATNSimulator(self, self.atn, self.decisionsToDFA, PredictionContextCache())
         self._actions = None
         self._predicates = None

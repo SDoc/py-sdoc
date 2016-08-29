@@ -474,6 +474,18 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         self.put_position(ctx, 'stop')
 
     # ------------------------------------------------------------------------------------------------------------------
+    def visitCmd_substitute(self, ctx):
+        """
+        Visit a parse tree produced by sdoc1Parser#cmd_substitute.
+
+        :param sdoc1Parser.Cmd_substituteContext ctx:  The parse tree.
+        """
+        expression = ctx.expression()
+        self.stream(expression.accept(self).get_value())
+
+        self.put_position(ctx, 'stop')
+
+    # ------------------------------------------------------------------------------------------------------------------
     def visitCmd_sdoc2(self, ctx):
         """
         Visits a parse tree produced by sdoc1Parser#sdoc2_cmd.

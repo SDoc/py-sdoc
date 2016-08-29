@@ -14,6 +14,7 @@ command
   | cmd_if
   | cmd_include
   | cmd_notice
+  | cmd_substitute
 
   | cmd_sdoc2   // Note: This command MUST be the last alternative of all commands.
   ;
@@ -39,6 +40,9 @@ cmd_include: INCLUDE SIMPLE_OBRACE SIMPLE_ARG SIMPLE_CBRACE;
 
 // Notice command. Prints message on console.
 cmd_notice: NOTICE SIMPLE_OBRACE SIMPLE_ARG SIMPLE_CBRACE;
+
+// Substitute command. Substitues the value of an expression in to SDoc2 output.
+cmd_substitute: SUBSTITUTE EXPR_OBRACE expression EXPR_CBRACE;
 
 // SDoc2 command. Passed through to the output without modifications.
 cmd_sdoc2: SDOC2_COMMAND;

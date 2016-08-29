@@ -1,4 +1,4 @@
-# Generated from sdoc/antlr/sdoc1Parser.g4 by ANTLR 4.5.1
+# Generated from sdoc/antlr/sdoc1Parser.g4 by ANTLR 4.5.3
 from antlr4 import *
 if __name__ is not None and "." in __name__:
     from .sdoc1Parser import sdoc1Parser
@@ -51,6 +51,11 @@ class sdoc1ParserVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by sdoc1Parser#cmd_notice.
     def visitCmd_notice(self, ctx:sdoc1Parser.Cmd_noticeContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by sdoc1Parser#cmd_substitute.
+    def visitCmd_substitute(self, ctx:sdoc1Parser.Cmd_substituteContext):
         return self.visitChildren(ctx)
 
 

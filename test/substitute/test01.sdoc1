@@ -1,0 +1,3 @@
+\expression{hello='Hello World'}
+
+SDoc says \substitute{hello}.
