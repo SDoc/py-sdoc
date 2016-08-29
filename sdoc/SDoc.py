@@ -337,7 +337,7 @@ class SDoc:
         if self._errors:
             self._io.writeln(" ")
             self._io.title('Errors')
-            self._io.writeln('There were <err>{0} errors</err> in total'.format(self._errors))
+            self._io.error('There were {0} errors in total'.format(self._errors))
 
         return self._errors
 

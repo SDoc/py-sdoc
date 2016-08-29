@@ -369,7 +369,7 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         line_number = token.line
         message = SDoc.unescape(ctx.SIMPLE_ARG().getText())
 
-        self._io.writeln('<err>Error: {0!s} at {1!s}:{2:d}</err>'.format(message, os.path.relpath(filename), line_number))
+        self._io.writeln('<error>Error: {0!s} at {1!s}:{2:d}</error>'.format(message, os.path.relpath(filename), line_number))
 
         self.put_position(ctx, 'stop')
 
