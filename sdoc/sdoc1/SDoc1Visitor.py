@@ -365,13 +365,9 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         :param sdoc1Parser.Cmd_errorContext ctx: The parse tree.
         """
         token = ctx.ERROR().getSymbol()
-        filename = token.getInputStream().fileName  # Replace fileName with get_source_name() when implemented in ANTLR.
-        line_number = token.line
-        column = token.column + 1
         message = SDoc.unescape(ctx.SIMPLE_ARG().getText())
 
-        self._io.writeln('<error>Error: {0}</error>'.format(message))
-        self._io.writeln('<error>Error: at {0}:{1}.{2}</error>'.format(os.path.relpath(filename), line_number, column))
+        self._error(message, token)
 
         self.put_position(ctx, 'stop')
 
