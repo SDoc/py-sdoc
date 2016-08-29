@@ -358,6 +358,22 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         self.put_position(ctx, 'stop')
 
     # ------------------------------------------------------------------------------------------------------------------
+    def visitCmd_error(self, ctx):
+        """
+        Visits a parse tree produced by sdoc1Parser#cmd_error.
+
+        :param sdoc1Parser.Cmd_errorContext ctx: The parse tree.
+        """
+        token = ctx.ERROR().getSymbol()
+        filename = token.getInputStream().fileName  # Replace fileName with get_source_name() when implemented in ANTLR.
+        line_number = token.line
+        message = SDoc.unescape(ctx.SIMPLE_ARG().getText())
+
+        self._io.writeln('<err>Error: {0!s} at {1!s}:{2:d}</err>'.format(message, os.path.relpath(filename), line_number))
+
+        self.put_position(ctx, 'stop')
+
+    # ------------------------------------------------------------------------------------------------------------------
     def visitCmd_if(self, ctx):
         """
         Visits a parse tree produced by sdoc1Parser#cmd_if.
@@ -469,7 +485,7 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         line_number = token.line
         message = SDoc.unescape(ctx.SIMPLE_ARG().getText())
 
-        self._io.writeln('<notice>Notice: {0!s} at {1!s}:{2:d}'.format(message, os.path.relpath(filename), line_number))
+        self._io.writeln('<notice>Notice: {0!s} at {1!s}:{2:d}</notice>'.format(message, os.path.relpath(filename), line_number))
 
         self.put_position(ctx, 'stop')
 

@@ -39,6 +39,11 @@ class sdoc1ParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by sdoc1Parser#cmd_error.
+    def visitCmd_error(self, ctx:sdoc1Parser.Cmd_errorContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by sdoc1Parser#cmd_if.
     def visitCmd_if(self, ctx:sdoc1Parser.Cmd_ifContext):
         return self.visitChildren(ctx)

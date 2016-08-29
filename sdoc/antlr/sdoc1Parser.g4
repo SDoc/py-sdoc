@@ -11,6 +11,7 @@ command
   : cmd_comment
   | cmd_debug
   | cmd_expression
+  | cmd_error
   | cmd_if
   | cmd_include
   | cmd_notice
@@ -28,6 +29,9 @@ cmd_debug: DEBUG EXPR_OBRACE expression? EXPR_CBRACE;
 
 // Expression command. Sets one or more variables.
 cmd_expression: EXPRESSION EXPR_OBRACE expression EXPR_CBRACE;
+
+// Error command. Logs an error messages and increases the error count.
+cmd_error: ERROR SIMPLE_OBRACE SIMPLE_ARG SIMPLE_CBRACE;
 
 // If-then-else command.
 cmd_if: IF EXPR_OBRACE expression EXPR_CBRACE sdoc
