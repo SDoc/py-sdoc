@@ -84,9 +84,9 @@ class HtmlFormat(Format):
     # ------------------------------------------------------------------------------------------------------------------
     def generate(self):
         """
-        Starts generating HTML file.
+        Generating the document in HTML and returns the number of error encountered.
 
-        :rtype int: The error count.
+        :rtype: int
         """
         # Activate numbering nodes.
         if self.enumerate:

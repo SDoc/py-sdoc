@@ -384,7 +384,7 @@ class Node:
                     node.argument = node_store.labels[node.argument]['argument']
 
                 else:
-                    node_store.error("Missing label with id: '{}'".format(node.argument), node)
+                    node_store.error("Label '{}' not found".format(node.argument), node)
 
             node.change_ref_argument()
 
