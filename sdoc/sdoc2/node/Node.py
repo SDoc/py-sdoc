@@ -299,7 +299,7 @@ class Node:
     # ------------------------------------------------------------------------------------------------------------------
     def parse_labels(self):
         """
-        Parses all labels and call methods to collect labels.and for
+        Parses all labels and call methods to collect labels.
         """
         self.modify_label_list()
 
@@ -374,13 +374,17 @@ class Node:
         for node_id in self.child_nodes:
             node = in_scope(node_id)
 
-            if node.argument in node_store.labels and node.get_command() == 'ref':
-                node.set_option_value('href', '#{0}'.format(node.argument))
+            if node.get_command() == 'ref':
+                if node.argument in node_store.labels:
+                    node.set_option_value('href', '#{0}'.format(node.argument))
 
-                if node_store.labels[node.argument]['title']:
-                    node.set_option_value('title', node_store.labels[node.argument]['title'])
+                    if node_store.labels[node.argument]['title']:
+                        node.set_option_value('title', node_store.labels[node.argument]['title'])
 
-                node.argument = node_store.labels[node.argument]['argument']
+                    node.argument = node_store.labels[node.argument]['argument']
+
+                else:
+                    node_store.error("Label '{}' not found".format(node.argument), node)
 
             node.change_ref_argument()
 

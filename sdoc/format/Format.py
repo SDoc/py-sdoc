@@ -50,7 +50,9 @@ class Format:
     @abc.abstractmethod
     def generate(self):
         """
-        Starts generating HTML file.
+        Generating the document in the target format and returns the number of error encountered.
+
+        :rtype: int
         """
         raise NotImplementedError()
 
