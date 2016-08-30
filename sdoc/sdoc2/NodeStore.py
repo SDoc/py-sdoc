@@ -36,6 +36,13 @@ class NodeStore:
     @todo Make abstract and implement other document store classes.
     """
 
+    errors = 0
+    """
+    The error count.
+
+    :type: int
+    """
+
     # ------------------------------------------------------------------------------------------------------------------
     def __init__(self, io):
         """
@@ -83,6 +90,25 @@ class NodeStore:
 
         :type: dict[str,str]
         """
+
+    # ------------------------------------------------------------------------------------------------------------------
+    @staticmethod
+    def error(message, node=None):
+        """
+        Logs an error.
+
+        :param str message: The error message.this message will be appended with 'at filename:line.column' ot the token.
+        :param sdoc.sdoc2.node.Node.Node node: The node where the error occurred.
+        """
+        NodeStore.errors += 1
+
+        messages = [message]
+        if node:
+            filename = node.position.file_name
+            line_number = node.position.start_line
+            column_number = node.position.start_column + 1
+            messages.append('Position: {0!s}:{1:d}.{2:d}'.format(filename, line_number, column_number))
+        node.io.warning(messages)
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
@@ -431,10 +457,12 @@ class NodeStore:
 
         :param sdoc.format.Format.Format target_format: The format which will generate file.
         """
-        # Start generating file using specific formatter.
-        target_format.generate()
+        # Start generating file using specific formatter and check the errors.
+        format_errors = target_format.generate()
 
-        return target_format.errors
+        NodeStore.errors += format_errors
+
+        return NodeStore.errors
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_enumerated_items(self):
