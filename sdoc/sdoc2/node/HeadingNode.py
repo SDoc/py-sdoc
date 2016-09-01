@@ -29,7 +29,7 @@ class HeadingNode(Node):
         :param dict[str,str] options: The options of this heading.
         :param str argument: The title of this heading.
         """
-        super().__init__(name, io, options, argument)
+        super().__init__(io, name, options, argument)
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_hierarchy_name(self):

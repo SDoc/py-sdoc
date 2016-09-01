@@ -36,18 +36,26 @@ class NodeStore:
     @todo Make abstract and implement other document store classes.
     """
 
+    _errors = 0
+    """
+    The error count.
+
+    :type: int
+    """
+
+    _io = None
+    """
+    Styled output formatter.
+
+    :type: None|sdoc.style.SdocStyle.SdocStyle
+    """
+
     # ------------------------------------------------------------------------------------------------------------------
     def __init__(self, io):
         """
         Object constructor.
         """
-
-        self._io = io
-        """
-        Styled output formatter.
-
-        :type: sdoc.style.SdocStyle.SdocStyle
-        """
+        NodeStore._io = io
 
         self.format = 'html'
         """
@@ -83,6 +91,25 @@ class NodeStore:
 
         :type: dict[str,str]
         """
+
+    # ------------------------------------------------------------------------------------------------------------------
+    @staticmethod
+    def error(message, node=None):
+        """
+        Logs an error.
+
+        :param str message: The error message.this message will be appended with 'at filename:line.column' ot the token.
+        :param sdoc.sdoc2.node.Node.Node node: The node where the error occurred.
+        """
+        NodeStore._errors += 1
+
+        messages = [message]
+        if node:
+            filename = node.position.file_name
+            line_number = node.position.start_line
+            column_number = node.position.start_column + 1
+            messages.append('Position: {0!s}:{1:d}.{2:d}'.format(filename, line_number, column_number))
+        NodeStore._io.error(messages)
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
@@ -319,8 +346,8 @@ class NodeStore:
                 if node.is_hierarchy_root():
                     parent_found = True
                 else:
-                    raise RuntimeError("Improper nesting of node '{0!s}' at {1!s} and node '{2!s}' at {3!s}."
-                                       .format(parent_node.name, parent_node.position, node.name, node.position))
+                    self.error("Improper nesting of node '{0!s}' at {1!s} and node '{2!s}' at {3!s}.".format(
+                        parent_node.name, parent_node.position, node.name, node.position))
 
             if not parent_found:
                 parent_hierarchy_level = parent_node.get_hierarchy_level()
@@ -335,10 +362,9 @@ class NodeStore:
         node_hierarchy_level = node.get_hierarchy_level(parent_hierarchy_level)
 
         if node_hierarchy_level - parent_hierarchy_level > 1:
-            # @todo position
-            self._io.warning(("improper nesting of levels:{0:d} at {1!s} and {2:d} at {3!s}.")
-                             .format(parent_hierarchy_level, parent_node.position,
-                                     node_hierarchy_level, node.position))
+            self.error("Improper nesting of levels:{0:d} at {1!s} and {2:d} at {3!s}.".format(
+                parent_hierarchy_level, parent_node.position, node_hierarchy_level, node.position),
+                node)
 
     # ------------------------------------------------------------------------------------------------------------------
     def store_node(self, node):
@@ -431,10 +457,12 @@ class NodeStore:
 
         :param sdoc.format.Format.Format target_format: The format which will generate file.
         """
-        # Start generating file using specific formatter.
-        target_format.generate()
+        # Start generating file using specific formatter and check the errors.
+        format_errors = target_format.generate()
 
-        return target_format.errors
+        NodeStore._errors += format_errors
+
+        return NodeStore._errors
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_enumerated_items(self):

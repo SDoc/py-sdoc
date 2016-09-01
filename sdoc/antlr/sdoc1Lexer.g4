@@ -15,10 +15,12 @@ DEBUG:      '\\debug'           -> mode(MODE_EXPR);
 ELIF:       '\\elif'            -> mode(MODE_EXPR);
 ELSE:       '\\else';
 ENDIF:      '\\endif';
+ERROR:      '\\error'           -> mode(MODE_SIMPLE);
 EXPRESSION: '\\expression'      -> mode(MODE_EXPR);
 IF:         '\\if'              -> mode(MODE_EXPR);
 INCLUDE:    '\\include'         -> mode(MODE_SIMPLE);
 NOTICE:     '\\notice'          -> mode(MODE_SIMPLE);
+SUBSTITUTE: '\\substitute'      -> mode(MODE_EXPR);
 
 // All other tokens starting with \ are considered SDoc2 commands.
 SDOC2_COMMAND: '\\'[a-z_]+;

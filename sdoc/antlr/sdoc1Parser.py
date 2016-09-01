@@ -1,102 +1,111 @@
-# Generated from sdoc/antlr/sdoc1Parser.g4 by ANTLR 4.5.1
+# Generated from sdoc/antlr/sdoc1Parser.g4 by ANTLR 4.5.3
 # encoding: utf-8
 from antlr4 import *
 from io import StringIO
 
 def serializedATN():
     with StringIO() as buf:
-        buf.write("\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3(")
-        buf.write("\u00e4\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7")
+        buf.write("\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3*")
+        buf.write("\u00f4\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7")
         buf.write("\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4\f\t\f\4\r\t\r\4\16")
         buf.write("\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22\4\23\t\23")
-        buf.write("\4\24\t\24\4\25\t\25\4\26\t\26\3\2\3\2\7\2/\n\2\f\2\16")
-        buf.write("\2\62\13\2\3\3\3\3\3\4\3\4\3\4\3\4\3\4\3\4\3\4\5\4=\n")
-        buf.write("\4\3\5\3\5\3\6\3\6\3\6\5\6D\n\6\3\6\3\6\3\7\3\7\3\7\3")
-        buf.write("\7\3\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\7\b")
-        buf.write("X\n\b\f\b\16\b[\13\b\3\b\3\b\5\b_\n\b\3\b\3\b\3\t\3\t")
-        buf.write("\3\t\3\t\3\t\3\n\3\n\3\n\3\n\3\n\3\13\3\13\3\f\3\f\3\f")
-        buf.write("\3\f\3\f\3\f\3\f\5\fv\n\f\3\r\3\r\3\r\3\r\3\r\3\r\3\r")
-        buf.write("\3\r\7\r\u0080\n\r\f\r\16\r\u0083\13\r\3\16\3\16\3\16")
-        buf.write("\3\16\3\16\3\16\3\16\3\16\3\16\7\16\u008e\n\16\f\16\16")
-        buf.write("\16\u0091\13\16\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17")
-        buf.write("\3\17\7\17\u009c\n\17\f\17\16\17\u009f\13\17\3\20\3\20")
-        buf.write("\3\20\3\20\3\20\3\20\3\20\3\20\3\20\3\20\3\20\3\20\3\20")
-        buf.write("\3\20\3\20\7\20\u00b0\n\20\f\20\16\20\u00b3\13\20\3\21")
-        buf.write("\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\7\21\u00be\n")
-        buf.write("\21\f\21\16\21\u00c1\13\21\3\22\3\22\3\22\3\22\3\22\3")
-        buf.write("\22\7\22\u00c9\n\22\f\22\16\22\u00cc\13\22\3\23\3\23\3")
-        buf.write("\23\3\23\3\23\3\23\7\23\u00d4\n\23\f\23\16\23\u00d7\13")
-        buf.write("\23\3\24\3\24\3\24\3\24\3\24\5\24\u00de\n\24\3\25\3\25")
-        buf.write("\3\26\3\26\3\26\2\t\30\32\34\36 \"$\27\2\4\6\b\n\f\16")
-        buf.write("\20\22\24\26\30\32\34\36 \"$&(*\2\2\u00ea\2\60\3\2\2\2")
-        buf.write("\4\63\3\2\2\2\6<\3\2\2\2\b>\3\2\2\2\n@\3\2\2\2\fG\3\2")
-        buf.write("\2\2\16L\3\2\2\2\20b\3\2\2\2\22g\3\2\2\2\24l\3\2\2\2\26")
-        buf.write("u\3\2\2\2\30w\3\2\2\2\32\u0084\3\2\2\2\34\u0092\3\2\2")
-        buf.write("\2\36\u00a0\3\2\2\2 \u00b4\3\2\2\2\"\u00c2\3\2\2\2$\u00cd")
-        buf.write("\3\2\2\2&\u00dd\3\2\2\2(\u00df\3\2\2\2*\u00e1\3\2\2\2")
-        buf.write(",/\5\6\4\2-/\5\4\3\2.,\3\2\2\2.-\3\2\2\2/\62\3\2\2\2\60")
-        buf.write(".\3\2\2\2\60\61\3\2\2\2\61\3\3\2\2\2\62\60\3\2\2\2\63")
-        buf.write("\64\7\3\2\2\64\5\3\2\2\2\65=\5\b\5\2\66=\5\n\6\2\67=\5")
-        buf.write("\f\7\28=\5\16\b\29=\5\20\t\2:=\5\22\n\2;=\5\24\13\2<\65")
-        buf.write("\3\2\2\2<\66\3\2\2\2<\67\3\2\2\2<8\3\2\2\2<9\3\2\2\2<")
-        buf.write(":\3\2\2\2<;\3\2\2\2=\7\3\2\2\2>?\7\4\2\2?\t\3\2\2\2@A")
-        buf.write("\7\6\2\2AC\7\22\2\2BD\5*\26\2CB\3\2\2\2CD\3\2\2\2DE\3")
-        buf.write("\2\2\2EF\7\23\2\2F\13\3\2\2\2GH\7\n\2\2HI\7\22\2\2IJ\5")
-        buf.write("*\26\2JK\7\23\2\2K\r\3\2\2\2LM\7\13\2\2MN\7\22\2\2NO\5")
-        buf.write("*\26\2OP\7\23\2\2PY\5\2\2\2QR\7\7\2\2RS\7\22\2\2ST\5*")
-        buf.write("\26\2TU\7\23\2\2UV\5\2\2\2VX\3\2\2\2WQ\3\2\2\2X[\3\2\2")
-        buf.write("\2YW\3\2\2\2YZ\3\2\2\2Z^\3\2\2\2[Y\3\2\2\2\\]\7\b\2\2")
-        buf.write("]_\5\2\2\2^\\\3\2\2\2^_\3\2\2\2_`\3\2\2\2`a\7\t\2\2a\17")
-        buf.write("\3\2\2\2bc\7\f\2\2cd\7\17\2\2de\7\21\2\2ef\7\20\2\2f\21")
-        buf.write("\3\2\2\2gh\7\r\2\2hi\7\17\2\2ij\7\21\2\2jk\7\20\2\2k\23")
-        buf.write("\3\2\2\2lm\7\16\2\2m\25\3\2\2\2nv\7&\2\2ov\7\'\2\2pv\7")
-        buf.write("(\2\2qr\7\25\2\2rs\5*\26\2st\7\26\2\2tv\3\2\2\2un\3\2")
-        buf.write("\2\2uo\3\2\2\2up\3\2\2\2uq\3\2\2\2v\27\3\2\2\2wx\b\r\1")
-        buf.write("\2xy\5\26\f\2y\u0081\3\2\2\2z{\f\3\2\2{|\7\27\2\2|}\5")
-        buf.write("*\26\2}~\7\30\2\2~\u0080\3\2\2\2\177z\3\2\2\2\u0080\u0083")
-        buf.write("\3\2\2\2\u0081\177\3\2\2\2\u0081\u0082\3\2\2\2\u0082\31")
-        buf.write("\3\2\2\2\u0083\u0081\3\2\2\2\u0084\u0085\b\16\1\2\u0085")
-        buf.write("\u0086\5\30\r\2\u0086\u008f\3\2\2\2\u0087\u0088\f\4\2")
-        buf.write("\2\u0088\u0089\7\31\2\2\u0089\u008e\5\30\r\2\u008a\u008b")
-        buf.write("\f\3\2\2\u008b\u008c\7\32\2\2\u008c\u008e\5\30\r\2\u008d")
-        buf.write("\u0087\3\2\2\2\u008d\u008a\3\2\2\2\u008e\u0091\3\2\2\2")
-        buf.write("\u008f\u008d\3\2\2\2\u008f\u0090\3\2\2\2\u0090\33\3\2")
-        buf.write("\2\2\u0091\u008f\3\2\2\2\u0092\u0093\b\17\1\2\u0093\u0094")
-        buf.write("\5\32\16\2\u0094\u009d\3\2\2\2\u0095\u0096\f\4\2\2\u0096")
-        buf.write("\u0097\7\33\2\2\u0097\u009c\5\32\16\2\u0098\u0099\f\3")
-        buf.write("\2\2\u0099\u009a\7\34\2\2\u009a\u009c\5\32\16\2\u009b")
-        buf.write("\u0095\3\2\2\2\u009b\u0098\3\2\2\2\u009c\u009f\3\2\2\2")
-        buf.write("\u009d\u009b\3\2\2\2\u009d\u009e\3\2\2\2\u009e\35\3\2")
-        buf.write("\2\2\u009f\u009d\3\2\2\2\u00a0\u00a1\b\20\1\2\u00a1\u00a2")
-        buf.write("\5\34\17\2\u00a2\u00b1\3\2\2\2\u00a3\u00a4\f\6\2\2\u00a4")
-        buf.write("\u00a5\7\"\2\2\u00a5\u00b0\5\34\17\2\u00a6\u00a7\f\5\2")
-        buf.write("\2\u00a7\u00a8\7\36\2\2\u00a8\u00b0\5\34\17\2\u00a9\u00aa")
-        buf.write("\f\4\2\2\u00aa\u00ab\7#\2\2\u00ab\u00b0\5\34\17\2\u00ac")
-        buf.write("\u00ad\f\3\2\2\u00ad\u00ae\7\37\2\2\u00ae\u00b0\5\34\17")
-        buf.write("\2\u00af\u00a3\3\2\2\2\u00af\u00a6\3\2\2\2\u00af\u00a9")
-        buf.write("\3\2\2\2\u00af\u00ac\3\2\2\2\u00b0\u00b3\3\2\2\2\u00b1")
-        buf.write("\u00af\3\2\2\2\u00b1\u00b2\3\2\2\2\u00b2\37\3\2\2\2\u00b3")
-        buf.write("\u00b1\3\2\2\2\u00b4\u00b5\b\21\1\2\u00b5\u00b6\5\36\20")
-        buf.write("\2\u00b6\u00bf\3\2\2\2\u00b7\u00b8\f\4\2\2\u00b8\u00b9")
-        buf.write("\7\35\2\2\u00b9\u00be\5\36\20\2\u00ba\u00bb\f\3\2\2\u00bb")
-        buf.write("\u00bc\7$\2\2\u00bc\u00be\5\36\20\2\u00bd\u00b7\3\2\2")
-        buf.write("\2\u00bd\u00ba\3\2\2\2\u00be\u00c1\3\2\2\2\u00bf\u00bd")
-        buf.write("\3\2\2\2\u00bf\u00c0\3\2\2\2\u00c0!\3\2\2\2\u00c1\u00bf")
-        buf.write("\3\2\2\2\u00c2\u00c3\b\22\1\2\u00c3\u00c4\5 \21\2\u00c4")
-        buf.write("\u00ca\3\2\2\2\u00c5\u00c6\f\3\2\2\u00c6\u00c7\7 \2\2")
-        buf.write("\u00c7\u00c9\5 \21\2\u00c8\u00c5\3\2\2\2\u00c9\u00cc\3")
-        buf.write("\2\2\2\u00ca\u00c8\3\2\2\2\u00ca\u00cb\3\2\2\2\u00cb#")
-        buf.write("\3\2\2\2\u00cc\u00ca\3\2\2\2\u00cd\u00ce\b\23\1\2\u00ce")
-        buf.write("\u00cf\5\"\22\2\u00cf\u00d5\3\2\2\2\u00d0\u00d1\f\3\2")
-        buf.write("\2\u00d1\u00d2\7!\2\2\u00d2\u00d4\5\"\22\2\u00d3\u00d0")
-        buf.write("\3\2\2\2\u00d4\u00d7\3\2\2\2\u00d5\u00d3\3\2\2\2\u00d5")
-        buf.write("\u00d6\3\2\2\2\u00d6%\3\2\2\2\u00d7\u00d5\3\2\2\2\u00d8")
-        buf.write("\u00de\5$\23\2\u00d9\u00da\5\30\r\2\u00da\u00db\5(\25")
-        buf.write("\2\u00db\u00dc\5&\24\2\u00dc\u00de\3\2\2\2\u00dd\u00d8")
-        buf.write("\3\2\2\2\u00dd\u00d9\3\2\2\2\u00de\'\3\2\2\2\u00df\u00e0")
-        buf.write("\7%\2\2\u00e0)\3\2\2\2\u00e1\u00e2\5&\24\2\u00e2+\3\2")
-        buf.write("\2\2\25.\60<CY^u\u0081\u008d\u008f\u009b\u009d\u00af\u00b1")
-        buf.write("\u00bd\u00bf\u00ca\u00d5\u00dd")
+        buf.write("\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\3\2")
+        buf.write("\3\2\7\2\63\n\2\f\2\16\2\66\13\2\3\3\3\3\3\4\3\4\3\4\3")
+        buf.write("\4\3\4\3\4\3\4\3\4\3\4\5\4C\n\4\3\5\3\5\3\6\3\6\3\6\5")
+        buf.write("\6J\n\6\3\6\3\6\3\7\3\7\3\7\3\7\3\7\3\b\3\b\3\b\3\b\3")
+        buf.write("\b\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\7\tc\n")
+        buf.write("\t\f\t\16\tf\13\t\3\t\3\t\5\tj\n\t\3\t\3\t\3\n\3\n\3\n")
+        buf.write("\3\n\3\n\3\13\3\13\3\13\3\13\3\13\3\f\3\f\3\f\3\f\3\f")
+        buf.write("\3\r\3\r\3\16\3\16\3\16\3\16\3\16\3\16\3\16\5\16\u0086")
+        buf.write("\n\16\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\7\17\u0090")
+        buf.write("\n\17\f\17\16\17\u0093\13\17\3\20\3\20\3\20\3\20\3\20")
+        buf.write("\3\20\3\20\3\20\3\20\7\20\u009e\n\20\f\20\16\20\u00a1")
+        buf.write("\13\20\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\7")
+        buf.write("\21\u00ac\n\21\f\21\16\21\u00af\13\21\3\22\3\22\3\22\3")
+        buf.write("\22\3\22\3\22\3\22\3\22\3\22\3\22\3\22\3\22\3\22\3\22")
+        buf.write("\3\22\7\22\u00c0\n\22\f\22\16\22\u00c3\13\22\3\23\3\23")
+        buf.write("\3\23\3\23\3\23\3\23\3\23\3\23\3\23\7\23\u00ce\n\23\f")
+        buf.write("\23\16\23\u00d1\13\23\3\24\3\24\3\24\3\24\3\24\3\24\7")
+        buf.write("\24\u00d9\n\24\f\24\16\24\u00dc\13\24\3\25\3\25\3\25\3")
+        buf.write("\25\3\25\3\25\7\25\u00e4\n\25\f\25\16\25\u00e7\13\25\3")
+        buf.write("\26\3\26\3\26\3\26\3\26\5\26\u00ee\n\26\3\27\3\27\3\30")
+        buf.write("\3\30\3\30\2\t\34\36 \"$&(\31\2\4\6\b\n\f\16\20\22\24")
+        buf.write("\26\30\32\34\36 \"$&(*,.\2\2\u00fa\2\64\3\2\2\2\4\67\3")
+        buf.write("\2\2\2\6B\3\2\2\2\bD\3\2\2\2\nF\3\2\2\2\fM\3\2\2\2\16")
+        buf.write("R\3\2\2\2\20W\3\2\2\2\22m\3\2\2\2\24r\3\2\2\2\26w\3\2")
+        buf.write("\2\2\30|\3\2\2\2\32\u0085\3\2\2\2\34\u0087\3\2\2\2\36")
+        buf.write("\u0094\3\2\2\2 \u00a2\3\2\2\2\"\u00b0\3\2\2\2$\u00c4\3")
+        buf.write("\2\2\2&\u00d2\3\2\2\2(\u00dd\3\2\2\2*\u00ed\3\2\2\2,\u00ef")
+        buf.write("\3\2\2\2.\u00f1\3\2\2\2\60\63\5\6\4\2\61\63\5\4\3\2\62")
+        buf.write("\60\3\2\2\2\62\61\3\2\2\2\63\66\3\2\2\2\64\62\3\2\2\2")
+        buf.write("\64\65\3\2\2\2\65\3\3\2\2\2\66\64\3\2\2\2\678\7\3\2\2")
+        buf.write("8\5\3\2\2\29C\5\b\5\2:C\5\n\6\2;C\5\f\7\2<C\5\16\b\2=")
+        buf.write("C\5\20\t\2>C\5\22\n\2?C\5\24\13\2@C\5\26\f\2AC\5\30\r")
+        buf.write("\2B9\3\2\2\2B:\3\2\2\2B;\3\2\2\2B<\3\2\2\2B=\3\2\2\2B")
+        buf.write(">\3\2\2\2B?\3\2\2\2B@\3\2\2\2BA\3\2\2\2C\7\3\2\2\2DE\7")
+        buf.write("\4\2\2E\t\3\2\2\2FG\7\6\2\2GI\7\24\2\2HJ\5.\30\2IH\3\2")
+        buf.write("\2\2IJ\3\2\2\2JK\3\2\2\2KL\7\25\2\2L\13\3\2\2\2MN\7\13")
+        buf.write("\2\2NO\7\24\2\2OP\5.\30\2PQ\7\25\2\2Q\r\3\2\2\2RS\7\n")
+        buf.write("\2\2ST\7\21\2\2TU\7\23\2\2UV\7\22\2\2V\17\3\2\2\2WX\7")
+        buf.write("\f\2\2XY\7\24\2\2YZ\5.\30\2Z[\7\25\2\2[d\5\2\2\2\\]\7")
+        buf.write("\7\2\2]^\7\24\2\2^_\5.\30\2_`\7\25\2\2`a\5\2\2\2ac\3\2")
+        buf.write("\2\2b\\\3\2\2\2cf\3\2\2\2db\3\2\2\2de\3\2\2\2ei\3\2\2")
+        buf.write("\2fd\3\2\2\2gh\7\b\2\2hj\5\2\2\2ig\3\2\2\2ij\3\2\2\2j")
+        buf.write("k\3\2\2\2kl\7\t\2\2l\21\3\2\2\2mn\7\r\2\2no\7\21\2\2o")
+        buf.write("p\7\23\2\2pq\7\22\2\2q\23\3\2\2\2rs\7\16\2\2st\7\21\2")
+        buf.write("\2tu\7\23\2\2uv\7\22\2\2v\25\3\2\2\2wx\7\17\2\2xy\7\24")
+        buf.write("\2\2yz\5.\30\2z{\7\25\2\2{\27\3\2\2\2|}\7\20\2\2}\31\3")
+        buf.write("\2\2\2~\u0086\7(\2\2\177\u0086\7)\2\2\u0080\u0086\7*\2")
+        buf.write("\2\u0081\u0082\7\27\2\2\u0082\u0083\5.\30\2\u0083\u0084")
+        buf.write("\7\30\2\2\u0084\u0086\3\2\2\2\u0085~\3\2\2\2\u0085\177")
+        buf.write("\3\2\2\2\u0085\u0080\3\2\2\2\u0085\u0081\3\2\2\2\u0086")
+        buf.write("\33\3\2\2\2\u0087\u0088\b\17\1\2\u0088\u0089\5\32\16\2")
+        buf.write("\u0089\u0091\3\2\2\2\u008a\u008b\f\3\2\2\u008b\u008c\7")
+        buf.write("\31\2\2\u008c\u008d\5.\30\2\u008d\u008e\7\32\2\2\u008e")
+        buf.write("\u0090\3\2\2\2\u008f\u008a\3\2\2\2\u0090\u0093\3\2\2\2")
+        buf.write("\u0091\u008f\3\2\2\2\u0091\u0092\3\2\2\2\u0092\35\3\2")
+        buf.write("\2\2\u0093\u0091\3\2\2\2\u0094\u0095\b\20\1\2\u0095\u0096")
+        buf.write("\5\34\17\2\u0096\u009f\3\2\2\2\u0097\u0098\f\4\2\2\u0098")
+        buf.write("\u0099\7\33\2\2\u0099\u009e\5\34\17\2\u009a\u009b\f\3")
+        buf.write("\2\2\u009b\u009c\7\34\2\2\u009c\u009e\5\34\17\2\u009d")
+        buf.write("\u0097\3\2\2\2\u009d\u009a\3\2\2\2\u009e\u00a1\3\2\2\2")
+        buf.write("\u009f\u009d\3\2\2\2\u009f\u00a0\3\2\2\2\u00a0\37\3\2")
+        buf.write("\2\2\u00a1\u009f\3\2\2\2\u00a2\u00a3\b\21\1\2\u00a3\u00a4")
+        buf.write("\5\36\20\2\u00a4\u00ad\3\2\2\2\u00a5\u00a6\f\4\2\2\u00a6")
+        buf.write("\u00a7\7\35\2\2\u00a7\u00ac\5\36\20\2\u00a8\u00a9\f\3")
+        buf.write("\2\2\u00a9\u00aa\7\36\2\2\u00aa\u00ac\5\36\20\2\u00ab")
+        buf.write("\u00a5\3\2\2\2\u00ab\u00a8\3\2\2\2\u00ac\u00af\3\2\2\2")
+        buf.write("\u00ad\u00ab\3\2\2\2\u00ad\u00ae\3\2\2\2\u00ae!\3\2\2")
+        buf.write("\2\u00af\u00ad\3\2\2\2\u00b0\u00b1\b\22\1\2\u00b1\u00b2")
+        buf.write("\5 \21\2\u00b2\u00c1\3\2\2\2\u00b3\u00b4\f\6\2\2\u00b4")
+        buf.write("\u00b5\7$\2\2\u00b5\u00c0\5 \21\2\u00b6\u00b7\f\5\2\2")
+        buf.write("\u00b7\u00b8\7 \2\2\u00b8\u00c0\5 \21\2\u00b9\u00ba\f")
+        buf.write("\4\2\2\u00ba\u00bb\7%\2\2\u00bb\u00c0\5 \21\2\u00bc\u00bd")
+        buf.write("\f\3\2\2\u00bd\u00be\7!\2\2\u00be\u00c0\5 \21\2\u00bf")
+        buf.write("\u00b3\3\2\2\2\u00bf\u00b6\3\2\2\2\u00bf\u00b9\3\2\2\2")
+        buf.write("\u00bf\u00bc\3\2\2\2\u00c0\u00c3\3\2\2\2\u00c1\u00bf\3")
+        buf.write("\2\2\2\u00c1\u00c2\3\2\2\2\u00c2#\3\2\2\2\u00c3\u00c1")
+        buf.write("\3\2\2\2\u00c4\u00c5\b\23\1\2\u00c5\u00c6\5\"\22\2\u00c6")
+        buf.write("\u00cf\3\2\2\2\u00c7\u00c8\f\4\2\2\u00c8\u00c9\7\37\2")
+        buf.write("\2\u00c9\u00ce\5\"\22\2\u00ca\u00cb\f\3\2\2\u00cb\u00cc")
+        buf.write("\7&\2\2\u00cc\u00ce\5\"\22\2\u00cd\u00c7\3\2\2\2\u00cd")
+        buf.write("\u00ca\3\2\2\2\u00ce\u00d1\3\2\2\2\u00cf\u00cd\3\2\2\2")
+        buf.write("\u00cf\u00d0\3\2\2\2\u00d0%\3\2\2\2\u00d1\u00cf\3\2\2")
+        buf.write("\2\u00d2\u00d3\b\24\1\2\u00d3\u00d4\5$\23\2\u00d4\u00da")
+        buf.write("\3\2\2\2\u00d5\u00d6\f\3\2\2\u00d6\u00d7\7\"\2\2\u00d7")
+        buf.write("\u00d9\5$\23\2\u00d8\u00d5\3\2\2\2\u00d9\u00dc\3\2\2\2")
+        buf.write("\u00da\u00d8\3\2\2\2\u00da\u00db\3\2\2\2\u00db\'\3\2\2")
+        buf.write("\2\u00dc\u00da\3\2\2\2\u00dd\u00de\b\25\1\2\u00de\u00df")
+        buf.write("\5&\24\2\u00df\u00e5\3\2\2\2\u00e0\u00e1\f\3\2\2\u00e1")
+        buf.write("\u00e2\7#\2\2\u00e2\u00e4\5&\24\2\u00e3\u00e0\3\2\2\2")
+        buf.write("\u00e4\u00e7\3\2\2\2\u00e5\u00e3\3\2\2\2\u00e5\u00e6\3")
+        buf.write("\2\2\2\u00e6)\3\2\2\2\u00e7\u00e5\3\2\2\2\u00e8\u00ee")
+        buf.write("\5(\25\2\u00e9\u00ea\5\34\17\2\u00ea\u00eb\5,\27\2\u00eb")
+        buf.write("\u00ec\5*\26\2\u00ec\u00ee\3\2\2\2\u00ed\u00e8\3\2\2\2")
+        buf.write("\u00ed\u00e9\3\2\2\2\u00ee+\3\2\2\2\u00ef\u00f0\7\'\2")
+        buf.write("\2\u00f0-\3\2\2\2\u00f1\u00f2\5*\26\2\u00f2/\3\2\2\2\25")
+        buf.write("\62\64BIdi\u0085\u0091\u009d\u009f\u00ab\u00ad\u00bf\u00c1")
+        buf.write("\u00cd\u00cf\u00da\u00e5\u00ed")
         return buf.getvalue()
 
 
@@ -111,23 +120,24 @@ class sdoc1Parser ( Parser ):
     sharedContextCache = PredictionContextCache()
 
     literalNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "'\\comment'", 
-                     "'\\debug'", "'\\elif'", "'\\else'", "'\\endif'", "'\\expression'", 
-                     "'\\if'", "'\\include'", "'\\notice'", "<INVALID>", 
+                     "'\\debug'", "'\\elif'", "'\\else'", "'\\endif'", "'\\error'", 
+                     "'\\expression'", "'\\if'", "'\\include'", "'\\notice'", 
+                     "'\\substitute'", "<INVALID>", "<INVALID>", "<INVALID>", 
                      "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                     "<INVALID>", "<INVALID>", "'('", "')'", "'['", "']'", 
-                     "'*'", "'/'", "'+'", "'-'", "'=='", "'>'", "'>='", 
-                     "'&&'", "'||'", "'<'", "'<='", "'!='", "'='" ]
+                     "'('", "')'", "'['", "']'", "'*'", "'/'", "'+'", "'-'", 
+                     "'=='", "'>'", "'>='", "'&&'", "'||'", "'<'", "'<='", 
+                     "'!='", "'='" ]
 
     symbolicNames = [ "<INVALID>", "TEXT", "LINE_COMMENT", "COMMENT", "DEBUG", 
-                      "ELIF", "ELSE", "ENDIF", "EXPRESSION", "IF", "INCLUDE", 
-                      "NOTICE", "SDOC2_COMMAND", "SIMPLE_OBRACE", "SIMPLE_CBRACE", 
-                      "SIMPLE_ARG", "EXPR_OBRACE", "EXPR_CBRACE", "EXPR_WS", 
-                      "EXPR_LEFT_PAREN", "EXPR_RIGHT_PAREN", "EXPR_LEFT_BRACKET", 
-                      "EXPR_RIGHT_BRACKET", "EXPR_MULT", "EXPR_DIV", "EXPR_ADD", 
-                      "EXPR_MINUS", "EXPR_EQUAL", "EXPR_GT", "EXPR_GTE", 
-                      "EXPR_LOGICAL_AND", "EXPR_LOGICAL_OR", "EXPR_LT", 
-                      "EXPR_LTE", "EXPR_NOT_EQUAL", "EXPR_ASSIGN", "EXPR_IDENTIFIER", 
-                      "EXPR_INTEGER_CONSTANT", "EXPR_STRING_CONSTANT" ]
+                      "ELIF", "ELSE", "ENDIF", "ERROR", "EXPRESSION", "IF", 
+                      "INCLUDE", "NOTICE", "SUBSTITUTE", "SDOC2_COMMAND", 
+                      "SIMPLE_OBRACE", "SIMPLE_CBRACE", "SIMPLE_ARG", "EXPR_OBRACE", 
+                      "EXPR_CBRACE", "EXPR_WS", "EXPR_LEFT_PAREN", "EXPR_RIGHT_PAREN", 
+                      "EXPR_LEFT_BRACKET", "EXPR_RIGHT_BRACKET", "EXPR_MULT", 
+                      "EXPR_DIV", "EXPR_ADD", "EXPR_MINUS", "EXPR_EQUAL", 
+                      "EXPR_GT", "EXPR_GTE", "EXPR_LOGICAL_AND", "EXPR_LOGICAL_OR", 
+                      "EXPR_LT", "EXPR_LTE", "EXPR_NOT_EQUAL", "EXPR_ASSIGN", 
+                      "EXPR_IDENTIFIER", "EXPR_INTEGER_CONSTANT", "EXPR_STRING_CONSTANT" ]
 
     RULE_sdoc = 0
     RULE_text = 1
@@ -135,28 +145,31 @@ class sdoc1Parser ( Parser ):
     RULE_cmd_comment = 3
     RULE_cmd_debug = 4
     RULE_cmd_expression = 5
-    RULE_cmd_if = 6
-    RULE_cmd_include = 7
-    RULE_cmd_notice = 8
-    RULE_cmd_sdoc2 = 9
-    RULE_primaryExpression = 10
-    RULE_postfixExpression = 11
-    RULE_multiplicativeExpression = 12
-    RULE_additiveExpression = 13
-    RULE_relationalExpression = 14
-    RULE_equalityExpression = 15
-    RULE_logicalAndExpression = 16
-    RULE_logicalOrExpression = 17
-    RULE_assignmentExpression = 18
-    RULE_assignmentOperator = 19
-    RULE_expression = 20
+    RULE_cmd_error = 6
+    RULE_cmd_if = 7
+    RULE_cmd_include = 8
+    RULE_cmd_notice = 9
+    RULE_cmd_substitute = 10
+    RULE_cmd_sdoc2 = 11
+    RULE_primaryExpression = 12
+    RULE_postfixExpression = 13
+    RULE_multiplicativeExpression = 14
+    RULE_additiveExpression = 15
+    RULE_relationalExpression = 16
+    RULE_equalityExpression = 17
+    RULE_logicalAndExpression = 18
+    RULE_logicalOrExpression = 19
+    RULE_assignmentExpression = 20
+    RULE_assignmentOperator = 21
+    RULE_expression = 22
 
     ruleNames =  [ "sdoc", "text", "command", "cmd_comment", "cmd_debug", 
-                   "cmd_expression", "cmd_if", "cmd_include", "cmd_notice", 
-                   "cmd_sdoc2", "primaryExpression", "postfixExpression", 
-                   "multiplicativeExpression", "additiveExpression", "relationalExpression", 
-                   "equalityExpression", "logicalAndExpression", "logicalOrExpression", 
-                   "assignmentExpression", "assignmentOperator", "expression" ]
+                   "cmd_expression", "cmd_error", "cmd_if", "cmd_include", 
+                   "cmd_notice", "cmd_substitute", "cmd_sdoc2", "primaryExpression", 
+                   "postfixExpression", "multiplicativeExpression", "additiveExpression", 
+                   "relationalExpression", "equalityExpression", "logicalAndExpression", 
+                   "logicalOrExpression", "assignmentExpression", "assignmentOperator", 
+                   "expression" ]
 
     EOF = Token.EOF
     TEXT=1
@@ -166,41 +179,43 @@ class sdoc1Parser ( Parser ):
     ELIF=5
     ELSE=6
     ENDIF=7
-    EXPRESSION=8
-    IF=9
-    INCLUDE=10
-    NOTICE=11
-    SDOC2_COMMAND=12
-    SIMPLE_OBRACE=13
-    SIMPLE_CBRACE=14
-    SIMPLE_ARG=15
-    EXPR_OBRACE=16
-    EXPR_CBRACE=17
-    EXPR_WS=18
-    EXPR_LEFT_PAREN=19
-    EXPR_RIGHT_PAREN=20
-    EXPR_LEFT_BRACKET=21
-    EXPR_RIGHT_BRACKET=22
-    EXPR_MULT=23
-    EXPR_DIV=24
-    EXPR_ADD=25
-    EXPR_MINUS=26
-    EXPR_EQUAL=27
-    EXPR_GT=28
-    EXPR_GTE=29
-    EXPR_LOGICAL_AND=30
-    EXPR_LOGICAL_OR=31
-    EXPR_LT=32
-    EXPR_LTE=33
-    EXPR_NOT_EQUAL=34
-    EXPR_ASSIGN=35
-    EXPR_IDENTIFIER=36
-    EXPR_INTEGER_CONSTANT=37
-    EXPR_STRING_CONSTANT=38
+    ERROR=8
+    EXPRESSION=9
+    IF=10
+    INCLUDE=11
+    NOTICE=12
+    SUBSTITUTE=13
+    SDOC2_COMMAND=14
+    SIMPLE_OBRACE=15
+    SIMPLE_CBRACE=16
+    SIMPLE_ARG=17
+    EXPR_OBRACE=18
+    EXPR_CBRACE=19
+    EXPR_WS=20
+    EXPR_LEFT_PAREN=21
+    EXPR_RIGHT_PAREN=22
+    EXPR_LEFT_BRACKET=23
+    EXPR_RIGHT_BRACKET=24
+    EXPR_MULT=25
+    EXPR_DIV=26
+    EXPR_ADD=27
+    EXPR_MINUS=28
+    EXPR_EQUAL=29
+    EXPR_GT=30
+    EXPR_GTE=31
+    EXPR_LOGICAL_AND=32
+    EXPR_LOGICAL_OR=33
+    EXPR_LT=34
+    EXPR_LTE=35
+    EXPR_NOT_EQUAL=36
+    EXPR_ASSIGN=37
+    EXPR_IDENTIFIER=38
+    EXPR_INTEGER_CONSTANT=39
+    EXPR_STRING_CONSTANT=40
 
     def __init__(self, input:TokenStream):
         super().__init__(input)
-        self.checkVersion("4.5.1")
+        self.checkVersion("4.5.3")
         self._interp = ParserATNSimulator(self, self.atn, self.decisionsToDFA, self.sharedContextCache)
         self._predicates = None
 
@@ -245,24 +260,24 @@ class sdoc1Parser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 46
+            self.state = 50
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << sdoc1Parser.TEXT) | (1 << sdoc1Parser.LINE_COMMENT) | (1 << sdoc1Parser.DEBUG) | (1 << sdoc1Parser.EXPRESSION) | (1 << sdoc1Parser.IF) | (1 << sdoc1Parser.INCLUDE) | (1 << sdoc1Parser.NOTICE) | (1 << sdoc1Parser.SDOC2_COMMAND))) != 0):
-                self.state = 44
+            while (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << sdoc1Parser.TEXT) | (1 << sdoc1Parser.LINE_COMMENT) | (1 << sdoc1Parser.DEBUG) | (1 << sdoc1Parser.ERROR) | (1 << sdoc1Parser.EXPRESSION) | (1 << sdoc1Parser.IF) | (1 << sdoc1Parser.INCLUDE) | (1 << sdoc1Parser.NOTICE) | (1 << sdoc1Parser.SUBSTITUTE) | (1 << sdoc1Parser.SDOC2_COMMAND))) != 0):
+                self.state = 48
                 token = self._input.LA(1)
-                if token in [sdoc1Parser.LINE_COMMENT, sdoc1Parser.DEBUG, sdoc1Parser.EXPRESSION, sdoc1Parser.IF, sdoc1Parser.INCLUDE, sdoc1Parser.NOTICE, sdoc1Parser.SDOC2_COMMAND]:
-                    self.state = 42
+                if token in [sdoc1Parser.LINE_COMMENT, sdoc1Parser.DEBUG, sdoc1Parser.ERROR, sdoc1Parser.EXPRESSION, sdoc1Parser.IF, sdoc1Parser.INCLUDE, sdoc1Parser.NOTICE, sdoc1Parser.SUBSTITUTE, sdoc1Parser.SDOC2_COMMAND]:
+                    self.state = 46
                     self.command()
 
                 elif token in [sdoc1Parser.TEXT]:
-                    self.state = 43
+                    self.state = 47
                     self.text()
 
                 else:
                     raise NoViableAltException(self)
 
-                self.state = 48
+                self.state = 52
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
@@ -301,7 +316,7 @@ class sdoc1Parser ( Parser ):
         self.enterRule(localctx, 2, self.RULE_text)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 49
+            self.state = 53
             self.match(sdoc1Parser.TEXT)
         except RecognitionException as re:
             localctx.exception = re
@@ -329,6 +344,10 @@ class sdoc1Parser ( Parser ):
             return self.getTypedRuleContext(sdoc1Parser.Cmd_expressionContext,0)
 
 
+        def cmd_error(self):
+            return self.getTypedRuleContext(sdoc1Parser.Cmd_errorContext,0)
+
+
         def cmd_if(self):
             return self.getTypedRuleContext(sdoc1Parser.Cmd_ifContext,0)
 
@@ -339,6 +358,10 @@ class sdoc1Parser ( Parser ):
 
         def cmd_notice(self):
             return self.getTypedRuleContext(sdoc1Parser.Cmd_noticeContext,0)
+
+
+        def cmd_substitute(self):
+            return self.getTypedRuleContext(sdoc1Parser.Cmd_substituteContext,0)
 
 
         def cmd_sdoc2(self):
@@ -362,41 +385,51 @@ class sdoc1Parser ( Parser ):
         localctx = sdoc1Parser.CommandContext(self, self._ctx, self.state)
         self.enterRule(localctx, 4, self.RULE_command)
         try:
-            self.state = 58
+            self.state = 64
             token = self._input.LA(1)
             if token in [sdoc1Parser.LINE_COMMENT]:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 51
+                self.state = 55
                 self.cmd_comment()
 
             elif token in [sdoc1Parser.DEBUG]:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 52
+                self.state = 56
                 self.cmd_debug()
 
             elif token in [sdoc1Parser.EXPRESSION]:
                 self.enterOuterAlt(localctx, 3)
-                self.state = 53
+                self.state = 57
                 self.cmd_expression()
 
-            elif token in [sdoc1Parser.IF]:
+            elif token in [sdoc1Parser.ERROR]:
                 self.enterOuterAlt(localctx, 4)
-                self.state = 54
+                self.state = 58
+                self.cmd_error()
+
+            elif token in [sdoc1Parser.IF]:
+                self.enterOuterAlt(localctx, 5)
+                self.state = 59
                 self.cmd_if()
 
             elif token in [sdoc1Parser.INCLUDE]:
-                self.enterOuterAlt(localctx, 5)
-                self.state = 55
+                self.enterOuterAlt(localctx, 6)
+                self.state = 60
                 self.cmd_include()
 
             elif token in [sdoc1Parser.NOTICE]:
-                self.enterOuterAlt(localctx, 6)
-                self.state = 56
+                self.enterOuterAlt(localctx, 7)
+                self.state = 61
                 self.cmd_notice()
 
+            elif token in [sdoc1Parser.SUBSTITUTE]:
+                self.enterOuterAlt(localctx, 8)
+                self.state = 62
+                self.cmd_substitute()
+
             elif token in [sdoc1Parser.SDOC2_COMMAND]:
-                self.enterOuterAlt(localctx, 7)
-                self.state = 57
+                self.enterOuterAlt(localctx, 9)
+                self.state = 63
                 self.cmd_sdoc2()
 
             else:
@@ -437,7 +470,7 @@ class sdoc1Parser ( Parser ):
         self.enterRule(localctx, 6, self.RULE_cmd_comment)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 60
+            self.state = 66
             self.match(sdoc1Parser.LINE_COMMENT)
         except RecognitionException as re:
             localctx.exception = re
@@ -485,18 +518,18 @@ class sdoc1Parser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 62
+            self.state = 68
             self.match(sdoc1Parser.DEBUG)
-            self.state = 63
+            self.state = 69
             self.match(sdoc1Parser.EXPR_OBRACE)
-            self.state = 65
+            self.state = 71
             _la = self._input.LA(1)
             if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << sdoc1Parser.EXPR_LEFT_PAREN) | (1 << sdoc1Parser.EXPR_IDENTIFIER) | (1 << sdoc1Parser.EXPR_INTEGER_CONSTANT) | (1 << sdoc1Parser.EXPR_STRING_CONSTANT))) != 0):
-                self.state = 64
+                self.state = 70
                 self.expression()
 
 
-            self.state = 67
+            self.state = 73
             self.match(sdoc1Parser.EXPR_CBRACE)
         except RecognitionException as re:
             localctx.exception = re
@@ -543,14 +576,66 @@ class sdoc1Parser ( Parser ):
         self.enterRule(localctx, 10, self.RULE_cmd_expression)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 69
+            self.state = 75
             self.match(sdoc1Parser.EXPRESSION)
-            self.state = 70
+            self.state = 76
             self.match(sdoc1Parser.EXPR_OBRACE)
-            self.state = 71
+            self.state = 77
             self.expression()
-            self.state = 72
+            self.state = 78
             self.match(sdoc1Parser.EXPR_CBRACE)
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+    class Cmd_errorContext(ParserRuleContext):
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def ERROR(self):
+            return self.getToken(sdoc1Parser.ERROR, 0)
+
+        def SIMPLE_OBRACE(self):
+            return self.getToken(sdoc1Parser.SIMPLE_OBRACE, 0)
+
+        def SIMPLE_ARG(self):
+            return self.getToken(sdoc1Parser.SIMPLE_ARG, 0)
+
+        def SIMPLE_CBRACE(self):
+            return self.getToken(sdoc1Parser.SIMPLE_CBRACE, 0)
+
+        def getRuleIndex(self):
+            return sdoc1Parser.RULE_cmd_error
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitCmd_error" ):
+                return visitor.visitCmd_error(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+
+
+    def cmd_error(self):
+
+        localctx = sdoc1Parser.Cmd_errorContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 12, self.RULE_cmd_error)
+        try:
+            self.enterOuterAlt(localctx, 1)
+            self.state = 80
+            self.match(sdoc1Parser.ERROR)
+            self.state = 81
+            self.match(sdoc1Parser.SIMPLE_OBRACE)
+            self.state = 82
+            self.match(sdoc1Parser.SIMPLE_ARG)
+            self.state = 83
+            self.match(sdoc1Parser.SIMPLE_CBRACE)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -621,48 +706,48 @@ class sdoc1Parser ( Parser ):
     def cmd_if(self):
 
         localctx = sdoc1Parser.Cmd_ifContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 12, self.RULE_cmd_if)
+        self.enterRule(localctx, 14, self.RULE_cmd_if)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 74
+            self.state = 85
             self.match(sdoc1Parser.IF)
-            self.state = 75
+            self.state = 86
             self.match(sdoc1Parser.EXPR_OBRACE)
-            self.state = 76
-            self.expression()
-            self.state = 77
-            self.match(sdoc1Parser.EXPR_CBRACE)
-            self.state = 78
-            self.sdoc()
             self.state = 87
+            self.expression()
+            self.state = 88
+            self.match(sdoc1Parser.EXPR_CBRACE)
+            self.state = 89
+            self.sdoc()
+            self.state = 98
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==sdoc1Parser.ELIF:
-                self.state = 79
+                self.state = 90
                 self.match(sdoc1Parser.ELIF)
-                self.state = 80
+                self.state = 91
                 self.match(sdoc1Parser.EXPR_OBRACE)
-                self.state = 81
+                self.state = 92
                 self.expression()
-                self.state = 82
+                self.state = 93
                 self.match(sdoc1Parser.EXPR_CBRACE)
-                self.state = 83
+                self.state = 94
                 self.sdoc()
-                self.state = 89
+                self.state = 100
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
-            self.state = 92
+            self.state = 103
             _la = self._input.LA(1)
             if _la==sdoc1Parser.ELSE:
-                self.state = 90
+                self.state = 101
                 self.match(sdoc1Parser.ELSE)
-                self.state = 91
+                self.state = 102
                 self.sdoc()
 
 
-            self.state = 94
+            self.state = 105
             self.match(sdoc1Parser.ENDIF)
         except RecognitionException as re:
             localctx.exception = re
@@ -705,16 +790,16 @@ class sdoc1Parser ( Parser ):
     def cmd_include(self):
 
         localctx = sdoc1Parser.Cmd_includeContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 14, self.RULE_cmd_include)
+        self.enterRule(localctx, 16, self.RULE_cmd_include)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 96
+            self.state = 107
             self.match(sdoc1Parser.INCLUDE)
-            self.state = 97
+            self.state = 108
             self.match(sdoc1Parser.SIMPLE_OBRACE)
-            self.state = 98
+            self.state = 109
             self.match(sdoc1Parser.SIMPLE_ARG)
-            self.state = 99
+            self.state = 110
             self.match(sdoc1Parser.SIMPLE_CBRACE)
         except RecognitionException as re:
             localctx.exception = re
@@ -757,17 +842,70 @@ class sdoc1Parser ( Parser ):
     def cmd_notice(self):
 
         localctx = sdoc1Parser.Cmd_noticeContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 16, self.RULE_cmd_notice)
+        self.enterRule(localctx, 18, self.RULE_cmd_notice)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 101
+            self.state = 112
             self.match(sdoc1Parser.NOTICE)
-            self.state = 102
+            self.state = 113
             self.match(sdoc1Parser.SIMPLE_OBRACE)
-            self.state = 103
+            self.state = 114
             self.match(sdoc1Parser.SIMPLE_ARG)
-            self.state = 104
+            self.state = 115
             self.match(sdoc1Parser.SIMPLE_CBRACE)
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+    class Cmd_substituteContext(ParserRuleContext):
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def SUBSTITUTE(self):
+            return self.getToken(sdoc1Parser.SUBSTITUTE, 0)
+
+        def EXPR_OBRACE(self):
+            return self.getToken(sdoc1Parser.EXPR_OBRACE, 0)
+
+        def expression(self):
+            return self.getTypedRuleContext(sdoc1Parser.ExpressionContext,0)
+
+
+        def EXPR_CBRACE(self):
+            return self.getToken(sdoc1Parser.EXPR_CBRACE, 0)
+
+        def getRuleIndex(self):
+            return sdoc1Parser.RULE_cmd_substitute
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitCmd_substitute" ):
+                return visitor.visitCmd_substitute(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+
+
+    def cmd_substitute(self):
+
+        localctx = sdoc1Parser.Cmd_substituteContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 20, self.RULE_cmd_substitute)
+        try:
+            self.enterOuterAlt(localctx, 1)
+            self.state = 117
+            self.match(sdoc1Parser.SUBSTITUTE)
+            self.state = 118
+            self.match(sdoc1Parser.EXPR_OBRACE)
+            self.state = 119
+            self.expression()
+            self.state = 120
+            self.match(sdoc1Parser.EXPR_CBRACE)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -800,10 +938,10 @@ class sdoc1Parser ( Parser ):
     def cmd_sdoc2(self):
 
         localctx = sdoc1Parser.Cmd_sdoc2Context(self, self._ctx, self.state)
-        self.enterRule(localctx, 18, self.RULE_cmd_sdoc2)
+        self.enterRule(localctx, 22, self.RULE_cmd_sdoc2)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 106
+            self.state = 122
             self.match(sdoc1Parser.SDOC2_COMMAND)
         except RecognitionException as re:
             localctx.exception = re
@@ -902,36 +1040,36 @@ class sdoc1Parser ( Parser ):
     def primaryExpression(self):
 
         localctx = sdoc1Parser.PrimaryExpressionContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 20, self.RULE_primaryExpression)
+        self.enterRule(localctx, 24, self.RULE_primaryExpression)
         try:
-            self.state = 115
+            self.state = 131
             token = self._input.LA(1)
             if token in [sdoc1Parser.EXPR_IDENTIFIER]:
                 localctx = sdoc1Parser.PrimaryExpressionIdentifierContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
-                self.state = 108
+                self.state = 124
                 self.match(sdoc1Parser.EXPR_IDENTIFIER)
 
             elif token in [sdoc1Parser.EXPR_INTEGER_CONSTANT]:
                 localctx = sdoc1Parser.PrimaryExpressionIntegerConstantContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
-                self.state = 109
+                self.state = 125
                 self.match(sdoc1Parser.EXPR_INTEGER_CONSTANT)
 
             elif token in [sdoc1Parser.EXPR_STRING_CONSTANT]:
                 localctx = sdoc1Parser.PrimaryExpressionStringConstantContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
-                self.state = 110
+                self.state = 126
                 self.match(sdoc1Parser.EXPR_STRING_CONSTANT)
 
             elif token in [sdoc1Parser.EXPR_LEFT_PAREN]:
                 localctx = sdoc1Parser.PrimaryExpressionSubExpressionContext(self, localctx)
                 self.enterOuterAlt(localctx, 4)
-                self.state = 111
+                self.state = 127
                 self.match(sdoc1Parser.EXPR_LEFT_PAREN)
-                self.state = 112
+                self.state = 128
                 self.expression()
-                self.state = 113
+                self.state = 129
                 self.match(sdoc1Parser.EXPR_RIGHT_PAREN)
 
             else:
@@ -1007,18 +1145,18 @@ class sdoc1Parser ( Parser ):
         _parentState = self.state
         localctx = sdoc1Parser.PostfixExpressionContext(self, self._ctx, _parentState)
         _prevctx = localctx
-        _startState = 22
-        self.enterRecursionRule(localctx, 22, self.RULE_postfixExpression, _p)
+        _startState = 26
+        self.enterRecursionRule(localctx, 26, self.RULE_postfixExpression, _p)
         try:
             self.enterOuterAlt(localctx, 1)
             localctx = sdoc1Parser.PrimaryExpressionParentContext(self, localctx)
             self._ctx = localctx
             _prevctx = localctx
 
-            self.state = 118
+            self.state = 134
             self.primaryExpression()
             self._ctx.stop = self._input.LT(-1)
-            self.state = 127
+            self.state = 143
             self._errHandler.sync(self)
             _alt = self._interp.adaptivePredict(self._input,7,self._ctx)
             while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
@@ -1028,17 +1166,17 @@ class sdoc1Parser ( Parser ):
                     _prevctx = localctx
                     localctx = sdoc1Parser.PostfixExpressionExpressionContext(self, sdoc1Parser.PostfixExpressionContext(self, _parentctx, _parentState))
                     self.pushNewRecursionContext(localctx, _startState, self.RULE_postfixExpression)
-                    self.state = 120
+                    self.state = 136
                     if not self.precpred(self._ctx, 1):
                         from antlr4.error.Errors import FailedPredicateException
                         raise FailedPredicateException(self, "self.precpred(self._ctx, 1)")
-                    self.state = 121
+                    self.state = 137
                     self.match(sdoc1Parser.EXPR_LEFT_BRACKET)
-                    self.state = 122
+                    self.state = 138
                     self.expression()
-                    self.state = 123
+                    self.state = 139
                     self.match(sdoc1Parser.EXPR_RIGHT_BRACKET) 
-                self.state = 129
+                self.state = 145
                 self._errHandler.sync(self)
                 _alt = self._interp.adaptivePredict(self._input,7,self._ctx)
 
@@ -1086,14 +1224,14 @@ class sdoc1Parser ( Parser ):
         _parentState = self.state
         localctx = sdoc1Parser.MultiplicativeExpressionContext(self, self._ctx, _parentState)
         _prevctx = localctx
-        _startState = 24
-        self.enterRecursionRule(localctx, 24, self.RULE_multiplicativeExpression, _p)
+        _startState = 28
+        self.enterRecursionRule(localctx, 28, self.RULE_multiplicativeExpression, _p)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 131
+            self.state = 147
             self.postfixExpression(0)
             self._ctx.stop = self._input.LT(-1)
-            self.state = 141
+            self.state = 157
             self._errHandler.sync(self)
             _alt = self._interp.adaptivePredict(self._input,9,self._ctx)
             while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
@@ -1101,36 +1239,37 @@ class sdoc1Parser ( Parser ):
                     if self._parseListeners is not None:
                         self.triggerExitRuleEvent()
                     _prevctx = localctx
-                    self.state = 139
+                    self.state = 155
+                    self._errHandler.sync(self);
                     la_ = self._interp.adaptivePredict(self._input,8,self._ctx)
                     if la_ == 1:
                         localctx = sdoc1Parser.MultiplicativeExpressionContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_multiplicativeExpression)
-                        self.state = 133
+                        self.state = 149
                         if not self.precpred(self._ctx, 2):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 2)")
-                        self.state = 134
+                        self.state = 150
                         self.match(sdoc1Parser.EXPR_MULT)
-                        self.state = 135
+                        self.state = 151
                         self.postfixExpression(0)
                         pass
 
                     elif la_ == 2:
                         localctx = sdoc1Parser.MultiplicativeExpressionContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_multiplicativeExpression)
-                        self.state = 136
+                        self.state = 152
                         if not self.precpred(self._ctx, 1):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 1)")
-                        self.state = 137
+                        self.state = 153
                         self.match(sdoc1Parser.EXPR_DIV)
-                        self.state = 138
+                        self.state = 154
                         self.postfixExpression(0)
                         pass
 
              
-                self.state = 143
+                self.state = 159
                 self._errHandler.sync(self)
                 _alt = self._interp.adaptivePredict(self._input,9,self._ctx)
 
@@ -1178,14 +1317,14 @@ class sdoc1Parser ( Parser ):
         _parentState = self.state
         localctx = sdoc1Parser.AdditiveExpressionContext(self, self._ctx, _parentState)
         _prevctx = localctx
-        _startState = 26
-        self.enterRecursionRule(localctx, 26, self.RULE_additiveExpression, _p)
+        _startState = 30
+        self.enterRecursionRule(localctx, 30, self.RULE_additiveExpression, _p)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 145
+            self.state = 161
             self.multiplicativeExpression(0)
             self._ctx.stop = self._input.LT(-1)
-            self.state = 155
+            self.state = 171
             self._errHandler.sync(self)
             _alt = self._interp.adaptivePredict(self._input,11,self._ctx)
             while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
@@ -1193,36 +1332,37 @@ class sdoc1Parser ( Parser ):
                     if self._parseListeners is not None:
                         self.triggerExitRuleEvent()
                     _prevctx = localctx
-                    self.state = 153
+                    self.state = 169
+                    self._errHandler.sync(self);
                     la_ = self._interp.adaptivePredict(self._input,10,self._ctx)
                     if la_ == 1:
                         localctx = sdoc1Parser.AdditiveExpressionContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_additiveExpression)
-                        self.state = 147
+                        self.state = 163
                         if not self.precpred(self._ctx, 2):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 2)")
-                        self.state = 148
+                        self.state = 164
                         self.match(sdoc1Parser.EXPR_ADD)
-                        self.state = 149
+                        self.state = 165
                         self.multiplicativeExpression(0)
                         pass
 
                     elif la_ == 2:
                         localctx = sdoc1Parser.AdditiveExpressionContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_additiveExpression)
-                        self.state = 150
+                        self.state = 166
                         if not self.precpred(self._ctx, 1):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 1)")
-                        self.state = 151
+                        self.state = 167
                         self.match(sdoc1Parser.EXPR_MINUS)
-                        self.state = 152
+                        self.state = 168
                         self.multiplicativeExpression(0)
                         pass
 
              
-                self.state = 157
+                self.state = 173
                 self._errHandler.sync(self)
                 _alt = self._interp.adaptivePredict(self._input,11,self._ctx)
 
@@ -1276,14 +1416,14 @@ class sdoc1Parser ( Parser ):
         _parentState = self.state
         localctx = sdoc1Parser.RelationalExpressionContext(self, self._ctx, _parentState)
         _prevctx = localctx
-        _startState = 28
-        self.enterRecursionRule(localctx, 28, self.RULE_relationalExpression, _p)
+        _startState = 32
+        self.enterRecursionRule(localctx, 32, self.RULE_relationalExpression, _p)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 159
+            self.state = 175
             self.additiveExpression(0)
             self._ctx.stop = self._input.LT(-1)
-            self.state = 175
+            self.state = 191
             self._errHandler.sync(self)
             _alt = self._interp.adaptivePredict(self._input,13,self._ctx)
             while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
@@ -1291,62 +1431,63 @@ class sdoc1Parser ( Parser ):
                     if self._parseListeners is not None:
                         self.triggerExitRuleEvent()
                     _prevctx = localctx
-                    self.state = 173
+                    self.state = 189
+                    self._errHandler.sync(self);
                     la_ = self._interp.adaptivePredict(self._input,12,self._ctx)
                     if la_ == 1:
                         localctx = sdoc1Parser.RelationalExpressionContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_relationalExpression)
-                        self.state = 161
+                        self.state = 177
                         if not self.precpred(self._ctx, 4):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 4)")
-                        self.state = 162
+                        self.state = 178
                         self.match(sdoc1Parser.EXPR_LT)
-                        self.state = 163
+                        self.state = 179
                         self.additiveExpression(0)
                         pass
 
                     elif la_ == 2:
                         localctx = sdoc1Parser.RelationalExpressionContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_relationalExpression)
-                        self.state = 164
+                        self.state = 180
                         if not self.precpred(self._ctx, 3):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 3)")
-                        self.state = 165
+                        self.state = 181
                         self.match(sdoc1Parser.EXPR_GT)
-                        self.state = 166
+                        self.state = 182
                         self.additiveExpression(0)
                         pass
 
                     elif la_ == 3:
                         localctx = sdoc1Parser.RelationalExpressionContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_relationalExpression)
-                        self.state = 167
+                        self.state = 183
                         if not self.precpred(self._ctx, 2):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 2)")
-                        self.state = 168
+                        self.state = 184
                         self.match(sdoc1Parser.EXPR_LTE)
-                        self.state = 169
+                        self.state = 185
                         self.additiveExpression(0)
                         pass
 
                     elif la_ == 4:
                         localctx = sdoc1Parser.RelationalExpressionContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_relationalExpression)
-                        self.state = 170
+                        self.state = 186
                         if not self.precpred(self._ctx, 1):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 1)")
-                        self.state = 171
+                        self.state = 187
                         self.match(sdoc1Parser.EXPR_GTE)
-                        self.state = 172
+                        self.state = 188
                         self.additiveExpression(0)
                         pass
 
              
-                self.state = 177
+                self.state = 193
                 self._errHandler.sync(self)
                 _alt = self._interp.adaptivePredict(self._input,13,self._ctx)
 
@@ -1394,14 +1535,14 @@ class sdoc1Parser ( Parser ):
         _parentState = self.state
         localctx = sdoc1Parser.EqualityExpressionContext(self, self._ctx, _parentState)
         _prevctx = localctx
-        _startState = 30
-        self.enterRecursionRule(localctx, 30, self.RULE_equalityExpression, _p)
+        _startState = 34
+        self.enterRecursionRule(localctx, 34, self.RULE_equalityExpression, _p)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 179
+            self.state = 195
             self.relationalExpression(0)
             self._ctx.stop = self._input.LT(-1)
-            self.state = 189
+            self.state = 205
             self._errHandler.sync(self)
             _alt = self._interp.adaptivePredict(self._input,15,self._ctx)
             while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
@@ -1409,36 +1550,37 @@ class sdoc1Parser ( Parser ):
                     if self._parseListeners is not None:
                         self.triggerExitRuleEvent()
                     _prevctx = localctx
-                    self.state = 187
+                    self.state = 203
+                    self._errHandler.sync(self);
                     la_ = self._interp.adaptivePredict(self._input,14,self._ctx)
                     if la_ == 1:
                         localctx = sdoc1Parser.EqualityExpressionContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_equalityExpression)
-                        self.state = 181
+                        self.state = 197
                         if not self.precpred(self._ctx, 2):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 2)")
-                        self.state = 182
+                        self.state = 198
                         self.match(sdoc1Parser.EXPR_EQUAL)
-                        self.state = 183
+                        self.state = 199
                         self.relationalExpression(0)
                         pass
 
                     elif la_ == 2:
                         localctx = sdoc1Parser.EqualityExpressionContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_equalityExpression)
-                        self.state = 184
+                        self.state = 200
                         if not self.precpred(self._ctx, 1):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 1)")
-                        self.state = 185
+                        self.state = 201
                         self.match(sdoc1Parser.EXPR_NOT_EQUAL)
-                        self.state = 186
+                        self.state = 202
                         self.relationalExpression(0)
                         pass
 
              
-                self.state = 191
+                self.state = 207
                 self._errHandler.sync(self)
                 _alt = self._interp.adaptivePredict(self._input,15,self._ctx)
 
@@ -1510,18 +1652,18 @@ class sdoc1Parser ( Parser ):
         _parentState = self.state
         localctx = sdoc1Parser.LogicalAndExpressionContext(self, self._ctx, _parentState)
         _prevctx = localctx
-        _startState = 32
-        self.enterRecursionRule(localctx, 32, self.RULE_logicalAndExpression, _p)
+        _startState = 36
+        self.enterRecursionRule(localctx, 36, self.RULE_logicalAndExpression, _p)
         try:
             self.enterOuterAlt(localctx, 1)
             localctx = sdoc1Parser.LogicalAndExpressionParentContext(self, localctx)
             self._ctx = localctx
             _prevctx = localctx
 
-            self.state = 193
+            self.state = 209
             self.equalityExpression(0)
             self._ctx.stop = self._input.LT(-1)
-            self.state = 200
+            self.state = 216
             self._errHandler.sync(self)
             _alt = self._interp.adaptivePredict(self._input,16,self._ctx)
             while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
@@ -1531,15 +1673,15 @@ class sdoc1Parser ( Parser ):
                     _prevctx = localctx
                     localctx = sdoc1Parser.LogicalAndExpressionAndContext(self, sdoc1Parser.LogicalAndExpressionContext(self, _parentctx, _parentState))
                     self.pushNewRecursionContext(localctx, _startState, self.RULE_logicalAndExpression)
-                    self.state = 195
+                    self.state = 211
                     if not self.precpred(self._ctx, 1):
                         from antlr4.error.Errors import FailedPredicateException
                         raise FailedPredicateException(self, "self.precpred(self._ctx, 1)")
-                    self.state = 196
+                    self.state = 212
                     self.match(sdoc1Parser.EXPR_LOGICAL_AND)
-                    self.state = 197
+                    self.state = 213
                     self.equalityExpression(0) 
-                self.state = 202
+                self.state = 218
                 self._errHandler.sync(self)
                 _alt = self._interp.adaptivePredict(self._input,16,self._ctx)
 
@@ -1611,18 +1753,18 @@ class sdoc1Parser ( Parser ):
         _parentState = self.state
         localctx = sdoc1Parser.LogicalOrExpressionContext(self, self._ctx, _parentState)
         _prevctx = localctx
-        _startState = 34
-        self.enterRecursionRule(localctx, 34, self.RULE_logicalOrExpression, _p)
+        _startState = 38
+        self.enterRecursionRule(localctx, 38, self.RULE_logicalOrExpression, _p)
         try:
             self.enterOuterAlt(localctx, 1)
             localctx = sdoc1Parser.LogicalOrExpressionParentContext(self, localctx)
             self._ctx = localctx
             _prevctx = localctx
 
-            self.state = 204
+            self.state = 220
             self.logicalAndExpression(0)
             self._ctx.stop = self._input.LT(-1)
-            self.state = 211
+            self.state = 227
             self._errHandler.sync(self)
             _alt = self._interp.adaptivePredict(self._input,17,self._ctx)
             while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
@@ -1632,15 +1774,15 @@ class sdoc1Parser ( Parser ):
                     _prevctx = localctx
                     localctx = sdoc1Parser.LogicalOrExpressionLogicalOrContext(self, sdoc1Parser.LogicalOrExpressionContext(self, _parentctx, _parentState))
                     self.pushNewRecursionContext(localctx, _startState, self.RULE_logicalOrExpression)
-                    self.state = 206
+                    self.state = 222
                     if not self.precpred(self._ctx, 1):
                         from antlr4.error.Errors import FailedPredicateException
                         raise FailedPredicateException(self, "self.precpred(self._ctx, 1)")
-                    self.state = 207
+                    self.state = 223
                     self.match(sdoc1Parser.EXPR_LOGICAL_OR)
-                    self.state = 208
+                    self.state = 224
                     self.logicalAndExpression(0) 
-                self.state = 213
+                self.state = 229
                 self._errHandler.sync(self)
                 _alt = self._interp.adaptivePredict(self._input,17,self._ctx)
 
@@ -1712,25 +1854,26 @@ class sdoc1Parser ( Parser ):
     def assignmentExpression(self):
 
         localctx = sdoc1Parser.AssignmentExpressionContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 36, self.RULE_assignmentExpression)
+        self.enterRule(localctx, 40, self.RULE_assignmentExpression)
         try:
-            self.state = 219
+            self.state = 235
+            self._errHandler.sync(self);
             la_ = self._interp.adaptivePredict(self._input,18,self._ctx)
             if la_ == 1:
                 localctx = sdoc1Parser.AssignmentExpressionParentContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
-                self.state = 214
+                self.state = 230
                 self.logicalOrExpression(0)
                 pass
 
             elif la_ == 2:
                 localctx = sdoc1Parser.AssignmentExpressionAssignmentContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
-                self.state = 215
+                self.state = 231
                 self.postfixExpression(0)
-                self.state = 216
+                self.state = 232
                 self.assignmentOperator()
-                self.state = 217
+                self.state = 233
                 self.assignmentExpression()
                 pass
 
@@ -1767,10 +1910,10 @@ class sdoc1Parser ( Parser ):
     def assignmentOperator(self):
 
         localctx = sdoc1Parser.AssignmentOperatorContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 38, self.RULE_assignmentOperator)
+        self.enterRule(localctx, 42, self.RULE_assignmentOperator)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 221
+            self.state = 237
             self.match(sdoc1Parser.EXPR_ASSIGN)
         except RecognitionException as re:
             localctx.exception = re
@@ -1805,10 +1948,10 @@ class sdoc1Parser ( Parser ):
     def expression(self):
 
         localctx = sdoc1Parser.ExpressionContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 40, self.RULE_expression)
+        self.enterRule(localctx, 44, self.RULE_expression)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 223
+            self.state = 239
             self.assignmentExpression()
         except RecognitionException as re:
             localctx.exception = re
@@ -1823,13 +1966,13 @@ class sdoc1Parser ( Parser ):
     def sempred(self, localctx:RuleContext, ruleIndex:int, predIndex:int):
         if self._predicates == None:
             self._predicates = dict()
-        self._predicates[11] = self.postfixExpression_sempred
-        self._predicates[12] = self.multiplicativeExpression_sempred
-        self._predicates[13] = self.additiveExpression_sempred
-        self._predicates[14] = self.relationalExpression_sempred
-        self._predicates[15] = self.equalityExpression_sempred
-        self._predicates[16] = self.logicalAndExpression_sempred
-        self._predicates[17] = self.logicalOrExpression_sempred
+        self._predicates[13] = self.postfixExpression_sempred
+        self._predicates[14] = self.multiplicativeExpression_sempred
+        self._predicates[15] = self.additiveExpression_sempred
+        self._predicates[16] = self.relationalExpression_sempred
+        self._predicates[17] = self.equalityExpression_sempred
+        self._predicates[18] = self.logicalAndExpression_sempred
+        self._predicates[19] = self.logicalOrExpression_sempred
         pred = self._predicates.get(ruleIndex, None)
         if pred is None:
             raise Exception("No predicate with index:" + str(ruleIndex))

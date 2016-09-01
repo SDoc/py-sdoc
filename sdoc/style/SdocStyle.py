@@ -23,7 +23,7 @@ class SdocStyle(CleoStyle):
 
         # Style for errors.
         style = OutputFormatterStyle('red', None, ['bold'])
-        output.get_formatter().set_style('err', style)
+        output.get_formatter().set_style('error', style)
 
         # Style for SDoc1 notices.
         style = OutputFormatterStyle('yellow')
