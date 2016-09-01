@@ -16,4 +16,4 @@ class IconDefHtmlFormatter(HtmlFormatter):
     """
 
 # ----------------------------------------------------------------------------------------------------------------------
-NodeStore.register_formatter('icon_def', 'html', IconDefHtmlFormatter)
+NodeStore.register_formatter('icondef', 'html', IconDefHtmlFormatter)
