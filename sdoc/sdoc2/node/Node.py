@@ -129,6 +129,16 @@ class Node:
             out_scope(node)
 
     # ------------------------------------------------------------------------------------------------------------------
+    def _remove_child_nodes(self, node_list):
+        """
+        Removes child nodes from list of child nodes of this node.
+
+        :param list[int] node_list: The child nodes the be removed.
+        """
+        for node in node_list:
+            self.child_nodes.remove(node)
+
+    # ------------------------------------------------------------------------------------------------------------------
     def get_hierarchy_name(self):
         """
         Returns the hierarchy name if this node is a part of a hierarchy. Otherwise returns False.

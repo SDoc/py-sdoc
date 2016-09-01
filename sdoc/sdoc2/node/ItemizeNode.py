@@ -116,17 +116,7 @@ class ItemizeNode(Node):
 
             out_scope(node)
 
-        self.remove_nodes(nodes_for_remove)
-
-    # ------------------------------------------------------------------------------------------------------------------
-    def remove_nodes(self, node_list):
-        """
-        Removes odd nodes from list of child nodes of this node.
-
-        :param list[int] node_list:
-        """
-        for node in node_list:
-            self.child_nodes.remove(node)
+        self._remove_child_nodes(nodes_for_remove)
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
