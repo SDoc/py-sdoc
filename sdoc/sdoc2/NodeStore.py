@@ -433,8 +433,6 @@ class NodeStore:
         # Currently, node with ID 1 is the document node. @todo Improve getting the document node.
         self.nodes[1].prepare_content_tree()
 
-        self.remove_nodes()
-
     # ------------------------------------------------------------------------------------------------------------------
     def number_numerable(self):
         """
