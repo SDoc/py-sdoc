@@ -109,7 +109,7 @@ class HtmlFormat(Format):
 
         # Generate in mode 'output file on each chapter'.
         if self._file_per_chapter:
-            raise NotImplementedError()
+            raise RuntimeError()
 
         return self._errors
 

@@ -11,7 +11,7 @@ import abc
 from sdoc.sdoc2 import in_scope, out_scope, node_store
 
 
-class Node:
+class Node(metaclass=abc.ABCMeta):
     """
     Abstract class for SDoc2 nodes.
     """

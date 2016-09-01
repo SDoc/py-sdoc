@@ -9,7 +9,7 @@ Licence MIT
 import abc
 
 
-class DataType:
+class DataType(metaclass=abc.ABCMeta):
     """
     Abstract parent class for all data types.
     """

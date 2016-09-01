@@ -61,7 +61,7 @@ class EndParagraphNode(Node):
         """
         Not implemented for end paragraph nodes.
         """
-        raise NotImplementedError()
+        raise RuntimeError()
 
 
 # ----------------------------------------------------------------------------------------------------------------------
