@@ -101,16 +101,32 @@ class ItemizeNode(Node):
     # ------------------------------------------------------------------------------------------------------------------
     def prepare_content_tree(self):
         """
-        Method which checks if all child nodes is instance of sdoc.sdoc2.node.ItemNode.ItemNode.
+        Method which checks if all child nodes is instance of sdoc.sdoc2.node.ItemNode.ItemNode. If not, removes
+        from child node list and from node store.
         """
+        nodes_for_remove = []
+
         for node_id in self.child_nodes:
             node = in_scope(node_id)
 
             if not isinstance(node, ItemNode):
-                raise RuntimeError("Node: id:{0!s}, {1!s} is not instance of 'ItemNode'"
-                                   .format(str(node.id), node.name))
+                node_store.error("Node: id:{0!s}, {1!s} is not instance of 'ItemNode'".format(str(node.id), node.name),
+                                 node)
+                nodes_for_remove.append(node_id)
 
             out_scope(node)
+
+        self.remove_nodes(nodes_for_remove)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def remove_nodes(self, node_list):
+        """
+        Removes odd nodes from list of child nodes of this node.
+
+        :param list[int] node_list:
+        """
+        for node in node_list:
+            self.child_nodes.remove(node)
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod

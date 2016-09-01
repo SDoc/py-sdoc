@@ -120,6 +120,7 @@ class Node:
         :param int level: the level of block commands.
         """
         self.io.writeln("{0!s}{1:4d} {2!s}".format(' ' * 4 * level, self.id, self.name))
+
         for node_id in self.child_nodes:
             node = in_scope(node_id)
 
