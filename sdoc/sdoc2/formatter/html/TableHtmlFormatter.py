@@ -35,7 +35,8 @@ class TableHtmlFormatter(HtmlFormatter):
         :param file file: The output file.
         """
         # Attributes for table.
-        table_attrs = {'class': node.get_option_value('class')}
+        table_attrs = {'class': node.get_option_value('class'),
+                       'id': node.get_option_value('id')}
 
         if node.column_headers:
             rows = self.generate_table_with_header(node)
