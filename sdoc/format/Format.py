@@ -9,7 +9,7 @@ Licence MIT
 import abc
 
 
-class Format:
+class Format(metaclass=abc.ABCMeta):
     """
     Abstract parent class for all formatters for generating output documents in a certain format.
     """

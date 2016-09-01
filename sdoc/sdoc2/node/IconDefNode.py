@@ -7,15 +7,13 @@ Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
 from sdoc.sdoc2.NodeStore import NodeStore
+from sdoc.sdoc2.node.IconNode import IconNode
 from sdoc.sdoc2.node.Node import Node
 
 
-class EndParagraphNode(Node):
+class IconDefNode(Node):
     """
-    SDoc2 node for end of paragraphs.
-
-    Note: End of paragraphs will are temporary used during the content tree preparation. Before and after the content
-          preparation end of paragraph nodes do not exist.
+    The class for definition of icons in sdoc2.
     """
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -24,19 +22,19 @@ class EndParagraphNode(Node):
         Object constructor.
 
         :param None|cleo.styles.output_style.OutputStyle io: The IO object.
-        :param dict[str,str] options: Not used.
+        :param dict[str,str] options: The options of this figure.
         :param str argument: Not used.
         """
-        super().__init__(io, 'end_paragraph', options, argument)
+        super().__init__(io, 'icon_def', options, argument)
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_command(self):
         """
-        Returns the command of this node, i.e. end_paragraph.
+        Returns the command of this node, i.e. icon_def.
 
         :rtype: str
         """
-        return 'end_paragraph'
+        return 'icondef'
 
     # ------------------------------------------------------------------------------------------------------------------
     def is_block_command(self):
@@ -50,19 +48,22 @@ class EndParagraphNode(Node):
     # ------------------------------------------------------------------------------------------------------------------
     def is_inline_command(self):
         """
-        Returns False.
+        Returns True.
 
         :rtype: bool
         """
-        return False
+        return True
 
     # ------------------------------------------------------------------------------------------------------------------
     def prepare_content_tree(self):
         """
-        Not implemented for end paragraph nodes.
+        Prepares this node for further processing.
         """
-        raise RuntimeError()
+        reference_name = self.argument
+        attributes = self._options
+
+        IconNode.add_definition(reference_name, attributes)
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-NodeStore.register_inline_command('end_paragraph', EndParagraphNode)
+NodeStore.register_inline_command('icondef', IconDefNode)

@@ -11,6 +11,8 @@ import io
 import re
 
 from sdoc.sdoc2 import in_scope, out_scope
+from sdoc.sdoc2.helper.Enumerable import Enumerable
+from sdoc.sdoc2.node.LabelNode import LabelNode
 from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.node.Node import Node
 
@@ -79,6 +81,24 @@ class TableNode(Node):
         return False
 
     # ------------------------------------------------------------------------------------------------------------------
+    def number(self, numbers):
+        """
+        Numbers all numerable nodes such as chapters, sections, figures, and, items.
+
+        :param dict[str,sdoc.sdoc2.helper.Enumerable.Enumerable] numbers: The current numbers.
+        """
+        if 'table' not in numbers:
+            numbers['table'] = Enumerable()
+            numbers['table'].generate_numeration(1)
+            numbers['table'].increment_last_level()
+        else:
+            numbers['table'].increment_last_level()
+
+        self._options['number'] = numbers['table'].get_string()
+
+        super().number(numbers)
+
+    # ------------------------------------------------------------------------------------------------------------------
     def prepare_content_tree(self):
         """
         Prepares this node for further processing.
@@ -88,12 +108,25 @@ class TableNode(Node):
         for node_id in self.child_nodes:
             node = in_scope(node_id)
 
-            table_nodes.append(node)
+            if not isinstance(node, LabelNode):
+                table_nodes.append(node)
+            else:
+                self.setup_label(node)
+
             node.prepare_content_tree()
 
             out_scope(node)
 
         self.generate_table(table_nodes)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def setup_label(self, node):
+        """
+        Sets the data of a label to current table.
+
+        :param sdoc.sdoc2.node.LabelNode.LabelNode node: The label node.
+        """
+        self._options['id'] = node.argument
 
     # ------------------------------------------------------------------------------------------------------------------
     def generate_table(self, nodes):
