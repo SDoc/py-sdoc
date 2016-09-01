@@ -91,6 +91,13 @@ class NodeStore:
         :type: dict[str,str]
         """
 
+        self._nodes_for_remove = []
+        """
+        The nodes which we need to remove from node store.
+
+        :type: list[int]
+        """
+
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
     def error(message, node=None):
@@ -109,6 +116,30 @@ class NodeStore:
             column_number = node.position.start_column + 1
             messages.append('Position: {0!s}:{1:d}.{2:d}'.format(filename, line_number, column_number))
         node.io.warning(messages)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def append_node_for_remove(self, node_id):
+        """
+        Append ID of node, to list of nodes, for future removing.
+
+        :param int node_id: The ID of node which we will remove.
+        """
+        self._nodes_for_remove.append(node_id)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def remove_nodes(self):
+        """
+        Removes nodes from node store listed in 'nodes_for_remove'.
+        """
+        # Remove nodes from child nodes of each other node.
+        for node_id in self._nodes_for_remove:
+            for node in self.nodes:
+                if node_id in self.nodes[node].child_nodes:
+                    self.nodes[node].child_nodes.remove(node_id)
+
+        # Remove nodes from node store.
+        for node_id in self._nodes_for_remove:
+            del self.nodes[node_id]
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
@@ -432,6 +463,8 @@ class NodeStore:
         """
         # Currently, node with ID 1 is the document node. @todo Improve getting the document node.
         self.nodes[1].prepare_content_tree()
+
+        self.remove_nodes()
 
     # ------------------------------------------------------------------------------------------------------------------
     def number_numerable(self):

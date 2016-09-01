@@ -24,7 +24,7 @@ class SmileNode(Node):
         :param dict[str,str] options: The options of this smile.
         :param str argument: Not used.
         """
-        super().__init__('smile', io, options, argument)
+        super().__init__(io, 'smile', options, argument)
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_command(self):
