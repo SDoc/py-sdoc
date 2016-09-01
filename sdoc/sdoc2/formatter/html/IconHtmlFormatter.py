@@ -8,8 +8,8 @@ Licence MIT
 # ----------------------------------------------------------------------------------------------------------------------
 from sdoc.helper.Html import Html
 from sdoc.sdoc2.NodeStore import NodeStore
-from sdoc.sdoc2.node.IconNode import IconNode
 from sdoc.sdoc2.formatter.html.HtmlFormatter import HtmlFormatter
+from sdoc.sdoc2.node.IconNode import IconNode
 
 
 class IconHtmlFormatter(HtmlFormatter):
@@ -30,9 +30,9 @@ class IconHtmlFormatter(HtmlFormatter):
         if attributes:
             img_element = Html.generate_void_element('img', attributes)
             file.write(img_element)
-
         else:
-            NodeStore.error("There is no definition for icon with name '{}'".format(node.argument))
+            NodeStore.error("There is no definition for icon with name '{}'".format(node.argument), node)
+
 
 # ----------------------------------------------------------------------------------------------------------------------
 NodeStore.register_formatter('icon', 'html', IconHtmlFormatter)

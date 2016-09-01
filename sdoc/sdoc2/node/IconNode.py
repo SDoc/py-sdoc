@@ -12,14 +12,14 @@ from sdoc.sdoc2.node.Node import Node
 
 class IconNode(Node):
     """
-    The class for icons in sdoc2.
+    Node for icons (i.e. small inline images).
     """
-
+    # ------------------------------------------------------------------------------------------------------------------
     _definitions = {}
     """
-    The static attribute with definitions of icons
+    The icon definitions. Map from ion name ot attributes.
 
-    :type: dict[str, list[mixed]]
+    :type: dict[str,dict[str,str]]
     """
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -61,13 +61,22 @@ class IconNode(Node):
         return True
 
     # ------------------------------------------------------------------------------------------------------------------
+    def is_phrasing(self):
+        """
+        Returns True if this node is a phrasing node, i.e. is a part of a paragraph. Otherwise returns False.
+
+        :rtype: bool
+        """
+        return True
+
+    # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
     def add_definition(name, attributes):
         """
-        Adds definition of an icon into static attribute.
+        Adds the definition of an icon to the icon definitions.
 
         :param str name: The name of a reference to icon definition.
-        :param dict[str, list[mixed] attributes: The attributes.
+        :param dict[str,dict[str,str]] attributes: The attributes.
         """
         IconNode._definitions[name] = attributes
 
@@ -79,13 +88,13 @@ class IconNode(Node):
 
         :param str name: The name of a definition
 
-        :rtype: list[mixed]
+        :rtype: dict[str,str]|None
         """
         if name in IconNode._definitions:
             return IconNode._definitions[name]
-
         else:
             return None
+
 
 # ----------------------------------------------------------------------------------------------------------------------
 NodeStore.register_inline_command('icon', IconNode)

@@ -34,7 +34,7 @@ class IconDefNode(Node):
 
         :rtype: str
         """
-        return 'icon_def'
+        return 'icondef'
 
     # ------------------------------------------------------------------------------------------------------------------
     def is_block_command(self):
@@ -64,5 +64,6 @@ class IconDefNode(Node):
 
         IconNode.add_definition(reference_name, attributes)
 
+
 # ----------------------------------------------------------------------------------------------------------------------
-NodeStore.register_inline_command('icon_def', IconDefNode)
+NodeStore.register_inline_command('icondef', IconDefNode)
