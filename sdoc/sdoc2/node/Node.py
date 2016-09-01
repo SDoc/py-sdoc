@@ -120,12 +120,23 @@ class Node:
         :param int level: the level of block commands.
         """
         self.io.writeln("{0!s}{1:4d} {2!s}".format(' ' * 4 * level, self.id, self.name))
+
         for node_id in self.child_nodes:
             node = in_scope(node_id)
 
             node.print_info(level + 1)
 
             out_scope(node)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def _remove_child_nodes(self, node_list):
+        """
+        Removes child nodes from list of child nodes of this node.
+
+        :param list[int] node_list: The child nodes the be removed.
+        """
+        for node in node_list:
+            self.child_nodes.remove(node)
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_hierarchy_name(self):
