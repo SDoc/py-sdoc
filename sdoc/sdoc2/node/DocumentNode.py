@@ -163,9 +163,9 @@ class DocumentNode(Node):
         """
         Removes the node from a child list node.
         """
-        for node_id in (self.date_node.id, self.title_node.id, self.version_node.id):
+        for node_id in (self.date_node, self.title_node, self.version_node):
             if node_id:
-                self.child_nodes.remove(node_id)
+                self.child_nodes.remove(node_id.id)
 
 # ----------------------------------------------------------------------------------------------------------------------
 NodeStore.register_block_command('document', DocumentNode)
