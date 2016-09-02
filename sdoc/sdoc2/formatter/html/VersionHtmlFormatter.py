@@ -24,8 +24,7 @@ class VersionHtmlFormatter(HtmlFormatter):
         :param sdoc.sdoc2.node.VersionNode.VersionNode node: The version node.
         :param file file: The output file.
         """
-        text = 'Version: {}'.format(node.argument)
-        html_code = Html.generate_element('h3', {}, text)
+        html_code = Html.generate_element('span', {}, node.argument)
 
         file.write(html_code)
 

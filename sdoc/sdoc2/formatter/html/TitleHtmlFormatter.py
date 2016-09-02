@@ -24,7 +24,7 @@ class TitleHtmlFormatter(HtmlFormatter):
         :param sdoc.sdoc2.node.TitleNode.TitleNode node: The title node.
         :param file file: The output file.
         """
-        html_code = Html.generate_element('h1', {}, node.argument)
+        html_code = Html.generate_element('span', {}, node.argument)
 
         file.write(html_code)
 
