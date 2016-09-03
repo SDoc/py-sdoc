@@ -6,10 +6,13 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
+import re
+
 from sdoc.sdoc2 import node_store, out_scope, in_scope
 from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.node.ItemNode import ItemNode
 from sdoc.sdoc2.node.Node import Node
+from sdoc.sdoc2.node.TextNode import TextNode
 
 
 class ItemizeNode(Node):
@@ -109,7 +112,15 @@ class ItemizeNode(Node):
         for node_id in self.child_nodes:
             node = in_scope(node_id)
 
-            if not isinstance(node, ItemNode):
+            if isinstance(node, TextNode):
+                # Ignore text nodes with only whitespace silently.
+                if re.sub(r'\s+', '', node.argument) != '':
+                    # This text node contains more than only whitespace.
+                    node_store.error("Unexpected text '{0}'".format(node.argument), node)
+                nodes_for_remove.append(node_id)
+
+            elif not isinstance(node, ItemNode):
+                # An itemize node can have only item nodes as direct child nodes.
                 node_store.error("Node: id:{0!s}, {1!s} is not instance of 'ItemNode'".format(str(node.id), node.name),
                                  node)
                 nodes_for_remove.append(node_id)
