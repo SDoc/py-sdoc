@@ -8,8 +8,8 @@ Licence MIT
 # ----------------------------------------------------------------------------------------------------------------------
 from sdoc.sdoc2 import in_scope, out_scope
 from sdoc.sdoc2.NodeStore import NodeStore
-from sdoc.sdoc2.node.Node import Node
 from sdoc.sdoc2.node.DateNode import DateNode
+from sdoc.sdoc2.node.Node import Node
 from sdoc.sdoc2.node.TitleNode import TitleNode
 from sdoc.sdoc2.node.VersionNode import VersionNode
 
@@ -29,25 +29,25 @@ class DocumentNode(Node):
         """
         super().__init__(io, 'document', options)
 
-        self.title_node = None
+        self.title_node_id = None
         """
-        The title of the sdoc document.
+        The ID of the node the title of the sdoc document.
 
-        :type: int
-        """
-
-        self.date_node = None
-        """
-        The date of the sdoc document.
-
-        :type: int
+        :type: int|None
         """
 
-        self.version_node = None
+        self.date_node_id = None
         """
-        The version of the sdoc document.
+        The ID of the node the date of the sdoc document.
 
-        :type: int
+        :type: int|None
+        """
+
+        self.version_node_id = None
+        """
+        The ID of the node with the version of the sdoc document.
+
+        :type: int|None
         """
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -120,52 +120,58 @@ class DocumentNode(Node):
         for node_id in self.child_nodes:
             node = in_scope(node_id)
 
-            self.setup_document_info(node)
             node.prepare_content_tree()
+            self.__set_document_info(node)
 
             out_scope(node)
 
-        self.remove_nodes_from_child()
+        self.__remove_document_info_nodes()
 
     # ------------------------------------------------------------------------------------------------------------------
-    def setup_document_info(self, node):
+    def __set_document_info(self, node):
         """
         Sets the info of a document (i.e. date, version or title) to DocumentNode attributes.
 
         :param sdoc.sdoc2.node.Node.Node node: The current node.
         """
         if isinstance(node, DateNode):
-            self.check_attr(self.date_node, node)
-            self.date_node = node.id
+            self.__check_document_info(self.date_node_id, node)
+            self.date_node_id = node.id
 
         elif isinstance(node, TitleNode):
-            self.check_attr(self.title_node, node)
-            self.title_node = node.id
+            self.__check_document_info(self.title_node_id, node)
+            self.title_node_id = node.id
 
         elif isinstance(node, VersionNode):
-            self.check_attr(self.version_node, node)
-            self.version_node = node.id
+            self.__check_document_info(self.version_node_id, node)
+            self.version_node_id = node.id
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def check_attr(attr, node):
+    def __check_document_info(info_node_current, info_node_new):
         """
-        Checks if attribute is set. If it set, and we want to set it again, we raise an error.
+        Checks if a document info node has been set already. If so, an error will be logged.
 
-        :param sdoc.sdoc2.node.Node.Node attr: The attribute which we check.
-        :param sdoc.sdoc2.node.Node.Node node: The node which we want to set.
+        :param int|None info_node_current: The current document info node (i.e. a property of the document).
+        :param sdoc.sdoc2.node.Node.Node info_node_new: The (new) document info node.
         """
-        if attr:
-            NodeStore.error("There are more than 1 {}'s are set. Please Fix it.".format(node.name))
+        if info_node_current:
+            node = in_scope(info_node_current)
+            position = node.position
+            out_scope(node)
+
+            NodeStore.error("Document info {0} can be specified only once. Previous definition at {1}.".format(
+                info_node_new.name, str(position)), info_node_new)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def remove_nodes_from_child(self):
+    def __remove_document_info_nodes(self):
         """
-        Removes the node from a child list node.
+        Removes the nodes with document info from the list of child nodes.
         """
-        for node_id in (self.date_node, self.title_node, self.version_node):
-            if node_id:
-                self.child_nodes.remove(node_id)
+        node_ids = [self.date_node_id, self.title_node_id, self.version_node_id]
+        node_ids = [node_id for node_id in node_ids if node_id is not None]
+        self._remove_child_nodes(node_ids)
+
 
 # ----------------------------------------------------------------------------------------------------------------------
 NodeStore.register_block_command('document', DocumentNode)

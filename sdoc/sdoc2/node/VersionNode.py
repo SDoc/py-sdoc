@@ -62,5 +62,14 @@ class VersionNode(Node):
         """
         return True
 
+    # ------------------------------------------------------------------------------------------------------------------
+    def is_phrasing(self):
+        """
+        Returns True.
+
+        :rtype: bool
+        """
+        return True
+
 # ----------------------------------------------------------------------------------------------------------------------
 NodeStore.register_inline_command('version', VersionNode)

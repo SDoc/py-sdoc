@@ -24,9 +24,9 @@ class DateHtmlFormatter(HtmlFormatter):
         :param sdoc.sdoc2.node.DateNode.DateNode node: The date node.
         :param file file: The output file.
         """
-        html_code = Html.generate_element('span', {}, node.argument)
+        html = Html.generate_element('span', {}, node.argument)
 
-        file.write(html_code)
+        file.write(html)
 
 # ----------------------------------------------------------------------------------------------------------------------
 NodeStore.register_formatter('date', 'html', DateHtmlFormatter)
