@@ -82,7 +82,12 @@ class HeadingNode(Node):
         Set ID for table of contents.
         """
         if 'id' not in self._options:
-            self._options['id'] = '#{}:{}'.format(self.name, self._options['number'])
+            if 'number' in self._options:
+                heading_text = self._options['number']
+            else:
+                heading_text = self.argument
+
+            self._options['id'] = '#{}:{}'.format(self.name, heading_text)
 
     # ------------------------------------------------------------------------------------------------------------------
     def prepare_content_tree(self):
