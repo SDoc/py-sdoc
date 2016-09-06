@@ -12,6 +12,7 @@ import re
 
 from sdoc.sdoc2 import in_scope, out_scope
 from sdoc.sdoc2.helper.Enumerable import Enumerable
+from sdoc.sdoc2.node.CaptionNode import CaptionNode
 from sdoc.sdoc2.node.LabelNode import LabelNode
 from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.node.Node import Node
@@ -51,6 +52,13 @@ class TableNode(Node):
         The text alignments in the table columns.
 
         :type: list[str|None]
+        """
+
+        self.caption = None
+        """
+        The caption for the table.
+
+        :type: str
         """
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -108,10 +116,14 @@ class TableNode(Node):
         for node_id in self.child_nodes:
             node = in_scope(node_id)
 
-            if not isinstance(node, LabelNode):
-                table_nodes.append(node)
-            else:
+            if isinstance(node, LabelNode):
                 self.setup_label(node)
+
+            elif isinstance(node, CaptionNode):
+                self.caption = node.argument
+
+            else:
+                table_nodes.append(node)
 
             node.prepare_content_tree()
 

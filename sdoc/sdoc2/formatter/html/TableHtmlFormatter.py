@@ -38,14 +38,35 @@ class TableHtmlFormatter(HtmlFormatter):
         table_attrs = {'class': node.get_option_value('class'),
                        'id': node.get_option_value('id')}
 
+        rows = ''
+        rows += TableHtmlFormatter.generate_caption(node)
+
         if node.column_headers:
-            rows = self.generate_table_with_header(node)
+            rows += self.generate_table_with_header(node)
         else:
-            rows = self.generate_table(node)
+            rows += self.generate_table(node)
 
         html_table = Html.generate_element('table', table_attrs, rows, True)
 
         file.write(html_table)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    @staticmethod
+    def generate_caption(node):
+        """
+        Generates the caption for the table in HTML representation.
+
+        :param sdoc.sdoc2.node.TableNode.TableNode node: The table node.
+
+        :rtype: str
+        """
+        if node.caption:
+            html_caption = Html.generate_element('caption', {}, node.caption, True)
+
+            return html_caption
+
+        else:
+            return ''
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
