@@ -72,6 +72,9 @@ class HeadingNode(Node):
         enumerable_numbers['heading'].increment_last_level()
         enumerable_numbers['heading'].remove_starting_zeros()
 
+        if 'part' in enumerable_numbers:
+            self._options['part_number'] = enumerable_numbers['part'].get_string()
+
         self._options['number'] = enumerable_numbers['heading'].get_string()
 
         super().number(enumerable_numbers)
@@ -82,7 +85,12 @@ class HeadingNode(Node):
         Set ID for table of contents.
         """
         if 'id' not in self._options:
-            self._options['id'] = '#{}:{}'.format(self.name, self._options['number'])
+            if 'part_number' in self._options:
+                self._options['id'] = '#{}:{}-{}'.format(self.name,
+                                                         self._options['part_number'],
+                                                         self._options['number'])
+            else:
+                self._options['id'] = '#{}:{}'.format(self.name, self._options['number'])
 
     # ------------------------------------------------------------------------------------------------------------------
     def prepare_content_tree(self):

@@ -28,7 +28,6 @@ class HeadingHtmlFormatter(HtmlFormatter):
         HtmlFormatter.generate(self, node, file)
 
     # ------------------------------------------------------------------------------------------------------------------
-
     @staticmethod
     def generate_heading_node(node, file):
         """
@@ -41,6 +40,7 @@ class HeadingHtmlFormatter(HtmlFormatter):
         attributes = {'id': node.get_option_value('id')}
 
         number = node.get_option_value('number')
+
         text_in_tag = '{0} {1!s}'.format('' if not number else number, node.argument)
         file.write(Html.generate_element('h{0:d}'.format(node.get_hierarchy_level()), attributes, text_in_tag))
 
