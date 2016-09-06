@@ -26,6 +26,13 @@ class ReferenceNode(Node):
         """
         super().__init__(io, 'ref', options, argument)
 
+        self.text = ''
+        """
+        The text of a reference.
+
+        :type: str
+        """
+
     # ------------------------------------------------------------------------------------------------------------------
     def get_command(self):
         """

@@ -63,7 +63,7 @@ class TocNode(Node):
         """
         self._options['ids'] = []
 
-        for key, node in node_store.nodes.items():
+        for node in node_store.nodes.values():
             if not isinstance(node, ParagraphNode) and isinstance(node, HeadingNode):
                 node.set_toc_id()
 

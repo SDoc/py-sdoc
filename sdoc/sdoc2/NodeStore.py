@@ -445,7 +445,7 @@ class NodeStore:
         """
         Checks if we have table of contents in document. If yes, we generate table of contents.
         """
-        for key, node in self.nodes.items():
+        for node in self.nodes.values():
             if node.get_command() == 'toc':
                 node.generate_toc()
 

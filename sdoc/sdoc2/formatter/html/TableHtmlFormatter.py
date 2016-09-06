@@ -24,35 +24,22 @@ class TableHtmlFormatter(HtmlFormatter):
         :param sdoc.sdoc2.node.TableNode.TableNode node: The table node.
         :param file file: The output file.
         """
-        self.write_into_file(node, file)
+        attributes = {'class': node.get_option_value('class'),
+                      'id':    node.get_option_value('id')}
 
-    # ------------------------------------------------------------------------------------------------------------------
-    def write_into_file(self, node, file):
-        """
-        Writes data into opened file.
+        html = Html.generate_tag('table', attributes)
 
-        :param sdoc.sdoc2.node.TableNode.TableNode node: The table node.
-        :param file file: The output file.
-        """
-        # Attributes for table.
-        table_attrs = {'class': node.get_option_value('class'),
-                       'id': node.get_option_value('id')}
+        html += TableHtmlFormatter._generate_caption(node)
 
-        rows = ''
-        rows += TableHtmlFormatter.generate_caption(node)
+        html += self._generate_table_body(node)
 
-        if node.column_headers:
-            rows += self.generate_table_with_header(node)
-        else:
-            rows += self.generate_table(node)
+        html += '</table>'
 
-        html_table = Html.generate_element('table', table_attrs, rows, True)
-
-        file.write(html_table)
+        file.write(html)
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def generate_caption(node):
+    def _generate_caption(node):
         """
         Generates the caption for the table in HTML representation.
 
@@ -61,37 +48,13 @@ class TableHtmlFormatter(HtmlFormatter):
         :rtype: str
         """
         if node.caption:
-            html_caption = Html.generate_element('caption', {}, node.caption, True)
+            return Html.generate_element('caption', {}, node.caption)
 
-            return html_caption
-
-        else:
-            return ''
+        return ''
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def generate_table(node):
-        """
-        Generates table without header.
-
-        :param sdoc.sdoc2.node.TableNode.TableNode node: The table node.
-
-        :rtype: str
-        """
-        columns = ''
-        rows = ''
-
-        for row in node.rows:
-            for column in row:
-                columns += Html.generate_element('td', {}, column)
-            rows += Html.generate_element('tr', {}, columns, True)
-            columns = ''
-
-        return rows
-
-    # ------------------------------------------------------------------------------------------------------------------
-    @staticmethod
-    def generate_table_with_header(node):
+    def _generate_table_body(node):
         """
         Generates table with header.
 
@@ -99,32 +62,30 @@ class TableHtmlFormatter(HtmlFormatter):
 
         :rtype: str
         """
-        table_header = ''
-        columns = ''
-        rows = ''
+        html = '<tbody>'
 
-        for column in node.column_headers:
-            table_header += Html.generate_element('th', {}, column, True)
-        table_header = Html.generate_element('tr', {}, table_header, True)
-
-        header_column_counter = 0
+        if node.column_headers:
+            html += '<tr>'
+            for column in node.column_headers:
+                html += Html.generate_element('th', {}, column)
+            html += '</tr>'
 
         for row in node.rows:
-            for col in row:
-                align = TableHtmlFormatter.get_align(node.alignments, header_column_counter)
-
-                columns += TableHtmlFormatter.generate_column(align, col)
-
-                header_column_counter += 1
-            rows += Html.generate_element('tr', {}, columns, True)
-            columns = ''
             header_column_counter = 0
+            html += '<tr>'
+            for col in row:
+                align = TableHtmlFormatter._get_align(node.alignments, header_column_counter)
+                html += TableHtmlFormatter._generate_table_cell(align, col)
+                header_column_counter += 1
+            html += '</tr>'
 
-        return table_header + rows
+        html += '</tbody>'
+
+        return html
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def generate_column(align, col):
+    def _generate_table_cell(align, col):
         """
         Returns the 'column' with HTML data.
 
@@ -132,30 +93,25 @@ class TableHtmlFormatter(HtmlFormatter):
 
         :rtype: str
         """
-        if isinstance(col, str):
-            if align:
-                column = Html.generate_element('td', {'style': "text-align: {0}".format(align)}, col)
-            else:
-                column = Html.generate_element('td', {}, col)
+        attributes = {}
 
+        if align:
+            attributes['style'] = "text-align: {0}".format(align)
+
+        if isinstance(col, str):
+            data = col
+            is_html = False
         else:
             # Generates html in nested node ('col') with specified formatter.
             formatter = NodeStore.get_formatter('html', col.get_command())
-            node_html = formatter.get_html(col)
+            data = formatter.get_html(col)
+            is_html = True
 
-            if align:
-                column = Html.generate_element('td',
-                                               {'style': "text-align: {0}".format(align)},
-                                               node_html,
-                                               is_html=True)
-            else:
-                column = Html.generate_element('td', {}, node_html, is_html=True)
-
-        return column
+        return Html.generate_element('td', attributes, data, is_html)
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def get_align(align_list, column):
+    def _get_align(align_list, column):
         """
         Returns the align or None.
 
@@ -164,10 +120,10 @@ class TableHtmlFormatter(HtmlFormatter):
 
         :rtype: list[str|None] | None
         """
-        try:
+        if column in align_list:
             return align_list[column]
-        except IndexError:
-            return None
+
+        return None
 
 
 # ----------------------------------------------------------------------------------------------------------------------
