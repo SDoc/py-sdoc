@@ -48,7 +48,14 @@ class TableHtmlFormatter(HtmlFormatter):
         :rtype: str
         """
         if node.caption:
-            return Html.generate_element('caption', {}, node.caption)
+            table_number = node.get_option_value('number')
+
+            if table_number:
+                inner_text = 'Tabel {}: {}'.format(table_number, node.caption)
+            else:
+                inner_text = node.caption
+
+            return Html.generate_element('caption', {}, inner_text)
 
         return ''
 
