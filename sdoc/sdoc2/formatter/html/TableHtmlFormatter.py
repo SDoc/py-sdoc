@@ -61,7 +61,7 @@ class TableHtmlFormatter(HtmlFormatter):
         :rtype: str
         """
         if node.caption:
-            html_caption = Html.generate_element('caption', {}, node.caption, True)
+            html_caption = Html.generate_element('caption', {}, node.caption)
 
             return html_caption
 
@@ -104,7 +104,7 @@ class TableHtmlFormatter(HtmlFormatter):
         rows = ''
 
         for column in node.column_headers:
-            table_header += Html.generate_element('th', {}, column, True)
+            table_header += Html.generate_element('th', {}, column)
         table_header = Html.generate_element('tr', {}, table_header, True)
 
         header_column_counter = 0
@@ -147,9 +147,9 @@ class TableHtmlFormatter(HtmlFormatter):
                 column = Html.generate_element('td',
                                                {'style': "text-align: {0}".format(align)},
                                                node_html,
-                                               is_html=True)
+                                               True)
             else:
-                column = Html.generate_element('td', {}, node_html, is_html=True)
+                column = Html.generate_element('td', {}, node_html, True)
 
         return column
 
