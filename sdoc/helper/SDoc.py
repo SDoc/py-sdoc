@@ -24,8 +24,14 @@ class SDoc:
 
         :rtype: str
         """
-
         def replace(matchobj):
+            """
+            Returns the match text prefixed with backslash
+
+            :param matchobj: The match.
+
+            :rtype: str
+            """
             return '\\' + matchobj.group(0)
 
         return re.sub(r'[\\{}]', replace, text)
@@ -42,6 +48,13 @@ class SDoc:
         """
 
         def replace(matchobj):
+            """
+            Returns the match text without prefixed backslash.
+
+            :param matchobj: The match.
+
+            :rtype: str
+            """
             return matchobj.group(0)[1:]
 
         return re.sub(r'\\.', replace, text)

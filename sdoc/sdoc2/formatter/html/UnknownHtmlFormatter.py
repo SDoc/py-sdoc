@@ -43,7 +43,7 @@ class UnknownHtmlFormatter(HtmlFormatter):
 
         :param sdoc.sdoc2.node.Node.Node node: The unknown node.
         """
-        self._error('Unknown SDoc2 command {0}'.format(node.name), node)
+        self.error('Unknown SDoc2 command {0}'.format(node.name), node)
 
 
 # ----------------------------------------------------------------------------------------------------------------------

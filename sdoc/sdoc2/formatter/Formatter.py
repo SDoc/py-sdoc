@@ -56,7 +56,7 @@ class Formatter:
         return self._errors
 
     # ------------------------------------------------------------------------------------------------------------------
-    def _error(self, message, node=None):
+    def error(self, message, node=None):
         """
         Logs an error.
 
@@ -64,7 +64,7 @@ class Formatter:
         :param sdoc.sdoc2.node.Node.Node node: The node where the error occurred.
         """
         if self._parent:
-            self._parent._error(message, node)
+            self._parent.error(message, node)
         else:
             self._errors += 1
 

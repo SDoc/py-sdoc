@@ -274,6 +274,9 @@ class SDoc:
 
     # ------------------------------------------------------------------------------------------------------------------
     def init(self):
+        """
+        Executes initiations required before running SDoc.
+        """
         self._read_config_file()
         self._create_node_store()
         self._import_nodes()
