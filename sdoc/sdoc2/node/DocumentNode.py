@@ -33,21 +33,21 @@ class DocumentNode(Node):
         """
         The title of the sdoc document.
 
-        :type: sdoc.sdoc2.node.TitleNode.TitleNode
+        :type: int
         """
 
         self.date_node = None
         """
         The date of the sdoc document.
 
-        :type: sdoc.sdoc2.node.DateNode.DateNode
+        :type: int
         """
 
         self.version_node = None
         """
         The version of the sdoc document.
 
-        :type: sdoc.sdoc2.node.VersionNode.VersionNode
+        :type: int
         """
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -136,15 +136,15 @@ class DocumentNode(Node):
         """
         if isinstance(node, DateNode):
             self.check_attr(self.date_node, node)
-            self.date_node = node
+            self.date_node = node.id
 
         elif isinstance(node, TitleNode):
             self.check_attr(self.title_node, node)
-            self.title_node = node
+            self.title_node = node.id
 
         elif isinstance(node, VersionNode):
             self.check_attr(self.version_node, node)
-            self.version_node = node
+            self.version_node = node.id
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
@@ -165,7 +165,7 @@ class DocumentNode(Node):
         """
         for node_id in (self.date_node, self.title_node, self.version_node):
             if node_id:
-                self.child_nodes.remove(node_id.id)
+                self.child_nodes.remove(node_id)
 
 # ----------------------------------------------------------------------------------------------------------------------
 NodeStore.register_block_command('document', DocumentNode)
