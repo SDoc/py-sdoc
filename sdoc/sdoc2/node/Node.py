@@ -386,13 +386,14 @@ class Node(metaclass=abc.ABCMeta):
             node = in_scope(node_id)
 
             if node.get_command() == 'ref':
+
                 if node.argument in node_store.labels:
                     node.set_option_value('href', '#{0}'.format(node.argument))
 
                     if node_store.labels[node.argument]['title']:
                         node.set_option_value('title', node_store.labels[node.argument]['title'])
 
-                    node.argument = node_store.labels[node.argument]['argument']
+                    node.text = node_store.labels[node.argument]['argument']
 
                 else:
                     node_store.error("Label '{}' not found".format(node.argument), node)

@@ -46,6 +46,5 @@ class SDoc2ReferencesTest(unittest.TestCase):
                 self.assertIn('chapter <a class="sdoc.reference" href="#chap:awesome" title="Awesome">2</a>', actual_text)
                 self.assertIn('<h1 id="chap:awesome">2 Awesome</h1>', actual_text)
                 self.assertIn('chapter <a class="sdoc.reference" href="#chap:intro" title="Introduction">1</a>', actual_text)
-                self.assertIn('MISSING LABEL <a class="sdoc.reference">chap:missing</a>', actual_text)
 
 # ----------------------------------------------------------------------------------------------------------------------
