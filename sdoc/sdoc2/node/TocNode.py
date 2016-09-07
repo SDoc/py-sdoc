@@ -70,10 +70,10 @@ class TocNode(Node):
                 data = {'id':     node.get_option_value('id'),
                         'arg':    node.argument,
                         'level':  node.get_hierarchy_level(),
-                        'number': node.get_option_value('number')}
+                        'number': node.get_option_value('number'),
+                        'numbering': node.numbering}
 
                 self._options['ids'].append(data)
-
 
 # ----------------------------------------------------------------------------------------------------------------------
 NodeStore.register_inline_command('toc', TocNode)

@@ -81,7 +81,8 @@ class TocHtmlFormatter(HtmlFormatter):
 
         file.write(Html.generate_tag('a', {'href': '#{}'.format(item['id'])}))
 
-        number = item['number']
+        if item['numbering'] != 'off':
+            number = item['number']
         if number:
             file.write(Html.generate_element('span', {}, str(number)))
 

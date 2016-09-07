@@ -31,6 +31,13 @@ class HeadingNode(Node):
         """
         super().__init__(io, name, options, argument)
 
+        self.numbering = None
+        """
+        The numbering status of the node.
+
+        :type: str|None
+        """
+
     # ------------------------------------------------------------------------------------------------------------------
     def get_hierarchy_name(self):
         """
@@ -96,11 +103,21 @@ class HeadingNode(Node):
         """
         super().prepare_content_tree()
 
+        self.set_numbering()
+
         # Adding the id's of splitted text in 'new_child_nodes1' list.
         self.split_text_nodes()
 
         # Creating paragraphs and add all id's in 'new_child_nodes2' list.
         self.create_paragraphs()
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def set_numbering(self):
+        """
+        Sets the numbering status to the heading node.
+        """
+        if 'numbering' in self._options:
+            self.numbering = self._options['numbering']
 
     # ------------------------------------------------------------------------------------------------------------------
     def split_text_nodes(self):
