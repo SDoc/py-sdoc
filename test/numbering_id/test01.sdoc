@@ -1,0 +1,16 @@
+\begin{document}
+
+\toc[depth=3]{Contents}
+
+\chapter{chapter 1}
+\section{ololol}
+
+\part{First part}
+\chapter{Cchapter 2}
+\section{ololol2}
+
+\part{Second part, YEAH!!!}
+\chapter{CHAPTER 1}
+\section{section12}
+
+\end{document}

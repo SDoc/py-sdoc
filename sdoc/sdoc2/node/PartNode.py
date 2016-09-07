@@ -8,6 +8,7 @@ Licence MIT
 # ----------------------------------------------------------------------------------------------------------------------
 from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.node.HeadingNode import HeadingNode
+from sdoc.sdoc2.helper.Enumerable import Enumerable
 
 
 class PartNode(HeadingNode):
@@ -43,6 +44,22 @@ class PartNode(HeadingNode):
         :rtype: int
         """
         return 0
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def number(self, enumerable_numbers):
+        """
+        Sets number of heading nodes.
+
+        :param dict[str,sdoc.sdoc2.helper.Enumerable.Enumerable] enumerable_numbers:
+        """
+        if 'part' not in enumerable_numbers:
+            enumerable_numbers['part'] = Enumerable()
+
+        enumerable_numbers['part'].generate_numeration(self.get_hierarchy_level())
+        enumerable_numbers['part'].increment_last_level()
+        enumerable_numbers['part'].remove_starting_zeros()
+
+        super().number(enumerable_numbers)
 
 
 # ----------------------------------------------------------------------------------------------------------------------

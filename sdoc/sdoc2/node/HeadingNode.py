@@ -8,6 +8,7 @@ Licence MIT
 # ----------------------------------------------------------------------------------------------------------------------
 import sdoc
 from sdoc.sdoc2 import in_scope, out_scope
+from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.helper.Enumerable import Enumerable
 from sdoc.sdoc2.node.EndParagraphNode import EndParagraphNode
 from sdoc.sdoc2.node.Node import Node
@@ -30,6 +31,13 @@ class HeadingNode(Node):
         :param str argument: The title of this heading.
         """
         super().__init__(io, name, options, argument)
+
+        self.numbering = True
+        """
+        The True the node must be numbered.
+
+        :type: bool
+        """
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_hierarchy_name(self):
@@ -72,6 +80,9 @@ class HeadingNode(Node):
         enumerable_numbers['heading'].increment_last_level()
         enumerable_numbers['heading'].remove_starting_zeros()
 
+        if 'part' in enumerable_numbers:
+            self._options['part_number'] = enumerable_numbers['part'].get_string()
+
         self._options['number'] = enumerable_numbers['heading'].get_string()
 
         super().number(enumerable_numbers)
@@ -82,12 +93,12 @@ class HeadingNode(Node):
         Set ID for table of contents.
         """
         if 'id' not in self._options:
-            if 'number' in self._options:
-                heading_text = self._options['number']
+            if 'part_number' in self._options:
+                self._options['id'] = '{}:{}:{}'.format(self.name,
+                                                        self._options['part_number'],
+                                                        self._options['number'])
             else:
-                heading_text = self.argument
-
-            self._options['id'] = '#{}:{}'.format(self.name, heading_text)
+                self._options['id'] = '{}:{}'.format(self.name, self._options['number'])
 
     # ------------------------------------------------------------------------------------------------------------------
     def prepare_content_tree(self):
@@ -96,11 +107,27 @@ class HeadingNode(Node):
         """
         super().prepare_content_tree()
 
+        self.set_numbering()
+
         # Adding the id's of splitted text in 'new_child_nodes1' list.
         self.split_text_nodes()
 
         # Creating paragraphs and add all id's in 'new_child_nodes2' list.
         self.create_paragraphs()
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def set_numbering(self):
+        """
+        Sets the numbering status to the heading node.
+        """
+        if 'numbering' in self._options:
+            if self._options['numbering'] == 'off':
+                self.numbering = False
+            elif self._options['numbering'] == 'on':
+                self.numbering = True
+            else:
+                NodeStore.error("Invalid value '{}' for attribute 'numbering'. Allowed values are 'on' and 'off'.".
+                                format(self._options['numbering']), self)
 
     # ------------------------------------------------------------------------------------------------------------------
     def split_text_nodes(self):
