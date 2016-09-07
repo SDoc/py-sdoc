@@ -16,6 +16,7 @@ from cleo import Application, CommandTester
 
 from sdoc import sdoc2
 from sdoc.command.SDoc2Command import SDoc2Command
+
 from sdoc.sdoc2 import in_scope
 
 
