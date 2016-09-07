@@ -8,6 +8,7 @@ Licence MIT
 # ----------------------------------------------------------------------------------------------------------------------
 import sdoc
 from sdoc.sdoc2 import in_scope, out_scope
+from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.helper.Enumerable import Enumerable
 from sdoc.sdoc2.node.EndParagraphNode import EndParagraphNode
 from sdoc.sdoc2.node.Node import Node
@@ -30,6 +31,13 @@ class HeadingNode(Node):
         :param str argument: The title of this heading.
         """
         super().__init__(io, name, options, argument)
+
+        self.numbering = True
+        """
+        The True the node must be numbered.
+
+        :type: bool
+        """
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_hierarchy_name(self):
@@ -96,11 +104,27 @@ class HeadingNode(Node):
         """
         super().prepare_content_tree()
 
+        self.set_numbering()
+
         # Adding the id's of splitted text in 'new_child_nodes1' list.
         self.split_text_nodes()
 
         # Creating paragraphs and add all id's in 'new_child_nodes2' list.
         self.create_paragraphs()
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def set_numbering(self):
+        """
+        Sets the numbering status to the heading node.
+        """
+        if 'numbering' in self._options:
+            if self._options['numbering'] == 'off':
+                self.numbering = False
+            elif self._options['numbering'] == 'on':
+                self.numbering = True
+            else:
+                NodeStore.error("Invalid value '{}' for attribute 'numbering'. Allowed values are 'on' and 'off'.".
+                                format(self._options['numbering']), self)
 
     # ------------------------------------------------------------------------------------------------------------------
     def split_text_nodes(self):
