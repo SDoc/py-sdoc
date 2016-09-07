@@ -6,7 +6,10 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
+from sdoc.sdoc2 import in_scope, out_scope
 from sdoc.sdoc2.NodeStore import NodeStore
+from sdoc.sdoc2.node.CaptionNode import CaptionNode
+from sdoc.sdoc2.node.LabelNode import LabelNode
 from sdoc.sdoc2.node.Node import Node
 
 
@@ -16,15 +19,21 @@ class FigureNode(Node):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io, options, argument):
+    def __init__(self, io, options):
         """
         Object constructor.
 
         :param None|cleo.styles.output_style.OutputStyle io: The IO object.
         :param dict[str,str] options: The options of this figure.
-        :param str argument: Not used.
         """
-        super().__init__(io, 'figure', options, argument)
+        super().__init__(io, 'figure', options)
+
+        self.caption = None
+        """
+        The caption for the figure.
+
+        :type: None|str
+        """
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_command(self):
@@ -42,7 +51,7 @@ class FigureNode(Node):
 
         :rtype: bool
         """
-        return False
+        return True
 
     # ------------------------------------------------------------------------------------------------------------------
     def is_inline_command(self):
@@ -51,7 +60,34 @@ class FigureNode(Node):
 
         :rtype: bool
         """
-        return True
+        return False
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def prepare_content_tree(self):
+        """
+        Prepares this node for further processing.
+        """
+        for node_id in self.child_nodes:
+            node = in_scope(node_id)
+
+            if isinstance(node, CaptionNode):
+                self.caption = node.argument
+
+            if isinstance(node, LabelNode):
+                self.setup_label(node)
+
+            # node.prepare_content_tree()
+
+            out_scope(node)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def setup_label(self, node):
+        """
+        Sets the data of a label to current table.
+
+        :param sdoc.sdoc2.node.LabelNode.LabelNode node: The label node.
+        """
+        self._options['id'] = node.argument
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
@@ -106,4 +142,4 @@ class FigureNode(Node):
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-NodeStore.register_inline_command('figure', FigureNode)
+NodeStore.register_block_command('figure', FigureNode)

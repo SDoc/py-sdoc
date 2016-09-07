@@ -38,18 +38,21 @@ class FigureHtmlFormatter(HtmlFormatter):
         :param file file: The output file.
         """
         # Creating dicts with attributes for each type of element.
-        img_attributes = {'src':    node.get_option_value('filename'),
+        figure_attributes = {'id': node.get_option_value('id')}
+
+        img_attributes = {'src':    node.get_option_value('src'),
                           'width':  node.get_option_value('width'),
                           'height': node.get_option_value('height'),
-                          'alt':    node.get_option_value('caption')}
-        div_attributes = {'class': node.get_option_value('class')}
+                          'alt':    node.caption}
 
         # Creating elements.
-        img_element = Html.generate_void_element('img', img_attributes)
-        div_img_element = Html.generate_element('div', div_attributes, img_element, True)
+        file.write(Html.generate_tag('figure', figure_attributes))
 
-        # Write elements into html file.
-        file.write(div_img_element)
+        file.write(Html.generate_element('figcaption', {}, node.caption))
+
+        file.write(Html.generate_element('img', img_attributes))
+
+        file.write('</figure>')
 
 
 # ----------------------------------------------------------------------------------------------------------------------
