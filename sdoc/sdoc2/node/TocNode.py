@@ -67,13 +67,14 @@ class TocNode(Node):
             if not isinstance(node, ParagraphNode) and isinstance(node, HeadingNode):
                 node.set_toc_id()
 
-                data = {'id':     node.get_option_value('id'),
-                        'arg':    node.argument,
-                        'level':  node.get_hierarchy_level(),
-                        'number': node.get_option_value('number'),
+                data = {'id':        node.get_option_value('id'),
+                        'arg':       node.argument,
+                        'level':     node.get_hierarchy_level(),
+                        'number':    node.get_option_value('number'),
                         'numbering': node.numbering}
 
                 self._options['ids'].append(data)
+
 
 # ----------------------------------------------------------------------------------------------------------------------
 NodeStore.register_inline_command('toc', TocNode)

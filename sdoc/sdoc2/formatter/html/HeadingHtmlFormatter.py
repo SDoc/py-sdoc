@@ -39,11 +39,11 @@ class HeadingHtmlFormatter(HtmlFormatter):
         # Set id attribute to heading node.
         attributes = {'id': node.get_option_value('id')}
 
-        if node.numbering == 'off':
-            text_in_tag = '{0!s}'.format(node.argument)
-        else:
+        if node.numbering:
             number = node.get_option_value('number')
-            text_in_tag = '{0} {1!s}'.format('' if not number else number, node.argument)
+            text_in_tag = '{0} {1}'.format('' if not number else number, node.argument)
+        else:
+            text_in_tag = '{0}'.format(node.argument)
 
         file.write(Html.generate_element('h{0:d}'.format(node.get_hierarchy_level()), attributes, text_in_tag))
 

@@ -60,7 +60,6 @@ class TocHtmlFormatter(HtmlFormatter):
         depth = node.get_option_value('depth')
 
         for item in node.get_option_value('ids'):
-
             if depth and item['level'] <= int(depth):
                 TocHtmlFormatter.write_elements(item, file)
 
@@ -81,8 +80,7 @@ class TocHtmlFormatter(HtmlFormatter):
 
         file.write(Html.generate_tag('a', {'href': '#{}'.format(item['id'])}))
 
-        if item['numbering'] != 'off':
-            number = item['number']
+        number = item['number'] if item['numbering'] else None
         if number:
             file.write(Html.generate_element('span', {}, str(number)))
 
