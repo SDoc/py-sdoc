@@ -79,7 +79,7 @@ class TocHtmlFormatter(HtmlFormatter):
         class_attr = 'level{}'.format(item['level'])
         file.write(Html.generate_tag('li', {'class': class_attr}))
 
-        file.write(Html.generate_tag('a', {'href': '{}'.format(item['id'])}))
+        file.write(Html.generate_tag('a', {'href': '#{}'.format(item['id'])}))
 
         number = item['number']
         file.write(Html.generate_element('span', {}, str(number)))
