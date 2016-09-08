@@ -48,7 +48,8 @@ class FigureHtmlFormatter(HtmlFormatter):
         # Creating elements.
         file.write(Html.generate_tag('figure', figure_attributes))
 
-        file.write(Html.generate_element('figcaption', {}, node.caption))
+        if node.caption:
+            file.write(Html.generate_element('figcaption', {}, node.caption))
 
         file.write(Html.generate_element('img', img_attributes))
 
