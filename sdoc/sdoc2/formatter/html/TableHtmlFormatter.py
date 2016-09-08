@@ -127,7 +127,7 @@ class TableHtmlFormatter(HtmlFormatter):
 
         :rtype: list[str|None] | None
         """
-        if column in align_list:
+        if column in range(len(align_list)):
             return align_list[column]
 
         return None
