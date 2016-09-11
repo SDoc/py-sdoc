@@ -2,8 +2,11 @@
 
 \section{Section without chapter}
 
-\figure{}
-\figure{}
+\begin{figure}
+\end{figure}
+
+\begin{figure}
+\end{figure}
 
 \begin{itemize}
 \item{} must be 1
@@ -17,8 +20,10 @@
 
 \section{Section 1.1}
 
-\figure{}
-\figure{}
+\begin{figure}
+\end{figure}
+\begin{figure}
+\end{figure}
 
 \begin{itemize}
 \item{} must be 1
