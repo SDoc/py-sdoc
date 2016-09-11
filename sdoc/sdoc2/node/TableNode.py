@@ -234,9 +234,7 @@ class TableNode(Node):
                     self.parse_vertical_separators(string, row)
 
                 else:
-                    if not data:
-                        pass
-                    else:
+                    if data:
                         row.append(data)
 
             if row:
