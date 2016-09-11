@@ -30,6 +30,25 @@ class FigureHtmlFormatter(HtmlFormatter):
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
+    def _write_caption(node, file):
+        """
+        Generates the caption for the table in HTML representation.
+
+        :param sdoc.sdoc2.node.FigureNode.FigureNode node: The figure node.
+        :param file file: The output file.
+        """
+        if node.caption:
+            figure_number = node.get_option_value('number')
+
+            if figure_number:
+                inner_text = 'Figuur {}: {}'.format(figure_number, node.caption)  # TODO Internationalization
+            else:
+                inner_text = node.caption
+
+            file.write(Html.generate_element('figcaption', {}, inner_text))
+
+    # ------------------------------------------------------------------------------------------------------------------
+    @staticmethod
     def write_into_file(node, file):
         """
         Writes data into opened HTML file.
@@ -48,10 +67,9 @@ class FigureHtmlFormatter(HtmlFormatter):
         # Creating elements.
         file.write(Html.generate_tag('figure', figure_attributes))
 
-        if node.caption:
-            file.write(Html.generate_element('figcaption', {}, node.caption))
-
         file.write(Html.generate_element('img', img_attributes))
+
+        FigureHtmlFormatter._write_caption(node, file)
 
         file.write('</figure>')
 
