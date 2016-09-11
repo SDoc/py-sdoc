@@ -232,8 +232,12 @@ class TableNode(Node):
                 if data and isinstance(data, str) and not data.isspace():
                     string = io.StringIO(data)
                     self.parse_vertical_separators(string, row)
+
                 else:
-                    row.append(data)
+                    if not data:
+                        pass
+                    else:
+                        row.append(data)
 
             if row:
                 rows.append(row)
