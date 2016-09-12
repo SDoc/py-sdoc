@@ -51,7 +51,7 @@ class TableHtmlFormatter(HtmlFormatter):
             table_number = node.get_option_value('number')
 
             if table_number:
-                inner_text = 'Tabel {}: {}'.format(table_number, node.caption)
+                inner_text = 'Tabel {}: {}'.format(table_number, node.caption)  # TODO Internationalization
             else:
                 inner_text = node.caption
 
@@ -127,7 +127,7 @@ class TableHtmlFormatter(HtmlFormatter):
 
         :rtype: list[str|None] | None
         """
-        if column in align_list:
+        if column in range(len(align_list)):
             return align_list[column]
 
         return None

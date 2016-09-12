@@ -1,7 +1,10 @@
 \begin{document}
 
-\figure{}
-\figure{}
+\begin{figure}
+\end{figure}
+
+\begin{figure}
+\end{figure}
 
 \section{Section 1}
 
@@ -9,16 +12,24 @@
 
 \subsubsection{Subsubsection 1}
 
-\figure{}
+\begin{figure}
+\end{figure}
 
 \section{Section 2}
 
 \chapter{Chapter 1}
-\figure{}
-\figure{}
+
+\begin{figure}
+\end{figure}
+
+\begin{figure}
+\end{figure}
 
 \chapter{Chapter 2}
-\figure{}
-\figure{}
+\begin{figure}
+\end{figure}
+
+\begin{figure}
+\end{figure}
 
 \end{document}
