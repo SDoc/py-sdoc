@@ -40,6 +40,8 @@ class SDoc1Interpreter:
 
         :param str infile: The input filename with the SDoc1 document.
         :param str outfile: The output filename with the SDoc2 document.
+
+        :rtype: int
         """
         in_stream = antlr4.FileStream(infile)
 

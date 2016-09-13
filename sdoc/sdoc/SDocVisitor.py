@@ -48,7 +48,7 @@ class SDocVisitor:
         """
         Logs an error.
 
-        :param str message: The error message.this message will be appended with 'at filename:line.column' ot the token.
+        :param str message: The error message.This message will be appended with 'at filename:line.column' ot the token.
         :param antlr4.Token.CommonToken token: The token where the error occurred.
         """
         self._errors += 1

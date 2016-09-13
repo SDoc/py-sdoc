@@ -59,6 +59,11 @@ class Position:
 
     # ------------------------------------------------------------------------------------------------------------------
     def __str__(self):
+        """
+        String representation of the position.
+
+        :rtype: str
+        """
         if not self.file_name:
             return "{0:d}.{1:d}".format(self.start_line, self.start_column + 1)
 

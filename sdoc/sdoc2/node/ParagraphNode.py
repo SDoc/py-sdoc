@@ -50,7 +50,7 @@ class ParagraphNode(HeadingNode):
     # ------------------------------------------------------------------------------------------------------------------
     def number(self, numbers):
         """
-        Overrides the HeadingNode implementation withe the (original) Node implementation.
+        Overrides the HeadingNode implementation with the (original) Node implementation.
 
         :param dict[str,str] numbers: The number of last node.
         """

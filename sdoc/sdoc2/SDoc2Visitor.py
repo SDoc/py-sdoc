@@ -111,7 +111,7 @@ class SDoc2Visitor(sdoc2ParserVisitor, SDocVisitor):
         """
         Returns the position of the token in the original SDoc1 source file.
 
-        :param token:
+        :param antlr4.Token.CommonToken token:
 
         :rtype: sdoc.sdoc2.Position.Position
         """

@@ -25,7 +25,7 @@ class StringDataType(DataType):
         """
         The value of this constant integer.
 
-        :type: string
+        :type: str
         """
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -44,7 +44,7 @@ class StringDataType(DataType):
         """
         Returns a clone of this string.
 
-        :rtype: StringDataType
+        :rtype: sdoc.sdoc1.data_type.StringDataType.StringDataType
         """
         return StringDataType(self._value)
 

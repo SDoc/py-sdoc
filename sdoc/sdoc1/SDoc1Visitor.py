@@ -66,7 +66,7 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         """
         The options.
 
-        :type: dict
+        :type: dict[str,int]
         """
 
         self._root_dir = root_dir
@@ -102,7 +102,7 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         """
         Getter for include_level.
 
-        :rtype: T
+        :rtype: int
         """
         return self._include_level
 
@@ -151,7 +151,7 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         """
         Puts a position SDoc2 command on the output stream.
 
-        :param ParserRuleContext ctx: The context tree.
+        :param antlr4.ParserRuleContext ctx: The context tree.
         :param str position: Either start or stop.
         """
         if position == 'start':
@@ -183,6 +183,8 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
 
         :param sdoc.sdoc1.data_type.DataType.DataType data: The data.
         :param antlr4.Token.CommonToken token: The token where data type is been used.
+
+        :rtype: bool|None
         """
         try:
             return data.is_true()
@@ -196,7 +198,7 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         """
         Visits a parse tree produced by sdoc1
 
-        :param ParserRuleContext tree: The context tree.
+        :param antlr4.ParserRuleContext tree: The context tree.
         """
         self.put_position(tree, 'start')
 
@@ -208,6 +210,8 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         Visit a parse tree for expression like a = b.
 
         :param sdoc1Parser.AssignmentExpressionAssignmentContext ctx: The context tree.
+
+        :rtype: mixed
         """
         right_hand_side = ctx.assignmentExpression().accept(self)
         left_hand_side = ctx.postfixExpression().accept(self)
@@ -233,6 +237,8 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         Visits a parse tree for expressions like 'a && b'.
 
         :param sdoc1Parser.LogicalAndExpressionAndContext ctx: The context tree.
+
+        :rtype: sdoc.sdoc1.data_type.IntegerDataType.IntegerDataType
         """
         a_ctx = ctx.logicalAndExpression()
         b_ctx = ctx.equalityExpression()
@@ -251,6 +257,8 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         Visits a parse tree for expressions like 'a || b'.
 
         :param sdoc1Parser.LogicalOrExpressionLogicalOrContext ctx: The context tree.
+
+        :rtype: sdoc.sdoc1.data_type.IntegerDataType.IntegerDataType
         """
         a_ctx = ctx.logicalOrExpression()
         b_ctx = ctx.logicalAndExpression()
@@ -269,6 +277,8 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         Visits a parse tree for expressions like 'a[1]'.
 
         :param sdoc1Parser.PostfixExpressionExpressionContext ctx: The context tree.
+
+        :rtype: sdoc.sdoc1.data_type.DataType.DataType
         """
         # First get the value of key.
         expression = ctx.expression().accept(self)
@@ -291,6 +301,8 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         Visits a parse tree produced by sdoc1Parser#primaryExpressionIdentifier.
 
         :param sdoc1Parser.PrimaryExpressionIdentifierContext ctx: The context tree.
+
+        :rtype: sdoc.sdoc1.data_type.IdentifierDataType.IdentifierDataType
         """
         return IdentifierDataType(self._global_scope, ctx.EXPR_IDENTIFIER().getText())
 
@@ -300,6 +312,8 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         Visits a parse tree produced by sdoc1Parser#PrimaryExpressionIntegerConstantContext.
 
         :param sdoc1Parser.PrimaryExpressionIntegerConstantContext ctx: The context tree.
+
+        :rtype: sdoc.sdoc1.data_type.IntegerDataType.IntegerDataType
         """
         return IntegerDataType(ctx.EXPR_INTEGER_CONSTANT().getText())
 
@@ -309,6 +323,8 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         Visits a parse tree produced by sdoc1Parser#PrimaryExpressionStringConstantContext.
 
         :param sdoc1Parser.PrimaryExpressionStringConstantContext ctx: The context tree.
+
+        :rtype sdoc.sdoc1.data_type.StringDataType.StringDataType
         """
         return StringDataType(ctx.EXPR_STRING_CONSTANT().getText()[1:-1].replace('\\\\', '\\').replace('\\\'', '\''))
 
