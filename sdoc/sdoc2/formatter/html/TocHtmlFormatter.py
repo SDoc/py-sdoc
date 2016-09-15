@@ -40,7 +40,7 @@ class TocHtmlFormatter(HtmlFormatter):
         attributes = {'role': 'navigation', 'class': 'table-of-contents'}
 
         file.write(Html.generate_tag('nav', attributes))
-        file.write(Html.generate_element('h1', {}, node.argument))
+        file.write(Html.generate_element('h3', {}, node.argument))
 
         file.write('<ul>')
         TocHtmlFormatter.write_contents(node, file)

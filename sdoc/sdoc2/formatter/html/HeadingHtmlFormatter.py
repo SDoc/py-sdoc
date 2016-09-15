@@ -45,14 +45,13 @@ class HeadingHtmlFormatter(HtmlFormatter):
         else:
             text_in_tag = '{0}'.format(node.argument)
 
-        file.write(Html.generate_element('h{0:d}'.format(node.get_hierarchy_level()), attributes, text_in_tag))
+        file.write(Html.generate_element('h{0:d}'.format(node.get_hierarchy_level()+2), attributes, text_in_tag))
 
 
 # ----------------------------------------------------------------------------------------------------------------------
+NodeStore.register_formatter('part', 'html', HeadingHtmlFormatter)
 NodeStore.register_formatter('chapter', 'html', HeadingHtmlFormatter)
 NodeStore.register_formatter('section', 'html', HeadingHtmlFormatter)
 NodeStore.register_formatter('subsection', 'html', HeadingHtmlFormatter)
 NodeStore.register_formatter('sub2section', 'html', HeadingHtmlFormatter)
 NodeStore.register_formatter('sub3section', 'html', HeadingHtmlFormatter)
-NodeStore.register_formatter('sub4section', 'html', HeadingHtmlFormatter)
-NodeStore.register_formatter('sub5section', 'html', HeadingHtmlFormatter)
