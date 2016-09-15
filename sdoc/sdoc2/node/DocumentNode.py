@@ -168,9 +168,9 @@ class DocumentNode(Node):
         """
         Removes the nodes with document info from the list of child nodes.
         """
-        node_ids = [self.date_node_id, self.title_node_id, self.version_node_id]
-        node_ids = [node_id for node_id in node_ids if node_id is not None]
-        self._remove_child_nodes(node_ids)
+        obsolete_node_ids = [self.date_node_id, self.title_node_id, self.version_node_id]
+        obsolete_node_ids = [node_id for node_id in obsolete_node_ids if node_id is not None]
+        self._remove_child_nodes(obsolete_node_ids)
 
 
 # ----------------------------------------------------------------------------------------------------------------------

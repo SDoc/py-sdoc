@@ -322,6 +322,7 @@ class Node(metaclass=abc.ABCMeta):
         """
         Creates label list for each heading node, and for node_store. Removes label nodes from child list.
         """
+        obsolete_node_ids = []
         for node_id in self.child_nodes:
             node = in_scope(node_id)
 
@@ -341,11 +342,13 @@ class Node(metaclass=abc.ABCMeta):
                                                     'title':    title_attribute}
 
                 # Removing node from child nodes.
-                self.child_nodes.remove(node.id)
+                obsolete_node_ids.append(node.id)
 
             node.parse_labels()
 
             out_scope(node)
+
+        self._remove_child_nodes(obsolete_node_ids)
 
     # ------------------------------------------------------------------------------------------------------------------
     def append_label_list_in_node_store(self, node):
