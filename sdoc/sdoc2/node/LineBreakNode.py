@@ -7,12 +7,12 @@ Licence MIT
 """
 # ----------------------------------------------------------------------------------------------------------------------
 from sdoc.sdoc2.NodeStore import NodeStore
-from sdoc.sdoc2.node.HeadingNode import HeadingNode
+from sdoc.sdoc2.node.Node import Node
 
 
-class Sub4SectionNode(HeadingNode):
+class LineBreakNode(Node):
     """
-    SDoc2 node for sub-sub-sub-subsections.
+    SDoc2 node for line breaks.
     """
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -21,30 +21,47 @@ class Sub4SectionNode(HeadingNode):
         Object constructor.
 
         :param None|cleo.styles.output_style.OutputStyle io: The IO object.
-        :param dict[str,str] options: The options of this section.
-        :param str argument: The title of this section.
+        :param dict[str,str] options: The options of this smile.
+        :param str argument: Not used.
         """
-        super().__init__(io, 'sub4section', options, argument)
+        super().__init__(io, 'br', options, argument)
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_command(self):
         """
-        Returns the command of this node, i.e. sub4section.
+        Returns the command of this node, i.e. br.
 
         :rtype: str
         """
-        return 'sub4section'
+        return 'br'
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_hierarchy_level(self, parent_hierarchy_level=-1):
+    def is_block_command(self):
         """
-        Returns 6.
+        Returns False.
 
-        :rtype: int
+        :rtype: bool
         """
-        return 6
+        return False
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def is_inline_command(self):
+        """
+        Returns True.
+
+        :rtype: bool
+        """
+        return True
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def is_phrasing(self):
+        """
+        Returns True.
+
+        :rtype: bool
+        """
+        return True
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-NodeStore.register_inline_command('sub4section', Sub4SectionNode)
-NodeStore.register_inline_command('subsubsubsubsection', Sub4SectionNode)
+NodeStore.register_inline_command('br', LineBreakNode)
