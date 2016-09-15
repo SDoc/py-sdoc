@@ -24,7 +24,7 @@ class LineBreakHtmlFormatter(HtmlFormatter):
         :param sdoc.sdoc2.node.LineBreakNode.LineBreakNode node: The linebreak node.
         :param file file: The output file.
         """
-        file.write('</br>')
+        file.write('<br/>')
 
 
 # ----------------------------------------------------------------------------------------------------------------------
