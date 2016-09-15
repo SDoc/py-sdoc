@@ -53,7 +53,7 @@ class ReferenceHtmlFormatter(HtmlFormatter):
                       'href':  node.get_option_value('href'),
                       'title': node.get_option_value('title')}
 
-        return Html.generate_element('a', attributes, node.text)
+        return Html.generate_element('a', attributes, str(node.text))
 
 
 # ----------------------------------------------------------------------------------------------------------------------
