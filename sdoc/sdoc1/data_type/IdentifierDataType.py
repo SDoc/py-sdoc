@@ -59,7 +59,7 @@ class IdentifierDataType(DataType):
         """
         Returns a clone of the referenced data type.
 
-        :rtype: DataType
+        :rtype: sdoc.sdoc1.data_type.DataType.DataType
         """
         return self._scope.get_reference(self._name).dereference()
 

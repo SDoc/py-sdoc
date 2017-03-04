@@ -14,7 +14,7 @@ from sdoc.sdoc2.formatter.html.HtmlFormatter import HtmlFormatter
 
 class DocumentHtmlFormatter(HtmlFormatter):
     """
-    HtmlFormatter for generating HTML code for document.
+    HtmlFormatter for generating HTML code for document node.
     """
 
     # ------------------------------------------------------------------------------------------------------------------

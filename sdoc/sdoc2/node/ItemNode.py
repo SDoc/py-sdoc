@@ -29,6 +29,11 @@ class ItemNode(Node):
         super().__init__(io, 'item', options, argument)
 
         self._hierarchy_level = 0
+        """
+        The hierarchy level of the itemize.
+
+        :type: int
+        """
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_command(self):

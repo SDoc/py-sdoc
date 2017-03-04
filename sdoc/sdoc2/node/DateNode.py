@@ -22,7 +22,7 @@ class DateNode(Node):
 
         :param None|cleo.styles.output_style.OutputStyle io: The IO object.
         :param dict[str,str] options: The options of the date.
-        :param str argument:
+        :param str argument: The date.
         """
         super().__init__(io, 'date', options, argument)
 

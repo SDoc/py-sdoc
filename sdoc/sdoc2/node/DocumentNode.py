@@ -90,6 +90,7 @@ class DocumentNode(Node):
     def is_document_root(self):
         """
         Returns True.
+
         :rtype: bool
         """
         return True

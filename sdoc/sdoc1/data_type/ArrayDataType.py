@@ -84,7 +84,7 @@ class ArrayDataType(DataType):
         """
         Returns a clone of this array.
 
-        :rtype: ArrayDataType
+        :rtype: sdoc.sdoc1.data_type.ArrayDataType.ArrayDataType
         """
         return ArrayDataType(self._elements)
 
@@ -93,9 +93,9 @@ class ArrayDataType(DataType):
         """
         Adds a new elements to this array. If the key holds an element already the element will be replaced.
 
-        :param int_str key: The key of the new element. Must be a scalar data type.
+        :param int|str key: The key of the new element. Must be a scalar data type.
 
-        :rtype: sdoc.sdoc1.data_type.DataType.ArrayDataType
+        :rtype: sdoc.sdoc1.data_type.ArrayDataType.ArrayDataType
 
         @todo consider key must be int or str
         """

@@ -18,7 +18,7 @@ class UnknownHtmlFormatter(HtmlFormatter):
     # ------------------------------------------------------------------------------------------------------------------
     def generate(self, node, file):
         """
-        Generates the HTML code for a paragraph node.
+        Generates the HTML code for an unknown node.
 
         :param sdoc.sdoc2.node.Node.Node node: The unknown node.
         :param file file: The output file.
@@ -28,7 +28,7 @@ class UnknownHtmlFormatter(HtmlFormatter):
     # ------------------------------------------------------------------------------------------------------------------
     def generate_chapter(self, node, file):
         """
-        Generates the HTML code for a paragraph node.
+        Generates the HTML code for an unknown node.
 
         :param sdoc.sdoc2.node.Node.Node node: The unknown node.
         :param file file: The output file.

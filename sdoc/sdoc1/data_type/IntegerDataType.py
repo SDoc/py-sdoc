@@ -44,7 +44,7 @@ class IntegerDataType(DataType):
         """
         Returns a clone of this integer.
 
-        :rtype: IntegerDataType
+        :rtype: sdoc.sdoc1.data_type.IntegerDataType.IntegerDataType
         """
         return IntegerDataType(self._value)
 

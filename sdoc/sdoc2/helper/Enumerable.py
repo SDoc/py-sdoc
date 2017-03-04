@@ -5,8 +5,6 @@ Copyright 2016 Set Based IT Consultancy
 
 Licence MIT
 """
-
-
 # ----------------------------------------------------------------------------------------------------------------------
 
 
@@ -22,6 +20,11 @@ class Enumerable:
         """
 
         self._numerate_data = {}
+        """
+        The info about node numeration.
+
+        :type: dict[int,int]
+        """
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_level(self, level):
@@ -30,7 +33,7 @@ class Enumerable:
 
         :param: int level: The level.
 
-        :rtype: int
+        :rtype: int|None
         """
         if level in self._numerate_data:
             return self._numerate_data[level]

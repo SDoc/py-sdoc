@@ -39,6 +39,7 @@ class Formatter:
         self._errors = 0
         """
         The error count.
+
         :type: int
         """
 
@@ -79,7 +80,7 @@ class Formatter:
     # ------------------------------------------------------------------------------------------------------------------
     def generate(self, node, file):
         """
-        Generates the representation of a node is the requested output format.
+        Generates the representation of a node in the requested output format.
 
         :param sdoc.sdoc2.node.Node.Node node: The node for which the output must be generated.
         :param file file: The output file.

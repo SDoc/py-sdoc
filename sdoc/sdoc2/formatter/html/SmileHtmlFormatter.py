@@ -24,17 +24,15 @@ class SmileHtmlFormatter(HtmlFormatter):
         :param sdoc.sdoc2.node.SmileNode.SmileNode node: The smile node.
         :param file file: The output file.
         """
-        file.write(SmileHtmlFormatter.get_html(node))
+        file.write(SmileHtmlFormatter.get_html())
 
         HtmlFormatter.generate(self, node, file)
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def get_html(node):
+    def get_html():
         """
-        Returns string with generated HTML tag.
-
-        :param sdoc.sdoc2.node.SmileNode.SmileNode node: The smile node.
+        Returns string with generated HTML tag for smile.
 
         :rtype: str
         """

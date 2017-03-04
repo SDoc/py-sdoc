@@ -38,6 +38,8 @@ class SDoc2Interpreter:
         Processes a SDoc1 document.
 
         :param str infile: The input filename with the SDoc2 document.
+
+        :rtype: int The count of errors.
         """
         in_stream = antlr4.FileStream(infile, 'utf-8')
 

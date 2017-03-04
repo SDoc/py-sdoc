@@ -76,8 +76,6 @@ class FigureNode(Node):
             if isinstance(node, LabelNode):
                 self.setup_label(node)
 
-            # node.prepare_content_tree()
-
             out_scope(node)
 
     # ------------------------------------------------------------------------------------------------------------------
