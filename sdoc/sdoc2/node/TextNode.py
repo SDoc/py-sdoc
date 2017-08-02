@@ -120,7 +120,7 @@ class TextNode(Node):
     # ------------------------------------------------------------------------------------------------------------------
     def prune_whitespace(self, leading=False, trailing=False):
         """
-        Method for removing white space in text.
+        Method for removing whitespace in text.
 
         :param bool leading: if True, remove whitespaces from start.
         :param bool trailing: if True, remove whitespaces from end.

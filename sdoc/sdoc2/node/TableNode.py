@@ -300,6 +300,8 @@ class TableNode(Node):
 
         :param list[mixed] row: The row with elements
         :param list[list[mixed]] rows: The list with many rows.
+
+        :rtype: list[]
         """
         rows.append(row)
         return []
@@ -374,6 +376,7 @@ class TableNode(Node):
         Strips whitespaces from the text of an each cell.
 
         :param list[str] row: The row with text of an each cell.
+
         :rtype: list[str]
         """
         clear_row = []

@@ -92,11 +92,11 @@ class TableHtmlFormatter(HtmlFormatter):
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def _generate_table_cell(align, col):
+    def _generate_table_cell(align, cell):
         """
         Returns the 'column' with HTML data.
 
-        :param mixed col: The column in a table.
+        :param mixed cell: The column in a table.
 
         :rtype: str
         """
@@ -105,13 +105,13 @@ class TableHtmlFormatter(HtmlFormatter):
         if align:
             attributes['style'] = "text-align: {0}".format(align)
 
-        if isinstance(col, str):
-            data = col
+        if isinstance(cell, str):
+            data = cell
             is_html = False
         else:
-            # Generates html in nested node ('col') with specified formatter.
-            formatter = NodeStore.get_formatter('html', col.get_command())
-            data = formatter.get_html(col)
+            # Generates html in nested node ('cell') with specified formatter.
+            formatter = NodeStore.get_formatter('html', cell.get_command())
+            data = formatter.get_html(cell)
             is_html = True
 
         return Html.generate_element('td', attributes, data, is_html)

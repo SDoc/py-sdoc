@@ -175,7 +175,7 @@ class Node(metaclass=abc.ABCMeta):
 
         :param str option_name: The name of the option.
 
-        :rtype: str
+        :rtype: str|None
         """
         return self._options[option_name] if option_name in self._options else None
 
@@ -185,7 +185,7 @@ class Node(metaclass=abc.ABCMeta):
         Sets value for option.
 
         :param str option: The name of an option
-        :param mixed value: The value of an option
+        :param str value: The value of an option
         """
         self._options[option] = value
 
@@ -285,7 +285,7 @@ class Node(metaclass=abc.ABCMeta):
         """
         Returns a list with a tuple with command and number of enumerated child nodes.
 
-        Thi method is intended for unit test only.
+        This method is intended for unit test only.
 
         :rtype: list[(str,str)]
         """

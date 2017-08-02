@@ -65,14 +65,14 @@ class SDoc:
         """
         A list with path names from with node modules must be imported.
 
-        :type: [str]
+        :type: list[str]
         """
 
         self._formatter_paths = []
         """
         A list with path names from with node modules must be imported.
 
-        :type: [str]
+        :type: list[str]
         """
 
         self._errors = 0
@@ -290,6 +290,8 @@ class SDoc:
         :param str sdoc1_path: The path of the SDoc1 document.
         :param str sdoc2_path: The path were the the SDoc2 document mut be stored.
         :param bool log_errors: If true the number of errors will be logged.
+
+        :rtype: int The count of errors.
         """
         self._io.title('SDoc1')
 
@@ -310,6 +312,8 @@ class SDoc:
 
         :param str sdoc2_path: The path of the SDoc2 document.
         :param bool log_errors: If true the number of errors will be logged.
+
+        :rtype: int The count of errors.
         """
         self._io.writeln('')
         self._io.title('SDoc2')
@@ -330,6 +334,8 @@ class SDoc:
         Generates the target document in the specific format.
 
         :param bool log_errors: If true the number of errors will be logged.
+
+        :rtype: int The count of errors.
         """
         self._io.writeln('')
         self._io.title('Format')
@@ -350,6 +356,8 @@ class SDoc:
 
         :param str main_filename: The path of the SDoc1 document.
         :param bool log_errors: If true the number of errors will be logged.
+
+        :rtype: int The count of errors.
         """
         self.init()
 

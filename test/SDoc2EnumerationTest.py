@@ -31,7 +31,7 @@ class SDoc2EnumerationTest(unittest.TestCase):
         """
         Takes a list of lists/tuples, converts to string, removes extra nesting and creates a tuple.
 
-        :param list nodes: The list of nested lists/tuples of items.
+        :param list[mixed] nodes: The list of nested lists/tuples of items.
 
         :rtype: tuple[tuple]
         """

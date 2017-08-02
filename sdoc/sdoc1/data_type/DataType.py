@@ -37,7 +37,7 @@ class DataType(metaclass=abc.ABCMeta):
         """
         Returns a clone of this data type.
 
-        :rtype: DataType
+        :rtype: sdoc.sdoc1.data_type.DataType.DataType
         """
         raise NotImplementedError
 

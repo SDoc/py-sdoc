@@ -30,7 +30,7 @@ class IconDefNode(Node):
     # ------------------------------------------------------------------------------------------------------------------
     def get_command(self):
         """
-        Returns the command of this node, i.e. icon_def.
+        Returns the command of this node, i.e. icondef.
 
         :rtype: str
         """

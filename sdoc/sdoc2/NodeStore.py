@@ -215,7 +215,7 @@ class NodeStore:
         Note: The node is not stored nor appended to the content tree.
 
         :param str command: The inline command.
-        :param dict options: The options.
+        :param None|dict[str,str] options: The options.
         :param str argument: The argument of the inline command.
         :param None|sdoc.sdoc2.Position.Position position: The position of the node definition.
 
@@ -274,7 +274,7 @@ class NodeStore:
         Creates a node based an inline command and appends it to the end of the content tree.
 
         :param str command: The inline command.
-        :param dict options: The options.
+        :param dict[str,str] options: The options.
         :param str argument: The argument of the inline command.
         :param sdoc.sdoc2.Position.Position position: The position of the node definition.
 
@@ -294,7 +294,7 @@ class NodeStore:
         Creates a node based on a block command and appends it to the end of the content tree.
 
         :param str command: The inline command.
-        :param dict options: The options.
+        :param dict[str,str] options: The options.
         :param sdoc.sdoc2.Position.Position position: The position of the node definition.
 
         :rtype: sdoc.sdoc2.node.Node.Node

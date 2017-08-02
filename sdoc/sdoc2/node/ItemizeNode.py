@@ -31,6 +31,11 @@ class ItemizeNode(Node):
         super().__init__(io, 'itemize', options)
 
         self._hierarchy_level = 0
+        """
+        The hierarchy level of the itemize.
+
+        :type: int
+        """
 
         node_store.first = True
 
