@@ -6,6 +6,7 @@ Copyright 2016 Set Based IT Consultancy
 Licence MIT
 """
 from cleo import Command
+from cleo.styles import CleoStyle
 
 
 class BaseCommand(Command):
@@ -22,17 +23,27 @@ class BaseCommand(Command):
         """
         Command.__init__(self, name)
 
-        self.output = None
+    # ------------------------------------------------------------------------------------------------------------------
+    def __set_style(self):
         """
-        The IO object.
+        Sets the output format style used by SDoc.
+        """
+        # Style for file system objects (e.g. file and directory names).
+        self.set_style('fso', fg='green', options=['bold'])
 
-        :type: None|cleo.styles.output_style.OutputStyle
-        """
+        # Style for errors.
+        self.set_style('error', fg='red', options=['bold'])
+
+        # Style for SDoc1 notices.
+        self.set_style('notice', fg='yellow')
 
     # ------------------------------------------------------------------------------------------------------------------
     def execute(self, i, o):
         self.input = i
         self.output = o
+
+        self.__set_style()
+        self.output = CleoStyle(self.input, self.output)
 
         return self.handle()
 

@@ -7,7 +7,6 @@ Licence MIT
 """
 from sdoc.SDoc import SDoc
 from sdoc.command.BaseCommand import BaseCommand
-from sdoc.style.SdocStyle import SdocStyle
 
 
 class SDoc2Command(BaseCommand):
@@ -24,8 +23,6 @@ class SDoc2Command(BaseCommand):
         """
         Reads the arguments and starts SDoc application.
         """
-        self.output = SdocStyle(self.input, self.output)
-
         sdoc = SDoc()
         sdoc.io = self.output
         sdoc.config_path = self.input.get_argument('config.cfg')

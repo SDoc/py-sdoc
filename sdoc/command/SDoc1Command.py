@@ -1,13 +1,8 @@
 """
 SDoc
-
-Copyright 2016 Set Based IT Consultancy
-
-Licence MIT
 """
 from sdoc.SDoc import SDoc
 from sdoc.command.BaseCommand import BaseCommand
-from sdoc.style.SdocStyle import SdocStyle
 
 
 class SDoc1Command(BaseCommand):
@@ -24,8 +19,6 @@ class SDoc1Command(BaseCommand):
         """
         Reads the arguments and starts SDoc1 application.
         """
-        self.output = SdocStyle(self.input, self.output)
-
         sdoc = SDoc()
         sdoc.io = self.output
 
