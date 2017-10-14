@@ -181,7 +181,7 @@ class SDoc:
                             .format(class_name, self._config_path))
 
         # Create the formatter.
-        self._format = m(self._io, config[section])
+        self._format = m(self._io, target_format, config)
 
     # ------------------------------------------------------------------------------------------------------------------
     def _config_set_temp_dir(self, config):

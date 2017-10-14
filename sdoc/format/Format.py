@@ -20,7 +20,7 @@ class Format(metaclass=abc.ABCMeta):
         Object constructor.
 
         :param cleo.styles.output_style.OutputStyle io: The IO object.
-        :param configparser.SectionProxy config: The section in the config file for the target_format.
+        :param configparser.ConfigParser config: The section in the config file for the target_format.
         """
         self._io = io
         """

@@ -42,9 +42,9 @@ class SDoc2ReferencesTest(unittest.TestCase):
                 with open('output.html', 'r') as actual:
                     actual_text = actual.read()
 
-                self.assertIn('<h1 id="chap:intro">1 Introduction</h1>', actual_text)
+                self.assertIn('<h3 id="chap:intro">1 Introduction</h3>', actual_text)
                 self.assertIn('chapter <a class="sdoc.reference" href="#chap:awesome" title="Awesome">2</a>', actual_text)
-                self.assertIn('<h1 id="chap:awesome">2 Awesome</h1>', actual_text)
+                self.assertIn('<h3 id="chap:awesome">2 Awesome</h3>', actual_text)
                 self.assertIn('chapter <a class="sdoc.reference" href="#chap:intro" title="Introduction">1</a>', actual_text)
 
 # ----------------------------------------------------------------------------------------------------------------------

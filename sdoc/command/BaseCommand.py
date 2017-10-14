@@ -5,7 +5,6 @@ Copyright 2016 Set Based IT Consultancy
 
 Licence MIT
 """
-# ----------------------------------------------------------------------------------------------------------------------
 from cleo import Command
 
 
@@ -23,11 +22,18 @@ class BaseCommand(Command):
         """
         Command.__init__(self, name)
 
-        self._io = None
+        self.output = None
         """
         The IO object.
 
         :type: None|cleo.styles.output_style.OutputStyle
         """
+
+    # ------------------------------------------------------------------------------------------------------------------
+    def execute(self, i, o):
+        self.input = i
+        self.output = o
+
+        return self.handle()
 
 # ----------------------------------------------------------------------------------------------------------------------
