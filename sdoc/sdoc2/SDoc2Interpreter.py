@@ -8,7 +8,7 @@ Licence MIT
 # ----------------------------------------------------------------------------------------------------------------------
 import antlr4
 
-import sdoc
+from sdoc import sdoc2
 from sdoc.antlr.sdoc2Lexer import sdoc2Lexer
 from sdoc.antlr.sdoc2Parser import sdoc2Parser
 from sdoc.sdoc2.SDoc2Visitor import SDoc2Visitor
@@ -51,7 +51,7 @@ class SDoc2Interpreter:
 
         visitor.visit(tree)
 
-        sdoc.sdoc2.node_store.prepare_content_tree()
+        sdoc2.node_store.prepare_content_tree()
 
         return visitor.errors
 
