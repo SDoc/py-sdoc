@@ -1,11 +1,13 @@
-# Generated from sdoc/antlr/sdoc2Parser.g4 by ANTLR 4.5.3
+# Generated from sdoc/antlr/sdoc2Parser.g4 by ANTLR 4.7
 # encoding: utf-8
 from antlr4 import *
 from io import StringIO
+from typing.io import TextIO
+import sys
 
 def serializedATN():
     with StringIO() as buf:
-        buf.write("\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\25")
+        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\25")
         buf.write("^\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b")
         buf.write("\t\b\3\2\3\2\7\2\23\n\2\f\2\16\2\26\13\2\3\3\3\3\3\4\3")
         buf.write("\4\3\4\3\4\5\4\36\n\4\3\5\3\5\3\5\3\5\3\5\7\5%\n\5\f\5")
@@ -13,29 +15,29 @@ def serializedATN():
         buf.write("\6\3\6\3\7\3\7\3\7\3\7\3\7\7\7;\n\7\f\7\16\7>\13\7\3\7")
         buf.write("\5\7A\n\7\3\7\3\7\5\7E\n\7\3\7\5\7H\n\7\3\b\3\b\3\b\3")
         buf.write("\b\3\b\7\bO\n\b\f\b\16\bR\13\b\3\b\5\bU\n\b\3\b\3\b\5")
-        buf.write("\bY\n\b\3\b\5\b\\\n\b\3\b\2\2\t\2\4\6\b\n\f\16\2\2e\2")
-        buf.write("\24\3\2\2\2\4\27\3\2\2\2\6\35\3\2\2\2\b\37\3\2\2\2\n\60")
-        buf.write("\3\2\2\2\f\65\3\2\2\2\16I\3\2\2\2\20\23\5\6\4\2\21\23")
-        buf.write("\5\4\3\2\22\20\3\2\2\2\22\21\3\2\2\2\23\26\3\2\2\2\24")
-        buf.write("\22\3\2\2\2\24\25\3\2\2\2\25\3\3\2\2\2\26\24\3\2\2\2\27")
-        buf.write("\30\7\3\2\2\30\5\3\2\2\2\31\36\5\b\5\2\32\36\5\n\6\2\33")
-        buf.write("\36\5\f\7\2\34\36\5\16\b\2\35\31\3\2\2\2\35\32\3\2\2\2")
-        buf.write("\35\33\3\2\2\2\35\34\3\2\2\2\36\7\3\2\2\2\37*\7\4\2\2")
-        buf.write(" &\7\b\2\2!\"\7\21\2\2\"#\7\20\2\2#%\7\22\2\2$!\3\2\2")
-        buf.write("\2%(\3\2\2\2&$\3\2\2\2&\'\3\2\2\2\')\3\2\2\2(&\3\2\2\2")
-        buf.write(")+\7\17\2\2* \3\2\2\2*+\3\2\2\2+,\3\2\2\2,-\7\t\2\2-.")
-        buf.write("\7\f\2\2./\7\13\2\2/\t\3\2\2\2\60\61\7\5\2\2\61\62\7\t")
-        buf.write("\2\2\62\63\7\f\2\2\63\64\7\13\2\2\64\13\3\2\2\2\65@\7")
-        buf.write("\6\2\2\66<\7\r\2\2\678\7\21\2\289\7\20\2\29;\7\22\2\2")
-        buf.write(":\67\3\2\2\2;>\3\2\2\2<:\3\2\2\2<=\3\2\2\2=?\3\2\2\2>")
-        buf.write("<\3\2\2\2?A\7\17\2\2@\66\3\2\2\2@A\3\2\2\2AG\3\2\2\2B")
-        buf.write("D\7\16\2\2CE\7\25\2\2DC\3\2\2\2DE\3\2\2\2EF\3\2\2\2FH")
-        buf.write("\7\24\2\2GB\3\2\2\2GH\3\2\2\2H\r\3\2\2\2IT\7\7\2\2JP\7")
-        buf.write("\r\2\2KL\7\21\2\2LM\7\20\2\2MO\7\22\2\2NK\3\2\2\2OR\3")
-        buf.write("\2\2\2PN\3\2\2\2PQ\3\2\2\2QS\3\2\2\2RP\3\2\2\2SU\7\17")
-        buf.write("\2\2TJ\3\2\2\2TU\3\2\2\2U[\3\2\2\2VX\7\16\2\2WY\7\25\2")
-        buf.write("\2XW\3\2\2\2XY\3\2\2\2YZ\3\2\2\2Z\\\7\24\2\2[V\3\2\2\2")
-        buf.write("[\\\3\2\2\2\\\17\3\2\2\2\17\22\24\35&*<@DGPTX[")
+        buf.write("\bY\n\b\3\b\5\b\\\n\b\3\b\2\2\t\2\4\6\b\n\f\16\2\2\2e")
+        buf.write("\2\24\3\2\2\2\4\27\3\2\2\2\6\35\3\2\2\2\b\37\3\2\2\2\n")
+        buf.write("\60\3\2\2\2\f\65\3\2\2\2\16I\3\2\2\2\20\23\5\6\4\2\21")
+        buf.write("\23\5\4\3\2\22\20\3\2\2\2\22\21\3\2\2\2\23\26\3\2\2\2")
+        buf.write("\24\22\3\2\2\2\24\25\3\2\2\2\25\3\3\2\2\2\26\24\3\2\2")
+        buf.write("\2\27\30\7\3\2\2\30\5\3\2\2\2\31\36\5\b\5\2\32\36\5\n")
+        buf.write("\6\2\33\36\5\f\7\2\34\36\5\16\b\2\35\31\3\2\2\2\35\32")
+        buf.write("\3\2\2\2\35\33\3\2\2\2\35\34\3\2\2\2\36\7\3\2\2\2\37*")
+        buf.write("\7\4\2\2 &\7\b\2\2!\"\7\21\2\2\"#\7\20\2\2#%\7\22\2\2")
+        buf.write("$!\3\2\2\2%(\3\2\2\2&$\3\2\2\2&\'\3\2\2\2\')\3\2\2\2(")
+        buf.write("&\3\2\2\2)+\7\17\2\2* \3\2\2\2*+\3\2\2\2+,\3\2\2\2,-\7")
+        buf.write("\t\2\2-.\7\f\2\2./\7\13\2\2/\t\3\2\2\2\60\61\7\5\2\2\61")
+        buf.write("\62\7\t\2\2\62\63\7\f\2\2\63\64\7\13\2\2\64\13\3\2\2\2")
+        buf.write("\65@\7\6\2\2\66<\7\r\2\2\678\7\21\2\289\7\20\2\29;\7\22")
+        buf.write("\2\2:\67\3\2\2\2;>\3\2\2\2<:\3\2\2\2<=\3\2\2\2=?\3\2\2")
+        buf.write("\2><\3\2\2\2?A\7\17\2\2@\66\3\2\2\2@A\3\2\2\2AG\3\2\2")
+        buf.write("\2BD\7\16\2\2CE\7\25\2\2DC\3\2\2\2DE\3\2\2\2EF\3\2\2\2")
+        buf.write("FH\7\24\2\2GB\3\2\2\2GH\3\2\2\2H\r\3\2\2\2IT\7\7\2\2J")
+        buf.write("P\7\r\2\2KL\7\21\2\2LM\7\20\2\2MO\7\22\2\2NK\3\2\2\2O")
+        buf.write("R\3\2\2\2PN\3\2\2\2PQ\3\2\2\2QS\3\2\2\2RP\3\2\2\2SU\7")
+        buf.write("\17\2\2TJ\3\2\2\2TU\3\2\2\2U[\3\2\2\2VX\7\16\2\2WY\7\25")
+        buf.write("\2\2XW\3\2\2\2XY\3\2\2\2YZ\3\2\2\2Z\\\7\24\2\2[V\3\2\2")
+        buf.write("\2[\\\3\2\2\2\\\17\3\2\2\2\17\22\24\35&*<@DGPTX[")
         return buf.getvalue()
 
 
@@ -95,9 +97,9 @@ class sdoc2Parser ( Parser ):
     INLINE_ARG_RIGHT_BRACE=18
     INLINE_ARG_ARG=19
 
-    def __init__(self, input:TokenStream):
-        super().__init__(input)
-        self.checkVersion("4.5.3")
+    def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
+        super().__init__(input, output)
+        self.checkVersion("4.7")
         self._interp = ParserATNSimulator(self, self.atn, self.decisionsToDFA, self.sharedContextCache)
         self._predicates = None
 
@@ -147,15 +149,16 @@ class sdoc2Parser ( Parser ):
             _la = self._input.LA(1)
             while (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << sdoc2Parser.TEXT) | (1 << sdoc2Parser.BEGIN) | (1 << sdoc2Parser.END) | (1 << sdoc2Parser.POSITION) | (1 << sdoc2Parser.SDOC2_COMMAND))) != 0):
                 self.state = 16
+                self._errHandler.sync(self)
                 token = self._input.LA(1)
                 if token in [sdoc2Parser.BEGIN, sdoc2Parser.END, sdoc2Parser.POSITION, sdoc2Parser.SDOC2_COMMAND]:
                     self.state = 14
                     self.command()
-
+                    pass
                 elif token in [sdoc2Parser.TEXT]:
                     self.state = 15
                     self.text()
-
+                    pass
                 else:
                     raise NoViableAltException(self)
 
@@ -248,27 +251,28 @@ class sdoc2Parser ( Parser ):
         self.enterRule(localctx, 4, self.RULE_command)
         try:
             self.state = 27
+            self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [sdoc2Parser.BEGIN]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 23
                 self.cmd_begin()
-
+                pass
             elif token in [sdoc2Parser.END]:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 24
                 self.cmd_end()
-
+                pass
             elif token in [sdoc2Parser.POSITION]:
                 self.enterOuterAlt(localctx, 3)
                 self.state = 25
                 self.cmd_position()
-
+                pass
             elif token in [sdoc2Parser.SDOC2_COMMAND]:
                 self.enterOuterAlt(localctx, 4)
                 self.state = 26
                 self.cmd_sdoc2()
-
+                pass
             else:
                 raise NoViableAltException(self)
 
@@ -344,6 +348,7 @@ class sdoc2Parser ( Parser ):
             self.state = 29
             self.match(sdoc2Parser.BEGIN)
             self.state = 40
+            self._errHandler.sync(self)
             _la = self._input.LA(1)
             if _la==sdoc2Parser.BLOCK_ARG_LEFT_BRACKET:
                 self.state = 30
@@ -496,6 +501,7 @@ class sdoc2Parser ( Parser ):
             self.state = 51
             self.match(sdoc2Parser.POSITION)
             self.state = 62
+            self._errHandler.sync(self)
             _la = self._input.LA(1)
             if _la==sdoc2Parser.INLINE_ARG_LEFT_BRACKET:
                 self.state = 52
@@ -519,11 +525,13 @@ class sdoc2Parser ( Parser ):
 
 
             self.state = 69
+            self._errHandler.sync(self)
             _la = self._input.LA(1)
             if _la==sdoc2Parser.INLINE_ARG_LEFT_BRACE:
                 self.state = 64
                 self.match(sdoc2Parser.INLINE_ARG_LEFT_BRACE)
                 self.state = 66
+                self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if _la==sdoc2Parser.INLINE_ARG_ARG:
                     self.state = 65
@@ -606,6 +614,7 @@ class sdoc2Parser ( Parser ):
             self.state = 71
             self.match(sdoc2Parser.SDOC2_COMMAND)
             self.state = 82
+            self._errHandler.sync(self)
             _la = self._input.LA(1)
             if _la==sdoc2Parser.INLINE_ARG_LEFT_BRACKET:
                 self.state = 72
@@ -629,11 +638,13 @@ class sdoc2Parser ( Parser ):
 
 
             self.state = 89
+            self._errHandler.sync(self)
             _la = self._input.LA(1)
             if _la==sdoc2Parser.INLINE_ARG_LEFT_BRACE:
                 self.state = 84
                 self.match(sdoc2Parser.INLINE_ARG_LEFT_BRACE)
                 self.state = 86
+                self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if _la==sdoc2Parser.INLINE_ARG_ARG:
                     self.state = 85

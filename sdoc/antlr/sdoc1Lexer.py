@@ -1,11 +1,13 @@
-# Generated from sdoc/antlr/sdoc1Lexer.g4 by ANTLR 4.5.3
+# Generated from sdoc/antlr/sdoc1Lexer.g4 by ANTLR 4.7
 from antlr4 import *
 from io import StringIO
+from typing.io import TextIO
+import sys
 
 
 def serializedATN():
     with StringIO() as buf:
-        buf.write("\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\2*")
+        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\2*")
         buf.write("\u013d\b\1\b\1\b\1\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6")
         buf.write("\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4\f\t\f")
         buf.write("\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22")
@@ -36,8 +38,8 @@ def serializedATN():
         buf.write("\25\13\27\f\31\r\33\16\35\17\37\20!\21#\22%\23\'\24)\25")
         buf.write("+\26-\27/\30\61\31\63\32\65\33\67\349\35;\36=\37? A!C")
         buf.write("\"E#G$I%K&M\'O(Q)S\2U\2W\2Y*\5\2\3\4\n\3\2^^\4\2\f\f\17")
-        buf.write("\17\4\2aac|\5\2^^}}\177\177\5\2\13\f\17\17\"\"\5\2C\\")
-        buf.write("aac|\3\2\62;\3\2))\u0144\2\5\3\2\2\2\2\7\3\2\2\2\2\t\3")
+        buf.write("\17\4\2aac|\4\2}}\177\177\5\2\13\f\17\17\"\"\5\2C\\aa")
+        buf.write("c|\3\2\62;\3\2))\2\u0144\2\5\3\2\2\2\2\7\3\2\2\2\2\t\3")
         buf.write("\2\2\2\2\13\3\2\2\2\2\r\3\2\2\2\2\17\3\2\2\2\2\21\3\2")
         buf.write("\2\2\2\23\3\2\2\2\2\25\3\2\2\2\2\27\3\2\2\2\2\31\3\2\2")
         buf.write("\2\2\33\3\2\2\2\2\35\3\2\2\2\2\37\3\2\2\2\3!\3\2\2\2\3")
@@ -189,6 +191,8 @@ class sdoc1Lexer(Lexer):
     EXPR_INTEGER_CONSTANT = 39
     EXPR_STRING_CONSTANT = 40
 
+    channelNames = [ u"DEFAULT_TOKEN_CHANNEL", u"HIDDEN" ]
+
     modeNames = [ "DEFAULT_MODE", "MODE_SIMPLE", "MODE_EXPR" ]
 
     literalNames = [ "<INVALID>",
@@ -222,9 +226,9 @@ class sdoc1Lexer(Lexer):
 
     grammarFileName = "sdoc1Lexer.g4"
 
-    def __init__(self, input=None):
-        super().__init__(input)
-        self.checkVersion("4.5.3")
+    def __init__(self, input=None, output:TextIO = sys.stdout):
+        super().__init__(input, output)
+        self.checkVersion("4.7")
         self._interp = LexerATNSimulator(self, self.atn, self.decisionsToDFA, PredictionContextCache())
         self._actions = None
         self._predicates = None

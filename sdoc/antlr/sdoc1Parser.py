@@ -1,11 +1,13 @@
-# Generated from sdoc/antlr/sdoc1Parser.g4 by ANTLR 4.5.3
+# Generated from sdoc/antlr/sdoc1Parser.g4 by ANTLR 4.7
 # encoding: utf-8
 from antlr4 import *
 from io import StringIO
+from typing.io import TextIO
+import sys
 
 def serializedATN():
     with StringIO() as buf:
-        buf.write("\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3*")
+        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3*")
         buf.write("\u00f4\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7")
         buf.write("\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4\f\t\f\4\r\t\r\4\16")
         buf.write("\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22\4\23\t\23")
@@ -30,8 +32,8 @@ def serializedATN():
         buf.write("\25\3\25\3\25\7\25\u00e4\n\25\f\25\16\25\u00e7\13\25\3")
         buf.write("\26\3\26\3\26\3\26\3\26\5\26\u00ee\n\26\3\27\3\27\3\30")
         buf.write("\3\30\3\30\2\t\34\36 \"$&(\31\2\4\6\b\n\f\16\20\22\24")
-        buf.write("\26\30\32\34\36 \"$&(*,.\2\2\u00fa\2\64\3\2\2\2\4\67\3")
-        buf.write("\2\2\2\6B\3\2\2\2\bD\3\2\2\2\nF\3\2\2\2\fM\3\2\2\2\16")
+        buf.write("\26\30\32\34\36 \"$&(*,.\2\2\2\u00fa\2\64\3\2\2\2\4\67")
+        buf.write("\3\2\2\2\6B\3\2\2\2\bD\3\2\2\2\nF\3\2\2\2\fM\3\2\2\2\16")
         buf.write("R\3\2\2\2\20W\3\2\2\2\22m\3\2\2\2\24r\3\2\2\2\26w\3\2")
         buf.write("\2\2\30|\3\2\2\2\32\u0085\3\2\2\2\34\u0087\3\2\2\2\36")
         buf.write("\u0094\3\2\2\2 \u00a2\3\2\2\2\"\u00b0\3\2\2\2$\u00c4\3")
@@ -213,9 +215,9 @@ class sdoc1Parser ( Parser ):
     EXPR_INTEGER_CONSTANT=39
     EXPR_STRING_CONSTANT=40
 
-    def __init__(self, input:TokenStream):
-        super().__init__(input)
-        self.checkVersion("4.5.3")
+    def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
+        super().__init__(input, output)
+        self.checkVersion("4.7")
         self._interp = ParserATNSimulator(self, self.atn, self.decisionsToDFA, self.sharedContextCache)
         self._predicates = None
 
@@ -265,15 +267,16 @@ class sdoc1Parser ( Parser ):
             _la = self._input.LA(1)
             while (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << sdoc1Parser.TEXT) | (1 << sdoc1Parser.LINE_COMMENT) | (1 << sdoc1Parser.DEBUG) | (1 << sdoc1Parser.ERROR) | (1 << sdoc1Parser.EXPRESSION) | (1 << sdoc1Parser.IF) | (1 << sdoc1Parser.INCLUDE) | (1 << sdoc1Parser.NOTICE) | (1 << sdoc1Parser.SUBSTITUTE) | (1 << sdoc1Parser.SDOC2_COMMAND))) != 0):
                 self.state = 48
+                self._errHandler.sync(self)
                 token = self._input.LA(1)
                 if token in [sdoc1Parser.LINE_COMMENT, sdoc1Parser.DEBUG, sdoc1Parser.ERROR, sdoc1Parser.EXPRESSION, sdoc1Parser.IF, sdoc1Parser.INCLUDE, sdoc1Parser.NOTICE, sdoc1Parser.SUBSTITUTE, sdoc1Parser.SDOC2_COMMAND]:
                     self.state = 46
                     self.command()
-
+                    pass
                 elif token in [sdoc1Parser.TEXT]:
                     self.state = 47
                     self.text()
-
+                    pass
                 else:
                     raise NoViableAltException(self)
 
@@ -386,52 +389,53 @@ class sdoc1Parser ( Parser ):
         self.enterRule(localctx, 4, self.RULE_command)
         try:
             self.state = 64
+            self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [sdoc1Parser.LINE_COMMENT]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 55
                 self.cmd_comment()
-
+                pass
             elif token in [sdoc1Parser.DEBUG]:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 56
                 self.cmd_debug()
-
+                pass
             elif token in [sdoc1Parser.EXPRESSION]:
                 self.enterOuterAlt(localctx, 3)
                 self.state = 57
                 self.cmd_expression()
-
+                pass
             elif token in [sdoc1Parser.ERROR]:
                 self.enterOuterAlt(localctx, 4)
                 self.state = 58
                 self.cmd_error()
-
+                pass
             elif token in [sdoc1Parser.IF]:
                 self.enterOuterAlt(localctx, 5)
                 self.state = 59
                 self.cmd_if()
-
+                pass
             elif token in [sdoc1Parser.INCLUDE]:
                 self.enterOuterAlt(localctx, 6)
                 self.state = 60
                 self.cmd_include()
-
+                pass
             elif token in [sdoc1Parser.NOTICE]:
                 self.enterOuterAlt(localctx, 7)
                 self.state = 61
                 self.cmd_notice()
-
+                pass
             elif token in [sdoc1Parser.SUBSTITUTE]:
                 self.enterOuterAlt(localctx, 8)
                 self.state = 62
                 self.cmd_substitute()
-
+                pass
             elif token in [sdoc1Parser.SDOC2_COMMAND]:
                 self.enterOuterAlt(localctx, 9)
                 self.state = 63
                 self.cmd_sdoc2()
-
+                pass
             else:
                 raise NoViableAltException(self)
 
@@ -523,6 +527,7 @@ class sdoc1Parser ( Parser ):
             self.state = 69
             self.match(sdoc1Parser.EXPR_OBRACE)
             self.state = 71
+            self._errHandler.sync(self)
             _la = self._input.LA(1)
             if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << sdoc1Parser.EXPR_LEFT_PAREN) | (1 << sdoc1Parser.EXPR_IDENTIFIER) | (1 << sdoc1Parser.EXPR_INTEGER_CONSTANT) | (1 << sdoc1Parser.EXPR_STRING_CONSTANT))) != 0):
                 self.state = 70
@@ -739,6 +744,7 @@ class sdoc1Parser ( Parser ):
                 _la = self._input.LA(1)
 
             self.state = 103
+            self._errHandler.sync(self)
             _la = self._input.LA(1)
             if _la==sdoc1Parser.ELSE:
                 self.state = 101
@@ -1043,25 +1049,26 @@ class sdoc1Parser ( Parser ):
         self.enterRule(localctx, 24, self.RULE_primaryExpression)
         try:
             self.state = 131
+            self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [sdoc1Parser.EXPR_IDENTIFIER]:
                 localctx = sdoc1Parser.PrimaryExpressionIdentifierContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
                 self.state = 124
                 self.match(sdoc1Parser.EXPR_IDENTIFIER)
-
+                pass
             elif token in [sdoc1Parser.EXPR_INTEGER_CONSTANT]:
                 localctx = sdoc1Parser.PrimaryExpressionIntegerConstantContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
                 self.state = 125
                 self.match(sdoc1Parser.EXPR_INTEGER_CONSTANT)
-
+                pass
             elif token in [sdoc1Parser.EXPR_STRING_CONSTANT]:
                 localctx = sdoc1Parser.PrimaryExpressionStringConstantContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
                 self.state = 126
                 self.match(sdoc1Parser.EXPR_STRING_CONSTANT)
-
+                pass
             elif token in [sdoc1Parser.EXPR_LEFT_PAREN]:
                 localctx = sdoc1Parser.PrimaryExpressionSubExpressionContext(self, localctx)
                 self.enterOuterAlt(localctx, 4)
@@ -1071,7 +1078,7 @@ class sdoc1Parser ( Parser ):
                 self.expression()
                 self.state = 129
                 self.match(sdoc1Parser.EXPR_RIGHT_PAREN)
-
+                pass
             else:
                 raise NoViableAltException(self)
 
@@ -1240,7 +1247,7 @@ class sdoc1Parser ( Parser ):
                         self.triggerExitRuleEvent()
                     _prevctx = localctx
                     self.state = 155
-                    self._errHandler.sync(self);
+                    self._errHandler.sync(self)
                     la_ = self._interp.adaptivePredict(self._input,8,self._ctx)
                     if la_ == 1:
                         localctx = sdoc1Parser.MultiplicativeExpressionContext(self, _parentctx, _parentState)
@@ -1333,7 +1340,7 @@ class sdoc1Parser ( Parser ):
                         self.triggerExitRuleEvent()
                     _prevctx = localctx
                     self.state = 169
-                    self._errHandler.sync(self);
+                    self._errHandler.sync(self)
                     la_ = self._interp.adaptivePredict(self._input,10,self._ctx)
                     if la_ == 1:
                         localctx = sdoc1Parser.AdditiveExpressionContext(self, _parentctx, _parentState)
@@ -1432,7 +1439,7 @@ class sdoc1Parser ( Parser ):
                         self.triggerExitRuleEvent()
                     _prevctx = localctx
                     self.state = 189
-                    self._errHandler.sync(self);
+                    self._errHandler.sync(self)
                     la_ = self._interp.adaptivePredict(self._input,12,self._ctx)
                     if la_ == 1:
                         localctx = sdoc1Parser.RelationalExpressionContext(self, _parentctx, _parentState)
@@ -1551,7 +1558,7 @@ class sdoc1Parser ( Parser ):
                         self.triggerExitRuleEvent()
                     _prevctx = localctx
                     self.state = 203
-                    self._errHandler.sync(self);
+                    self._errHandler.sync(self)
                     la_ = self._interp.adaptivePredict(self._input,14,self._ctx)
                     if la_ == 1:
                         localctx = sdoc1Parser.EqualityExpressionContext(self, _parentctx, _parentState)
@@ -1857,7 +1864,7 @@ class sdoc1Parser ( Parser ):
         self.enterRule(localctx, 40, self.RULE_assignmentExpression)
         try:
             self.state = 235
-            self._errHandler.sync(self);
+            self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,18,self._ctx)
             if la_ == 1:
                 localctx = sdoc1Parser.AssignmentExpressionParentContext(self, localctx)

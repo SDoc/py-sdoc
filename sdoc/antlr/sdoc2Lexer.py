@@ -1,11 +1,13 @@
-# Generated from sdoc/antlr/sdoc2Lexer.g4 by ANTLR 4.5.3
+# Generated from sdoc/antlr/sdoc2Lexer.g4 by ANTLR 4.7
 from antlr4 import *
 from io import StringIO
+from typing.io import TextIO
+import sys
 
 
 def serializedATN():
     with StringIO() as buf:
-        buf.write("\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\2\25")
+        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\2\25")
         buf.write("\u00c4\b\1\b\1\b\1\b\1\b\1\b\1\4\2\t\2\4\3\t\3\4\4\t\4")
         buf.write("\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13")
         buf.write("\t\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4")
@@ -27,15 +29,15 @@ def serializedATN():
         buf.write("\26\r\26\16\26\u00c2\2\2\27\b\3\n\4\f\5\16\6\20\7\22\b")
         buf.write("\24\t\26\n\30\13\32\f\34\r\36\16 \17\"\20$\21&\22(\2*")
         buf.write("\2,\23.\24\60\25\b\2\3\4\5\6\7\f\3\2^^\4\2aac|\5\2\62")
-        buf.write(";aac|\5\2\13\f\17\17\"\"\5\2^^}}\177\177\4\2C\\c|\7\2")
-        buf.write("\62;C\\^^aac|\3\2$$\3\2))\3\2\62;\u00cc\2\b\3\2\2\2\2")
-        buf.write("\n\3\2\2\2\2\f\3\2\2\2\2\16\3\2\2\2\2\20\3\2\2\2\3\22")
-        buf.write("\3\2\2\2\3\24\3\2\2\2\3\26\3\2\2\2\4\30\3\2\2\2\4\32\3")
-        buf.write("\2\2\2\5\34\3\2\2\2\5\36\3\2\2\2\6 \3\2\2\2\6\"\3\2\2")
-        buf.write("\2\6$\3\2\2\2\6&\3\2\2\2\6,\3\2\2\2\7.\3\2\2\2\7\60\3")
-        buf.write("\2\2\2\b9\3\2\2\2\n;\3\2\2\2\fD\3\2\2\2\16K\3\2\2\2\20")
-        buf.write("W\3\2\2\2\22a\3\2\2\2\24e\3\2\2\2\26j\3\2\2\2\30p\3\2")
-        buf.write("\2\2\32}\3\2\2\2\34\u0081\3\2\2\2\36\u0085\3\2\2\2 \u0089")
+        buf.write(";aac|\5\2\13\f\17\17\"\"\4\2}}\177\177\4\2C\\c|\6\2\62")
+        buf.write(";C\\aac|\3\2$$\3\2))\3\2\62;\2\u00cc\2\b\3\2\2\2\2\n\3")
+        buf.write("\2\2\2\2\f\3\2\2\2\2\16\3\2\2\2\2\20\3\2\2\2\3\22\3\2")
+        buf.write("\2\2\3\24\3\2\2\2\3\26\3\2\2\2\4\30\3\2\2\2\4\32\3\2\2")
+        buf.write("\2\5\34\3\2\2\2\5\36\3\2\2\2\6 \3\2\2\2\6\"\3\2\2\2\6")
+        buf.write("$\3\2\2\2\6&\3\2\2\2\6,\3\2\2\2\7.\3\2\2\2\7\60\3\2\2")
+        buf.write("\2\b9\3\2\2\2\n;\3\2\2\2\fD\3\2\2\2\16K\3\2\2\2\20W\3")
+        buf.write("\2\2\2\22a\3\2\2\2\24e\3\2\2\2\26j\3\2\2\2\30p\3\2\2\2")
+        buf.write("\32}\3\2\2\2\34\u0081\3\2\2\2\36\u0085\3\2\2\2 \u0089")
         buf.write("\3\2\2\2\"\u008d\3\2\2\2$\u008f\3\2\2\2&\u0098\3\2\2\2")
         buf.write("(\u00aa\3\2\2\2*\u00ad\3\2\2\2,\u00b2\3\2\2\2.\u00b8\3")
         buf.write("\2\2\2\60\u00c0\3\2\2\2\62\64\n\2\2\2\63\62\3\2\2\2\64")
@@ -120,6 +122,8 @@ class sdoc2Lexer(Lexer):
     INLINE_ARG_RIGHT_BRACE = 18
     INLINE_ARG_ARG = 19
 
+    channelNames = [ u"DEFAULT_TOKEN_CHANNEL", u"HIDDEN" ]
+
     modeNames = [ "DEFAULT_MODE", "MODE_BLOCK_ARG", "BLOCK_MODE_ARG", "MODE_INLINE_ARG", 
                   "MODE_OPT_ARG", "INLINE_MODE_ARG" ]
 
@@ -142,9 +146,9 @@ class sdoc2Lexer(Lexer):
 
     grammarFileName = "sdoc2Lexer.g4"
 
-    def __init__(self, input=None):
-        super().__init__(input)
-        self.checkVersion("4.5.3")
+    def __init__(self, input=None, output:TextIO = sys.stdout):
+        super().__init__(input, output)
+        self.checkVersion("4.7")
         self._interp = LexerATNSimulator(self, self.atn, self.decisionsToDFA, PredictionContextCache())
         self._actions = None
         self._predicates = None

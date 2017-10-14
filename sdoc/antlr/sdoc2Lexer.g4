@@ -27,7 +27,7 @@ mode BLOCK_MODE_ARG;
 
 BLOCK_ARG_RIGHT_BRACE:  '}'[ \t\r\n]*  -> popMode,popMode;
 
-BLOCK_ARG_ARG: (~[\{\}] | '\\'. )+;
+BLOCK_ARG_ARG: (~[{}] | '\\'. )+;
 
 // Mode for SDoc2 commands with an argument, i.e. \chapter[]{What is SDoc?}
 mode MODE_INLINE_ARG;
@@ -42,7 +42,7 @@ mode MODE_OPT_ARG;
 OPT_ARG_RIGHT_BRACKET: ']'  -> popMode;
 OPT_ARG_EQUALS:        '=';
 
-OPT_ARG_NAME: [a-zA-Z][a-zA-Z0-9\_]*;
+OPT_ARG_NAME: [a-zA-Z][a-zA-Z0-9_]*;
 
 OPT_ARG_VALUE
    : OPT_ARG_STRING
@@ -66,6 +66,6 @@ mode INLINE_MODE_ARG;
 
 INLINE_ARG_RIGHT_BRACE:  '}'  -> popMode,popMode;
 
-INLINE_ARG_ARG: (~[\{\}] | '\\'. )+;
+INLINE_ARG_ARG: (~[{}] | '\\'. )+;
 
 

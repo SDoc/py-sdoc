@@ -31,7 +31,7 @@ mode MODE_SIMPLE;
 
 SIMPLE_OBRACE:  '{';
 SIMPLE_CBRACE:  '}'  -> mode(DEFAULT_MODE);
-SIMPLE_ARG:     (~[\{\}] | '\\'. )+;
+SIMPLE_ARG:     (~[{}] | '\\'. )+;
 
 
 // Mode for SDoc1 commands with an expression as argument, i.e. \expression{a=b=c='abc'}
