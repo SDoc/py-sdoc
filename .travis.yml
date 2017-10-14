@@ -2,7 +2,7 @@ language: python
 python:
   - '3.4'
   - '3.5'
-  - '3.5-dev'
+  - '3.6'
   - 'nightly'
 
 sudo: true
@@ -11,7 +11,7 @@ install:
   - cd $HOME
   - pip3 install antlr4-python3-runtime
   - pip3 install httplib2
-  - pip3 install cleo
+  - pip3 install cleo=0.6.1
 
 script: 
   - cd $TRAVIS_BUILD_DIR
