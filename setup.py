@@ -11,20 +11,20 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 setup(
     name='SDoc',
 
-    version='0.0.23',
+    version='0.9.0',
 
     description='A super format documentation document preparation system for SAAS and multi tenant applications',
     long_description=long_description,
 
     url='https://github.com/SDoc/py-sdoc',
 
-    author='Paul Water, Oleg Klimenko',
+    author='Set Based IT Consultancy',
     author_email='info@setbased.nl',
 
     license='MIT',
 
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
 
         'Environment :: Console',
 
@@ -36,10 +36,9 @@ setup(
         'Operating System :: OS Independent',
 
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.2',
-        'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: Implementation :: PyPy',
 
         'Topic :: Documentation',
