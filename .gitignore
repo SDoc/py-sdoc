@@ -6,5 +6,6 @@
 /composer.lock
 /dist/
 /doc/
+/sdoc/antlr/*.interp
 /test/html/
 /vendor/
