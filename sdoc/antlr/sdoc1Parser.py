@@ -1,9 +1,13 @@
-# Generated from sdoc/antlr/sdoc1Parser.g4 by ANTLR 4.7
+# Generated from sdoc/antlr/sdoc1Parser.g4 by ANTLR 4.8
 # encoding: utf-8
 from antlr4 import *
 from io import StringIO
-from typing.io import TextIO
 import sys
+if sys.version_info[1] > 5:
+	from typing import TextIO
+else:
+	from typing.io import TextIO
+
 
 def serializedATN():
     with StringIO() as buf:
@@ -217,9 +221,10 @@ class sdoc1Parser ( Parser ):
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
-        self.checkVersion("4.7")
+        self.checkVersion("4.8")
         self._interp = ParserATNSimulator(self, self.atn, self.decisionsToDFA, self.sharedContextCache)
         self._predicates = None
+
 
 
 
@@ -292,6 +297,7 @@ class sdoc1Parser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class TextContext(ParserRuleContext):
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
@@ -328,6 +334,7 @@ class sdoc1Parser ( Parser ):
         finally:
             self.exitRule()
         return localctx
+
 
     class CommandContext(ParserRuleContext):
 
@@ -447,6 +454,7 @@ class sdoc1Parser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class Cmd_commentContext(ParserRuleContext):
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
@@ -483,6 +491,7 @@ class sdoc1Parser ( Parser ):
         finally:
             self.exitRule()
         return localctx
+
 
     class Cmd_debugContext(ParserRuleContext):
 
@@ -544,6 +553,7 @@ class sdoc1Parser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class Cmd_expressionContext(ParserRuleContext):
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
@@ -597,6 +607,7 @@ class sdoc1Parser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class Cmd_errorContext(ParserRuleContext):
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
@@ -648,6 +659,7 @@ class sdoc1Parser ( Parser ):
         finally:
             self.exitRule()
         return localctx
+
 
     class Cmd_ifContext(ParserRuleContext):
 
@@ -763,6 +775,7 @@ class sdoc1Parser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class Cmd_includeContext(ParserRuleContext):
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
@@ -815,6 +828,7 @@ class sdoc1Parser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class Cmd_noticeContext(ParserRuleContext):
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
@@ -866,6 +880,7 @@ class sdoc1Parser ( Parser ):
         finally:
             self.exitRule()
         return localctx
+
 
     class Cmd_substituteContext(ParserRuleContext):
 
@@ -920,6 +935,7 @@ class sdoc1Parser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class Cmd_sdoc2Context(ParserRuleContext):
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
@@ -956,6 +972,7 @@ class sdoc1Parser ( Parser ):
         finally:
             self.exitRule()
         return localctx
+
 
     class PrimaryExpressionContext(ParserRuleContext):
 
@@ -1090,6 +1107,7 @@ class sdoc1Parser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class PostfixExpressionContext(ParserRuleContext):
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
@@ -1195,6 +1213,7 @@ class sdoc1Parser ( Parser ):
             self.unrollRecursionContexts(_parentctx)
         return localctx
 
+
     class MultiplicativeExpressionContext(ParserRuleContext):
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
@@ -1288,6 +1307,7 @@ class sdoc1Parser ( Parser ):
             self.unrollRecursionContexts(_parentctx)
         return localctx
 
+
     class AdditiveExpressionContext(ParserRuleContext):
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
@@ -1380,6 +1400,7 @@ class sdoc1Parser ( Parser ):
         finally:
             self.unrollRecursionContexts(_parentctx)
         return localctx
+
 
     class RelationalExpressionContext(ParserRuleContext):
 
@@ -1506,6 +1527,7 @@ class sdoc1Parser ( Parser ):
             self.unrollRecursionContexts(_parentctx)
         return localctx
 
+
     class EqualityExpressionContext(ParserRuleContext):
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
@@ -1598,6 +1620,7 @@ class sdoc1Parser ( Parser ):
         finally:
             self.unrollRecursionContexts(_parentctx)
         return localctx
+
 
     class LogicalAndExpressionContext(ParserRuleContext):
 
@@ -1700,6 +1723,7 @@ class sdoc1Parser ( Parser ):
             self.unrollRecursionContexts(_parentctx)
         return localctx
 
+
     class LogicalOrExpressionContext(ParserRuleContext):
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
@@ -1801,6 +1825,7 @@ class sdoc1Parser ( Parser ):
             self.unrollRecursionContexts(_parentctx)
         return localctx
 
+
     class AssignmentExpressionContext(ParserRuleContext):
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
@@ -1893,6 +1918,7 @@ class sdoc1Parser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class AssignmentOperatorContext(ParserRuleContext):
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
@@ -1929,6 +1955,7 @@ class sdoc1Parser ( Parser ):
         finally:
             self.exitRule()
         return localctx
+
 
     class ExpressionContext(ParserRuleContext):
 

@@ -1,9 +1,13 @@
-# Generated from sdoc/antlr/sdoc2Parser.g4 by ANTLR 4.7
+# Generated from sdoc/antlr/sdoc2Parser.g4 by ANTLR 4.8
 # encoding: utf-8
 from antlr4 import *
 from io import StringIO
-from typing.io import TextIO
 import sys
+if sys.version_info[1] > 5:
+	from typing import TextIO
+else:
+	from typing.io import TextIO
+
 
 def serializedATN():
     with StringIO() as buf:
@@ -99,9 +103,10 @@ class sdoc2Parser ( Parser ):
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
-        self.checkVersion("4.7")
+        self.checkVersion("4.8")
         self._interp = ParserATNSimulator(self, self.atn, self.decisionsToDFA, self.sharedContextCache)
         self._predicates = None
+
 
 
 
@@ -174,6 +179,7 @@ class sdoc2Parser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class TextContext(ParserRuleContext):
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
@@ -210,6 +216,7 @@ class sdoc2Parser ( Parser ):
         finally:
             self.exitRule()
         return localctx
+
 
     class CommandContext(ParserRuleContext):
 
@@ -283,6 +290,7 @@ class sdoc2Parser ( Parser ):
         finally:
             self.exitRule()
         return localctx
+
 
     class Cmd_beginContext(ParserRuleContext):
 
@@ -385,6 +393,7 @@ class sdoc2Parser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class Cmd_endContext(ParserRuleContext):
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
@@ -436,6 +445,7 @@ class sdoc2Parser ( Parser ):
         finally:
             self.exitRule()
         return localctx
+
 
     class Cmd_positionContext(ParserRuleContext):
 
@@ -549,6 +559,7 @@ class sdoc2Parser ( Parser ):
         finally:
             self.exitRule()
         return localctx
+
 
     class Cmd_sdoc2Context(ParserRuleContext):
 

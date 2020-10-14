@@ -1,4 +1,4 @@
-# Generated from sdoc/antlr/sdoc2Parser.g4 by ANTLR 4.7
+# Generated from sdoc/antlr/sdoc2Parser.g4 by ANTLR 4.8
 from antlr4 import *
 if __name__ is not None and "." in __name__:
     from .sdoc2Parser import sdoc2Parser
