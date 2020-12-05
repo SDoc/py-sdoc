@@ -1,3 +1,7 @@
+from typing import Any, Dict
+
+from cleo.styles import OutputStyle
+
 from sdoc.sdoc2.helper.Enumerable import Enumerable
 from sdoc.sdoc2.node.HeadingNode import HeadingNode
 from sdoc.sdoc2.NodeStore import NodeStore
@@ -9,40 +13,36 @@ class PartNode(HeadingNode):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io, options, argument):
+    def __init__(self, io: OutputStyle, options: Dict[str, str], argument: str):
         """
         PartNode constructor
 
-        :param None|cleo.styles.output_style.OutputStyle io: The IO object.
+        :param OutputStyle io: The IO object.
         :param dict[str, str] options: The options of this part.
         :param str argument: The title of this part.
         """
         super().__init__(io, 'part', options, argument)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_command(self):
+    def get_command(self) -> str:
         """
         Returns command of this node (i.e. 'part').
-
-        :rtype: str
         """
         return 'part'
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_hierarchy_level(self, parent_hierarchy_level=-1):
+    def get_hierarchy_level(self, parent_hierarchy_level: int = -1) -> int:
         """
         Returns 0.
-
-        :rtype: int
         """
         return 0
 
     # ------------------------------------------------------------------------------------------------------------------
-    def number(self, enumerable_numbers):
+    def number(self, enumerable_numbers: Dict[str, Any]) -> None:
         """
         Sets number of heading nodes.
 
-        :param dict[str,sdoc.sdoc2.helper.Enumerable.Enumerable] enumerable_numbers:
+        :param dict[str,any] enumerable_numbers:
         """
         if 'part' not in enumerable_numbers:
             enumerable_numbers['part'] = Enumerable()

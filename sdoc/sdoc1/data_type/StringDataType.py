@@ -7,27 +7,23 @@ class StringDataType(DataType):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, value):
+    def __init__(self, value: str):
         """
         Object constructor.
 
         :param str value: The value of this string constant.
         """
-        self._value = value
+        self._value: str = value
         """
         The value of this constant integer.
-
-        :type: str
         """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def debug(self, indent=0):
+    def debug(self, indent: int = 0) -> str:
         """
         Returns a string for debugging.
 
         :param int indent: Unused.
-
-        :rtype: str
         """
         return "'" + self._value + "'"
 
@@ -41,65 +37,51 @@ class StringDataType(DataType):
         return StringDataType(self._value)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_value(self):
+    def get_value(self) -> str:
         """
         Returns the underling value of this data type.
-
-        :rtype: str
         """
         return self._value
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_type_id(self):
+    def get_type_id(self) -> int:
         """
         Returns the ID of this data type.
-
-        :rtype: int
         """
         return DataType.STRING
 
     # ------------------------------------------------------------------------------------------------------------------
-    def is_constant(self):
+    def is_constant(self) -> bool:
         """
         Returns False always.
-
-        :rtype: bool
         """
         return False
 
     # ------------------------------------------------------------------------------------------------------------------
-    def is_defined(self):
+    def is_defined(self) -> bool:
         """
         Returns True always.
-
-        :rtype: bool
         """
         return True
 
     # ------------------------------------------------------------------------------------------------------------------
-    def is_scalar(self):
+    def is_scalar(self) -> bool:
         """
         Returns True always.
-
-        :rtype: bool
         """
         return True
 
     # ------------------------------------------------------------------------------------------------------------------
-    def is_true(self):
+    def is_true(self) -> bool:
         """
         Returns True if this string is not empty. Returns False otherwise.
-
-        :rtype: bool
         """
         return self._value != ''
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __str__(self):
+    def __str__(self) -> str:
         """
         Returns the string representation of the string constant.
-
-        :rtype: str
         """
         return self._value
 

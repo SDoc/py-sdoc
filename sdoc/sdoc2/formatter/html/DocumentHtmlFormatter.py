@@ -1,6 +1,9 @@
+from typing import Any
+
 from sdoc.helper.Html import Html
 from sdoc.sdoc2 import in_scope, out_scope
 from sdoc.sdoc2.formatter.html.HtmlFormatter import HtmlFormatter
+from sdoc.sdoc2.node.DocumentNode import DocumentNode
 from sdoc.sdoc2.NodeStore import NodeStore
 
 
@@ -10,12 +13,12 @@ class DocumentHtmlFormatter(HtmlFormatter):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def generate(self, node, file):
+    def generate(self, node: DocumentNode, file: Any) -> None:
         """
         Generates the HTML code for a document node.
 
-        :param sdoc.sdoc2.node.DocumentNode.DocumentNode node: The document node.
-        :param file file: The output file.
+        :param DocumentNode node: The document node.
+        :param any file: The output file.
         """
         self.generate_document_node(node, file)
 
@@ -23,12 +26,12 @@ class DocumentHtmlFormatter(HtmlFormatter):
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def generate_document_node(node, file):
+    def generate_document_node(node: DocumentNode, file: Any) -> None:
         """
         Generates the HTML code for heading node.
 
-        :param sdoc.sdoc2.node.DocumentNode.DocumentNode node: The document node.
-        :param file file: The output file.
+        :param DocumentNode node: The document node.
+        :param any file: The output file.
         """
         file.write('<div class="sdoc-document-title-outer">')
         if node.title_node_id:

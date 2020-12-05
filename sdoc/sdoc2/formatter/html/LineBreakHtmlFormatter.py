@@ -1,4 +1,7 @@
+from typing import Any
+
 from sdoc.sdoc2.formatter.html.HtmlFormatter import HtmlFormatter
+from sdoc.sdoc2.node.LineBreakNode import LineBreakNode
 from sdoc.sdoc2.NodeStore import NodeStore
 
 
@@ -8,12 +11,12 @@ class LineBreakHtmlFormatter(HtmlFormatter):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def generate(self, node, file):
+    def generate(self, node: LineBreakNode, file: Any) -> None:
         """
         Generates the HTML code for a smile node.
 
-        :param sdoc.sdoc2.node.LineBreakNode.LineBreakNode node: The linebreak node.
-        :param file file: The output file.
+        :param LineBreakNode node: The linebreak node.
+        :param any file: The output file.
         """
         file.write('<br/>')
 

@@ -8,13 +8,11 @@ class SDoc:
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def escape(text):
+    def escape(text: str) -> str:
         """
         Returns an escaped string that is safe to use in SDoc.
 
         :param str text: The escaped string.
-
-        :rtype: str
         """
 
         def replace(match_obj):
@@ -31,13 +29,11 @@ class SDoc:
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def unescape(text):
+    def unescape(text: str) -> str:
         """
         Returns an unescaped SDoc escaped string. I.e. removes back slashes.
 
         :param str text: The SDoc escaped string.
-
-        :rtype: str
         """
 
         def replace(match_obj):

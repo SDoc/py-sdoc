@@ -1,3 +1,7 @@
+from typing import Dict
+
+from cleo.styles import OutputStyle
+
 from sdoc.sdoc2 import in_scope, out_scope
 from sdoc.sdoc2.node.Node import Node
 from sdoc.sdoc2.node.TextNode import TextNode
@@ -10,83 +14,69 @@ class ItemNode(Node):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io, options, argument):
+    def __init__(self, io: OutputStyle, options: Dict[str, str], argument: str):
         """
         Object constructor.
 
-        :param None|cleo.styles.output_style.OutputStyle io: The IO object.
+        :param OutputStyle io: The IO object.
         :param dict[str,str] options: The options of this item.
         :param str argument: Not used.
         """
         super().__init__(io, 'item', options, argument)
 
-        self._hierarchy_level = 0
+        self._hierarchy_level: int = 0
         """
         The hierarchy level of the itemize.
-
-        :type: int
         """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_command(self):
+    def get_command(self) -> str:
         """
         Returns the command of this node, i.e. item.
-
-        :rtype: str
         """
         return 'item'
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_hierarchy_level(self, parent_hierarchy_level=-1):
+    def get_hierarchy_level(self, parent_hierarchy_level: int = -1) -> int:
         """
         Returns parent_hierarchy_level.
 
         :param int parent_hierarchy_level: The level of the parent in the hierarchy.
-
-        :rtype: int
         """
         self._hierarchy_level = parent_hierarchy_level + 1
 
         return self._hierarchy_level
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_hierarchy_name(self):
+    def get_hierarchy_name(self) -> str:
         """
         Returns 'item'
-
-        :rtype: str
         """
         return 'item'
 
     # ------------------------------------------------------------------------------------------------------------------
-    def is_block_command(self):
+    def is_block_command(self) -> bool:
         """
         Returns False.
-
-        :rtype: bool
         """
         return False
 
     # ------------------------------------------------------------------------------------------------------------------
-    def is_inline_command(self):
+    def is_inline_command(self) -> bool:
         """
         Returns True.
-
-        :rtype: bool
         """
         return True
 
     # ------------------------------------------------------------------------------------------------------------------
-    def is_list_element(self):
+    def is_list_element(self) -> bool:
         """
         Returns True.
-
-        :rtype: bool
         """
         return True
 
     # ------------------------------------------------------------------------------------------------------------------
-    def prepare_content_tree(self):
+    def prepare_content_tree(self) -> None:
         """
         Method which checks if all child nodes is phrasing.
         """
@@ -113,13 +103,11 @@ class ItemNode(Node):
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def _increment_last_level(number):
+    def _increment_last_level(number: str) -> str:
         """
         Increments the last level in number of the item node.
 
         :param str number: The number of last node.
-
-        :rtype: str
         """
         heading_numbers = number.split('.')
         heading_numbers[-1] = str(int(heading_numbers[-1]) + 1)
@@ -128,18 +116,16 @@ class ItemNode(Node):
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def strip_start_point(number):
+    def strip_start_point(number: str) -> str:
         """
         Removes start point if it in the number.
 
         :param str number: The number of last node.
-
-        :rtype: str
         """
         return number.lstrip('.')
 
     # ------------------------------------------------------------------------------------------------------------------
-    def number(self, numbers):
+    def number(self, numbers: Dict[str, str]) -> None:
         """
         Sets number for item nodes.
 

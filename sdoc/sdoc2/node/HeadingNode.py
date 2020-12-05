@@ -1,3 +1,8 @@
+from abc import ABC
+from typing import Any, Dict
+
+from cleo.styles import OutputStyle
+
 import sdoc
 from sdoc.sdoc2 import in_scope, out_scope
 from sdoc.sdoc2.helper.Enumerable import Enumerable
@@ -7,63 +12,55 @@ from sdoc.sdoc2.node.TextNode import TextNode
 from sdoc.sdoc2.NodeStore import NodeStore
 
 
-class HeadingNode(Node):
+class HeadingNode(Node, ABC):
     """
     Abstract class for heading nodes.
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io, name, options, argument):
+    def __init__(self, io: OutputStyle, name: str, options: Dict[str, str], argument: str):
         """
         Object constructor.
 
-        :param None|cleo.styles.output_style.OutputStyle io: The IO object.
+        :param OutputStyle io: The IO object.
         :param str name: The (command) name of this heading.
         :param dict[str,str] options: The options of this heading.
         :param str argument: The title of this heading.
         """
         super().__init__(io, name, options, argument)
 
-        self.numbering = True
+        self.numbering: bool = True
         """
         The True the node must be numbered.
-
-        :type: bool
         """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_hierarchy_name(self):
+    def get_hierarchy_name(self) -> str:
         """
         Returns 'sectioning'.
-
-        :rtype: str
         """
         return 'sectioning'
 
     # ------------------------------------------------------------------------------------------------------------------
-    def is_block_command(self):
+    def is_block_command(self) -> bool:
         """
         Returns False.
-
-        :rtype: bool
         """
         return False
 
     # ------------------------------------------------------------------------------------------------------------------
-    def is_inline_command(self):
+    def is_inline_command(self) -> bool:
         """
         Returns True.
-
-        :rtype: bool
         """
         return True
 
     # ------------------------------------------------------------------------------------------------------------------
-    def number(self, enumerable_numbers):
+    def number(self, enumerable_numbers: Dict[str, Any]):
         """
         Sets number of heading nodes.
 
-        :param dict[str,sdoc.sdoc2.helper.Enumerable.Enumerable] enumerable_numbers:
+        :param dict[str,any] enumerable_numbers:
         """
         if 'heading' not in enumerable_numbers:
             enumerable_numbers['heading'] = Enumerable()
@@ -80,7 +77,7 @@ class HeadingNode(Node):
         super().number(enumerable_numbers)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def set_toc_id(self):
+    def set_toc_id(self) -> None:
         """
         Set ID for table of contents.
         """
@@ -93,7 +90,7 @@ class HeadingNode(Node):
                 self._options['id'] = '{}:{}'.format(self.name, self._options['number'])
 
     # ------------------------------------------------------------------------------------------------------------------
-    def prepare_content_tree(self):
+    def prepare_content_tree(self) -> None:
         """
         Prepares the content tree. Create paragraph nodes.
         """
@@ -101,14 +98,14 @@ class HeadingNode(Node):
 
         self.set_numbering()
 
-        # Adding the id's of splitted text in 'new_child_nodes1' list.
+        # Adding the id's of split text in 'new_child_nodes1' list.
         self.split_text_nodes()
 
         # Creating paragraphs and add all id's in 'new_child_nodes2' list.
         self.create_paragraphs()
 
     # ------------------------------------------------------------------------------------------------------------------
-    def set_numbering(self):
+    def set_numbering(self) -> None:
         """
         Sets the numbering status to the heading node.
         """
@@ -122,7 +119,7 @@ class HeadingNode(Node):
                                 format(self._options['numbering']), self)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def split_text_nodes(self):
+    def split_text_nodes(self) -> None:
         """
         Replaces single text nodes that contains a paragraph separator (i.e. a double new line) with multiple text nodes
         without paragraph separator.
@@ -144,7 +141,7 @@ class HeadingNode(Node):
         self.child_nodes = new_child_nodes
 
     # ------------------------------------------------------------------------------------------------------------------
-    def create_paragraphs(self):
+    def create_paragraphs(self) -> None:
         """
         Create paragraph nodes.
 

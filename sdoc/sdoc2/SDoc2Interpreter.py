@@ -1,4 +1,5 @@
 import antlr4
+from cleo.styles import OutputStyle
 
 from sdoc import sdoc2
 from sdoc.antlr.sdoc2Lexer import sdoc2Lexer
@@ -12,26 +13,22 @@ class SDoc2Interpreter:
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io):
+    def __init__(self, io: OutputStyle):
         """
         Object constructor.
         """
 
-        self._io = io
+        self._io: OutputStyle = io
         """
         Styled output formatter.
-
-        :type: sdoc.style.SdocStyle.SdocStyle
         """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def process(self, infile):
+    def process(self, infile: str) -> int:
         """
-        Processes a SDoc1 document.
+        Processes a SDoc1 document and returns the error count.
 
         :param str infile: The input filename with the SDoc2 document.
-
-        :rtype: int The count of errors.
         """
         in_stream = antlr4.FileStream(infile, 'utf-8')
 

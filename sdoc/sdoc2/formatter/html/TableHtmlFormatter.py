@@ -1,5 +1,8 @@
+from typing import Any, List, Optional
+
 from sdoc.helper.Html import Html
 from sdoc.sdoc2.formatter.html.HtmlFormatter import HtmlFormatter
+from sdoc.sdoc2.node.TableNode import TableNode
 from sdoc.sdoc2.NodeStore import NodeStore
 
 
@@ -9,12 +12,12 @@ class TableHtmlFormatter(HtmlFormatter):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def generate(self, node, file):
+    def generate(self, node: TableNode, file: Any) -> None:
         """
         Generates the HTML code for a table node.
 
-        :param sdoc.sdoc2.node.TableNode.TableNode node: The table node.
-        :param file file: The output file.
+        :param TableNode node: The table node.
+        :param any file: The output file.
         """
         attributes = {'class': node.get_option_value('class'),
                       'id':    node.get_option_value('id')}
@@ -31,11 +34,11 @@ class TableHtmlFormatter(HtmlFormatter):
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def _generate_caption(node):
+    def _generate_caption(node: TableNode) -> str:
         """
         Generates the caption for the table in HTML representation.
 
-        :param sdoc.sdoc2.node.TableNode.TableNode node: The table node.
+        :param TableNode node: The table node.
 
         :rtype: str
         """
@@ -53,13 +56,11 @@ class TableHtmlFormatter(HtmlFormatter):
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def _generate_table_body(node):
+    def _generate_table_body(node: TableNode) -> str:
         """
         Generates table with header.
 
-        :param sdoc.sdoc2.node.TableNode.TableNode node: The table node.
-
-        :rtype: str
+        :param TableNode node: The table node.
         """
         html = '<tbody>'
 
@@ -84,13 +85,12 @@ class TableHtmlFormatter(HtmlFormatter):
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def _generate_table_cell(align, cell):
+    def _generate_table_cell(align: Optional[str], cell: Any) -> str:
         """
         Returns the 'column' with HTML data.
 
-        :param mixed cell: The column in a table.
-
-        :rtype: str
+        :param str|None align:
+        :param any cell: The column in a table.
         """
         attributes = {}
 
@@ -110,14 +110,12 @@ class TableHtmlFormatter(HtmlFormatter):
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def _get_align(align_list, column):
+    def _get_align(align_list: List[Optional[str]], column: int) -> Optional[List[Optional[str]]]:
         """
         Returns the align or None.
 
         :param list[str|None] align_list: The list with alignments.
         :param int column: The number of column.
-
-        :rtype: list[str|None] | None
         """
         if column in range(len(align_list)):
             return align_list[column]

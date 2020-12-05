@@ -1,8 +1,12 @@
 import configparser
 import os
+from typing import List, Optional
+
+from cleo.styles import OutputStyle
 
 from sdoc import sdoc2
 from sdoc.error import SDocError
+from sdoc.format.Format import Format
 from sdoc.sdoc1.SDoc1Interpreter import SDoc1Interpreter
 from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.SDoc2Interpreter import SDoc2Interpreter
@@ -18,124 +22,100 @@ class SDoc:
         """
         Object contructor.
         """
-        self._io = None
+        self._io: Optional[OutputStyle] = None
         """
         The IO object.
-
-        :type: None|sdoc.style.SdocStyle.SdocStyle
         """
 
-        self._format = None
+        self._format: Optional[Format] = None
         """
         The class for generation the document in the target format.
-
-        :type: sdoc.format.Format.Format
         """
 
-        self._target_dir = '.'
+        self._target_dir: str = '.'
         """
         The directory where the document in the target format must be created.
-
-        :type: str
         """
 
-        self._temp_dir = '.'
+        self._temp_dir: str = '.'
         """
         The directory where temporary files are stored.
-
-        :type: str
         """
 
-        self._config_path = ''
+        self._config_path: str = ''
         """
         The path of the config file.
-
-        :type: str
         """
 
-        self._nodes_paths = []
+        self._nodes_paths: List[str] = []
         """
         A list with path names from with node modules must be imported.
-
-        :type: list[str]
         """
 
-        self._formatter_paths = []
+        self._formatter_paths: List[str] = []
         """
         A list with path names from with node modules must be imported.
-
-        :type: list[str]
         """
 
-        self._errors = 0
+        self._errors: int = 0
         """
         The total number of errors encountered at SDoc level 1 and level 2.
-
-        :type: int
         """
 
     # ------------------------------------------------------------------------------------------------------------------
     @property
-    def io(self):
+    def io(self) -> OutputStyle:
         """
         Getter for io.
-
-        :rtype: cleo.styles.output_style.OutputStyle
         """
         return self._io
 
     # ------------------------------------------------------------------------------------------------------------------
     @io.setter
-    def io(self, io):
+    def io(self, io: OutputStyle) -> None:
         """
         Setter for io.
 
-        :param cleo.styles.output_style.OutputStyle io: The IO object.
+        :param OutputStyle io: The IO object.
         """
         self._io = io
 
     # ------------------------------------------------------------------------------------------------------------------
     @property
-    def config_path(self):
+    def config_path(self) -> str:
         """
         Getter for config_path.
-
-        :rtype: str
         """
         return self._config_path
 
     # ------------------------------------------------------------------------------------------------------------------
     @config_path.setter
-    def config_path(self, config_path):
+    def config_path(self, config_path: str) -> None:
         """
         Setter for config_path.
 
-        :param cleo.styles.output_style.OutputStyle config_path: The path of the config file.
+        :param str config_path: The path of the config file.
         """
         self._config_path = config_path
 
     # ------------------------------------------------------------------------------------------------------------------
     @property
-    def target_dir(self):
+    def target_dir(self) -> str:
         """
         Getter for target_dir.
-
-        :rtype: str
         """
         return self.target_dir
 
     # ------------------------------------------------------------------------------------------------------------------
     @property
-    def temp_dir(self):
+    def temp_dir(self) -> str:
         """
         Getter for temp_dir.
-
-        :rtype: str
         """
         return self.temp_dir
 
     # ------------------------------------------------------------------------------------------------------------------
-    def _config_create_formatter(self, config):
+    def _config_create_formatter(self, config: configparser.ConfigParser) -> None:
         """
         Creates the formatter for generating the document in the target format.
 
@@ -176,7 +156,7 @@ class SDoc:
         self._format = m(self._io, target_format, config)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def _config_set_temp_dir(self, config):
+    def _config_set_temp_dir(self, config: configparser.ConfigParser) -> None:
         """
         Reads the directory for storing temporary files.
 
@@ -192,7 +172,7 @@ class SDoc:
             raise SDocError("Directory '{0!s}' is not writable".format(self._temp_dir))
 
     # ------------------------------------------------------------------------------------------------------------------
-    def _config_set_target_dir(self, config):
+    def _config_set_target_dir(self, config: configparser.ConfigParser) -> None:
         """
         Reads the directory where the document in the target format must be created.
 
@@ -208,7 +188,7 @@ class SDoc:
             raise SDocError("Directory '{0!s}' is not writable".format(self._target_dir))
 
     # ------------------------------------------------------------------------------------------------------------------
-    def _read_config_file(self):
+    def _read_config_file(self) -> None:
         """
         Reads the configuration file.
         """
@@ -226,7 +206,7 @@ class SDoc:
         self._nodes_paths.append(os.path.dirname(__file__) + '/sdoc2/node')
 
     # ------------------------------------------------------------------------------------------------------------------
-    def _create_node_store(self):
+    def _create_node_store(self) -> None:
         """
         Creates the node store (for storing nodes).
         """
@@ -234,7 +214,7 @@ class SDoc:
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def importing(path):
+    def importing(path: str) -> None:
         """
         Imports modules from specific path.
 
@@ -249,7 +229,7 @@ class SDoc:
                 __import__('sdoc' + path + module[:-3], locals(), globals())
 
     # ------------------------------------------------------------------------------------------------------------------
-    def _import_nodes(self):
+    def _import_nodes(self) -> None:
         """
         Imports nodes from path which is declared below.
         """
@@ -257,7 +237,7 @@ class SDoc:
         self.importing('/sdoc2/node/')
 
     # ------------------------------------------------------------------------------------------------------------------
-    def _import_formatters(self):
+    def _import_formatters(self) -> None:
         """
         Imports formatters from path which is declared below.
         """
@@ -265,7 +245,7 @@ class SDoc:
         self.importing('/sdoc2/formatter/html/')
 
     # ------------------------------------------------------------------------------------------------------------------
-    def init(self):
+    def init(self) -> None:
         """
         Executes initiations required before running SDoc.
         """
@@ -275,15 +255,13 @@ class SDoc:
         self._import_formatters()
 
     # ------------------------------------------------------------------------------------------------------------------
-    def run_sdoc1(self, sdoc1_path, sdoc2_path, log_errors=True):
+    def run_sdoc1(self, sdoc1_path: str, sdoc2_path: str, log_errors: bool = True) -> int:
         """
-        Run the SDoc1 parser.
+        Run the SDoc1 parser and returns the error count.
 
         :param str sdoc1_path: The path of the SDoc1 document.
         :param str sdoc2_path: The path were the the SDoc2 document mut be stored.
         :param bool log_errors: If true the number of errors will be logged.
-
-        :rtype: int The count of errors.
         """
         self._io.title('SDoc1')
 
@@ -298,14 +276,12 @@ class SDoc:
         return self._errors
 
     # ------------------------------------------------------------------------------------------------------------------
-    def run_sdoc2(self, sdoc2_path, log_errors=True):
+    def run_sdoc2(self, sdoc2_path: str, log_errors: bool = True) -> int:
         """
-        Run the SDoc2 parser.
+        Run the SDoc2 parser and returns the error count..
 
         :param str sdoc2_path: The path of the SDoc2 document.
         :param bool log_errors: If true the number of errors will be logged.
-
-        :rtype: int The count of errors.
         """
         self._io.writeln('')
         self._io.title('SDoc2')
@@ -321,13 +297,11 @@ class SDoc:
         return self._errors
 
     # ------------------------------------------------------------------------------------------------------------------
-    def run_format(self, log_errors=True):
+    def run_format(self, log_errors: bool = True) -> int:
         """
-        Generates the target document in the specific format.
+        Generates the target document in the specific format and returns the error count.
 
         :param bool log_errors: If true the number of errors will be logged.
-
-        :rtype: int The count of errors.
         """
         self._io.writeln('')
         self._io.title('Format')
@@ -342,14 +316,12 @@ class SDoc:
         return self._errors
 
     # ------------------------------------------------------------------------------------------------------------------
-    def run_sdoc(self, main_filename, log_errors=True):
+    def run_sdoc(self, main_filename: str, log_errors: bool = True) -> int:
         """
-        Runs the SDoc1 and SDoc2 parser.
+        Runs the SDoc1 and SDoc2 parser and returns the error count.
 
         :param str main_filename: The path of the SDoc1 document.
         :param bool log_errors: If true the number of errors will be logged.
-
-        :rtype: int The count of errors.
         """
         self.init()
 

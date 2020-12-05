@@ -1,3 +1,7 @@
+from typing import Dict
+
+from cleo.styles import OutputStyle
+
 from sdoc.sdoc2 import node_store
 from sdoc.sdoc2.node.HeadingNode import HeadingNode
 from sdoc.sdoc2.node.Node import Node
@@ -11,45 +15,39 @@ class TocNode(Node):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io, options, argument):
+    def __init__(self, io: OutputStyle, options: Dict[str, str], argument: str):
         """
         Object constructor.
 
-        :param None|cleo.styles.output_style.OutputStyle io: The IO object.
+        :param OutputStyle io: The IO object.
         :param dict[str,str] options: The options of this table of contents.
         :param str argument: The argument of this TOC.
         """
         Node.__init__(self, io, 'toc', options, argument)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_command(self):
+    def get_command(self) -> str:
         """
         Returns the command of this node (i.e. toc).
-
-        :rtype: str
         """
         return 'toc'
 
     # ------------------------------------------------------------------------------------------------------------------
-    def is_block_command(self):
+    def is_block_command(self) -> bool:
         """
         Returns False.
-
-        :rtype: bool
         """
         return False
 
     # ------------------------------------------------------------------------------------------------------------------
-    def is_inline_command(self):
+    def is_inline_command(self) -> bool:
         """
         Returns True.
-
-        :rtype: bool
         """
         return True
 
     # ------------------------------------------------------------------------------------------------------------------
-    def generate_toc(self):
+    def generate_toc(self) -> None:
         """
         Generates the table of contents.
         """

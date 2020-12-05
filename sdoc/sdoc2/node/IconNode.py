@@ -1,3 +1,7 @@
+from typing import Dict, Optional
+
+from cleo.styles import OutputStyle
+
 from sdoc.sdoc2.node.Node import Node
 from sdoc.sdoc2.NodeStore import NodeStore
 
@@ -16,66 +20,58 @@ class IconNode(Node):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io, options, argument):
+    def __init__(self, io: OutputStyle, options: Dict[str, str], argument: str):
         """
         Object constructor.
 
-        :param None|cleo.styles.output_style.OutputStyle io: The IO object.
+        :param OutputStyle io: The IO object.
         :param dict[str,str] options: The options of this figure.
         :param str argument: Not used.
         """
         super().__init__(io, 'icon', options, argument)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_command(self):
+    def get_command(self) -> str:
         """
         Returns the command of this node, i.e. icon.
-
-        :rtype: str
         """
         return 'icon'
 
     # ------------------------------------------------------------------------------------------------------------------
-    def is_block_command(self):
+    def is_block_command(self) -> bool:
         """
         Returns False.
-
-        :rtype: bool
         """
         return False
 
     # ------------------------------------------------------------------------------------------------------------------
-    def is_inline_command(self):
+    def is_inline_command(self) -> bool:
         """
         Returns True.
-
-        :rtype: bool
         """
         return True
 
     # ------------------------------------------------------------------------------------------------------------------
-    def is_phrasing(self):
+    def is_phrasing(self) -> bool:
         """
         Returns True if this node is a phrasing node, i.e. is a part of a paragraph. Otherwise returns False.
-
-        :rtype: bool
         """
         return True
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def add_definition(name, attributes):
+    def add_definition(name: str, attributes: Dict[str, str]):
         """
         Adds the definition of an icon to the icon definitions.
 
         :param str name: The name of a reference to icon definition.
-        :param dict[str,dict[str,str]] attributes: The attributes.
+        :param dict[str,str] attributes: The attributes.
         """
         IconNode._definitions[name] = attributes
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def get_definition(name):
+    def get_definition(name: str) -> Optional[Dict[str, str]]:
         """
         Returns the attributes of a definition, if name of definition is exists.
 

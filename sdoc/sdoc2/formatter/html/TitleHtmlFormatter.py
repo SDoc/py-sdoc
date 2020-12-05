@@ -1,5 +1,8 @@
+from typing import Any
+
 from sdoc.helper.Html import Html
 from sdoc.sdoc2.formatter.html.HtmlFormatter import HtmlFormatter
+from sdoc.sdoc2.node.TitleNode import TitleNode
 from sdoc.sdoc2.NodeStore import NodeStore
 
 
@@ -9,12 +12,12 @@ class TitleHtmlFormatter(HtmlFormatter):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def generate(self, node, file):
+    def generate(self, node: TitleNode, file: Any) -> None:
         """
         Generates HTML code for a title node.
 
-        :param sdoc.sdoc2.node.TitleNode.TitleNode node: The title node.
-        :param file file: The output file.
+        :param TitleNode node: The title node.
+        :param any file: The output file.
         """
         html_code = Html.generate_element('span', {}, node.argument)
 

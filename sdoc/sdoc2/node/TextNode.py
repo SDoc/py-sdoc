@@ -1,4 +1,7 @@
 import re
+from typing import Dict, List
+
+from cleo.styles import OutputStyle
 
 import sdoc
 from sdoc.sdoc2.node.Node import Node
@@ -11,18 +14,18 @@ class TextNode(Node):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io, options, argument):
+    def __init__(self, io: OutputStyle, options: Dict[str, str], argument: str):
         """
         Object constructor.
 
-        :param None|cleo.styles.output_style.OutputStyle io: The IO object.
+        :param OutputStyle io: The IO object.
         :param dict[str,str] options: Not used.
         :param str argument: The actual text.
         """
         super().__init__(io, 'TEXT', options, argument)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def print_info(self, level):
+    def print_info(self, level: int) -> None:
         """
         Temp function for development.
 
@@ -31,43 +34,35 @@ class TextNode(Node):
         self.io.writeln("{0!s}{1:4d} {2!s} {3!s}".format(' ' * 4 * level, self.id, self.name, ''))
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_command(self):
+    def get_command(self) -> str:
         """
         Returns the command of this node, i.e. TEXT.
-
-        :rtype: str
         """
         return 'TEXT'
 
     # ------------------------------------------------------------------------------------------------------------------
-    def is_block_command(self):
+    def is_block_command(self) -> bool:
         """
         Returns False.
-
-        :rtype: bool
         """
         return False
 
     # ------------------------------------------------------------------------------------------------------------------
-    def is_inline_command(self):
+    def is_inline_command(self) -> bool:
         """
         Returns False.
-
-        :rtype: bool
         """
         return False
 
     # ------------------------------------------------------------------------------------------------------------------
-    def is_phrasing(self):
+    def is_phrasing(self) -> bool:
         """
         Returns True.
-
-        :rtype: bool
         """
         return True
 
     # ------------------------------------------------------------------------------------------------------------------
-    def split_by_paragraph(self):
+    def split_by_paragraph(self) -> List[int]:
         """
         Splits this text node into text nodes without a paragraph separator (i.e. a double new line) in to a list of
         text nodes without paragraph separator each paragraph separator is replace with a end paragraph node. Each
@@ -110,7 +105,7 @@ class TextNode(Node):
         return text_ids
 
     # ------------------------------------------------------------------------------------------------------------------
-    def prune_whitespace(self, leading=False, trailing=False):
+    def prune_whitespace(self, leading: bool = False, trailing: bool = False):
         """
         Method for removing whitespace in text.
 

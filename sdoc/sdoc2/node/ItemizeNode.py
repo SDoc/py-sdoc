@@ -1,4 +1,7 @@
 import re
+from typing import Dict
+
+from cleo.styles import OutputStyle
 
 from sdoc.sdoc2 import in_scope, node_store, out_scope
 from sdoc.sdoc2.node.ItemNode import ItemNode
@@ -13,61 +16,51 @@ class ItemizeNode(Node):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io, options):
+    def __init__(self, io: OutputStyle, options: Dict[str, str]):
         """
         Object constructor.
 
-        :param None|cleo.styles.output_style.OutputStyle io: The IO object.
+        :param OutputStyle io: The IO object.
         :param dict[str,str] options: The options of this itemize.
         """
         super().__init__(io, 'itemize', options)
 
-        self._hierarchy_level = 0
+        self._hierarchy_level: int = 0
         """
         The hierarchy level of the itemize.
-
-        :type: int
         """
 
         node_store.first = True
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_command(self):
+    def get_command(self) -> str:
         """
         Returns the command of this node, i.e. itemize.
-
-        :rtype: str
         """
         return 'itemize'
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_hierarchy_level(self, parent_hierarchy_level=-1):
+    def get_hierarchy_level(self, parent_hierarchy_level: int = -1) -> int:
         """
         Returns parent_hierarchy_level + 1.
 
         :param int parent_hierarchy_level: The level of the parent in the hierarchy.
-
-        :rtype: int
         """
         self._hierarchy_level = parent_hierarchy_level + 1
 
         return self._hierarchy_level
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_hierarchy_name(self):
+    def get_hierarchy_name(self) -> str:
         """
         Returns 'item'
-
-        :rtype: str
         """
         return 'item'
 
     # ------------------------------------------------------------------------------------------------------------------
-    def is_block_command(self):
+    def is_block_command(self) -> bool:
         """
         Returns True.
-
-        :rtype: bool
         """
         return True
 
@@ -75,31 +68,25 @@ class ItemizeNode(Node):
     def is_hierarchy_root(self):
         """
         Returns True.
-
-        :rtype: bool
         """
         return self._hierarchy_level == 0
 
     # ------------------------------------------------------------------------------------------------------------------
-    def is_inline_command(self):
+    def is_inline_command(self) -> bool:
         """
         Returns False.
-
-        :rtype: bool
         """
         return False
 
     # ------------------------------------------------------------------------------------------------------------------
-    def is_phrasing(self):
+    def is_phrasing(self) -> bool:
         """
         Returns True.
-
-        :rtype: bool
         """
         return False
 
     # ------------------------------------------------------------------------------------------------------------------
-    def prepare_content_tree(self):
+    def prepare_content_tree(self) -> None:
         """
         Method which checks if all child nodes is instance of sdoc.sdoc2.node.ItemNode.ItemNode. If not, removes
         from child node list and from node store.
@@ -128,13 +115,11 @@ class ItemizeNode(Node):
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def level_down(number):
+    def level_down(number: str) -> str:
         """
         Decrements the level of hierarchy.
 
         :param str number: The number of last node.
-
-        :rtype: str
         """
         number_list = number.split('.')
         number = '.'.join(number_list[:-1])
@@ -143,7 +128,7 @@ class ItemizeNode(Node):
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def level_up(numbers):
+    def level_up(numbers: Dict[str, str]) -> None:
         """
         Increments the level of hierarchy.
 
@@ -155,7 +140,7 @@ class ItemizeNode(Node):
             numbers['item'] = '0'
 
     # ------------------------------------------------------------------------------------------------------------------
-    def number(self, numbers):
+    def number(self, numbers: Dict[str, str]) -> None:
         """
         Passing over all child nodes, for numeration.
 

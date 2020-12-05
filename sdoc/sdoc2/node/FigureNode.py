@@ -1,3 +1,7 @@
+from typing import Any, Dict, Optional
+
+from cleo.styles import OutputStyle
+
 from sdoc.sdoc2 import in_scope, out_scope
 from sdoc.sdoc2.node.CaptionNode import CaptionNode
 from sdoc.sdoc2.node.LabelNode import LabelNode
@@ -11,51 +15,43 @@ class FigureNode(Node):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io, options):
+    def __init__(self, io: OutputStyle, options: Dict[str, str]):
         """
         Object constructor.
 
-        :param None|cleo.styles.output_style.OutputStyle io: The IO object.
+        :param OutputStyle io: The IO object.
         :param dict[str,str] options: The options of this figure.
         """
         super().__init__(io, 'figure', options)
 
-        self.caption = None
+        self.caption: Optional[str] = None
         """
         The caption for the figure.
-
-        :type: None|str
         """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_command(self):
+    def get_command(self) -> str:
         """
         Returns the command of this node, i.e. smile.
-
-        :rtype: str
         """
         return 'figure'
 
     # ------------------------------------------------------------------------------------------------------------------
-    def is_block_command(self):
+    def is_block_command(self) -> bool:
         """
         Returns False.
-
-        :rtype: bool
         """
         return True
 
     # ------------------------------------------------------------------------------------------------------------------
-    def is_inline_command(self):
+    def is_inline_command(self) -> bool:
         """
         Returns True.
-
-        :rtype: bool
         """
         return False
 
     # ------------------------------------------------------------------------------------------------------------------
-    def prepare_content_tree(self):
+    def prepare_content_tree(self) -> None:
         """
         Prepares this node for further processing.
         """
@@ -71,21 +67,21 @@ class FigureNode(Node):
             out_scope(node)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def setup_label(self, node):
+    def setup_label(self, node: LabelNode) -> None:
         """
         Sets the data of a label to current table.
 
-        :param sdoc.sdoc2.node.LabelNode.LabelNode node: The label node.
+        :param LabelNode node: The label node.
         """
         self._options['id'] = node.argument
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def _get_numeration(enumerable_numbers):
+    def _get_numeration(enumerable_numbers: Dict[str, Any]) -> None:
         """
         Returns the current enumeration of figures.
 
-        :param dict[str, sdoc.sdoc2.helper.Enumerable.Enumerable] enumerable_numbers:
+        :param dict[str,any] enumerable_numbers:
         """
         if 'heading' in enumerable_numbers and enumerable_numbers['heading'].get_level(1):
             chapter = enumerable_numbers['heading'].get_level(1)
@@ -105,11 +101,11 @@ class FigureNode(Node):
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def _increment_last_level(enumerable_numbers):
+    def _increment_last_level(enumerable_numbers: Dict[str, Any]) -> None:
         """
         Increments the last level of figures enumeration.
 
-        :param dict[str,str] enumerable_numbers: The current numbers of enumerable nodes.
+        :param dict[str,any] enumerable_numbers: The current numbers of enumerable nodes.
         """
         heading_numbers = enumerable_numbers['figures'].split('.')
         heading_numbers[-1] = str(int(heading_numbers[-1]) + 1)
@@ -117,11 +113,11 @@ class FigureNode(Node):
         enumerable_numbers['figures'] = '.'.join(heading_numbers)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def number(self, enumerable_numbers):
+    def number(self, enumerable_numbers: Dict[str, Any]):
         """
         Sets the number of this figure node.
 
-        :param dict[str,str] enumerable_numbers: The current numbers of enumerable nodes.
+        :param dict[str,any] enumerable_numbers: The current numbers of enumerable nodes.
         """
         self._get_numeration(enumerable_numbers)
         self._increment_last_level(enumerable_numbers)

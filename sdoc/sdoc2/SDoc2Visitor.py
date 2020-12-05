@@ -1,6 +1,11 @@
 import re
+from typing import Any, Dict
+
+from antlr4.Token import CommonToken
+from cleo.styles import OutputStyle
 
 from sdoc import sdoc2
+from sdoc.antlr.sdoc2Parser import sdoc2Parser
 from sdoc.antlr.sdoc2ParserVisitor import sdoc2ParserVisitor
 from sdoc.sdoc.SDocVisitor import SDocVisitor
 from sdoc.sdoc2.Position import Position
@@ -12,7 +17,7 @@ class SDoc2Visitor(sdoc2ParserVisitor, SDocVisitor):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, sdoc1_path, io):
+    def __init__(self, sdoc1_path: str, io: OutputStyle):
         """
         Object constructor.
 
@@ -21,62 +26,48 @@ class SDoc2Visitor(sdoc2ParserVisitor, SDocVisitor):
         """
         SDocVisitor.__init__(self, io)
 
-        self._io = io
+        self._io: OutputStyle = io
         """
         Styled output formatter.
-
-        :type: sdoc.style.SdocStyle.SdocStyle
         """
 
-        self._output = None
+        self._output: Any = None
         """
         Object for streaming the generated output. This object MUST implement the write method.
         """
 
-        self._sdoc1_file_name = sdoc1_path
+        self._sdoc1_file_name: str = sdoc1_path
         """
         The original file name at SDoc1 level.
-
-        :type: str
         """
 
-        self._sdoc1_line = 0
+        self._sdoc1_line: int = 0
         """
         The offset of for computing the current line at SDoc1 level.
-
-        :type: int
         """
 
-        self._sdoc1_column = 0
+        self._sdoc1_column: int = 0
         """
         The offset of for computing the current column at SDoc1 level.
-
-        :type: int
         """
 
-        self._sdoc2_line = 0
+        self._sdoc2_line: int = 0
         """
         The line position of the last position command.
-
-        :type: int
         """
 
-        self._sdoc2_column = 0
+        self._sdoc2_column: int = 0
         """
         The last column position of the last position command.
-
-        :type: int
         """
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def _get_options(ctx):
+    def _get_options(ctx) -> Dict[str, str]:
         """
         Returns the option of an command.
 
         :param ParserRuleContext ctx: The parse tree with the options.
-
-        :rtype: dict[str,str]
         """
         options = {}
         i = 0
@@ -99,13 +90,11 @@ class SDoc2Visitor(sdoc2ParserVisitor, SDocVisitor):
         return options
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_position(self, token):
+    def get_position(self, token: CommonToken) -> Position:
         """
         Returns the position of the token in the original SDoc1 source file.
 
-        :param antlr4.Token.CommonToken token:
-
-        :rtype: sdoc.sdoc2.Position.Position
+        :param CommonToken token:
         """
         line_number = token.line
         column = token.column
@@ -118,16 +107,16 @@ class SDoc2Visitor(sdoc2ParserVisitor, SDocVisitor):
         return Position(self._sdoc1_file_name, line_number, column, -1, -1)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def set_output(self, output):
+    def set_output(self, output: Any) -> None:
         """
         Sets the object for streaming the generated output.
 
-        :param output: This object MUST implement the write method.
+        :param any output: This object MUST implement the write method.
         """
         self._output = output
 
     # ------------------------------------------------------------------------------------------------------------------
-    def stream(self, snippet):
+    def stream(self, snippet: str) -> None:
         """
         Puts an output snippet on the output stream.
 
@@ -137,33 +126,33 @@ class SDoc2Visitor(sdoc2ParserVisitor, SDocVisitor):
             self._output.write(snippet)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def visitCmd_begin(self, ctx):
+    def visitCmd_begin(self, ctx: sdoc2Parser.Cmd_beginContext) -> None:
         """
         Visit a parse tree produced by a begin command.
 
-        :param sdoc.antlr.sdoc2Parser.sdoc2Parser.Cmd_beginContext ctx: The parse tree.
+        :param sdoc2Parser.Cmd_beginContext ctx: The parse tree.
         """
         command = ctx.BLOCK_ARG_ARG().getText()
 
         sdoc2.node_store.append_block_node(command, self._get_options(ctx), self.get_position(ctx.start))
 
     # ------------------------------------------------------------------------------------------------------------------
-    def visitCmd_end(self, ctx):
+    def visitCmd_end(self, ctx: sdoc2Parser.Cmd_endContext) -> None:
         """
         Visit a parse tree produced by an end command.
 
-        :param sdoc.antlr.sdoc2Parser.sdoc2Parser.Cmd_endContext ctx: The parse tree.
+        :param sdoc2Parser.Cmd_endContext ctx: The parse tree.
         """
         command = ctx.BLOCK_ARG_ARG().getText().rstrip()
 
         sdoc2.node_store.end_block_node(command)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def visitCmd_position(self, ctx):
+    def visitCmd_position(self, ctx: sdoc2Parser.Cmd_positionContext) -> None:
         """
         Visit a parse tree produced by a position command.
 
-        :param sdoc.antlr.sdoc2Parser.sdoc2Parser.Cmd_positionContext ctx: The parse tree.
+        :param sdoc2Parser.Cmd_positionContext ctx: The parse tree.
         """
         argument = ctx.INLINE_ARG_ARG()
         parts = re.match(r'(.+):([0-9]+)\.([0-9]+)', str(argument))
@@ -180,11 +169,11 @@ class SDoc2Visitor(sdoc2ParserVisitor, SDocVisitor):
         self._sdoc2_column = token.column + len(token.text)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def visitCmd_sdoc2(self, ctx):
+    def visitCmd_sdoc2(self, ctx: sdoc2Parser.Cmd_sdoc2Context) -> None:
         """
         Visit a parse tree produced by a inline command.
 
-        :param sdoc.antlr.sdoc2Parser.sdoc2Parser.Cmd_sdoc2Context ctx: The parse tree.
+        :param sdoc2Parser.Cmd_sdoc2Context ctx: The parse tree.
         """
         command = ctx.SDOC2_COMMAND().getText()
         argument = ctx.INLINE_ARG_ARG()
@@ -195,11 +184,11 @@ class SDoc2Visitor(sdoc2ParserVisitor, SDocVisitor):
                                             self.get_position(ctx.start))
 
     # ------------------------------------------------------------------------------------------------------------------
-    def visitText(self, ctx):
+    def visitText(self, ctx: sdoc2Parser.TextContext) -> None:
         """
         Visit a parse tree produced by TEXT.
 
-        :param sdoc.antlr.sdoc2Parser.sdoc2Parser.TextContext ctx: The parse tree.
+        :param sdoc2Parser.TextContext ctx: The parse tree.
         """
         sdoc2.node_store.append_inline_node('TEXT', {}, ctx.TEXT().getText(), self.get_position(ctx.start))
 

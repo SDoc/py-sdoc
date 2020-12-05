@@ -1,3 +1,6 @@
+from typing import Dict, Optional
+
+
 class Enumerable:
     """
     Class for storing information about numeration of heading nodes.
@@ -9,21 +12,17 @@ class Enumerable:
         Object constructor.
         """
 
-        self._numerate_data = {}
+        self._numerate_data: Dict[int, int] = {}
         """
         The info about node numeration.
-
-        :type: dict[int,int]
         """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_level(self, level):
+    def get_level(self, level: int) -> Optional[int]:
         """
         Gets the level from numerate data.
 
         :param: int level: The level.
-
-        :rtype: int|None
         """
         if level in self._numerate_data:
             return self._numerate_data[level]
@@ -31,7 +30,7 @@ class Enumerable:
             return None
 
     # ------------------------------------------------------------------------------------------------------------------
-    def generate_numeration(self, level):
+    def generate_numeration(self, level: int) -> None:
         """
         Sets current enumeration of headings at a heading level.
 
@@ -50,7 +49,7 @@ class Enumerable:
         self._numerate_data = new_numerate_data
 
     # ------------------------------------------------------------------------------------------------------------------
-    def increment_last_level(self):
+    def increment_last_level(self) -> None:
         """
         Increments the last level in number of a heading number.
         """
@@ -58,7 +57,7 @@ class Enumerable:
         self._numerate_data[last_level] += 1
 
     # ------------------------------------------------------------------------------------------------------------------
-    def remove_starting_zeros(self):
+    def remove_starting_zeros(self) -> None:
         """
         Removes starting multiple zero symbols. And lefts one if we have omitted levels.
         """
@@ -74,16 +73,14 @@ class Enumerable:
                     break
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_string(self):
+    def get_string(self) -> str:
         """
         Returns the string equivalent of levels for future output.
-
-        :rtype: str
         """
         numbering = []
 
         if max(self._numerate_data) == 0:
-            return self._numerate_data[0]
+            return str(self._numerate_data[0])
         else:
             for key in self._numerate_data:
                 # If we need to generate chapter, subsection ... etc. we omit outputting part number.

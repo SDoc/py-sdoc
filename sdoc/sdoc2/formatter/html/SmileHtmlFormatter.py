@@ -1,5 +1,8 @@
+from typing import Any
+
 from sdoc.helper.Html import Html
 from sdoc.sdoc2.formatter.html.HtmlFormatter import HtmlFormatter
+from sdoc.sdoc2.node.SmileNode import SmileNode
 from sdoc.sdoc2.NodeStore import NodeStore
 
 
@@ -9,12 +12,12 @@ class SmileHtmlFormatter(HtmlFormatter):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def generate(self, node, file):
+    def generate(self, node: SmileNode, file: Any) -> None:
         """
         Generates the HTML code for a smile node.
 
-        :param sdoc.sdoc2.node.SmileNode.SmileNode node: The smile node.
-        :param file file: The output file.
+        :param SmileNode node: The smile node.
+        :param any file: The output file.
         """
         file.write(SmileHtmlFormatter.get_html())
 
@@ -22,7 +25,7 @@ class SmileHtmlFormatter(HtmlFormatter):
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def get_html():
+    def get_html() -> str:
         """
         Returns string with generated HTML tag for smile.
 

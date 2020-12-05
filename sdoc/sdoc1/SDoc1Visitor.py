@@ -1,6 +1,10 @@
 import os
+from typing import Any, Dict, Optional
 
 import antlr4
+from antlr4 import ParserRuleContext
+from antlr4.Token import CommonToken
+from cleo.styles import OutputStyle
 
 from sdoc.antlr.sdoc1Lexer import sdoc1Lexer
 from sdoc.antlr.sdoc1Parser import sdoc1Parser
@@ -8,6 +12,7 @@ from sdoc.antlr.sdoc1ParserVisitor import sdoc1ParserVisitor
 from sdoc.helper.SDoc import SDoc
 from sdoc.sdoc.SDocVisitor import SDocVisitor
 from sdoc.sdoc1.data_type.ArrayDataType import ArrayDataType
+from sdoc.sdoc1.data_type.DataType import DataType
 from sdoc.sdoc1.data_type.IdentifierDataType import IdentifierDataType
 from sdoc.sdoc1.data_type.IntegerDataType import IntegerDataType
 from sdoc.sdoc1.data_type.StringDataType import StringDataType
@@ -20,7 +25,7 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io, root_dir=os.getcwd()):
+    def __init__(self, io: OutputStyle, root_dir: str = os.getcwd()):
         """
         Object constructor.
 
@@ -28,79 +33,65 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         """
         SDocVisitor.__init__(self, io)
 
-        self._io = io
+        self._io: OutputStyle = io
         """
         Styled output formatter.
-
-        :type: sdoc.style.SdocStyle.SdocStyle
         """
 
-        self._output = None
+        self._output: Any = None
         """
         Object for streaming the generated output. This object MUST implement the write method.
         """
 
-        self._global_scope = ArrayDataType()
+        self._global_scope: ArrayDataType = ArrayDataType()
         """
         All defined variables at global scope.
-
-        :type: sdoc.sdoc1.data_type.ArrayDataType.ArrayDataType
         """
 
-        self._include_level = 0
+        self._include_level: int = 0
         """
         The level of including other SDoc documents.
-
-        :type: int
         """
 
-        self._options = {'max_include_level': 100}
+        self._options: Dict[str, int] = {'max_include_level': 100}
         """
         The options.
-
-        :type: dict[str,int]
         """
 
-        self._root_dir = root_dir
+        self._root_dir: str = root_dir
         """
         The root directory for including sub-documents.
-
-        :type: str
         """
 
     # ------------------------------------------------------------------------------------------------------------------
     @property
-    def output(self):
+    def output(self) -> Any:
         """
         Getter for output.
-
-        :rtype: T
         """
         return self._output
 
     # ------------------------------------------------------------------------------------------------------------------
     @output.setter
-    def output(self, output):
+    def output(self, output: Any) -> None:
         """
         Setter for output.
 
-        :param T output: This object MUST implement the write method.
+        :param any output: This object MUST implement the write method.
         """
         self._output = output
 
     # ------------------------------------------------------------------------------------------------------------------
     @property
-    def include_level(self):
+    def include_level(self) -> int:
         """
         Getter for include_level.
-
-        :rtype: int
         """
         return self._include_level
 
     # ------------------------------------------------------------------------------------------------------------------
     @include_level.setter
-    def include_level(self, include_level):
+    def include_level(self, include_level: int) -> None:
         """
         Setter for include_level.
 
@@ -110,26 +101,24 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
 
     # ------------------------------------------------------------------------------------------------------------------
     @property
-    def global_scope(self):
+    def global_scope(self) -> ArrayDataType:
         """
         Getter for global_scope.
-
-        :rtype: sdoc.sdoc1.data_type.ArrayDataType.ArrayDataType
         """
         return self._global_scope
 
     # ------------------------------------------------------------------------------------------------------------------
     @global_scope.setter
-    def global_scope(self, scope):
+    def global_scope(self, scope: ArrayDataType) -> None:
         """
         Setter for global_scope.
 
-        :param sdoc.sdoc1.data_type.ArrayDataType.ArrayDataType scope: The global scope.
+        :param ArrayDataType scope: The global scope.
         """
         self._global_scope = scope
 
     # ------------------------------------------------------------------------------------------------------------------
-    def stream(self, snippet):
+    def stream(self, snippet: str) -> None:
         """
         Puts an output snippet on the output stream.
 
@@ -139,11 +128,11 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
             self._output.write(snippet)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def put_position(self, ctx, position):
+    def put_position(self, ctx: ParserRuleContext, position: str) -> None:
         """
         Puts a position SDoc2 command on the output stream.
 
-        :param antlr4.ParserRuleContext ctx: The context tree.
+        :param ParserRuleContext ctx: The context tree.
         :param str position: Either start or stop.
         """
         if position == 'start':
@@ -168,15 +157,13 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         self.stream('\\position{{{0!s}:{1:d}.{2:d}}}'.format(SDoc.escape(filename), line_number, column))
 
     # ------------------------------------------------------------------------------------------------------------------
-    def _data_is_true(self, data, token=None):
+    def _data_is_true(self, data: DataType, token: Optional[CommonToken] = None) -> Optional[bool]:
         """
         Returns True if a data type evaluates to True, False if a data type evaluates to False, and None if an error
         occurs.
 
-        :param sdoc.sdoc1.data_type.DataType.DataType data: The data.
-        :param antlr4.Token.CommonToken token: The token where data type is been used.
-
-        :rtype: bool|None
+        :param DataType data: The data.
+        :param CommonToken token: The token where data type is been used.
         """
         try:
             return data.is_true()
@@ -186,24 +173,22 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
             return None
 
     # ------------------------------------------------------------------------------------------------------------------
-    def visit(self, tree):
+    def visit(self, tree: ParserRuleContext) -> Any:
         """
         Visits a parse tree produced by sdoc1
 
-        :param antlr4.ParserRuleContext tree: The context tree.
+        :param ParserRuleContext tree: The context tree.
         """
         self.put_position(tree, 'start')
 
         return super().visit(tree)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def visitAssignmentExpressionAssignment(self, ctx):
+    def visitAssignmentExpressionAssignment(self, ctx: sdoc1Parser.AssignmentExpressionAssignmentContext) -> Any:
         """
         Visit a parse tree for expression like a = b.
 
         :param sdoc1Parser.AssignmentExpressionAssignmentContext ctx: The context tree.
-
-        :rtype: mixed
         """
         right_hand_side = ctx.assignmentExpression().accept(self)
         left_hand_side = ctx.postfixExpression().accept(self)
@@ -213,7 +198,7 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         if not isinstance(left_hand_side, IdentifierDataType):
             message = "Left hand side '{0!s}' is not an identifier.".format(str(left_hand_side))
             self._error(message, ctx.postfixExpression().start)
-            return
+            return None
 
         try:
             value = left_hand_side.set_value(right_hand_side)
@@ -224,13 +209,11 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         return value
 
     # ------------------------------------------------------------------------------------------------------------------
-    def visitLogicalAndExpressionAnd(self, ctx):
+    def visitLogicalAndExpressionAnd(self, ctx: sdoc1Parser.LogicalAndExpressionAndContext) -> IntegerDataType:
         """
         Visits a parse tree for expressions like 'a && b'.
 
         :param sdoc1Parser.LogicalAndExpressionAndContext ctx: The context tree.
-
-        :rtype: sdoc.sdoc1.data_type.IntegerDataType.IntegerDataType
         """
         a_ctx = ctx.logicalAndExpression()
         b_ctx = ctx.equalityExpression()
@@ -244,13 +227,12 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         return IntegerDataType(1 if a_is_true and b_is_true else 0)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def visitLogicalOrExpressionLogicalOr(self, ctx):
+    def visitLogicalOrExpressionLogicalOr(self,
+                                          ctx: sdoc1Parser.LogicalOrExpressionLogicalOrContext) -> IntegerDataType:
         """
         Visits a parse tree for expressions like 'a || b'.
 
         :param sdoc1Parser.LogicalOrExpressionLogicalOrContext ctx: The context tree.
-
-        :rtype: sdoc.sdoc1.data_type.IntegerDataType.IntegerDataType
         """
         a_ctx = ctx.logicalOrExpression()
         b_ctx = ctx.logicalAndExpression()
@@ -264,73 +246,69 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         return IntegerDataType(1 if a_is_true or b_is_true else 0)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def visitPostfixExpressionExpression(self, ctx):
+    def visitPostfixExpressionExpression(self, ctx: sdoc1Parser.PostfixExpressionExpressionContext) \
+            -> Optional[DataType]:
         """
         Visits a parse tree for expressions like 'a[1]'.
 
         :param sdoc1Parser.PostfixExpressionExpressionContext ctx: The context tree.
-
-        :rtype: sdoc.sdoc1.data_type.DataType.DataType
         """
         # First get the value of key.
         expression = ctx.expression().accept(self)
         if not expression.is_defined():
             message = '{0!s} is not defined.'.format(ctx.expression().getSymbol())
             self._error(message, ctx.expression().start)
-            return
+            return None
 
         postfix_expression = ctx.postfixExpression().accept(self)
         if not isinstance(postfix_expression, IdentifierDataType):
             message = "'{0!s}' is not an identifier.".format(ctx.postfixExpression().getSymbol())
             self._error(message, ctx.postfixExpression().start)
-            return
+            return None
 
         return postfix_expression.get_array_element(expression)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def visitPrimaryExpressionIdentifier(self, ctx):
+    def visitPrimaryExpressionIdentifier(self, ctx: sdoc1Parser.PrimaryExpressionIdentifierContext) \
+            -> IdentifierDataType:
         """
         Visits a parse tree produced by sdoc1Parser#primaryExpressionIdentifier.
 
         :param sdoc1Parser.PrimaryExpressionIdentifierContext ctx: The context tree.
-
-        :rtype: sdoc.sdoc1.data_type.IdentifierDataType.IdentifierDataType
         """
         return IdentifierDataType(self._global_scope, ctx.EXPR_IDENTIFIER().getText())
 
     # ------------------------------------------------------------------------------------------------------------------
-    def visitPrimaryExpressionIntegerConstant(self, ctx):
+    def visitPrimaryExpressionIntegerConstant(self, ctx: sdoc1Parser.PrimaryExpressionIntegerConstantContext) \
+            -> IntegerDataType:
         """
         Visits a parse tree produced by sdoc1Parser#PrimaryExpressionIntegerConstantContext.
 
         :param sdoc1Parser.PrimaryExpressionIntegerConstantContext ctx: The context tree.
-
-        :rtype: sdoc.sdoc1.data_type.IntegerDataType.IntegerDataType
         """
         return IntegerDataType(ctx.EXPR_INTEGER_CONSTANT().getText())
 
     # ------------------------------------------------------------------------------------------------------------------
-    def visitPrimaryExpressionStringConstant(self, ctx):
+    def visitPrimaryExpressionStringConstant(self, ctx: sdoc1Parser.PrimaryExpressionStringConstantContext) \
+            -> StringDataType:
         """
         Visits a parse tree produced by sdoc1Parser#PrimaryExpressionStringConstantContext.
 
         :param sdoc1Parser.PrimaryExpressionStringConstantContext ctx: The context tree.
-
-        :rtype sdoc.sdoc1.data_type.StringDataType.StringDataType
         """
         return StringDataType(ctx.EXPR_STRING_CONSTANT().getText()[1:-1].replace('\\\\', '\\').replace('\\\'', '\''))
 
     # ------------------------------------------------------------------------------------------------------------------
-    def visitPrimaryExpressionSubExpression(self, ctx):
+    def visitPrimaryExpressionSubExpression(self, ctx: sdoc1Parser.PrimaryExpressionSubExpressionContext) -> Any:
         """
         Visits a parse tree for sub-expressions like (a && b).
 
-        :param sdoc1Parser.primaryExpressionSubExpression ctx: The context tree.
+        :param sdoc1Parser.PrimaryExpressionSubExpressionContext ctx: The context tree.
         """
         return ctx.expression().accept(self)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def visitCmd_comment(self, ctx):
+    def visitCmd_comment(self, ctx: sdoc1Parser.Cmd_commentContext) -> None:
         """
         Visits a parse tree produced by sdoc1Parser#cmd_comment.
 
@@ -339,7 +317,7 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         self.put_position(ctx, 'stop')
 
     # ------------------------------------------------------------------------------------------------------------------
-    def visitCmd_debug(self, ctx):
+    def visitCmd_debug(self, ctx: sdoc1Parser.Cmd_debugContext) -> None:
         """
         Visits a parse tree produced by sdoc1Parser#cmd_debug.
 
@@ -355,7 +333,7 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         self.put_position(ctx, 'stop')
 
     # ------------------------------------------------------------------------------------------------------------------
-    def visitCmd_expression(self, ctx):
+    def visitCmd_expression(self, ctx: sdoc1Parser.Cmd_expressionContext) -> None:
         """
         Visits a parse tree produced by sdoc1Parser#cmd_expression.
 
@@ -366,7 +344,7 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         self.put_position(ctx, 'stop')
 
     # ------------------------------------------------------------------------------------------------------------------
-    def visitCmd_error(self, ctx):
+    def visitCmd_error(self, ctx: sdoc1Parser.Cmd_errorContext) -> None:
         """
         Visits a parse tree produced by sdoc1Parser#cmd_error.
 
@@ -380,7 +358,7 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         self.put_position(ctx, 'stop')
 
     # ------------------------------------------------------------------------------------------------------------------
-    def visitCmd_if(self, ctx):
+    def visitCmd_if(self, ctx: sdoc1Parser.Cmd_ifContext) -> None:
         """
         Visits a parse tree produced by sdoc1Parser#cmd_if.
 
@@ -431,7 +409,7 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         self.put_position(ctx, 'stop')
 
     # ------------------------------------------------------------------------------------------------------------------
-    def visitCmd_include(self, ctx):
+    def visitCmd_include(self, ctx: sdoc1Parser.Cmd_includeContext) -> None:
         """
         Includes another SDoc into this SDoc.
 
@@ -480,7 +458,7 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
             self._error(message, ctx.INCLUDE().getSymbol())
 
     # ------------------------------------------------------------------------------------------------------------------
-    def visitCmd_notice(self, ctx):
+    def visitCmd_notice(self, ctx: sdoc1Parser.Cmd_noticeContext) -> None:
         """
         Visits a parse tree produced by sdoc1Parser#cmd_notice.
 
@@ -497,7 +475,7 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         self.put_position(ctx, 'stop')
 
     # ------------------------------------------------------------------------------------------------------------------
-    def visitCmd_substitute(self, ctx):
+    def visitCmd_substitute(self, ctx: sdoc1Parser.Cmd_substituteContext) -> None:
         """
         Visit a parse tree produced by sdoc1Parser#cmd_substitute.
 
@@ -509,7 +487,7 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         self.put_position(ctx, 'stop')
 
     # ------------------------------------------------------------------------------------------------------------------
-    def visitCmd_sdoc2(self, ctx):
+    def visitCmd_sdoc2(self, ctx: sdoc1Parser.Cmd_sdoc2Context) -> None:
         """
         Visits a parse tree produced by sdoc1Parser#sdoc2_cmd.
 
@@ -518,7 +496,7 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         self.stream(ctx.SDOC2_COMMAND().getText())
 
     # ------------------------------------------------------------------------------------------------------------------
-    def visitText(self, ctx):
+    def visitText(self, ctx: sdoc1Parser.TextContext) -> None:
         """
         Visits a parse tree produced by sdoc1Parser#text.
 

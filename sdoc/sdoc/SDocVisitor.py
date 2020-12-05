@@ -1,41 +1,41 @@
 # ----------------------------------------------------------------------------------------------------------------------
+from typing import Optional
+
+from antlr4.Token import CommonToken
+from cleo.styles import OutputStyle
+
+
 class SDocVisitor:
     """
     Parent visitor for SDoc level 1 & 2.
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io):
+    def __init__(self, io: OutputStyle):
         """
         Object constructor.
         """
 
-        self._io = io
+        self._io: OutputStyle = io
         """
         Styled output formatter.
-
-        :type: sdoc.style.SdocStyle.SdocStyle
         """
 
-        self._errors = 0
+        self._errors: int = 0
         """
         The error count.
-
-        :type: int
         """
 
     # ------------------------------------------------------------------------------------------------------------------
     @property
-    def errors(self):
+    def errors(self) -> int:
         """
         Getter for the error count.
-
-        :rtype: int
         """
         return self._errors
 
     # ------------------------------------------------------------------------------------------------------------------
-    def _error(self, message, token=None):
+    def _error(self, message: str, token: Optional[CommonToken] = None) -> None:
         """
         Logs an error.
 

@@ -7,7 +7,7 @@ class Position:
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, file_name, start_line, start_column, end_line, end_column):
+    def __init__(self, file_name: str, start_line: int, start_column: int, end_line: int, end_column: int):
         """
         Object constructor.
 
@@ -17,46 +17,34 @@ class Position:
         :param int end_line: The line where the node definition ends.
         :param int end_column: The column where the node definition end.
         """
-        self.file_name = file_name
+        self.file_name: str = file_name
         """
         The name of the file where the node is defined.
-
-        :type: str
         """
 
-        self.start_line = start_line
+        self.start_line: int = start_line
         """
         The line where the node definition starts.
-
-        :type: int
         """
 
-        self.start_column = start_column
+        self.start_column: int = start_column
         """
         The column where the node definition starts.
-
-        :type: int
         """
 
-        self.end_line = end_line
+        self.end_line: int = end_line
         """
         The line where the node definition ends.
-
-        :type: int
         """
-        self.end_column = end_column
+        self.end_column: int = end_column
         """
         The column where the node definition end.
-
-        :type: int
         """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __str__(self):
+    def __str__(self) -> str:
         """
         String representation of the position.
-
-        :rtype: str
         """
         if not self.file_name:
             return "{0:d}.{1:d}".format(self.start_line, self.start_column + 1)

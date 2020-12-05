@@ -1,5 +1,8 @@
+from typing import Any
+
 from sdoc.helper.Html import Html
 from sdoc.sdoc2.formatter.html.HtmlFormatter import HtmlFormatter
+from sdoc.sdoc2.node.VersionNode import VersionNode
 from sdoc.sdoc2.NodeStore import NodeStore
 
 
@@ -9,12 +12,12 @@ class VersionHtmlFormatter(HtmlFormatter):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def generate(self, node, file):
+    def generate(self, node: VersionNode, file: Any) -> None:
         """
         Generates HTML code for a version node.
 
-        :param sdoc.sdoc2.node.VersionNode.VersionNode node: The version node.
-        :param file file: The output file.
+        :param VersionNode node: The version node.
+        :param any file: The output file.
         """
         html_code = Html.generate_element('span', {}, node.argument)
 

@@ -1,4 +1,9 @@
+from typing import Any, Optional
+
+from cleo.styles import OutputStyle
+
 from sdoc.sdoc2 import in_scope, node_store, out_scope
+from sdoc.sdoc2.node.Node import Node
 
 
 class Formatter:
@@ -7,18 +12,16 @@ class Formatter:
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io, parent):
+    def __init__(self, io: OutputStyle, parent):
         """
         Object constructor.
 
-        :param cleo.styles.output_style.OutputStyle io: The IO object.
-        :param sdoc.sdoc2.formatter.Formatter.Formatter parent: The formatter for the parent node.
+        :param OutputStyle io: The IO object.
+        :param sdoc.sdoc2.formatter.Formatter.Formatter|None parent: The formatter for the parent node.
         """
-        self._io = io
+        self._io: OutputStyle = io
         """
         The IO object.
-
-        :type: cleo.styles.output_style.OutputStyle
         """
 
         self._parent = parent
@@ -28,16 +31,14 @@ class Formatter:
         :type: sdoc.sdoc2.formatter.Formatter.Formatter
         """
 
-        self._errors = 0
+        self._errors: int = 0
         """
         The error count.
-
-        :type: int
         """
 
     # ------------------------------------------------------------------------------------------------------------------
     @property
-    def errors(self):
+    def errors(self) -> int:
         """
         Getter for the error count.
 
@@ -49,12 +50,12 @@ class Formatter:
         return self._errors
 
     # ------------------------------------------------------------------------------------------------------------------
-    def error(self, message, node=None):
+    def error(self, message: str, node: Optional[Node] = None) -> None:
         """
         Logs an error.
 
         :param str message: The error message.this message will be appended with 'at filename:line.column' ot the token.
-        :param sdoc.sdoc2.node.Node.Node node: The node where the error occurred.
+        :param Node node: The node where the error occurred.
         """
         if self._parent:
             self._parent.error(message, node)
@@ -70,12 +71,12 @@ class Formatter:
             self._io.error(messages)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def generate(self, node, file):
+    def generate(self, node: Node, file: Any) -> None:
         """
         Generates the representation of a node in the requested output format.
 
-        :param sdoc.sdoc2.node.Node.Node node: The node for which the output must be generated.
-        :param file file: The output file.
+        :param Node node: The node for which the output must be generated.
+        :param any file: The output file.
         """
         for node_id in node.child_nodes:
             child_node = in_scope(node_id)

@@ -1,4 +1,5 @@
 import abc
+from typing import Union
 
 
 class DataType(metaclass=abc.ABCMeta):
@@ -13,13 +14,11 @@ class DataType(metaclass=abc.ABCMeta):
 
     # ------------------------------------------------------------------------------------------------------------------
     @abc.abstractmethod
-    def debug(self, indent=0):
+    def debug(self, indent: int = 0) -> str:
         """
         Returns a string for debugging.
 
         :param int indent: The indentation level.
-
-        :rtype: str
         """
         raise NotImplementedError
 
@@ -35,61 +34,49 @@ class DataType(metaclass=abc.ABCMeta):
 
     # ------------------------------------------------------------------------------------------------------------------
     @abc.abstractmethod
-    def get_value(self):
+    def get_value(self) -> Union[int, str]:
         """
         Returns the underling value of this data type.
-
-        :rtype: str|int
         """
         raise NotImplementedError
 
     # ------------------------------------------------------------------------------------------------------------------
     @abc.abstractmethod
-    def get_type_id(self):
+    def get_type_id(self) -> int:
         """
         Returns the ID of this data type.
-
-        :rtype: int
         """
         raise NotImplementedError
 
     # ------------------------------------------------------------------------------------------------------------------
     @abc.abstractmethod
-    def is_constant(self):
+    def is_constant(self) -> bool:
         """
         Returns True if this data type is a constant. Returns False otherwise.
-
-        :rtype: bool
         """
         raise NotImplementedError
 
     # ------------------------------------------------------------------------------------------------------------------
     @abc.abstractmethod
-    def is_defined(self):
+    def is_defined(self) -> bool:
         """
         Returns True if this data type is defined, i.e. has a value. Returns False otherwise.
-
-        :rtype: bool
         """
         raise NotImplementedError
 
     # ------------------------------------------------------------------------------------------------------------------
     @abc.abstractmethod
-    def is_scalar(self):
+    def is_scalar(self) -> bool:
         """
         Returns True if this data type is a scalar. Returns False otherwise.
-
-        :rtype: bool
         """
         raise NotImplementedError
 
     # ------------------------------------------------------------------------------------------------------------------
     @abc.abstractmethod
-    def is_true(self):
+    def is_true(self) -> bool:
         """
         Returns True if this data type evaluates to True. Returns False otherwise.
-
-        :rtype: bool
         """
         raise NotImplementedError
 

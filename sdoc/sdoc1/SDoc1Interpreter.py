@@ -1,6 +1,7 @@
 import os
 
 import antlr4
+from cleo.styles import OutputStyle
 
 from sdoc.antlr.sdoc1Lexer import sdoc1Lexer
 from sdoc.antlr.sdoc1Parser import sdoc1Parser
@@ -13,27 +14,23 @@ class SDoc1Interpreter:
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io):
+    def __init__(self, io: OutputStyle):
         """
         Object constructor.
         """
 
-        self._io = io
+        self._io: OutputStyle = io
         """
         Styled output formatter.
-
-        :type: sdoc.style.SdocStyle.SdocStyle
         """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def process(self, infile, outfile):
+    def process(self, infile: str, outfile: str) -> int:
         """
         Processes a SDoc1 document.
 
         :param str infile: The input filename with the SDoc1 document.
         :param str outfile: The output filename with the SDoc2 document.
-
-        :rtype: int
         """
         in_stream = antlr4.FileStream(infile)
 

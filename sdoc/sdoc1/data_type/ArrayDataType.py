@@ -1,4 +1,5 @@
 import copy
+from typing import Any, Dict, Optional, Union
 
 from sdoc.sdoc1.data_type.DataType import DataType
 from sdoc.sdoc1.error import DataTypeError
@@ -10,28 +11,26 @@ class ArrayDataType(DataType):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, elements=None):
+    def __init__(self, elements: Optional[Dict[Any, DataType]] = None):
         """
         Object constructor.
 
-        :param dict[mixed, sdoc.sdoc1.data_type.DataType.DataType]: The elements of this array.
+        :param dict[any,DataType]|None: The elements of this array.
         """
 
         self._elements = copy.deepcopy(elements) if elements else {}
         """
         The elements in this array.
 
-        :type: dict[mixed, sdoc.sdoc1.data_type.DataType.DataType]
+        :type: dict[any,DataType]|None
         """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def debug(self, indent=0):
+    def debug(self, indent: int = 0) -> str:
         """
         Returns a string for debugging.
 
         :param int indent: The indentation level.
-
-        :rtype: str
         """
         ret = '[\n'
         sep = " => "
@@ -53,6 +52,8 @@ class ArrayDataType(DataType):
                 str1 = " " + " " * indent + "{}".format(key).ljust(longest, " ")
             elif isinstance(key, str):
                 str1 = " " + " " * indent + "'{}'".format(key).ljust(longest, " ")
+            else:
+                raise ValueError()
 
             # Creating indentation level.
             if isinstance(self._elements[key], ArrayDataType):
@@ -81,15 +82,13 @@ class ArrayDataType(DataType):
         return ArrayDataType(self._elements)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_array(self, key):
+    def get_array(self, key: Union[int, str]):
         """
         Adds a new elements to this array. If the key holds an element already the element will be replaced.
 
         :param int|str key: The key of the new element. Must be a scalar data type.
 
         :rtype: sdoc.sdoc1.data_type.ArrayDataType.ArrayDataType
-
-        @todo consider key must be int or str
         """
         if key not in self._elements:
             # Variable is not defined: create a new array.
@@ -113,8 +112,6 @@ class ArrayDataType(DataType):
         :param sdoc.sdoc1.data_type.DataType.DataType value: The value of the new element.
 
         :rtype: sdoc.sdoc1.data_type.DataType.DataType
-
-        @todo consider key must be int or str
         """
         if not key.is_scalar():
             raise DataTypeError("Key '{0!s}' is not a scalar.".format(str(key)))
@@ -124,7 +121,7 @@ class ArrayDataType(DataType):
         return self._elements[key.get_value()]
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_reference(self, name):
+    def get_reference(self, name: Union[int, str]):
         """
         Returns a reference to an element in this array.
 
@@ -145,58 +142,46 @@ class ArrayDataType(DataType):
         raise RuntimeError()
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_type_id(self):
+    def get_type_id(self) -> int:
         """
         Returns the ID of this data type.
-
-        :rtype: int
         """
         return DataType.ARRAY
 
     # ------------------------------------------------------------------------------------------------------------------
-    def has_element(self, name):
+    def has_element(self, name: Union[int, str]) -> bool:
         """
         Returns True if this array has a specified element.
 
         :param int|str name: The name of the element.
-
-        :rtype: bool
         """
         return name in self._elements
 
     # ------------------------------------------------------------------------------------------------------------------
-    def is_constant(self):
+    def is_constant(self) -> bool:
         """
         Returns False always.
-
-        :rtype: bool
         """
         return False
 
     # ------------------------------------------------------------------------------------------------------------------
-    def is_defined(self):
+    def is_defined(self) -> bool:
         """
         Returns True always.
-
-        :rtype: bool
         """
         return True
 
     # ------------------------------------------------------------------------------------------------------------------
-    def is_scalar(self):
+    def is_scalar(self) -> bool:
         """
         Returns False always.
-
-        :rtype: bool
         """
         return False
 
     # ------------------------------------------------------------------------------------------------------------------
-    def is_true(self):
+    def is_true(self) -> bool:
         """
         Returns True if this array holds 1 or more elements. Returns False otherwise.
-
-        :rtype: bool
         """
         return len(self._elements) > 0
 

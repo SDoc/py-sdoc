@@ -1,4 +1,7 @@
 import os
+from configparser import ConfigParser
+
+from cleo.styles import OutputStyle
 
 from sdoc import sdoc2
 from sdoc.error import SDocError
@@ -11,53 +14,45 @@ class HtmlFormat(Format):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io, target_format, config):
+    def __init__(self, io: OutputStyle, target_format: str, config: ConfigParser):
         """
         Object constructor.
 
-        :param cleo.styles.output_style.OutputStyle io: The IO object.
+        :param OutputStyle io: The IO object.
         :param str target_format: The name of the format (in the config file).
-        :param configparser.ConfigParser config: The section in the config file for the target_format.
+        :param ConfigParser config: The section in the config file for the target_format.
         """
         Format.__init__(self, io, config)
 
-        self._enumerate = True
+        self._enumerate: bool = True
         """
         If set chapters, sections, etc. must be numbered.
-
-        :type: bool
         """
 
-        self._file_per_chapter = False
+        self._file_per_chapter: bool = False
         """
         If set, will generate multiple .html files for each chapter.
-
-        :type: bool
         """
 
-        self._one_file = True
+        self._one_file: bool = True
         """
         If set, will generate one .html file.
-
-        :type: bool
         """
 
-        self._target_dir = '.'
+        self._target_dir: str = '.'
         """
         The directory where the document in the target format must be created.
-
-        :type: str
         """
 
         self._read_configuration(target_format, config)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def _read_configuration(self, target_format, config):
+    def _read_configuration(self, target_format: str, config: ConfigParser) -> None:
         """
         Reads the configuration for this formatter.
 
         :param str target_format: The name of the format (in the config file).
-        :param configparser.ConfigParser config: The section in the config file for the target_format.
+        :param ConfigParser config: The section in the config file for the target_format.
         """
         section = 'format_' + target_format
 
@@ -83,20 +78,16 @@ class HtmlFormat(Format):
 
     # ------------------------------------------------------------------------------------------------------------------
     @property
-    def enumerate(self):
+    def enumerate(self) -> bool:
         """
         Getter for enumerate attribute.
-
-        :rtype: bool
         """
         return self._enumerate
 
     # ------------------------------------------------------------------------------------------------------------------
-    def generate(self):
+    def generate(self) -> int:
         """
         Generating the document in HTML and returns the number of errors encountered.
-
-        :rtype: int
         """
         # Activate numbering nodes.
         if self.enumerate:

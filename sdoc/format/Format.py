@@ -1,4 +1,7 @@
 import abc
+from configparser import ConfigParser
+
+from cleo.styles import OutputStyle
 
 
 class Format(metaclass=abc.ABCMeta):
@@ -7,44 +10,36 @@ class Format(metaclass=abc.ABCMeta):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io, config):
+    def __init__(self, io: OutputStyle, config: ConfigParser):
         """
         Object constructor.
 
-        :param cleo.styles.output_style.OutputStyle io: The IO object.
-        :param configparser.ConfigParser config: The section in the config file for the target_format.
+        :param OutputStyle io: The IO object.
+        :param ConfigParser config: The section in the config file for the target_format.
         """
-        self._io = io
+        self._io: OutputStyle = io
         """
         The IO object.
-
-        :type: cleo.styles.output_style.OutputStyle
         """
 
-        self._errors = 0
+        self._errors: int = 0
         """
         The error count.
-
-        :type: int
         """
 
     # ------------------------------------------------------------------------------------------------------------------
     @property
-    def errors(self):
+    def errors(self) -> int:
         """
         Getter for the error count.
-
-        :rtype: int
         """
         return self._errors
 
     # ------------------------------------------------------------------------------------------------------------------
     @abc.abstractmethod
-    def generate(self):
+    def generate(self) -> int:
         """
         Generating the document in the target format and returns the number of error encountered.
-
-        :rtype: int
         """
         raise NotImplementedError()
 

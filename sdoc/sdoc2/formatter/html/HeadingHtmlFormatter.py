@@ -1,5 +1,8 @@
+from typing import Any
+
 from sdoc.helper.Html import Html
 from sdoc.sdoc2.formatter.html.HtmlFormatter import HtmlFormatter
+from sdoc.sdoc2.node.HeadingNode import HeadingNode
 from sdoc.sdoc2.NodeStore import NodeStore
 
 
@@ -9,24 +12,24 @@ class HeadingHtmlFormatter(HtmlFormatter):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def generate(self, node, file):
+    def generate(self, node: HeadingNode, file: Any) -> None:
         """
         Generates the HTML code for a heading node.
 
-        :param sdoc.sdoc2.node.HeadingNode.HeadingNode node: The heading node.
-        :param file file: The output file.
+        :param HeadingNode node: The heading node.
+        :param any file: The output file.
         """
         self.generate_heading_node(node, file)
         HtmlFormatter.generate(self, node, file)
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def generate_heading_node(node, file):
+    def generate_heading_node(node: HeadingNode, file: Any) -> None:
         """
         Generates the HTML code for heading node.
 
-        :param sdoc.sdoc2.node.HeadingNode.HeadingNode node: The heading node.
-        :param file file: The output file.
+        :param HeadingNode node: The heading node.
+        :param any file: The output file.
         """
         # Set id attribute to heading node.
         attributes = {'id': node.get_option_value('id')}

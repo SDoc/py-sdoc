@@ -1,3 +1,10 @@
+from typing import Any, Dict, List, Optional, Tuple, Union
+
+from cleo.styles import OutputStyle
+
+from sdoc.sdoc2.helper.Enumerable import Enumerable
+from sdoc.sdoc2.Position import Position
+
 inline_creators = {}
 """
 Map from inline commands to node creators.
@@ -27,70 +34,60 @@ class NodeStore:
     @todo Make abstract and implement other document store classes.
     """
 
-    _errors = 0
+    _errors: int = 0
     """
     The error count.
-
-    :type: int
     """
 
-    _io = None
+    _io: Optional[OutputStyle] = None
     """
     Styled output formatter.
-
-    :type: None|sdoc.style.SdocStyle.SdocStyle
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io):
+    def __init__(self, io: OutputStyle):
         """
         Object constructor.
         """
         NodeStore._io = io
 
-        self.format = 'html'
+        self.format: str = 'html'
         """
         The output format.
-
-        :type: str
         """
 
-        self.nested_nodes = []
+        self.nested_nodes: List[Any] = []
         """
         The stack of nested nodes (only filled when creating all nodes).
 
         :type: list[sdoc.sdoc2.node.Node.Node]
         """
 
-        self.nodes = {}
+        self.nodes: Dict[Any] = {}
         """
         The actual node store. Map from node ID to node.
 
         :type: dict[int,sdoc.sdoc2.node.Node.Node]
         """
 
-        self._enumerable_numbers = {}
+        self._enumerable_numbers: Dict[Enumerable] = {}
         """
         The current numbers of enumerable nodes (e.g. headings, figures).
-
-        :type: dict[str,sdoc.sdoc2.helper.Enumerable.Enumerable]
         """
 
-        self.labels = {}
+        self.labels: Dict[str, Union[str, Dict[str, str]]] = {}
         """
         The identifiers of labels which refers on each heading node.
-
-        :type: dict[str,str]
         """
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def error(message, node=None):
+    def error(message: str, node=None) -> None:
         """
         Logs an error.
 
         :param str message: The error message.this message will be appended with 'at filename:line.column' ot the token.
-        :param sdoc.sdoc2.node.Node.Node node: The node where the error occurred.
+        :param sdoc.sdoc2.node.Node.Node|None node: The node where the error occurred.
         """
         NodeStore._errors += 1
 
@@ -104,7 +101,7 @@ class NodeStore:
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def get_formatter(output_type, name_formatter):
+    def get_formatter(output_type: str, name_formatter: str):
         """
         Returns the formatter for special type.
 
@@ -116,7 +113,7 @@ class NodeStore:
         return formatters[output_type][name_formatter]
 
     # ------------------------------------------------------------------------------------------------------------------
-    def end_block_node(self, command):
+    def end_block_node(self, command: str) -> None:
         """
         Signals the end of a block command.
 
@@ -142,7 +139,7 @@ class NodeStore:
         self.nested_nodes.pop()
 
     # ------------------------------------------------------------------------------------------------------------------
-    def in_scope(self, node_id):
+    def in_scope(self, node_id: int):
         """
         Retrieves a node based on its ID.
 
@@ -163,7 +160,7 @@ class NodeStore:
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def register_inline_command(command, constructor):
+    def register_inline_command(command: str, constructor) -> None:
         """
         Registers a node constructor for an inline command.
 
@@ -174,7 +171,7 @@ class NodeStore:
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def register_formatter(command, output_format, formatter):
+    def register_formatter(command: str, output_format: str, formatter) -> None:
         """
         Registers a output formatter constructor for a command.
 
@@ -189,26 +186,30 @@ class NodeStore:
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def register_block_command(command, constructor):
+    def register_block_command(command: str, constructor) -> None:
         """
         Registers a node constructor for a block command.
 
-        :param string command: The name of the inline command.
+        :param str command: The name of the inline command.
         :param callable constructor: The node constructor.
         """
         block_creators[command] = constructor
 
     # ------------------------------------------------------------------------------------------------------------------
-    def create_inline_node(self, command, options=None, argument='', position=None):
+    def create_inline_node(self,
+                           command: str,
+                           options: Optional[Dict[str, str]] = None,
+                           argument: str = '',
+                           position: Position = None):
         """
         Creates a node based an inline command.
 
         Note: The node is not stored nor appended to the content tree.
 
         :param str command: The inline command.
-        :param None|dict[str,str] options: The options.
+        :param dict[str,str] options: The options.
         :param str argument: The argument of the inline command.
-        :param None|sdoc.sdoc2.Position.Position position: The position of the node definition.
+        :param Position|None position: The position of the node definition.
 
         :rtype: sdoc.sdoc2.node.Node.Node
         """
@@ -231,7 +232,7 @@ class NodeStore:
         return node
 
     # ------------------------------------------------------------------------------------------------------------------
-    def create_block_node(self, command, options, position=None):
+    def create_block_node(self, command: str, options: Dict[str, str], position: Position):
         """
         Creates a node based on a block command.
 
@@ -239,7 +240,7 @@ class NodeStore:
 
         :param str command: The inline command.
         :param dict[str,str] options: The options.
-        :param None|sdoc.sdoc2.Position.Position position: The position of the node definition.
+        :param Position position: The position of the node definition.
 
         :rtype: sdoc.sdoc2.node.Node.Node
         """
@@ -260,14 +261,14 @@ class NodeStore:
         return node
 
     # ------------------------------------------------------------------------------------------------------------------
-    def append_inline_node(self, command, options, argument, position):
+    def append_inline_node(self, command: str, options: Dict[str, str], argument: str, position: Position):
         """
         Creates a node based an inline command and appends it to the end of the content tree.
 
         :param str command: The inline command.
         :param dict[str,str] options: The options.
         :param str argument: The argument of the inline command.
-        :param sdoc.sdoc2.Position.Position position: The position of the node definition.
+        :param Position position: The position of the node definition.
 
         :rtype: sdoc.sdoc2.node.Node.Node
         """
@@ -280,13 +281,13 @@ class NodeStore:
         return node
 
     # ------------------------------------------------------------------------------------------------------------------
-    def append_block_node(self, command, options, position):
+    def append_block_node(self, command: str, options: Dict[str, str], position: Position):
         """
         Creates a node based on a block command and appends it to the end of the content tree.
 
         :param str command: The inline command.
         :param dict[str,str] options: The options.
-        :param sdoc.sdoc2.Position.Position position: The position of the node definition.
+        :param Position position: The position of the node definition.
 
         :rtype: sdoc.sdoc2.node.Node.Node
         """
@@ -299,13 +300,13 @@ class NodeStore:
         return node
 
     # ------------------------------------------------------------------------------------------------------------------
-    def create_formatter(self, io, command, parent=None):
+    def create_formatter(self, io: OutputStyle, command: str, parent=None):
         """
         Creates a formatter for generating the output of nodes in the requested output format.
 
-        :param cleo.styles.output_style.OutputStyle io: The IO object.
+        :param OutputStyle io: The IO object.
         :param str command: The inline of block command.
-        :param sdoc.sdoc2.formatter.Formatter.Formatter parent: The parent formatter.
+        :param sdoc.sdoc2.formatter.Formatter.Formatter|None parent: The parent formatter.
 
         :rtype: sdoc.sdoc2.formatter.Formatter.Formatter
         """
@@ -322,7 +323,7 @@ class NodeStore:
         return formatter
 
     # ------------------------------------------------------------------------------------------------------------------
-    def _adjust_hierarchy(self, node):
+    def _adjust_hierarchy(self, node) -> None:
         """
         Adjust the hierarchy based on the hierarchy of a new node.
 
@@ -358,14 +359,12 @@ class NodeStore:
                     node)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def store_node(self, node):
+    def store_node(self, node) -> int:
         """
         Stores a node. If the node was not stored before assigns an ID to this node, otherwise the node replaces the
         node stored under the same ID. Returns the ID if the node.
 
         :param sdoc.sdoc2.node.Node.Node node: The node.
-
-        :rtype: int
         """
         if not node.id:
             # Add the node to the node store.
@@ -377,7 +376,7 @@ class NodeStore:
         return node.id
 
     # ------------------------------------------------------------------------------------------------------------------
-    def _append_to_content_tree(self, node):
+    def _append_to_content_tree(self, node) -> None:
         """
         Appends the node at the proper nesting level at the end of the content tree.
 
@@ -417,7 +416,7 @@ class NodeStore:
                 self.nested_nodes.append(node)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def prepare_content_tree(self):
+    def prepare_content_tree(self) -> None:
         """
         Prepares after parsing at SDoc2 level the content tree for further processing.
         """
@@ -425,14 +424,14 @@ class NodeStore:
         self.nodes[1].prepare_content_tree()
 
     # ------------------------------------------------------------------------------------------------------------------
-    def number_numerable(self):
+    def number_numerable(self) -> None:
         """
         Numbers all numerable nodes such as chapters, sections, figures, and, items.
         """
         self.nodes[1].number(self._enumerable_numbers)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def generate_toc(self):
+    def generate_toc(self) -> None:
         """
         Checks if we have table of contents in document. If yes, we generate table of contents.
         """
@@ -442,7 +441,7 @@ class NodeStore:
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def generate(target_format):
+    def generate(target_format) -> int:
         """
         Generates the document.
 
@@ -456,7 +455,7 @@ class NodeStore:
         return NodeStore._errors
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_enumerated_items(self):
+    def get_enumerated_items(self) -> List[Tuple[str, str]]:
         """
         Returns a list with tuples with command and number of enumerated nodes.
 
@@ -467,7 +466,7 @@ class NodeStore:
         return self.nodes[1].get_enumerated_items()
 
     # ------------------------------------------------------------------------------------------------------------------
-    def parse_labels(self):
+    def parse_labels(self) -> None:
         """
         Method for parsing labels, setting additional arguments to nodes, and removing label nodes from tree.
         """

@@ -1,6 +1,8 @@
+from typing import Dict
 from urllib import error, request
 
 import httplib2
+from cleo.styles import OutputStyle
 
 from sdoc.sdoc2.node.Node import Node
 from sdoc.sdoc2.NodeStore import NodeStore
@@ -12,22 +14,20 @@ class HyperlinkNode(Node):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io, options, argument):
+    def __init__(self, io: OutputStyle, options: Dict[str, str], argument: str):
         """
         Object constructor.
 
-        :param None|cleo.styles.output_style.OutputStyle io: The IO object.
+        :param OutputStyle io: The IO object.
         :param dict[str,str] options: The options of the hyperlink.
         :param str argument: Not used.
         """
         super().__init__(io, 'hyperlink', options, argument)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_html_attributes(self):
+    def get_html_attributes(self) -> Dict[str, str]:
         """
         Checks valid html attributes for hyperlinks and returns a list of attributes.
-
-        :rtype: dict[str,str]
         """
         valid_html_attributes = ('href', 'class', 'id', 'download', 'hreflang', 'media', 'rel', 'target', 'type')
         attributes_dict = {}
@@ -39,7 +39,7 @@ class HyperlinkNode(Node):
         return attributes_dict
 
     # ------------------------------------------------------------------------------------------------------------------
-    def prepare_content_tree(self):
+    def prepare_content_tree(self) -> None:
         """
         Prepares the content of the node. Checks url of 'href' attribute. Sets if needed.
         """
@@ -53,7 +53,7 @@ class HyperlinkNode(Node):
         self.try_connect()
 
     # ------------------------------------------------------------------------------------------------------------------
-    def set_scheme(self, url):
+    def set_scheme(self, url: str):
         """
         Checks if we haven't got a scheme. Sets scheme if needed.
 
@@ -68,7 +68,7 @@ class HyperlinkNode(Node):
                 self._options['href'] = url
 
     # ------------------------------------------------------------------------------------------------------------------
-    def try_connect(self):
+    def try_connect(self) -> None:
         """
         Tries to connect to url. If have connection, checks the redirect. If redirect to 'https' protocol and
         host is the same, reset scheme in 'href' attribute.
@@ -82,10 +82,10 @@ class HyperlinkNode(Node):
             else:
                 # If we connected, check the redirect.
                 url = self._options['href'].lstrip('(http://)|(https://)')
-                splitted_url = url.split('/')
+                split_url = url.split('/')
 
-                host = splitted_url[0]
-                address = '/'.join(splitted_url[1:])
+                host = split_url[0]
+                address = '/'.join(split_url[1:])
 
                 connection = httplib2.HTTPConnectionWithTimeout(host)
                 connection.request('HEAD', address)
@@ -100,38 +100,30 @@ class HyperlinkNode(Node):
             self.io.warning("Invalid url address: '{0!s}'".format(self._options['href']))
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_command(self):
+    def get_command(self) -> str:
         """
         Returns the command of this node, i.e. hyperlink.
-
-        :rtype: str
         """
         return 'hyperlink'
 
     # ------------------------------------------------------------------------------------------------------------------
-    def is_phrasing(self):
+    def is_phrasing(self) -> bool:
         """
         Returns True.
-
-        :rtype: bool
         """
         return True
 
     # ------------------------------------------------------------------------------------------------------------------
-    def is_inline_command(self):
+    def is_inline_command(self) -> bool:
         """
         Returns True.
-
-        :rtype: bool
         """
         return True
 
     # ------------------------------------------------------------------------------------------------------------------
-    def is_block_command(self):
+    def is_block_command(self) -> bool:
         """
         Returns False.
-
-        :rtype: bool
         """
         return False
 

@@ -1,5 +1,8 @@
+from typing import Any
+
 from sdoc.helper.Html import Html
 from sdoc.sdoc2.formatter.html.HtmlFormatter import HtmlFormatter
+from sdoc.sdoc2.node.ItemNode import ItemNode
 from sdoc.sdoc2.NodeStore import NodeStore
 
 
@@ -9,12 +12,12 @@ class ItemHtmlFormatter(HtmlFormatter):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def generate(self, node, file):
+    def generate(self, node: ItemNode, file: Any) -> None:
         """
         Generates the HTML code for an item node.
 
-        :param sdoc.sdoc2.node.ItemNode.ItemNode node: The item node.
-        :param file file: The output file.
+        :param ItemNode node: The item node.
+        :param any file: The output file.
         """
         attributes = {'id': node.get_option_value('id')}
 

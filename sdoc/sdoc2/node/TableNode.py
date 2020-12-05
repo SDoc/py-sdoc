@@ -1,6 +1,9 @@
 import csv
 import io
 import re
+from typing import Any, Dict, List, Optional
+
+from cleo.styles import OutputStyle
 
 from sdoc.sdoc2 import in_scope, out_scope
 from sdoc.sdoc2.helper.Enumerable import Enumerable
@@ -16,76 +19,62 @@ class TableNode(Node):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, in_out, options):
+    def __init__(self, in_out: OutputStyle, options: Dict[str, str]):
         """
         Object constructor.
 
-        :param None|cleo.styles.output_style.OutputStyle in_out: The IO object.
+        :param OutputStyle in_out: The IO object.
         :param dict[str,str] options: The options of this table.
         """
         super().__init__(in_out, 'table', options)
 
-        self.rows = []
+        self.rows: List[List[str]] = []
         """
         The table rows.
-
-        :type: list[list[str]]
         """
 
-        self.column_headers = []
+        self.column_headers: List[str] = []
         """
         The column headers of the table (if any).
-
-        :type: list[str]
         """
 
-        self.alignments = []
+        self.alignments: List[Optional[str]] = []
         """
         The text alignments in the table columns.
-
-        :type: list[str|None]
         """
 
-        self.caption = None
+        self.caption: Optional[str] = None
         """
         The caption for the table.
-
-        :type: str
         """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_command(self):
+    def get_command(self) -> str:
         """
         Returns the command of this node, i.e. table.
-
-        :rtype: str
         """
         return 'table'
 
     # ------------------------------------------------------------------------------------------------------------------
-    def is_block_command(self):
+    def is_block_command(self) -> bool:
         """
         Returns True.
-
-        :rtype: bool
         """
         return True
 
     # ------------------------------------------------------------------------------------------------------------------
-    def is_inline_command(self):
+    def is_inline_command(self) -> bool:
         """
         Returns False.
-
-        :rtype: bool
         """
         return False
 
     # ------------------------------------------------------------------------------------------------------------------
-    def number(self, numbers):
+    def number(self, numbers: Dict[str, Any]) -> None:
         """
         Numbers all numerable nodes such as chapters, sections, figures, and, items.
 
-        :param dict[str,sdoc.sdoc2.helper.Enumerable.Enumerable] numbers: The current numbers.
+        :param dict[str,any] numbers: The current numbers.
         """
         if 'table' not in numbers:
             numbers['table'] = Enumerable()
@@ -99,7 +88,7 @@ class TableNode(Node):
         super().number(numbers)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def prepare_content_tree(self):
+    def prepare_content_tree(self) -> None:
         """
         Prepares this node for further processing.
         """
@@ -140,10 +129,8 @@ class TableNode(Node):
         :param list[sdoc.sdoc2.node.Node.Node] nodes: The list with nodes.
         """
         table_data = TableNode.divide_text_nodes(nodes)
-
-        splitted_data = TableNode.split_by_new_lines(table_data)
-
-        rows = self.generate_output_rows(splitted_data)
+        split_data = TableNode.split_by_new_lines(table_data)
+        rows = self.generate_output_rows(split_data)
 
         if self.has_header(rows):
             self.column_headers = rows[0]
@@ -154,13 +141,13 @@ class TableNode(Node):
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def divide_text_nodes(nodes):
+    def divide_text_nodes(nodes: List[Any]) -> List[Any]:
         """
         Divides text nodes from other type of nodes.
 
-        :param: list[mixed] nodes: The list with nodes.
+        :param: list[any] nodes: The list with nodes.
 
-        :rtype: list[mixed]
+        :rtype: list[any]
         """
         table_data = []
         table_text_repr = ''
@@ -180,40 +167,40 @@ class TableNode(Node):
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def split_by_new_lines(table_data):
+    def split_by_new_lines(table_data: List[Any]) -> List[Any]:
         """
         Splits data by newline symbols.
 
-        :param list[mixed] table_data:
+        :param list[any] table_data:
 
-        :rtype: list[mixed]
+        :rtype: list[any]
         """
-        splitted_data = []
+        split_data = []
 
         for data in table_data:
             if isinstance(data, str):
-                splitted_data.append(data.split('\n'))
+                split_data.append(data.split('\n'))
             else:
-                splitted_data.append(data)
+                split_data.append(data)
 
-        for data in splitted_data:
+        for data in split_data:
             if isinstance(data, list):
                 for element in data:
                     if element.isspace() or element == '':
                         data.remove(element)
 
-        return splitted_data
+        return split_data
 
     # ------------------------------------------------------------------------------------------------------------------
-    def generate_output_rows(self, splitted_data):
+    def generate_output_rows(self, split_data: List[Any]) -> List[List[Any]]:
         """
         Generates the rows for final representation.
 
-        :param list[mixed] splitted_data: The splitted data.
+        :param list[any] split_data: The split data.
 
-        :rtype: list[list[mixed]]
+        :rtype: list[list[any]]
         """
-        separated_data = TableNode.split_by_vertical_separators(splitted_data)
+        separated_data = TableNode.split_by_vertical_separators(split_data)
 
         rows = []
 
@@ -236,18 +223,18 @@ class TableNode(Node):
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def split_by_vertical_separators(splitted_data):
+    def split_by_vertical_separators(split_data: List[Any]) -> List[List[Any]]:
         """
         Splits data by vertical separators and creates rows with data.
 
-        :param list[mixed] splitted_data: The splitted data.
+        :param list[any] split_data: The split data.
 
-        :rtype: list[list[mixed]]
+        :rtype: list[list[any]]
         """
         rows = []
         row = []
 
-        for item in splitted_data:
+        for item in split_data:
             # If we have a list we pass for each element.
             # In list we have only text elements.
             if isinstance(item, list):
@@ -284,26 +271,24 @@ class TableNode(Node):
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def reset_data(row, rows):
+    def reset_data(row: List[Any], rows: List[List[any]]) -> List[Any]:
         """
         Appends row with data to list of rows, and clear row from any elements.
 
         Warning! This method changes original list 'rows'.
 
-        :param list[mixed] row: The row with elements
-        :param list[list[mixed]] rows: The list with many rows.
-
-        :rtype: list[]
+        :param list[any] row: The row with elements
+        :param list[list[any]] rows: The list with many rows.
         """
         rows.append(row)
         return []
 
     # ------------------------------------------------------------------------------------------------------------------
-    def parse_vertical_separators(self, string, row):
+    def parse_vertical_separators(self, string: io.StringIO, row: List[any]) -> None:
         """
         Splits row by vertical separator for future output.
 
-        :param str string: The string which we will separate.
+        :param StringIO string: The string which we will separate.
         :param list[mixed] row: The list with the row in which we append data.
         """
         reader = csv.reader(string, delimiter='|')
@@ -316,13 +301,11 @@ class TableNode(Node):
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def has_header(rows):
+    def has_header(rows: List[str]) -> bool:
         """
         Returns True if the table has a table header.
 
         :param list[str] rows: The second row of the table.
-
-        :rtype: bool
         """
         is_header = True
 
@@ -339,13 +322,11 @@ class TableNode(Node):
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def get_column_alignments(row):
+    def get_column_alignments(row: List[str]) -> List[str]:
         """
         Sets alignments on table columns.
 
         :param list[str] row: The row with hyphens for creating column headers.
-
-        :rtype: list[str]
         """
         alignments = []
         for hyphens in row:
@@ -363,13 +344,11 @@ class TableNode(Node):
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def prune_whitespace(row):
+    def prune_whitespace(row: List[str]) -> List[str]:
         """
         Strips whitespaces from the text of an each cell.
 
         :param list[str] row: The row with text of an each cell.
-
-        :rtype: list[str]
         """
         clear_row = []
         for item in row:

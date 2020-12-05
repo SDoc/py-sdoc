@@ -1,8 +1,10 @@
+from abc import ABC
+
 from cleo import Command
 from cleo.styles import CleoStyle
 
 
-class BaseCommand(Command):
+class BaseCommand(Command, ABC):
     """
     Abstract parent command for all out commands.
     """

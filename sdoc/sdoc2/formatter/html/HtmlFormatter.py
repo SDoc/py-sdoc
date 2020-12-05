@@ -1,3 +1,5 @@
+from cleo.styles import OutputStyle
+
 from sdoc.sdoc2.formatter.Formatter import Formatter
 
 
@@ -7,12 +9,12 @@ class HtmlFormatter(Formatter):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io, parent):
+    def __init__(self, io: OutputStyle, parent: Formatter):
         """
         Object constructor.
 
-        :param cleo.styles.output_style.OutputStyle io: The IO object.
-        :param sdoc.sdoc2.formatter.Formatter.Formatter parent: The formatter for the parent node.
+        :param OutputStyle io: The IO object.
+        :param Formatter parent: The formatter for the parent node.
         """
         Formatter.__init__(self, io, parent)
 

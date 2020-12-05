@@ -1,3 +1,7 @@
+from typing import Dict
+
+from cleo.styles import OutputStyle
+
 from sdoc.sdoc2 import in_scope, out_scope
 from sdoc.sdoc2.node.HeadingNode import HeadingNode
 from sdoc.sdoc2.node.Node import Node
@@ -11,36 +15,32 @@ class ParagraphNode(HeadingNode):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io, options, argument):
+    def __init__(self, io: OutputStyle, options: Dict[str, str], argument: str):
         """
         Object constructor.
 
-        :param None|cleo.styles.output_style.OutputStyle io: The IO object.
+        :param OutputStyle io: The IO object.
         :param dict[str,str] options: Not used.
         :param str argument: The text of this paragraph.
         """
         super().__init__(io, 'paragraph', options, argument)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_command(self):
+    def get_command(self) -> str:
         """
         Returns the command of this node, i.e. paragraph.
-
-        :rtype: str
         """
         return 'paragraph'
 
     # ------------------------------------------------------------------------------------------------------------------
-    def is_block_command(self):
+    def is_block_command(self) -> bool:
         """
         Returns False.
-
-        :rtype: bool
         """
         return False
 
     # ------------------------------------------------------------------------------------------------------------------
-    def number(self, numbers):
+    def number(self, numbers: Dict[str, str]) -> None:
         """
         Overrides the HeadingNode implementation with the (original) Node implementation.
 
@@ -49,23 +49,21 @@ class ParagraphNode(HeadingNode):
         Node.number(self, numbers)
 
     # ------------------------------------------------------------------------------------------------------------------
-    def is_inline_command(self):
+    def is_inline_command(self) -> bool:
         """
         Returns False.
-
-        :rtype: bool
         """
         return False
 
     # ------------------------------------------------------------------------------------------------------------------
-    def set_toc_id(self):
+    def set_toc_id(self) -> None:
         """
         Don't do anything. Because we needn't this behaviour here.
         """
         pass
 
     # ------------------------------------------------------------------------------------------------------------------
-    def prune_whitespace(self):
+    def prune_whitespace(self) -> None:
         """
         Removes spaces from end of a paragraph.
         """

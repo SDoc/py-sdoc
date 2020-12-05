@@ -1,3 +1,7 @@
+from typing import Dict, Optional
+
+from cleo.styles import OutputStyle
+
 from sdoc.sdoc2 import in_scope, out_scope
 from sdoc.sdoc2.node.DateNode import DateNode
 from sdoc.sdoc2.node.Node import Node
@@ -12,101 +16,81 @@ class DocumentNode(Node):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io, options):
+    def __init__(self, io: OutputStyle, options: Dict[str, str]):
         """
         Object constructor.
 
-        :param None|cleo.styles.output_style.OutputStyle io: The IO object.
+        :param OutputStyle io: The IO object.
         :param dict[str,str] options: The options of this document.
         """
         super().__init__(io, 'document', options)
 
-        self.title_node_id = None
+        self.title_node_id: Optional[int] = None
         """
         The ID of the node the title of the sdoc document.
-
-        :type: int|None
         """
 
-        self.date_node_id = None
+        self.date_node_id: Optional[int] = None
         """
         The ID of the node the date of the sdoc document.
-
-        :type: int|None
         """
 
-        self.version_node_id = None
+        self.version_node_id: Optional[int] = None
         """
         The ID of the node with the version of the sdoc document.
-
-        :type: int|None
         """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_command(self):
+    def get_command(self) -> str:
         """
         Returns the command of this node, i.e. document.
-
-        :rtype: str
         """
         return 'document'
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_hierarchy_level(self, parent_hierarchy_level=-1):
+    def get_hierarchy_level(self, parent_hierarchy_level: int = -1) -> int:
         """
         Returns 0.
-
-        :rtype: int
         """
         return 0
 
     # ------------------------------------------------------------------------------------------------------------------
-    def get_hierarchy_name(self):
+    def get_hierarchy_name(self) -> str:
         """
         Returns 'sectioning'.
-
-        :rtype: str
         """
         return 'sectioning'
 
     # ------------------------------------------------------------------------------------------------------------------
-    def is_block_command(self):
+    def is_block_command(self) -> bool:
         """
         Returns True.
-
-        :rtype: bool
         """
         return True
 
     # ------------------------------------------------------------------------------------------------------------------
-    def is_document_root(self):
+    def is_document_root(self) -> bool:
         """
         Returns True.
-
-        :rtype: bool
         """
         return True
 
     # ------------------------------------------------------------------------------------------------------------------
-    def is_inline_command(self):
+    def is_inline_command(self) -> bool:
         """
         Returns False.
-
-        :rtype: bool
         """
         return False
 
     # ------------------------------------------------------------------------------------------------------------------
-    def is_phrasing(self):
+    def is_phrasing(self) -> bool:
         """
         Returns False.
-
-        :rtype: bool
         """
         return False
 
     # ------------------------------------------------------------------------------------------------------------------
-    def prepare_content_tree(self):
+    def prepare_content_tree(self) -> None:
         """
         Prepares this node for further processing.
         """
@@ -121,11 +105,11 @@ class DocumentNode(Node):
         self.__remove_document_info_nodes()
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __set_document_info(self, node):
+    def __set_document_info(self, node: Node) -> None:
         """
         Sets the info of a document (i.e. date, version or title) to DocumentNode attributes.
 
-        :param sdoc.sdoc2.node.Node.Node node: The current node.
+        :param Node node: The current node.
         """
         if isinstance(node, DateNode):
             self.__check_document_info(self.date_node_id, node)
@@ -141,12 +125,12 @@ class DocumentNode(Node):
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
-    def __check_document_info(info_node_current, info_node_new):
+    def __check_document_info(info_node_current: Optional[int], info_node_new: Node) -> None:
         """
         Checks if a document info node has been set already. If so, an error will be logged.
 
         :param int|None info_node_current: The current document info node (i.e. a property of the document).
-        :param sdoc.sdoc2.node.Node.Node info_node_new: The (new) document info node.
+        :param Node info_node_new: The (new) document info node.
         """
         if info_node_current:
             node = in_scope(info_node_current)

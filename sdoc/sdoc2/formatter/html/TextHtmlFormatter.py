@@ -1,5 +1,8 @@
+from typing import Any
+
 from sdoc.helper.Html import Html
 from sdoc.sdoc2.formatter.html.HtmlFormatter import HtmlFormatter
+from sdoc.sdoc2.node.TextNode import TextNode
 from sdoc.sdoc2.NodeStore import NodeStore
 
 
@@ -9,12 +12,12 @@ class TextHtmlFormatter(HtmlFormatter):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def generate(self, node, file):
+    def generate(self, node: TextNode, file: Any) -> None:
         """
         Generates the HTML code for a text node.
 
-        :param sdoc.sdoc2.node.TextNode.TextNode node: The text node.
-        :param file file: The output file.
+        :param TextNode node: The text node.
+        :param any file: The output file.
         """
         file.write(Html.escape(node.argument))
 
