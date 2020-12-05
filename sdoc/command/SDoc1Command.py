@@ -1,8 +1,5 @@
-"""
-SDoc
-"""
-from sdoc.SDoc import SDoc
 from sdoc.command.BaseCommand import BaseCommand
+from sdoc.SDoc import SDoc
 
 
 class SDoc1Command(BaseCommand):

@@ -1,16 +1,8 @@
-"""
-SDoc
-
-Copyright 2016 Set Based IT Consultancy
-
-Licence MIT
-"""
-# ----------------------------------------------------------------------------------------------------------------------
 from cleo import Application
 
-from sdoc.command.SDocCommand import SDocCommand
 from sdoc.command.SDoc1Command import SDoc1Command
 from sdoc.command.SDoc2Command import SDoc2Command
+from sdoc.command.SDocCommand import SDocCommand
 
 
 # ----------------------------------------------------------------------------------------------------------------------

@@ -1,10 +1,3 @@
-"""
-SDoc
-
-Copyright 2016 Set Based IT Consultancy
-
-Licence MIT
-"""
 import os
 
 
@@ -12,6 +5,7 @@ class Position:
     """
     Class for start and end position of a node in a SDoc source file.
     """
+
     # ------------------------------------------------------------------------------------------------------------------
     def __init__(self, file_name, start_line, start_column, end_line, end_column):
         """
@@ -67,7 +61,6 @@ class Position:
         if not self.file_name:
             return "{0:d}.{1:d}".format(self.start_line, self.start_column + 1)
 
-        return "{0!s}:{1:d}.{2:d}".format(os.path.relpath(self.file_name), self.start_line, self.start_column+1)
-
+        return "{0!s}:{1:d}.{2:d}".format(os.path.relpath(self.file_name), self.start_line, self.start_column + 1)
 
 # ----------------------------------------------------------------------------------------------------------------------

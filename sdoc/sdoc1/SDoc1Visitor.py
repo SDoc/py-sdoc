@@ -1,11 +1,3 @@
-"""
-SDoc
-
-Copyright 2016 Set Based IT Consultancy
-
-Licence MIT
-"""
-# ----------------------------------------------------------------------------------------------------------------------
 import os
 
 import antlr4
@@ -500,7 +492,7 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         message = SDoc.unescape(ctx.SIMPLE_ARG().getText())
 
         self._io.writeln(
-            '<notice>Notice: {0!s} at {1!s}:{2:d}</notice>'.format(message, os.path.relpath(filename), line_number))
+                '<notice>Notice: {0!s} at {1!s}:{2:d}</notice>'.format(message, os.path.relpath(filename), line_number))
 
         self.put_position(ctx, 'stop')
 

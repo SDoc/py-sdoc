@@ -1,14 +1,6 @@
-"""
-SDoc
-
-Copyright 2016 Set Based IT Consultancy
-
-Licence MIT
-"""
-# ----------------------------------------------------------------------------------------------------------------------
 from sdoc.helper.Html import Html
-from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.formatter.html.HtmlFormatter import HtmlFormatter
+from sdoc.sdoc2.NodeStore import NodeStore
 
 
 class DateHtmlFormatter(HtmlFormatter):
@@ -27,6 +19,7 @@ class DateHtmlFormatter(HtmlFormatter):
         html = Html.generate_element('span', {}, node.argument)
 
         file.write(html)
+
 
 # ----------------------------------------------------------------------------------------------------------------------
 NodeStore.register_formatter('date', 'html', DateHtmlFormatter)

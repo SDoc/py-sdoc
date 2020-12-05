@@ -1,14 +1,6 @@
-"""
-SDoc
-
-Copyright 2016 Set Based IT Consultancy
-
-Licence MIT
-"""
-# ----------------------------------------------------------------------------------------------------------------------
 from sdoc.helper.Html import Html
-from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.formatter.html.HtmlFormatter import HtmlFormatter
+from sdoc.sdoc2.NodeStore import NodeStore
 
 
 class HeadingHtmlFormatter(HtmlFormatter):
@@ -45,7 +37,7 @@ class HeadingHtmlFormatter(HtmlFormatter):
         else:
             text_in_tag = '{0}'.format(node.argument)
 
-        file.write(Html.generate_element('h{0:d}'.format(node.get_hierarchy_level()+2), attributes, text_in_tag))
+        file.write(Html.generate_element('h{0:d}'.format(node.get_hierarchy_level() + 2), attributes, text_in_tag))
 
 
 # ----------------------------------------------------------------------------------------------------------------------

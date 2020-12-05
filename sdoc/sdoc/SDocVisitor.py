@@ -1,12 +1,3 @@
-"""
-SDoc
-
-Copyright 2016 Set Based IT Consultancy
-
-Licence MIT
-"""
-
-
 # ----------------------------------------------------------------------------------------------------------------------
 class SDocVisitor:
     """
@@ -60,6 +51,5 @@ class SDocVisitor:
         if token:
             messages.append('Position: {0!s}:{1:d}.{2:d}'.format(filename, line_number, column_number))
         self._io.error(messages)
-
 
 # ----------------------------------------------------------------------------------------------------------------------

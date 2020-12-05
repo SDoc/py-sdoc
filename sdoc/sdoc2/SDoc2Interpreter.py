@@ -1,11 +1,3 @@
-"""
-SDoc
-
-Copyright 2016 Set Based IT Consultancy
-
-Licence MIT
-"""
-# ----------------------------------------------------------------------------------------------------------------------
 import antlr4
 
 from sdoc import sdoc2

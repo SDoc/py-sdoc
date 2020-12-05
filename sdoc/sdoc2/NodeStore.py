@@ -1,12 +1,3 @@
-"""
-SDoc
-
-Copyright 2016 Set Based IT Consultancy
-
-Licence MIT
-"""
-# ----------------------------------------------------------------------------------------------------------------------
-
 inline_creators = {}
 """
 Map from inline commands to node creators.
@@ -347,7 +338,7 @@ class NodeStore:
                     parent_found = True
                 else:
                     self.error("Improper nesting of node '{0!s}' at {1!s} and node '{2!s}' at {3!s}.".format(
-                        parent_node.name, parent_node.position, node.name, node.position))
+                            parent_node.name, parent_node.position, node.name, node.position))
 
             if not parent_found:
                 parent_hierarchy_level = parent_node.get_hierarchy_level()
@@ -363,8 +354,8 @@ class NodeStore:
 
         if node_hierarchy_level - parent_hierarchy_level > 1:
             self.error("Improper nesting of levels:{0:d} at {1!s} and {2:d} at {3!s}.".format(
-                parent_hierarchy_level, parent_node.position, node_hierarchy_level, node.position),
-                node)
+                    parent_hierarchy_level, parent_node.position, node_hierarchy_level, node.position),
+                    node)
 
     # ------------------------------------------------------------------------------------------------------------------
     def store_node(self, node):

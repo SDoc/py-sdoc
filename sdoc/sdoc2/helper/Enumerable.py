@@ -1,13 +1,3 @@
-"""
-SDoc
-
-Copyright 2016 Set Based IT Consultancy
-
-Licence MIT
-"""
-# ----------------------------------------------------------------------------------------------------------------------
-
-
 class Enumerable:
     """
     Class for storing information about numeration of heading nodes.

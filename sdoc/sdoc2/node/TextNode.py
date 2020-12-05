@@ -1,16 +1,8 @@
-"""
-SDoc
-
-Copyright 2016 Set Based IT Consultancy
-
-Licence MIT
-"""
-# ----------------------------------------------------------------------------------------------------------------------
 import re
 
 import sdoc
-from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.node.Node import Node
+from sdoc.sdoc2.NodeStore import NodeStore
 
 
 class TextNode(Node):

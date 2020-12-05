@@ -1,14 +1,6 @@
-"""
-SDoc
-
-Copyright 2016 Set Based IT Consultancy
-
-Licence MIT
-"""
-# ----------------------------------------------------------------------------------------------------------------------
-from sdoc.sdoc2.NodeStore import NodeStore
-from sdoc.sdoc2.node.HeadingNode import HeadingNode
 from sdoc.sdoc2.helper.Enumerable import Enumerable
+from sdoc.sdoc2.node.HeadingNode import HeadingNode
+from sdoc.sdoc2.NodeStore import NodeStore
 
 
 class PartNode(HeadingNode):

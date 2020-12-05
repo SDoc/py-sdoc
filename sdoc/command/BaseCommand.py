@@ -1,10 +1,3 @@
-"""
-SDoc
-
-Copyright 2016 Set Based IT Consultancy
-
-Licence MIT
-"""
 from cleo import Command
 from cleo.styles import CleoStyle
 

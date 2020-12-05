@@ -1,11 +1,3 @@
-"""
-SDoc
-
-Copyright 2016 Set Based IT Consultancy
-
-Licence MIT
-"""
-# ----------------------------------------------------------------------------------------------------------------------
 from sdoc.sdoc1.data_type.DataType import DataType
 from sdoc.sdoc1.data_type.StringDataType import StringDataType
 

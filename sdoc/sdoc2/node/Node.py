@@ -1,14 +1,6 @@
-"""
-SDoc
-
-Copyright 2016 Set Based IT Consultancy
-
-Licence MIT
-"""
-# ----------------------------------------------------------------------------------------------------------------------
 import abc
 
-from sdoc.sdoc2 import in_scope, out_scope, node_store
+from sdoc.sdoc2 import in_scope, node_store, out_scope
 
 
 class Node(metaclass=abc.ABCMeta):

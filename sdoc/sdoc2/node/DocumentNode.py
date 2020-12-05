@@ -1,17 +1,9 @@
-"""
-SDoc
-
-Copyright 2016 Set Based IT Consultancy
-
-Licence MIT
-"""
-# ----------------------------------------------------------------------------------------------------------------------
 from sdoc.sdoc2 import in_scope, out_scope
-from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.node.DateNode import DateNode
 from sdoc.sdoc2.node.Node import Node
 from sdoc.sdoc2.node.TitleNode import TitleNode
 from sdoc.sdoc2.node.VersionNode import VersionNode
+from sdoc.sdoc2.NodeStore import NodeStore
 
 
 class DocumentNode(Node):
@@ -162,7 +154,7 @@ class DocumentNode(Node):
             out_scope(node)
 
             NodeStore.error("Document info {0} can be specified only once. Previous definition at {1}.".format(
-                info_node_new.name, str(position)), info_node_new)
+                    info_node_new.name, str(position)), info_node_new)
 
     # ------------------------------------------------------------------------------------------------------------------
     def __remove_document_info_nodes(self):

@@ -1,12 +1,4 @@
-"""
-SDoc
-
-Copyright 2016 Set Based IT Consultancy
-
-Licence MIT
-"""
-# ----------------------------------------------------------------------------------------------------------------------
-from sdoc.sdoc2 import node_store, in_scope, out_scope
+from sdoc.sdoc2 import in_scope, node_store, out_scope
 
 
 class Formatter:

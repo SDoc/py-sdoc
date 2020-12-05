@@ -1,17 +1,9 @@
-"""
-SDoc
-
-Copyright 2016 Set Based IT Consultancy
-
-Licence MIT
-"""
-# ----------------------------------------------------------------------------------------------------------------------
-from urllib import request, error
+from urllib import error, request
 
 import httplib2
 
-from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.node.Node import Node
+from sdoc.sdoc2.NodeStore import NodeStore
 
 
 class HyperlinkNode(Node):

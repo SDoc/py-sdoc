@@ -1,12 +1,5 @@
-"""
-SDoc
-
-Copyright 2016 Set Based IT Consultancy
-
-Licence MIT
-"""
-from sdoc.SDoc import SDoc
 from sdoc.command.BaseCommand import BaseCommand
+from sdoc.SDoc import SDoc
 
 
 class SDoc2Command(BaseCommand):

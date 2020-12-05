@@ -1,13 +1,5 @@
-"""
-SDoc
-
-Copyright 2016 Set Based IT Consultancy
-
-Licence MIT
-"""
-# ----------------------------------------------------------------------------------------------------------------------
-from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.node.Node import Node
+from sdoc.sdoc2.NodeStore import NodeStore
 
 
 class DateNode(Node):
@@ -70,6 +62,7 @@ class DateNode(Node):
         :rtype: bool
         """
         return True
+
 
 # ----------------------------------------------------------------------------------------------------------------------
 NodeStore.register_inline_command('date', DateNode)

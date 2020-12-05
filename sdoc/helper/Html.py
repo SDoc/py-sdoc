@@ -1,12 +1,3 @@
-"""
-SDoc
-
-Copyright 2016 Set Based IT Consultancy
-
-Licence MIT
-"""
-
-
 class Html:
     """
     Utility class with functions for generating HTML code.

@@ -1,11 +1,3 @@
-"""
-SDoc
-
-Copyright 2016 Set Based IT Consultancy
-
-Licence MIT
-"""
-# ----------------------------------------------------------------------------------------------------------------------
 import re
 
 
@@ -24,6 +16,7 @@ class SDoc:
 
         :rtype: str
         """
+
         def replace(match_obj):
             """
             Returns the match text prefixed with backslash
@@ -58,6 +51,5 @@ class SDoc:
             return match_obj.group(0)[1:]
 
         return re.sub(r'\\.', replace, text)
-
 
 # ----------------------------------------------------------------------------------------------------------------------

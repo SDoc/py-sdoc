@@ -36,9 +36,9 @@ setup(
         'Operating System :: OS Independent',
 
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: Implementation :: PyPy',
 
         'Topic :: Documentation',
@@ -50,7 +50,9 @@ setup(
 
     packages=find_packages(exclude=['build', 'test']),
 
-    install_requires=['antlr4-python3-runtime==4.8', 'httplib2', 'cleo==0.6.8'],
+    install_requires=['antlr4-python3-runtime~=4.8',
+                      'cleo==0.6.8',
+                      'httplib2~=0.18.1'],
 
     entry_points={
         'console_scripts': [

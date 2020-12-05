@@ -9,3 +9,4 @@
 /sdoc/antlr/*.interp
 /test/html/
 /vendor/
+/venv/

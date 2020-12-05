@@ -1,18 +1,10 @@
-"""
-SDoc
-
-Copyright 2016 Set Based IT Consultancy
-
-Licence MIT
-"""
-# ----------------------------------------------------------------------------------------------------------------------
 import re
 
-from sdoc.sdoc2 import node_store, out_scope, in_scope
-from sdoc.sdoc2.NodeStore import NodeStore
+from sdoc.sdoc2 import in_scope, node_store, out_scope
 from sdoc.sdoc2.node.ItemNode import ItemNode
 from sdoc.sdoc2.node.Node import Node
 from sdoc.sdoc2.node.TextNode import TextNode
+from sdoc.sdoc2.NodeStore import NodeStore
 
 
 class ItemizeNode(Node):

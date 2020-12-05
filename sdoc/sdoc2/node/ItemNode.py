@@ -1,15 +1,7 @@
-"""
-SDoc
-
-Copyright 2016 Set Based IT Consultancy
-
-Licence MIT
-"""
-# ----------------------------------------------------------------------------------------------------------------------
 from sdoc.sdoc2 import in_scope, out_scope
-from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.node.Node import Node
 from sdoc.sdoc2.node.TextNode import TextNode
+from sdoc.sdoc2.NodeStore import NodeStore
 
 
 class ItemNode(Node):
