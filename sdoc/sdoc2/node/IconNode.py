@@ -1,6 +1,6 @@
 from typing import Dict, Optional
 
-from cleo.styles import OutputStyle
+from cleo.io.io import IO
 
 from sdoc.sdoc2.node.Node import Node
 from sdoc.sdoc2.NodeStore import NodeStore
@@ -20,7 +20,7 @@ class IconNode(Node):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io: OutputStyle, options: Dict[str, str], argument: str):
+    def __init__(self, io: IO, options: Dict[str, str], argument: str):
         """
         Object constructor.
 

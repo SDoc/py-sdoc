@@ -1,7 +1,7 @@
 from abc import ABC
 from typing import Any, Dict
 
-from cleo.styles import OutputStyle
+from cleo.io.io import IO
 
 import sdoc
 from sdoc.sdoc2 import in_scope, out_scope
@@ -18,7 +18,7 @@ class HeadingNode(Node, ABC):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io: OutputStyle, name: str, options: Dict[str, str], argument: str):
+    def __init__(self, io: IO, name: str, options: Dict[str, str], argument: str):
         """
         Object constructor.
 

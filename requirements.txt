@@ -1,7 +1,7 @@
 # Must be aligned with setup.py.
 antlr4-python3-runtime==4.12.*
-cleo==2.0.0
-httplib2~=0.18.1
+cleo~=2.0.0
+httplib2~=0.21.0
 
 # For development only.
 coverage~=5.3

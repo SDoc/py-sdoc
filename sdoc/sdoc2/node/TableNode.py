@@ -3,7 +3,7 @@ import io
 import re
 from typing import Any, Dict, List, Optional
 
-from cleo.styles import OutputStyle
+from cleo.io.io import IO
 
 from sdoc.sdoc2 import in_scope, out_scope
 from sdoc.sdoc2.helper.Enumerable import Enumerable
@@ -19,14 +19,14 @@ class TableNode(Node):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, in_out: OutputStyle, options: Dict[str, str]):
+    def __init__(self, io_object: IO, options: Dict[str, str]):
         """
         Object constructor.
 
-        :param OutputStyle in_out: The IO object.
+        :param OutputStyle io_object: The IO object.
         :param dict[str,str] options: The options of this table.
         """
-        super().__init__(in_out, 'table', options)
+        super().__init__(io_object, 'table', options)
 
         self.rows: List[List[str]] = []
         """

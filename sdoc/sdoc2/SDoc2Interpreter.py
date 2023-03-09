@@ -1,5 +1,5 @@
 import antlr4
-from cleo.styles import OutputStyle
+from cleo.io.io import IO
 
 from sdoc import sdoc2
 from sdoc.antlr.sdoc2Lexer import sdoc2Lexer
@@ -13,12 +13,12 @@ class SDoc2Interpreter:
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io: OutputStyle):
+    def __init__(self, io: IO):
         """
         Object constructor.
         """
 
-        self._io: OutputStyle = io
+        self._io: IO = io
         """
         Styled output formatter.
         """

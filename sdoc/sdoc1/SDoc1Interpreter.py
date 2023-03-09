@@ -1,7 +1,7 @@
 import os
 
 import antlr4
-from cleo.styles import OutputStyle
+from cleo.io.io import IO
 
 from sdoc.antlr.sdoc1Lexer import sdoc1Lexer
 from sdoc.antlr.sdoc1Parser import sdoc1Parser
@@ -14,12 +14,12 @@ class SDoc1Interpreter:
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io: OutputStyle):
+    def __init__(self, io: IO):
         """
         Object constructor.
         """
 
-        self._io: OutputStyle = io
+        self._io: IO = io
         """
         Styled output formatter.
         """
@@ -34,7 +34,7 @@ class SDoc1Interpreter:
         """
         in_stream = antlr4.FileStream(infile)
 
-        self._io.writeln('Writing <fso>{0!s}</fso>'.format(outfile))
+        self._io.write_line('Writing <fso>{0!s}</fso>'.format(outfile))
         with open(outfile, 'wt') as out_stream:
             lexer = sdoc1Lexer(in_stream)
             tokens = antlr4.CommonTokenStream(lexer)

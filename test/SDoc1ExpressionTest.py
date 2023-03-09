@@ -2,7 +2,8 @@ import glob
 import os
 import unittest
 
-from cleo import Application, CommandTester
+from cleo.application import Application
+from cleo.testers.command_tester import CommandTester
 
 from sdoc.command.SDoc1Command import SDoc1Command
 
@@ -31,10 +32,8 @@ class SDoc1ExpressionTest(unittest.TestCase):
 
                 command = application.find('sdoc1')
                 command_tester = CommandTester(command)
-                command_tester.execute([('command', command.get_name()),
-                                        ('main.sdoc', test_file_name),
-                                        ('output.sdoc2', 't.sdoc2')])
+                command_tester.execute('{} t.sdoc2'.format(test_file_name))
 
-                self.assertTrue(command_tester.get_display().rstrip().endswith(text.strip()))
+                self.assertTrue(command_tester.io.fetch_output().rstrip().endswith(text.strip()))
 
 # ----------------------------------------------------------------------------------------------------------------------

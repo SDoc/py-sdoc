@@ -1,7 +1,7 @@
 import re
 from typing import Dict, List
 
-from cleo.styles import OutputStyle
+from cleo.io.io import IO
 
 import sdoc
 from sdoc.sdoc2.node.Node import Node
@@ -14,7 +14,7 @@ class TextNode(Node):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io: OutputStyle, options: Dict[str, str], argument: str):
+    def __init__(self, io: IO, options: Dict[str, str], argument: str):
         """
         Object constructor.
 
@@ -31,7 +31,7 @@ class TextNode(Node):
 
         :param int level: the level of block commands.
         """
-        self.io.writeln("{0!s}{1:4d} {2!s} {3!s}".format(' ' * 4 * level, self.id, self.name, ''))
+        self.io.write_line("{0!s}{1:4d} {2!s} {3!s}".format(' ' * 4 * level, self.id, self.name, ''))
 
     # ------------------------------------------------------------------------------------------------------------------
     def get_command(self) -> str:

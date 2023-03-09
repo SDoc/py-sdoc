@@ -1,7 +1,7 @@
 import os
 from configparser import ConfigParser
 
-from cleo.styles import OutputStyle
+from cleo.io.io import IO
 
 from sdoc import sdoc2
 from sdoc.error import SDocError
@@ -14,7 +14,7 @@ class HtmlFormat(Format):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io: OutputStyle, target_format: str, config: ConfigParser):
+    def __init__(self, io: IO, target_format: str, config: ConfigParser):
         """
         Object constructor.
 
@@ -22,7 +22,7 @@ class HtmlFormat(Format):
         :param str target_format: The name of the format (in the config file).
         :param ConfigParser config: The section in the config file for the target_format.
         """
-        Format.__init__(self, io, config)
+        Format.__init__(self, io)
 
         self._enumerate: bool = True
         """
@@ -102,7 +102,7 @@ class HtmlFormat(Format):
         # Generate whole HTML output file.
         if self._one_file:
             file_name = os.path.join(self._target_dir, 'output.html')
-            self._io.writeln('Writing <fso>{0!s}</fso>'.format(file_name))
+            self._io.write_line('Writing <fso>{0!s}</fso>'.format(file_name))
             with open(file_name, 'wt', encoding='utf8') as general_file:
                 formatter = sdoc2.node_store.create_formatter(self._io, 'document')
                 formatter.generate(sdoc2.node_store.nodes[1], general_file)

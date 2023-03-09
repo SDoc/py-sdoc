@@ -1,6 +1,6 @@
 from typing import Any, Dict, List, Optional, Tuple, Union
 
-from cleo.styles import OutputStyle
+from cleo.io.io import IO
 
 from sdoc.sdoc2.helper.Enumerable import Enumerable
 from sdoc.sdoc2.Position import Position
@@ -39,13 +39,13 @@ class NodeStore:
     The error count.
     """
 
-    _io: Optional[OutputStyle] = None
+    _io: Optional[IO] = None
     """
     Styled output formatter.
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io: OutputStyle):
+    def __init__(self, io: IO):
         """
         Object constructor.
         """
@@ -97,7 +97,7 @@ class NodeStore:
             line_number = node.position.start_line
             column_number = node.position.start_column + 1
             messages.append('Position: {0!s}:{1:d}.{2:d}'.format(filename, line_number, column_number))
-        NodeStore._io.error(messages)
+        NodeStore._io.write_error(messages)
 
     # ------------------------------------------------------------------------------------------------------------------
     @staticmethod
@@ -152,7 +152,7 @@ class NodeStore:
     # ------------------------------------------------------------------------------------------------------------------
     def out_scope(self, node):
         """
-        Marks a node as not longer in scope.
+        Marks a node as no longer in scope.
 
         :param sdoc.sdoc2.node.Node.Node node: The node.
         """
@@ -300,7 +300,7 @@ class NodeStore:
         return node
 
     # ------------------------------------------------------------------------------------------------------------------
-    def create_formatter(self, io: OutputStyle, command: str, parent=None):
+    def create_formatter(self, io: IO, command: str, parent=None):
         """
         Creates a formatter for generating the output of nodes in the requested output format.
 

@@ -2,7 +2,8 @@ import glob
 import os
 import unittest
 
-from cleo import Application, CommandTester
+from cleo.application import Application
+from cleo.testers.command_tester import CommandTester
 
 from sdoc.command.SDocCommand import SDocCommand
 
@@ -27,9 +28,7 @@ class SDoc2NumberingIdTest(unittest.TestCase):
 
                 command = application.find('sdoc')
                 command_tester = CommandTester(command)
-                command_tester.execute([('command', command.get_name()),
-                                        ('config.cfg', config_path),
-                                        ('main.sdoc', test_file_name)])
+                command_tester.execute('{} {}'.format(config_path[0], test_file_name))
 
                 with open('output.html', 'r') as actual:
                     actual_text = actual.read()

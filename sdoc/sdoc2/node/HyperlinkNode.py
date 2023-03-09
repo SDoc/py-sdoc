@@ -1,8 +1,8 @@
 from typing import Dict
-from urllib import error, request
+from urllib import request
 
 import httplib2
-from cleo.styles import OutputStyle
+from cleo.io.io import IO
 
 from sdoc.sdoc2.node.Node import Node
 from sdoc.sdoc2.NodeStore import NodeStore
@@ -14,7 +14,7 @@ class HyperlinkNode(Node):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io: OutputStyle, options: Dict[str, str], argument: str):
+    def __init__(self, io: IO, options: Dict[str, str], argument: str):
         """
         Object constructor.
 

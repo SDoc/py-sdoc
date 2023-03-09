@@ -2,7 +2,7 @@
 from typing import Optional
 
 from antlr4.Token import CommonToken
-from cleo.styles import OutputStyle
+from cleo.io.io import IO
 
 
 class SDocVisitor:
@@ -11,12 +11,12 @@ class SDocVisitor:
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io: OutputStyle):
+    def __init__(self, io: IO):
         """
         Object constructor.
         """
 
-        self._io: OutputStyle = io
+        self._io: IO = io
         """
         Styled output formatter.
         """
@@ -50,6 +50,6 @@ class SDocVisitor:
         messages = [message]
         if token:
             messages.append('Position: {0!s}:{1:d}.{2:d}'.format(filename, line_number, column_number))
-        self._io.error(messages)
+        self._io.write_error(messages)
 
 # ----------------------------------------------------------------------------------------------------------------------

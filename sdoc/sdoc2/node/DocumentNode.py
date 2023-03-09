@@ -1,6 +1,6 @@
 from typing import Dict, Optional
 
-from cleo.styles import OutputStyle
+from cleo.io.io import IO
 
 from sdoc.sdoc2 import in_scope, out_scope
 from sdoc.sdoc2.node.DateNode import DateNode
@@ -16,7 +16,7 @@ class DocumentNode(Node):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io: OutputStyle, options: Dict[str, str]):
+    def __init__(self, io: IO, options: Dict[str, str]):
         """
         Object constructor.
 

@@ -21,7 +21,7 @@ def in_scope(node_id):
 # ----------------------------------------------------------------------------------------------------------------------
 def out_scope(node):
     """
-    Marks a node as not longer in scope.
+    Marks a node as no longer in scope.
 
     :param sdoc.sdoc2.node.Node.Node node: The node.
     """

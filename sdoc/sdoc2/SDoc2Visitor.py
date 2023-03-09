@@ -2,7 +2,7 @@ import re
 from typing import Any, Dict
 
 from antlr4.Token import CommonToken
-from cleo.styles import OutputStyle
+from cleo.io.io import IO
 
 from sdoc import sdoc2
 from sdoc.antlr.sdoc2Parser import sdoc2Parser
@@ -17,16 +17,16 @@ class SDoc2Visitor(sdoc2ParserVisitor, SDocVisitor):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, sdoc1_path: str, io: OutputStyle):
+    def __init__(self, sdoc1_path: str, io: IO):
         """
         Object constructor.
 
-        :param str sdoc1_path: The the path to the original SDoc1 document.
+        :param str sdoc1_path: The path to the original SDoc1 document.
         :param cleo.styles.output_style.OutputStyle io: The IO object.
         """
         SDocVisitor.__init__(self, io)
 
-        self._io: OutputStyle = io
+        self._io: IO = io
         """
         Styled output formatter.
         """
@@ -65,7 +65,7 @@ class SDoc2Visitor(sdoc2ParserVisitor, SDocVisitor):
     @staticmethod
     def _get_options(ctx) -> Dict[str, str]:
         """
-        Returns the option of an command.
+        Returns the option of a command.
 
         :param ParserRuleContext ctx: The parse tree with the options.
         """

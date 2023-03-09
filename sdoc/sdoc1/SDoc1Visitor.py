@@ -4,7 +4,7 @@ from typing import Any, Dict, Optional
 import antlr4
 from antlr4 import ParserRuleContext
 from antlr4.Token import CommonToken
-from cleo.styles import OutputStyle
+from cleo.io.io import IO
 
 from sdoc.antlr.sdoc1Lexer import sdoc1Lexer
 from sdoc.antlr.sdoc1Parser import sdoc1Parser
@@ -25,7 +25,7 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io: OutputStyle, root_dir: str = os.getcwd()):
+    def __init__(self, io: IO, root_dir: str = os.getcwd()):
         """
         Object constructor.
 
@@ -33,7 +33,7 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         """
         SDocVisitor.__init__(self, io)
 
-        self._io: OutputStyle = io
+        self._io: IO = io
         """
         Styled output formatter.
         """
@@ -326,9 +326,9 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         expression = ctx.expression()
 
         if expression is not None:
-            self._io.writeln(expression.accept(self).debug())
+            self._io.write_line(expression.accept(self).debug())
         else:
-            self._io.writeln(self._global_scope.debug())
+            self._io.write_line(self._global_scope.debug())
 
         self.put_position(ctx, 'stop')
 
@@ -426,7 +426,7 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         if not os.path.isabs(file_name):
             file_name = os.path.join(self._root_dir, file_name + '.sdoc')
         real_path = os.path.relpath(file_name)
-        self._io.writeln("Including <fso>{0!s}</fso>".format(real_path))
+        self._io.write_line("Including <fso>{0!s}</fso>".format(real_path))
         try:
             stream = antlr4.FileStream(file_name, 'utf-8')
 
@@ -469,7 +469,7 @@ class SDoc1Visitor(sdoc1ParserVisitor, SDocVisitor):
         line_number = token.line
         message = SDoc.unescape(ctx.SIMPLE_ARG().getText())
 
-        self._io.writeln(
+        self._io.write_line(
                 '<notice>Notice: {0!s} at {1!s}:{2:d}</notice>'.format(message, os.path.relpath(filename), line_number))
 
         self.put_position(ctx, 'stop')

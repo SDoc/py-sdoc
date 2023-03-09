@@ -1,6 +1,6 @@
 from typing import Any, Dict, Optional
 
-from cleo.styles import OutputStyle
+from cleo.io.io import IO
 
 from sdoc.sdoc2 import in_scope, out_scope
 from sdoc.sdoc2.node.CaptionNode import CaptionNode
@@ -15,7 +15,7 @@ class FigureNode(Node):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io: OutputStyle, options: Dict[str, str]):
+    def __init__(self, io: IO, options: Dict[str, str]):
         """
         Object constructor.
 

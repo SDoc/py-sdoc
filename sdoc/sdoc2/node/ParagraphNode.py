@@ -1,6 +1,6 @@
 from typing import Dict
 
-from cleo.styles import OutputStyle
+from cleo.io.io import IO
 
 from sdoc.sdoc2 import in_scope, out_scope
 from sdoc.sdoc2.node.HeadingNode import HeadingNode
@@ -15,7 +15,7 @@ class ParagraphNode(HeadingNode):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io: OutputStyle, options: Dict[str, str], argument: str):
+    def __init__(self, io: IO, options: Dict[str, str], argument: str):
         """
         Object constructor.
 

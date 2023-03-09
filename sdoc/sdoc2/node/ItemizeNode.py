@@ -1,7 +1,7 @@
 import re
 from typing import Dict
 
-from cleo.styles import OutputStyle
+from cleo.io.io import IO
 
 from sdoc.sdoc2 import in_scope, node_store, out_scope
 from sdoc.sdoc2.node.ItemNode import ItemNode
@@ -16,7 +16,7 @@ class ItemizeNode(Node):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io: OutputStyle, options: Dict[str, str]):
+    def __init__(self, io: IO, options: Dict[str, str]):
         """
         Object constructor.
 

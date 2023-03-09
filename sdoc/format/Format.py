@@ -1,7 +1,6 @@
 import abc
-from configparser import ConfigParser
 
-from cleo.styles import OutputStyle
+from cleo.io.io import IO
 
 
 class Format(metaclass=abc.ABCMeta):
@@ -10,14 +9,13 @@ class Format(metaclass=abc.ABCMeta):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io: OutputStyle, config: ConfigParser):
+    def __init__(self, io: IO):
         """
         Object constructor.
 
         :param OutputStyle io: The IO object.
-        :param ConfigParser config: The section in the config file for the target_format.
         """
-        self._io: OutputStyle = io
+        self._io: IO = io
         """
         The IO object.
         """

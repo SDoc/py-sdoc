@@ -1,7 +1,7 @@
 import abc
 from typing import Any, Dict, List, Optional, Tuple, Union
 
-from cleo.styles import OutputStyle
+from cleo.io.io import IO
 
 from sdoc.sdoc2 import in_scope, node_store, out_scope
 from sdoc.sdoc2.Position import Position
@@ -13,7 +13,7 @@ class Node(metaclass=abc.ABCMeta):
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io: OutputStyle, name: str, options: Optional[Dict[str, str]] = None, argument: str = ''):
+    def __init__(self, io: IO, name: str, options: Optional[Dict[str, str]] = None, argument: str = ''):
         """
         Object constructor.
 
@@ -22,7 +22,7 @@ class Node(metaclass=abc.ABCMeta):
         :param dict[str,str] options: The options of this node.
         :param str argument: The argument of this node (inline commands only).
         """
-        self._io: OutputStyle = io
+        self._io: IO = io
         """
         The IO object.
         """
@@ -64,7 +64,7 @@ class Node(metaclass=abc.ABCMeta):
 
     # ------------------------------------------------------------------------------------------------------------------
     @property
-    def io(self) -> OutputStyle:
+    def io(self) -> IO:
         """
         Getter for io.
         """
@@ -95,7 +95,7 @@ class Node(metaclass=abc.ABCMeta):
 
         :param int level: the level of block commands.
         """
-        self.io.writeln("{0!s}{1:4d} {2!s}".format(' ' * 4 * level, self.id, self.name))
+        self.io.write_line("{0!s}{1:4d} {2!s}".format(' ' * 4 * level, self.id, self.name))
 
         for node_id in self.child_nodes:
             node = in_scope(node_id)
@@ -109,7 +109,7 @@ class Node(metaclass=abc.ABCMeta):
         """
         Removes child nodes from list of child nodes of this node.
 
-        :param list[int] node_list: The child nodes the be removed.
+        :param list[int] node_list: The child nodes to be removed.
         """
         for node in node_list:
             self.child_nodes.remove(node)
@@ -117,7 +117,7 @@ class Node(metaclass=abc.ABCMeta):
     # ------------------------------------------------------------------------------------------------------------------
     def get_hierarchy_name(self) -> Optional[str]:
         """
-        Returns the hierarchy name if this node is a part of a hierarchy. Otherwise returns None.
+        Returns the hierarchy name if this node is a part of a hierarchy. Otherwise, returns None.
         """
         return None
 
@@ -161,21 +161,21 @@ class Node(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def is_block_command(self) -> bool:
         """
-        Returns True if this node is created by a block command. Otherwise returns False.
+        Returns True if this node is created by a block command. Otherwise, returns False.
         """
         raise NotImplementedError()
 
     # ------------------------------------------------------------------------------------------------------------------
     def is_document_root(self) -> bool:
         """
-        Returns True if this node is a document root node. Otherwise returns False.
+        Returns True if this node is a document root node. Otherwise, returns False.
         """
         return False
 
     # ------------------------------------------------------------------------------------------------------------------
     def is_hierarchy_root(self) -> bool:
         """
-        Returns True if this node can be the root of a hierarchy. Otherwise returns False.
+        Returns True if this node can be the root of a hierarchy. Otherwise, returns False.
         """
         return False
 
@@ -190,14 +190,14 @@ class Node(metaclass=abc.ABCMeta):
     # ------------------------------------------------------------------------------------------------------------------
     def is_phrasing(self) -> bool:
         """
-        Returns True if this node is a phrasing node, i.e. is a part of a paragraph. Otherwise returns False.
+        Returns True if this node is a phrasing node, i.e. is a part of a paragraph. Otherwise, returns False.
         """
         return False
 
     # ------------------------------------------------------------------------------------------------------------------
     def is_list_element(self) -> bool:
         """
-        Returns True if this node is a list element, e.g. an item in itemize. Otherwise returns False.
+        Returns True if this node is a list element, e.g. an item in itemize. Otherwise, returns False.
         """
         return False
 
@@ -336,7 +336,7 @@ class Node(metaclass=abc.ABCMeta):
     # ------------------------------------------------------------------------------------------------------------------
     def change_ref_argument(self) -> None:
         """
-        Changes reference argument on number of depending heading node.
+        Changes reference argument on number of depending on heading node.
         """
         for node_id in self.child_nodes:
             node = in_scope(node_id)

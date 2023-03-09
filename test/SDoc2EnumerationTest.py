@@ -4,7 +4,8 @@ import glob
 import os
 import unittest
 
-from cleo import Application, CommandTester
+from cleo.application import Application
+from cleo.testers.command_tester import CommandTester
 
 from sdoc import sdoc2
 from sdoc.command.SDoc2Command import SDoc2Command
@@ -72,9 +73,7 @@ class SDoc2EnumerationTest(unittest.TestCase):
 
                 command = application.find('sdoc2')
                 command_tester = CommandTester(command)
-                command_tester.execute([('command', command.get_name()),
-                                        ('config.cfg', config_path),
-                                        ('main.sdoc2', test_file_name)])
+                command_tester.execute('{} {}'.format(config_path[0], test_file_name))
 
                 root = in_scope(1)
                 sdoc2.node_store.number_numerable()

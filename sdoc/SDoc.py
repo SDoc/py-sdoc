@@ -2,11 +2,10 @@ import configparser
 import os
 from typing import List, Optional
 
-from cleo.styles import OutputStyle
-
 from sdoc import sdoc2
 from sdoc.error import SDocError
 from sdoc.format.Format import Format
+from sdoc.io.SDocIO import SDocIO
 from sdoc.sdoc1.SDoc1Interpreter import SDoc1Interpreter
 from sdoc.sdoc2.NodeStore import NodeStore
 from sdoc.sdoc2.SDoc2Interpreter import SDoc2Interpreter
@@ -22,7 +21,7 @@ class SDoc:
         """
         Object contructor.
         """
-        self._io: Optional[OutputStyle] = None
+        self._io: Optional[SDocIO] = None
         """
         The IO object.
         """
@@ -64,7 +63,7 @@ class SDoc:
 
     # ------------------------------------------------------------------------------------------------------------------
     @property
-    def io(self) -> OutputStyle:
+    def io(self) -> SDocIO:
         """
         Getter for io.
         """
@@ -72,7 +71,7 @@ class SDoc:
 
     # ------------------------------------------------------------------------------------------------------------------
     @io.setter
-    def io(self, io: OutputStyle) -> None:
+    def io(self, io: SDocIO) -> None:
         """
         Setter for io.
 
@@ -126,7 +125,7 @@ class SDoc:
         # Read the target format of the document.
         target_format = config.get('sdoc', 'format', fallback=None)
         if target_format not in available_formats:
-            raise SDocError("The format '{0!s}' is not available in SDoc. Set another in config file '{1!s}'"
+            raise SDocError("The format '{}' is not available in SDoc. Set another in config file '{}'"
                             .format(target_format, self._config_path))
 
         if not target_format:
@@ -260,7 +259,7 @@ class SDoc:
         Run the SDoc1 parser and returns the error count.
 
         :param str sdoc1_path: The path of the SDoc1 document.
-        :param str sdoc2_path: The path were the the SDoc2 document mut be stored.
+        :param str sdoc2_path: The path were the SDoc2 document mut be stored.
         :param bool log_errors: If true the number of errors will be logged.
         """
         self._io.title('SDoc1')
@@ -269,30 +268,30 @@ class SDoc:
         self._errors += interpreter1.process(sdoc1_path, sdoc2_path)
 
         if log_errors and self._errors:
-            self._io.writeln(" ")
+            self._io.write_line(" ")
             self._io.title('Errors')
-            self._io.error('There were {0} errors in total'.format(self._errors))
+            self._io.write_error('There were {0} errors in total'.format(self._errors))
 
         return self._errors
 
     # ------------------------------------------------------------------------------------------------------------------
     def run_sdoc2(self, sdoc2_path: str, log_errors: bool = True) -> int:
         """
-        Run the SDoc2 parser and returns the error count..
+        Run the SDoc2 parser and returns the error count.
 
         :param str sdoc2_path: The path of the SDoc2 document.
         :param bool log_errors: If true the number of errors will be logged.
         """
-        self._io.writeln('')
+        self._io.write_line('')
         self._io.title('SDoc2')
 
         interpreter2 = SDoc2Interpreter(self._io)
         self._errors += interpreter2.process(sdoc2_path)
 
         if log_errors and self._errors:
-            self._io.writeln(" ")
+            self._io.write_line(" ")
             self._io.title('Errors')
-            self._io.error('There were {0} errors in total'.format(self._errors))
+            self._io.write_error('There were {0} errors in total'.format(self._errors))
 
         return self._errors
 
@@ -303,15 +302,15 @@ class SDoc:
 
         :param bool log_errors: If true the number of errors will be logged.
         """
-        self._io.writeln('')
+        self._io.write_line('')
         self._io.title('Format')
 
         self._errors += sdoc2.node_store.generate(self._format)
 
         if log_errors and self._errors:
-            self._io.writeln(" ")
+            self._io.write_line(" ")
             self._io.title('Errors')
-            self._io.error('There were {0} errors in total'.format(self._errors))
+            self._io.write_error('There were {0} errors in total'.format(self._errors))
 
         return self._errors
 
@@ -331,9 +330,9 @@ class SDoc:
         self.run_format(False)
 
         if log_errors and self._errors:
-            self._io.writeln(" ")
+            self._io.write_line(" ")
             self._io.title('Errors')
-            self._io.error('There were {0} errors in total'.format(self._errors))
+            self._io.write_error('There were {0} errors in total'.format(self._errors))
 
         return self._errors
 

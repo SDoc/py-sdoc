@@ -1,6 +1,6 @@
 from typing import Any, Optional
 
-from cleo.styles import OutputStyle
+from cleo.io.io import IO
 
 from sdoc.sdoc2 import in_scope, node_store, out_scope
 from sdoc.sdoc2.node.Node import Node
@@ -12,14 +12,14 @@ class Formatter:
     """
 
     # ------------------------------------------------------------------------------------------------------------------
-    def __init__(self, io: OutputStyle, parent):
+    def __init__(self, io: IO, parent):
         """
         Object constructor.
 
         :param OutputStyle io: The IO object.
         :param sdoc.sdoc2.formatter.Formatter.Formatter|None parent: The formatter for the parent node.
         """
-        self._io: OutputStyle = io
+        self._io: IO = io
         """
         The IO object.
         """
@@ -54,7 +54,7 @@ class Formatter:
         """
         Logs an error.
 
-        :param str message: The error message.this message will be appended with 'at filename:line.column' ot the token.
+        :param str message: The error message. This message will be appended with 'at filename:line.column' ot the token.
         :param Node node: The node where the error occurred.
         """
         if self._parent:
@@ -68,7 +68,7 @@ class Formatter:
                 line_number = node.position.start_line
                 column_number = node.position.start_column + 1
                 messages.append('Position: {0!s}:{1:d}.{2:d}'.format(filename, line_number, column_number))
-            self._io.error(messages)
+            self._io.write_error(messages)
 
     # ------------------------------------------------------------------------------------------------------------------
     def generate(self, node: Node, file: Any) -> None:
