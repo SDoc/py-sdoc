@@ -11,7 +11,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 setup(
     name='SDoc',
 
-    version='0.9.2',
+    version='1.0.0',
 
     description='A super format documentation document preparation system for SAAS and multi tenant applications',
     long_description=long_description,
