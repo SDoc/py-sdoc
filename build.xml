@@ -1,7 +1,7 @@
 <project name="SDoc" default="build" basedir=".">
     <taskdef name="ReadSemanticVersion" classname="vendor.setbased.phing-extensions.src.Task.ReadSemanticVersionTask"/>
     <property name="BUILD_DIR" value="./build"/>
-    <property name="ANTLR4" value="/usr/local/lib/antlr-4.9-complete.jar"/>
+    <property name="ANTLR4" value="/usr/local/lib/antlr-4.12.0-complete.jar"/>
     <property name="GRUN" value="java org.antlr.v4.gui.TestRig"/>
 
     <!-- Run composer update and executes various other updates -->
@@ -151,8 +151,8 @@
 
     <!-- Runs all unit tests-->
     <target name="unit">
-        <exec command="coverage3 run -m unittest discover -s test -p *Test.py" passthru="true" checkreturn="true"/>
-        <exec command="coverage3 html" passthru="true" checkreturn="true"/>
+        <exec command="venv/bin/coverage3 run -m unittest discover -s test -p *Test.py" passthru="true" checkreturn="true"/>
+        <exec command="venv/bin/coverage3 html" passthru="true" checkreturn="true"/>
     </target>
 
     <!-- Default target -->

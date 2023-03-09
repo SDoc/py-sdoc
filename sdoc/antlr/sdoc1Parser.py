@@ -1,4 +1,4 @@
-# Generated from sdoc/antlr/sdoc1Parser.g4 by ANTLR 4.9
+# Generated from sdoc/antlr/sdoc1Parser.g4 by ANTLR 4.12.0
 # encoding: utf-8
 from antlr4 import *
 from io import StringIO
@@ -8,112 +8,92 @@ if sys.version_info[1] > 5:
 else:
 	from typing.io import TextIO
 
-
 def serializedATN():
-    with StringIO() as buf:
-        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3*")
-        buf.write("\u00f4\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7")
-        buf.write("\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4\f\t\f\4\r\t\r\4\16")
-        buf.write("\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22\4\23\t\23")
-        buf.write("\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\3\2")
-        buf.write("\3\2\7\2\63\n\2\f\2\16\2\66\13\2\3\3\3\3\3\4\3\4\3\4\3")
-        buf.write("\4\3\4\3\4\3\4\3\4\3\4\5\4C\n\4\3\5\3\5\3\6\3\6\3\6\5")
-        buf.write("\6J\n\6\3\6\3\6\3\7\3\7\3\7\3\7\3\7\3\b\3\b\3\b\3\b\3")
-        buf.write("\b\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\7\tc\n")
-        buf.write("\t\f\t\16\tf\13\t\3\t\3\t\5\tj\n\t\3\t\3\t\3\n\3\n\3\n")
-        buf.write("\3\n\3\n\3\13\3\13\3\13\3\13\3\13\3\f\3\f\3\f\3\f\3\f")
-        buf.write("\3\r\3\r\3\16\3\16\3\16\3\16\3\16\3\16\3\16\5\16\u0086")
-        buf.write("\n\16\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\7\17\u0090")
-        buf.write("\n\17\f\17\16\17\u0093\13\17\3\20\3\20\3\20\3\20\3\20")
-        buf.write("\3\20\3\20\3\20\3\20\7\20\u009e\n\20\f\20\16\20\u00a1")
-        buf.write("\13\20\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\7")
-        buf.write("\21\u00ac\n\21\f\21\16\21\u00af\13\21\3\22\3\22\3\22\3")
-        buf.write("\22\3\22\3\22\3\22\3\22\3\22\3\22\3\22\3\22\3\22\3\22")
-        buf.write("\3\22\7\22\u00c0\n\22\f\22\16\22\u00c3\13\22\3\23\3\23")
-        buf.write("\3\23\3\23\3\23\3\23\3\23\3\23\3\23\7\23\u00ce\n\23\f")
-        buf.write("\23\16\23\u00d1\13\23\3\24\3\24\3\24\3\24\3\24\3\24\7")
-        buf.write("\24\u00d9\n\24\f\24\16\24\u00dc\13\24\3\25\3\25\3\25\3")
-        buf.write("\25\3\25\3\25\7\25\u00e4\n\25\f\25\16\25\u00e7\13\25\3")
-        buf.write("\26\3\26\3\26\3\26\3\26\5\26\u00ee\n\26\3\27\3\27\3\30")
-        buf.write("\3\30\3\30\2\t\34\36 \"$&(\31\2\4\6\b\n\f\16\20\22\24")
-        buf.write("\26\30\32\34\36 \"$&(*,.\2\2\2\u00fa\2\64\3\2\2\2\4\67")
-        buf.write("\3\2\2\2\6B\3\2\2\2\bD\3\2\2\2\nF\3\2\2\2\fM\3\2\2\2\16")
-        buf.write("R\3\2\2\2\20W\3\2\2\2\22m\3\2\2\2\24r\3\2\2\2\26w\3\2")
-        buf.write("\2\2\30|\3\2\2\2\32\u0085\3\2\2\2\34\u0087\3\2\2\2\36")
-        buf.write("\u0094\3\2\2\2 \u00a2\3\2\2\2\"\u00b0\3\2\2\2$\u00c4\3")
-        buf.write("\2\2\2&\u00d2\3\2\2\2(\u00dd\3\2\2\2*\u00ed\3\2\2\2,\u00ef")
-        buf.write("\3\2\2\2.\u00f1\3\2\2\2\60\63\5\6\4\2\61\63\5\4\3\2\62")
-        buf.write("\60\3\2\2\2\62\61\3\2\2\2\63\66\3\2\2\2\64\62\3\2\2\2")
-        buf.write("\64\65\3\2\2\2\65\3\3\2\2\2\66\64\3\2\2\2\678\7\3\2\2")
-        buf.write("8\5\3\2\2\29C\5\b\5\2:C\5\n\6\2;C\5\f\7\2<C\5\16\b\2=")
-        buf.write("C\5\20\t\2>C\5\22\n\2?C\5\24\13\2@C\5\26\f\2AC\5\30\r")
-        buf.write("\2B9\3\2\2\2B:\3\2\2\2B;\3\2\2\2B<\3\2\2\2B=\3\2\2\2B")
-        buf.write(">\3\2\2\2B?\3\2\2\2B@\3\2\2\2BA\3\2\2\2C\7\3\2\2\2DE\7")
-        buf.write("\4\2\2E\t\3\2\2\2FG\7\6\2\2GI\7\24\2\2HJ\5.\30\2IH\3\2")
-        buf.write("\2\2IJ\3\2\2\2JK\3\2\2\2KL\7\25\2\2L\13\3\2\2\2MN\7\13")
-        buf.write("\2\2NO\7\24\2\2OP\5.\30\2PQ\7\25\2\2Q\r\3\2\2\2RS\7\n")
-        buf.write("\2\2ST\7\21\2\2TU\7\23\2\2UV\7\22\2\2V\17\3\2\2\2WX\7")
-        buf.write("\f\2\2XY\7\24\2\2YZ\5.\30\2Z[\7\25\2\2[d\5\2\2\2\\]\7")
-        buf.write("\7\2\2]^\7\24\2\2^_\5.\30\2_`\7\25\2\2`a\5\2\2\2ac\3\2")
-        buf.write("\2\2b\\\3\2\2\2cf\3\2\2\2db\3\2\2\2de\3\2\2\2ei\3\2\2")
-        buf.write("\2fd\3\2\2\2gh\7\b\2\2hj\5\2\2\2ig\3\2\2\2ij\3\2\2\2j")
-        buf.write("k\3\2\2\2kl\7\t\2\2l\21\3\2\2\2mn\7\r\2\2no\7\21\2\2o")
-        buf.write("p\7\23\2\2pq\7\22\2\2q\23\3\2\2\2rs\7\16\2\2st\7\21\2")
-        buf.write("\2tu\7\23\2\2uv\7\22\2\2v\25\3\2\2\2wx\7\17\2\2xy\7\24")
-        buf.write("\2\2yz\5.\30\2z{\7\25\2\2{\27\3\2\2\2|}\7\20\2\2}\31\3")
-        buf.write("\2\2\2~\u0086\7(\2\2\177\u0086\7)\2\2\u0080\u0086\7*\2")
-        buf.write("\2\u0081\u0082\7\27\2\2\u0082\u0083\5.\30\2\u0083\u0084")
-        buf.write("\7\30\2\2\u0084\u0086\3\2\2\2\u0085~\3\2\2\2\u0085\177")
-        buf.write("\3\2\2\2\u0085\u0080\3\2\2\2\u0085\u0081\3\2\2\2\u0086")
-        buf.write("\33\3\2\2\2\u0087\u0088\b\17\1\2\u0088\u0089\5\32\16\2")
-        buf.write("\u0089\u0091\3\2\2\2\u008a\u008b\f\3\2\2\u008b\u008c\7")
-        buf.write("\31\2\2\u008c\u008d\5.\30\2\u008d\u008e\7\32\2\2\u008e")
-        buf.write("\u0090\3\2\2\2\u008f\u008a\3\2\2\2\u0090\u0093\3\2\2\2")
-        buf.write("\u0091\u008f\3\2\2\2\u0091\u0092\3\2\2\2\u0092\35\3\2")
-        buf.write("\2\2\u0093\u0091\3\2\2\2\u0094\u0095\b\20\1\2\u0095\u0096")
-        buf.write("\5\34\17\2\u0096\u009f\3\2\2\2\u0097\u0098\f\4\2\2\u0098")
-        buf.write("\u0099\7\33\2\2\u0099\u009e\5\34\17\2\u009a\u009b\f\3")
-        buf.write("\2\2\u009b\u009c\7\34\2\2\u009c\u009e\5\34\17\2\u009d")
-        buf.write("\u0097\3\2\2\2\u009d\u009a\3\2\2\2\u009e\u00a1\3\2\2\2")
-        buf.write("\u009f\u009d\3\2\2\2\u009f\u00a0\3\2\2\2\u00a0\37\3\2")
-        buf.write("\2\2\u00a1\u009f\3\2\2\2\u00a2\u00a3\b\21\1\2\u00a3\u00a4")
-        buf.write("\5\36\20\2\u00a4\u00ad\3\2\2\2\u00a5\u00a6\f\4\2\2\u00a6")
-        buf.write("\u00a7\7\35\2\2\u00a7\u00ac\5\36\20\2\u00a8\u00a9\f\3")
-        buf.write("\2\2\u00a9\u00aa\7\36\2\2\u00aa\u00ac\5\36\20\2\u00ab")
-        buf.write("\u00a5\3\2\2\2\u00ab\u00a8\3\2\2\2\u00ac\u00af\3\2\2\2")
-        buf.write("\u00ad\u00ab\3\2\2\2\u00ad\u00ae\3\2\2\2\u00ae!\3\2\2")
-        buf.write("\2\u00af\u00ad\3\2\2\2\u00b0\u00b1\b\22\1\2\u00b1\u00b2")
-        buf.write("\5 \21\2\u00b2\u00c1\3\2\2\2\u00b3\u00b4\f\6\2\2\u00b4")
-        buf.write("\u00b5\7$\2\2\u00b5\u00c0\5 \21\2\u00b6\u00b7\f\5\2\2")
-        buf.write("\u00b7\u00b8\7 \2\2\u00b8\u00c0\5 \21\2\u00b9\u00ba\f")
-        buf.write("\4\2\2\u00ba\u00bb\7%\2\2\u00bb\u00c0\5 \21\2\u00bc\u00bd")
-        buf.write("\f\3\2\2\u00bd\u00be\7!\2\2\u00be\u00c0\5 \21\2\u00bf")
-        buf.write("\u00b3\3\2\2\2\u00bf\u00b6\3\2\2\2\u00bf\u00b9\3\2\2\2")
-        buf.write("\u00bf\u00bc\3\2\2\2\u00c0\u00c3\3\2\2\2\u00c1\u00bf\3")
-        buf.write("\2\2\2\u00c1\u00c2\3\2\2\2\u00c2#\3\2\2\2\u00c3\u00c1")
-        buf.write("\3\2\2\2\u00c4\u00c5\b\23\1\2\u00c5\u00c6\5\"\22\2\u00c6")
-        buf.write("\u00cf\3\2\2\2\u00c7\u00c8\f\4\2\2\u00c8\u00c9\7\37\2")
-        buf.write("\2\u00c9\u00ce\5\"\22\2\u00ca\u00cb\f\3\2\2\u00cb\u00cc")
-        buf.write("\7&\2\2\u00cc\u00ce\5\"\22\2\u00cd\u00c7\3\2\2\2\u00cd")
-        buf.write("\u00ca\3\2\2\2\u00ce\u00d1\3\2\2\2\u00cf\u00cd\3\2\2\2")
-        buf.write("\u00cf\u00d0\3\2\2\2\u00d0%\3\2\2\2\u00d1\u00cf\3\2\2")
-        buf.write("\2\u00d2\u00d3\b\24\1\2\u00d3\u00d4\5$\23\2\u00d4\u00da")
-        buf.write("\3\2\2\2\u00d5\u00d6\f\3\2\2\u00d6\u00d7\7\"\2\2\u00d7")
-        buf.write("\u00d9\5$\23\2\u00d8\u00d5\3\2\2\2\u00d9\u00dc\3\2\2\2")
-        buf.write("\u00da\u00d8\3\2\2\2\u00da\u00db\3\2\2\2\u00db\'\3\2\2")
-        buf.write("\2\u00dc\u00da\3\2\2\2\u00dd\u00de\b\25\1\2\u00de\u00df")
-        buf.write("\5&\24\2\u00df\u00e5\3\2\2\2\u00e0\u00e1\f\3\2\2\u00e1")
-        buf.write("\u00e2\7#\2\2\u00e2\u00e4\5&\24\2\u00e3\u00e0\3\2\2\2")
-        buf.write("\u00e4\u00e7\3\2\2\2\u00e5\u00e3\3\2\2\2\u00e5\u00e6\3")
-        buf.write("\2\2\2\u00e6)\3\2\2\2\u00e7\u00e5\3\2\2\2\u00e8\u00ee")
-        buf.write("\5(\25\2\u00e9\u00ea\5\34\17\2\u00ea\u00eb\5,\27\2\u00eb")
-        buf.write("\u00ec\5*\26\2\u00ec\u00ee\3\2\2\2\u00ed\u00e8\3\2\2\2")
-        buf.write("\u00ed\u00e9\3\2\2\2\u00ee+\3\2\2\2\u00ef\u00f0\7\'\2")
-        buf.write("\2\u00f0-\3\2\2\2\u00f1\u00f2\5*\26\2\u00f2/\3\2\2\2\25")
-        buf.write("\62\64BIdi\u0085\u0091\u009d\u009f\u00ab\u00ad\u00bf\u00c1")
-        buf.write("\u00cd\u00cf\u00da\u00e5\u00ed")
-        return buf.getvalue()
-
+    return [
+        4,1,40,242,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
+        6,2,7,7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,
+        2,14,7,14,2,15,7,15,2,16,7,16,2,17,7,17,2,18,7,18,2,19,7,19,2,20,
+        7,20,2,21,7,21,2,22,7,22,1,0,1,0,5,0,49,8,0,10,0,12,0,52,9,0,1,1,
+        1,1,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,3,2,65,8,2,1,3,1,3,1,4,1,
+        4,1,4,3,4,72,8,4,1,4,1,4,1,5,1,5,1,5,1,5,1,5,1,6,1,6,1,6,1,6,1,6,
+        1,7,1,7,1,7,1,7,1,7,1,7,1,7,1,7,1,7,1,7,1,7,5,7,97,8,7,10,7,12,7,
+        100,9,7,1,7,1,7,3,7,104,8,7,1,7,1,7,1,8,1,8,1,8,1,8,1,8,1,9,1,9,
+        1,9,1,9,1,9,1,10,1,10,1,10,1,10,1,10,1,11,1,11,1,12,1,12,1,12,1,
+        12,1,12,1,12,1,12,3,12,132,8,12,1,13,1,13,1,13,1,13,1,13,1,13,1,
+        13,1,13,5,13,142,8,13,10,13,12,13,145,9,13,1,14,1,14,1,14,1,14,1,
+        14,1,14,1,14,1,14,1,14,5,14,156,8,14,10,14,12,14,159,9,14,1,15,1,
+        15,1,15,1,15,1,15,1,15,1,15,1,15,1,15,5,15,170,8,15,10,15,12,15,
+        173,9,15,1,16,1,16,1,16,1,16,1,16,1,16,1,16,1,16,1,16,1,16,1,16,
+        1,16,1,16,1,16,1,16,5,16,190,8,16,10,16,12,16,193,9,16,1,17,1,17,
+        1,17,1,17,1,17,1,17,1,17,1,17,1,17,5,17,204,8,17,10,17,12,17,207,
+        9,17,1,18,1,18,1,18,1,18,1,18,1,18,5,18,215,8,18,10,18,12,18,218,
+        9,18,1,19,1,19,1,19,1,19,1,19,1,19,5,19,226,8,19,10,19,12,19,229,
+        9,19,1,20,1,20,1,20,1,20,1,20,3,20,236,8,20,1,21,1,21,1,22,1,22,
+        1,22,0,7,26,28,30,32,34,36,38,23,0,2,4,6,8,10,12,14,16,18,20,22,
+        24,26,28,30,32,34,36,38,40,42,44,0,0,248,0,50,1,0,0,0,2,53,1,0,0,
+        0,4,64,1,0,0,0,6,66,1,0,0,0,8,68,1,0,0,0,10,75,1,0,0,0,12,80,1,0,
+        0,0,14,85,1,0,0,0,16,107,1,0,0,0,18,112,1,0,0,0,20,117,1,0,0,0,22,
+        122,1,0,0,0,24,131,1,0,0,0,26,133,1,0,0,0,28,146,1,0,0,0,30,160,
+        1,0,0,0,32,174,1,0,0,0,34,194,1,0,0,0,36,208,1,0,0,0,38,219,1,0,
+        0,0,40,235,1,0,0,0,42,237,1,0,0,0,44,239,1,0,0,0,46,49,3,4,2,0,47,
+        49,3,2,1,0,48,46,1,0,0,0,48,47,1,0,0,0,49,52,1,0,0,0,50,48,1,0,0,
+        0,50,51,1,0,0,0,51,1,1,0,0,0,52,50,1,0,0,0,53,54,5,1,0,0,54,3,1,
+        0,0,0,55,65,3,6,3,0,56,65,3,8,4,0,57,65,3,10,5,0,58,65,3,12,6,0,
+        59,65,3,14,7,0,60,65,3,16,8,0,61,65,3,18,9,0,62,65,3,20,10,0,63,
+        65,3,22,11,0,64,55,1,0,0,0,64,56,1,0,0,0,64,57,1,0,0,0,64,58,1,0,
+        0,0,64,59,1,0,0,0,64,60,1,0,0,0,64,61,1,0,0,0,64,62,1,0,0,0,64,63,
+        1,0,0,0,65,5,1,0,0,0,66,67,5,2,0,0,67,7,1,0,0,0,68,69,5,4,0,0,69,
+        71,5,18,0,0,70,72,3,44,22,0,71,70,1,0,0,0,71,72,1,0,0,0,72,73,1,
+        0,0,0,73,74,5,19,0,0,74,9,1,0,0,0,75,76,5,9,0,0,76,77,5,18,0,0,77,
+        78,3,44,22,0,78,79,5,19,0,0,79,11,1,0,0,0,80,81,5,8,0,0,81,82,5,
+        15,0,0,82,83,5,17,0,0,83,84,5,16,0,0,84,13,1,0,0,0,85,86,5,10,0,
+        0,86,87,5,18,0,0,87,88,3,44,22,0,88,89,5,19,0,0,89,98,3,0,0,0,90,
+        91,5,5,0,0,91,92,5,18,0,0,92,93,3,44,22,0,93,94,5,19,0,0,94,95,3,
+        0,0,0,95,97,1,0,0,0,96,90,1,0,0,0,97,100,1,0,0,0,98,96,1,0,0,0,98,
+        99,1,0,0,0,99,103,1,0,0,0,100,98,1,0,0,0,101,102,5,6,0,0,102,104,
+        3,0,0,0,103,101,1,0,0,0,103,104,1,0,0,0,104,105,1,0,0,0,105,106,
+        5,7,0,0,106,15,1,0,0,0,107,108,5,11,0,0,108,109,5,15,0,0,109,110,
+        5,17,0,0,110,111,5,16,0,0,111,17,1,0,0,0,112,113,5,12,0,0,113,114,
+        5,15,0,0,114,115,5,17,0,0,115,116,5,16,0,0,116,19,1,0,0,0,117,118,
+        5,13,0,0,118,119,5,18,0,0,119,120,3,44,22,0,120,121,5,19,0,0,121,
+        21,1,0,0,0,122,123,5,14,0,0,123,23,1,0,0,0,124,132,5,38,0,0,125,
+        132,5,39,0,0,126,132,5,40,0,0,127,128,5,21,0,0,128,129,3,44,22,0,
+        129,130,5,22,0,0,130,132,1,0,0,0,131,124,1,0,0,0,131,125,1,0,0,0,
+        131,126,1,0,0,0,131,127,1,0,0,0,132,25,1,0,0,0,133,134,6,13,-1,0,
+        134,135,3,24,12,0,135,143,1,0,0,0,136,137,10,1,0,0,137,138,5,23,
+        0,0,138,139,3,44,22,0,139,140,5,24,0,0,140,142,1,0,0,0,141,136,1,
+        0,0,0,142,145,1,0,0,0,143,141,1,0,0,0,143,144,1,0,0,0,144,27,1,0,
+        0,0,145,143,1,0,0,0,146,147,6,14,-1,0,147,148,3,26,13,0,148,157,
+        1,0,0,0,149,150,10,2,0,0,150,151,5,25,0,0,151,156,3,26,13,0,152,
+        153,10,1,0,0,153,154,5,26,0,0,154,156,3,26,13,0,155,149,1,0,0,0,
+        155,152,1,0,0,0,156,159,1,0,0,0,157,155,1,0,0,0,157,158,1,0,0,0,
+        158,29,1,0,0,0,159,157,1,0,0,0,160,161,6,15,-1,0,161,162,3,28,14,
+        0,162,171,1,0,0,0,163,164,10,2,0,0,164,165,5,27,0,0,165,170,3,28,
+        14,0,166,167,10,1,0,0,167,168,5,28,0,0,168,170,3,28,14,0,169,163,
+        1,0,0,0,169,166,1,0,0,0,170,173,1,0,0,0,171,169,1,0,0,0,171,172,
+        1,0,0,0,172,31,1,0,0,0,173,171,1,0,0,0,174,175,6,16,-1,0,175,176,
+        3,30,15,0,176,191,1,0,0,0,177,178,10,4,0,0,178,179,5,34,0,0,179,
+        190,3,30,15,0,180,181,10,3,0,0,181,182,5,30,0,0,182,190,3,30,15,
+        0,183,184,10,2,0,0,184,185,5,35,0,0,185,190,3,30,15,0,186,187,10,
+        1,0,0,187,188,5,31,0,0,188,190,3,30,15,0,189,177,1,0,0,0,189,180,
+        1,0,0,0,189,183,1,0,0,0,189,186,1,0,0,0,190,193,1,0,0,0,191,189,
+        1,0,0,0,191,192,1,0,0,0,192,33,1,0,0,0,193,191,1,0,0,0,194,195,6,
+        17,-1,0,195,196,3,32,16,0,196,205,1,0,0,0,197,198,10,2,0,0,198,199,
+        5,29,0,0,199,204,3,32,16,0,200,201,10,1,0,0,201,202,5,36,0,0,202,
+        204,3,32,16,0,203,197,1,0,0,0,203,200,1,0,0,0,204,207,1,0,0,0,205,
+        203,1,0,0,0,205,206,1,0,0,0,206,35,1,0,0,0,207,205,1,0,0,0,208,209,
+        6,18,-1,0,209,210,3,34,17,0,210,216,1,0,0,0,211,212,10,1,0,0,212,
+        213,5,32,0,0,213,215,3,34,17,0,214,211,1,0,0,0,215,218,1,0,0,0,216,
+        214,1,0,0,0,216,217,1,0,0,0,217,37,1,0,0,0,218,216,1,0,0,0,219,220,
+        6,19,-1,0,220,221,3,36,18,0,221,227,1,0,0,0,222,223,10,1,0,0,223,
+        224,5,33,0,0,224,226,3,36,18,0,225,222,1,0,0,0,226,229,1,0,0,0,227,
+        225,1,0,0,0,227,228,1,0,0,0,228,39,1,0,0,0,229,227,1,0,0,0,230,236,
+        3,38,19,0,231,232,3,26,13,0,232,233,3,42,21,0,233,234,3,40,20,0,
+        234,236,1,0,0,0,235,230,1,0,0,0,235,231,1,0,0,0,236,41,1,0,0,0,237,
+        238,5,37,0,0,238,43,1,0,0,0,239,240,3,40,20,0,240,45,1,0,0,0,19,
+        48,50,64,71,98,103,131,143,155,157,169,171,189,191,203,205,216,227,
+        235
+    ]
 
 class sdoc1Parser ( Parser ):
 
@@ -221,7 +201,7 @@ class sdoc1Parser ( Parser ):
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
-        self.checkVersion("4.9")
+        self.checkVersion("4.12.0")
         self._interp = ParserATNSimulator(self, self.atn, self.decisionsToDFA, self.sharedContextCache)
         self._predicates = None
 
@@ -229,6 +209,7 @@ class sdoc1Parser ( Parser ):
 
 
     class SdocContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -270,15 +251,15 @@ class sdoc1Parser ( Parser ):
             self.state = 50
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << sdoc1Parser.TEXT) | (1 << sdoc1Parser.LINE_COMMENT) | (1 << sdoc1Parser.DEBUG) | (1 << sdoc1Parser.ERROR) | (1 << sdoc1Parser.EXPRESSION) | (1 << sdoc1Parser.IF) | (1 << sdoc1Parser.INCLUDE) | (1 << sdoc1Parser.NOTICE) | (1 << sdoc1Parser.SUBSTITUTE) | (1 << sdoc1Parser.SDOC2_COMMAND))) != 0):
+            while (((_la) & ~0x3f) == 0 and ((1 << _la) & 32534) != 0):
                 self.state = 48
                 self._errHandler.sync(self)
                 token = self._input.LA(1)
-                if token in [sdoc1Parser.LINE_COMMENT, sdoc1Parser.DEBUG, sdoc1Parser.ERROR, sdoc1Parser.EXPRESSION, sdoc1Parser.IF, sdoc1Parser.INCLUDE, sdoc1Parser.NOTICE, sdoc1Parser.SUBSTITUTE, sdoc1Parser.SDOC2_COMMAND]:
+                if token in [2, 4, 8, 9, 10, 11, 12, 13, 14]:
                     self.state = 46
                     self.command()
                     pass
-                elif token in [sdoc1Parser.TEXT]:
+                elif token in [1]:
                     self.state = 47
                     self.text()
                     pass
@@ -299,6 +280,7 @@ class sdoc1Parser ( Parser ):
 
 
     class TextContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -337,6 +319,7 @@ class sdoc1Parser ( Parser ):
 
 
     class CommandContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -398,47 +381,47 @@ class sdoc1Parser ( Parser ):
             self.state = 64
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [sdoc1Parser.LINE_COMMENT]:
+            if token in [2]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 55
                 self.cmd_comment()
                 pass
-            elif token in [sdoc1Parser.DEBUG]:
+            elif token in [4]:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 56
                 self.cmd_debug()
                 pass
-            elif token in [sdoc1Parser.EXPRESSION]:
+            elif token in [9]:
                 self.enterOuterAlt(localctx, 3)
                 self.state = 57
                 self.cmd_expression()
                 pass
-            elif token in [sdoc1Parser.ERROR]:
+            elif token in [8]:
                 self.enterOuterAlt(localctx, 4)
                 self.state = 58
                 self.cmd_error()
                 pass
-            elif token in [sdoc1Parser.IF]:
+            elif token in [10]:
                 self.enterOuterAlt(localctx, 5)
                 self.state = 59
                 self.cmd_if()
                 pass
-            elif token in [sdoc1Parser.INCLUDE]:
+            elif token in [11]:
                 self.enterOuterAlt(localctx, 6)
                 self.state = 60
                 self.cmd_include()
                 pass
-            elif token in [sdoc1Parser.NOTICE]:
+            elif token in [12]:
                 self.enterOuterAlt(localctx, 7)
                 self.state = 61
                 self.cmd_notice()
                 pass
-            elif token in [sdoc1Parser.SUBSTITUTE]:
+            elif token in [13]:
                 self.enterOuterAlt(localctx, 8)
                 self.state = 62
                 self.cmd_substitute()
                 pass
-            elif token in [sdoc1Parser.SDOC2_COMMAND]:
+            elif token in [14]:
                 self.enterOuterAlt(localctx, 9)
                 self.state = 63
                 self.cmd_sdoc2()
@@ -456,6 +439,7 @@ class sdoc1Parser ( Parser ):
 
 
     class Cmd_commentContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -494,6 +478,7 @@ class sdoc1Parser ( Parser ):
 
 
     class Cmd_debugContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -538,7 +523,7 @@ class sdoc1Parser ( Parser ):
             self.state = 71
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << sdoc1Parser.EXPR_LEFT_PAREN) | (1 << sdoc1Parser.EXPR_IDENTIFIER) | (1 << sdoc1Parser.EXPR_INTEGER_CONSTANT) | (1 << sdoc1Parser.EXPR_STRING_CONSTANT))) != 0):
+            if (((_la) & ~0x3f) == 0 and ((1 << _la) & 1924147445760) != 0):
                 self.state = 70
                 self.expression()
 
@@ -555,6 +540,7 @@ class sdoc1Parser ( Parser ):
 
 
     class Cmd_expressionContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -609,6 +595,7 @@ class sdoc1Parser ( Parser ):
 
 
     class Cmd_errorContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -662,6 +649,7 @@ class sdoc1Parser ( Parser ):
 
 
     class Cmd_ifContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -740,7 +728,7 @@ class sdoc1Parser ( Parser ):
             self.state = 98
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la==sdoc1Parser.ELIF:
+            while _la==5:
                 self.state = 90
                 self.match(sdoc1Parser.ELIF)
                 self.state = 91
@@ -758,7 +746,7 @@ class sdoc1Parser ( Parser ):
             self.state = 103
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==sdoc1Parser.ELSE:
+            if _la==6:
                 self.state = 101
                 self.match(sdoc1Parser.ELSE)
                 self.state = 102
@@ -777,6 +765,7 @@ class sdoc1Parser ( Parser ):
 
 
     class Cmd_includeContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -830,6 +819,7 @@ class sdoc1Parser ( Parser ):
 
 
     class Cmd_noticeContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -883,6 +873,7 @@ class sdoc1Parser ( Parser ):
 
 
     class Cmd_substituteContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -937,6 +928,7 @@ class sdoc1Parser ( Parser ):
 
 
     class Cmd_sdoc2Context(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -975,6 +967,7 @@ class sdoc1Parser ( Parser ):
 
 
     class PrimaryExpressionContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -1068,25 +1061,25 @@ class sdoc1Parser ( Parser ):
             self.state = 131
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [sdoc1Parser.EXPR_IDENTIFIER]:
+            if token in [38]:
                 localctx = sdoc1Parser.PrimaryExpressionIdentifierContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
                 self.state = 124
                 self.match(sdoc1Parser.EXPR_IDENTIFIER)
                 pass
-            elif token in [sdoc1Parser.EXPR_INTEGER_CONSTANT]:
+            elif token in [39]:
                 localctx = sdoc1Parser.PrimaryExpressionIntegerConstantContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
                 self.state = 125
                 self.match(sdoc1Parser.EXPR_INTEGER_CONSTANT)
                 pass
-            elif token in [sdoc1Parser.EXPR_STRING_CONSTANT]:
+            elif token in [40]:
                 localctx = sdoc1Parser.PrimaryExpressionStringConstantContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
                 self.state = 126
                 self.match(sdoc1Parser.EXPR_STRING_CONSTANT)
                 pass
-            elif token in [sdoc1Parser.EXPR_LEFT_PAREN]:
+            elif token in [21]:
                 localctx = sdoc1Parser.PrimaryExpressionSubExpressionContext(self, localctx)
                 self.enterOuterAlt(localctx, 4)
                 self.state = 127
@@ -1109,6 +1102,7 @@ class sdoc1Parser ( Parser ):
 
 
     class PostfixExpressionContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -1215,6 +1209,7 @@ class sdoc1Parser ( Parser ):
 
 
     class MultiplicativeExpressionContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -1309,6 +1304,7 @@ class sdoc1Parser ( Parser ):
 
 
     class AdditiveExpressionContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -1403,6 +1399,7 @@ class sdoc1Parser ( Parser ):
 
 
     class RelationalExpressionContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -1529,6 +1526,7 @@ class sdoc1Parser ( Parser ):
 
 
     class EqualityExpressionContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -1623,6 +1621,7 @@ class sdoc1Parser ( Parser ):
 
 
     class LogicalAndExpressionContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -1725,6 +1724,7 @@ class sdoc1Parser ( Parser ):
 
 
     class LogicalOrExpressionContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -1827,6 +1827,7 @@ class sdoc1Parser ( Parser ):
 
 
     class AssignmentExpressionContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -1920,6 +1921,7 @@ class sdoc1Parser ( Parser ):
 
 
     class AssignmentOperatorContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -1958,6 +1960,7 @@ class sdoc1Parser ( Parser ):
 
 
     class ExpressionContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
