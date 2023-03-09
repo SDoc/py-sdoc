@@ -41,7 +41,7 @@ class HyperlinkNode(Node):
     # ------------------------------------------------------------------------------------------------------------------
     def prepare_content_tree(self) -> None:
         """
-        Prepares the content of the node. Checks url of 'href' attribute. Sets if needed.
+        Prepares the content of the node. Checks URL of 'href' attribute. Sets if needed.
         """
         # Setting scheme if we haven't.
         if 'href' in self._options:
@@ -57,7 +57,7 @@ class HyperlinkNode(Node):
         """
         Checks if we haven't got a scheme. Sets scheme if needed.
 
-        :param str url: The url address with scheme or without.
+        :param str url: The URL with scheme or without.
         """
         if not request.urlparse(url).scheme:
             if url.startswith('ftp.'):
@@ -70,8 +70,8 @@ class HyperlinkNode(Node):
     # ------------------------------------------------------------------------------------------------------------------
     def try_connect(self) -> None:
         """
-        Tries to connect to url. If have connection, checks the redirect. If redirect to 'https' protocol and
-        host is the same, reset scheme in 'href' attribute.
+        Tries to connect to the URL. On a successful connection, checks for a redirect. If redirected to protocol https
+        and host is the same, updates the protocol in the URL.
         """
         try:
             response = request.urlopen(self._options['href'])
@@ -96,10 +96,13 @@ class HyperlinkNode(Node):
                     if response.getheader('Location').startswith('https://' + url):
                         self._options['href'].replace('http://', 'https://')
 
-        except error.URLError:
-            self.io.warning("Invalid url address: '{0!s}'".format(self._options['href']))
+        except Exception as exception:
+            self.io.warning("Unable to retrieve URL: '{0!s}'".format(self._options['href']))
+            self.io.warning(str(exception.__class__))
+            self.io.warning(str(exception))
 
-    # ------------------------------------------------------------------------------------------------------------------
+            # ------------------------------------------------------------------------------------------------------------------
+
     def get_command(self) -> str:
         """
         Returns the command of this node, i.e. hyperlink.
