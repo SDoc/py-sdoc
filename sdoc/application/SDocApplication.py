@@ -16,7 +16,7 @@ class SDocApplication(Application):
         """
         Object constructor.
         """
-        Application.__init__(self, 'SDocApplication', '0.0.11')
+        Application.__init__(self, 'SDoc', '1.0.0')
 
         self.add(SDocCommand())
         self.add(SDoc1Command())
